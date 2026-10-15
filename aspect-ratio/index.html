@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calculadora Aspect Ratio — DanoloTools</title>
-  <meta name="description" content="Calculadora interactiva de proporciones y resolución de imagen/vídeo en tiempo real con selector de orientación horizontal/vertical.">
+  <title>Aspect Ratio — DanoloTools</title>
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,69 +16,50 @@
   <header class="site-header">
     <div class="container header-inner">
       <div class="brand-wrapper">
-        <a href="../" class="brand-logo">
+        <a href="../index.html" class="brand-logo">
           <div class="brand-icon-box">D</div>
           <span>DANOLO<span style="color: var(--cyan);">//</span>TOOLS</span>
         </a>
-        <div class="brand-badge">
-          <span class="status-dot"></span>
-          <span>LIVE</span>
-        </div>
       </div>
       <nav class="header-nav">
-        <a href="../" class="nav-link">
+        <a href="../index.html" class="nav-link">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="3" width="7" height="7"></rect>
-            <rect x="14" y="3" width="7" height="7"></rect>
-            <rect x="14" y="14" width="7" height="7"></rect>
-            <rect x="3" y="14" width="7" height="7"></rect>
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
           </svg>
-          <span>Todas las herramientas</span>
+          <span>Volver</span>
         </a>
       </nav>
     </div>
   </header>
 
   <!-- Main Content -->
-  <main class="container">
-    <div class="tool-page-header">
-      <nav class="breadcrumb" aria-label="Ruta de navegación">
-        <a href="../">DanoloTools</a>
-        <span>/</span>
-        <span style="color: var(--cyan);">Calculadora Aspect Ratio</span>
-      </nav>
-      <h1 class="hero-title" style="font-size: 2.5rem; margin-bottom: 0.5rem;">
+  <main class="container" style="padding-top: 1.5rem;">
+    <div style="margin-bottom: 1.5rem;">
+      <h1 class="hero-title" style="font-size: 1.75rem; margin-bottom: 0;">
         Calculadora <span class="gradient-text">Aspect Ratio</span>
       </h1>
-      <p class="hero-subtitle" style="margin-bottom: 1.5rem; font-size: 1rem;">
-        Calcula dimensiones en píxeles y ratios de pantalla con previsualización física y conmutador rápido entre orientación horizontal y vertical.
-      </p>
     </div>
 
     <div class="calculator-wrapper">
       
-      <!-- Calculator Controls Panel -->
+      <!-- Controls Panel -->
       <section class="calc-panel">
-        <div class="panel-title">
-          <span>Configuración de Proporciones</span>
-          <span class="tool-badge active">TIEMPO REAL</span>
-        </div>
-
         <!-- Common Presets Dropdown -->
         <div class="form-group">
           <label for="presetSelect" class="form-label">Common Presets</label>
           <select id="presetSelect" class="form-select">
-            <option value="9:16" selected>Vertical Video 9:16 (TikTok / Reels / Shorts)</option>
-            <option value="16:9">Widescreen 16:9 (YouTube / TV / Monitor)</option>
-            <option value="1:1">Square 1:1 (Instagram Post / Avatar)</option>
-            <option value="4:5">Social Portrait 4:5 (Instagram Feed)</option>
-            <option value="4:3">Standard 4:3 (iPad / Monitor clásico)</option>
-            <option value="3:4">Portrait 3:4 (Documento / Tablet vertical)</option>
-            <option value="21:9">Ultrawide 21:9 (Cine panorámico / Monitor)</option>
-            <option value="9:21">Ultrawide Vertical 9:21</option>
-            <option value="3:2">Classic 3:2 (Fotografía 35mm horizontal)</option>
-            <option value="2:3">Portrait 2:3 (Fotografía 35mm vertical)</option>
-            <option value="custom">Personalizado (Custom)</option>
+            <option value="9:16" selected>Vertical Video 9:16</option>
+            <option value="16:9">Widescreen 16:9</option>
+            <option value="1:1">Square 1:1</option>
+            <option value="4:5">Vertical 4:5</option>
+            <option value="4:3">Standard 4:3</option>
+            <option value="3:4">Portrait 3:4</option>
+            <option value="21:9">Ultrawide 21:9</option>
+            <option value="9:21">Ultrawide 9:21</option>
+            <option value="3:2">Photo 3:2</option>
+            <option value="2:3">Photo 2:3</option>
+            <option value="custom">Personalizado</option>
           </select>
         </div>
 
@@ -96,9 +76,9 @@
             </div>
           </div>
 
-          <!-- The Centered Swap Button: Horizontal <-> Vertical -->
+          <!-- Swap Button: Horizontal <-> Vertical -->
           <div class="swap-button-container">
-            <button id="btnSwap" class="btn-swap" type="button" title="Intercambiar ancho y alto (Horizontal ⇄ Vertical)">
+            <button id="btnSwap" class="btn-swap" type="button" title="Intercambiar Horizontal ⇄ Vertical">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M7 16V4M7 4L3 8M7 4L11 8M17 8V20M17 20L21 16M17 20L13 16"/>
               </svg>
@@ -121,14 +101,14 @@
 
         <!-- Quick Resolution Chips -->
         <div>
-          <span class="form-label">Resoluciones Rápidas de Referencia</span>
+          <span class="form-label">Presets Rápidos</span>
           <div class="quick-presets-chips">
-            <button type="button" class="chip-btn chip-resolution" data-w="1080" data-h="1920" data-rw="9" data-rh="16">1080×1920 (Reels/TikTok)</button>
-            <button type="button" class="chip-btn chip-resolution" data-w="1920" data-h="1080" data-rw="16" data-rh="9">1920×1080 (Full HD)</button>
-            <button type="button" class="chip-btn chip-resolution" data-w="3840" data-h="2160" data-rw="16" data-rh="9">3840×2160 (4K UHD)</button>
-            <button type="button" class="chip-btn chip-resolution" data-w="1080" data-h="1080" data-rw="1" data-rh="1">1080×1080 (Square)</button>
-            <button type="button" class="chip-btn chip-resolution" data-w="1080" data-h="1350" data-rw="4" data-rh="5">1080×1350 (IG 4:5)</button>
-            <button type="button" class="chip-btn chip-resolution" data-w="2560" data-h="1440" data-rw="16" data-rh="9">2560×1440 (2K QHD)</button>
+            <button type="button" class="chip-btn chip-resolution" data-w="1080" data-h="1920" data-rw="9" data-rh="16">1080×1920</button>
+            <button type="button" class="chip-btn chip-resolution" data-w="1920" data-h="1080" data-rw="16" data-rh="9">1920×1080</button>
+            <button type="button" class="chip-btn chip-resolution" data-w="3840" data-h="2160" data-rw="16" data-rh="9">3840×2160</button>
+            <button type="button" class="chip-btn chip-resolution" data-w="1080" data-h="1080" data-rw="1" data-rh="1">1080×1080</button>
+            <button type="button" class="chip-btn chip-resolution" data-w="1080" data-h="1350" data-rw="4" data-rh="5">1080×1350</button>
+            <button type="button" class="chip-btn chip-resolution" data-w="2560" data-h="1440" data-rw="16" data-rh="9">2560×1440</button>
           </div>
         </div>
 
@@ -154,107 +134,29 @@
           <div class="metrics-pills">
             <div class="metric-badge">Ratio: <strong id="metricRatio">9:16</strong></div>
             <div class="metric-badge">Factor: <strong id="metricDecimal">0.563:1</strong></div>
-            <div class="metric-badge">Modo: <strong id="metricOrientation">Vertical (Portrait)</strong></div>
-            <div class="metric-badge">Sensor: <strong id="metricMegapixels">2.91 MP</strong></div>
+            <div class="metric-badge"><strong id="metricOrientation">Vertical (Portrait)</strong></div>
           </div>
 
           <div class="copy-buttons-group">
-            <button id="btnRoundEven" class="btn-secondary" type="button" title="Ajusta ancho y alto a números pares exactos para compatibilidad con códecs H.264/H.265">
+            <button id="btnRoundEven" class="btn-secondary" type="button" title="Ajusta a números pares exactos">
               <span>Nº Pares</span>
             </button>
-            <button id="btnCopyDimensions" class="btn-secondary" type="button" title="Copiar ancho y alto">
+            <button id="btnCopyDimensions" class="btn-secondary" type="button" title="Copiar W×H">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                 <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
               </svg>
-              <span>Copiar W×H</span>
+              <span>Copiar</span>
             </button>
-            <button id="btnCopyCSS" class="btn-secondary" type="button" title="Copiar propiedad CSS aspect-ratio">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="16 18 22 12 16 6"></polyline>
-                <polyline points="8 6 2 12 8 18"></polyline>
-              </svg>
-              <span>Copiar CSS</span>
+            <button id="btnCopyCSS" class="btn-secondary" type="button" title="Copiar CSS aspect-ratio">
+              <span>CSS</span>
             </button>
           </div>
         </div>
       </section>
 
     </div>
-
-    <!-- Reference Cheat-Sheet -->
-    <section class="reference-card">
-      <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: 0.5rem;">Tabla Rápida de Ratios Populares</h3>
-      <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">Estándares de la industria audiovisual, web y redes sociales:</p>
-      
-      <div style="overflow-x: auto;">
-        <table class="reference-table">
-          <thead>
-            <tr>
-              <th>Ratio</th>
-              <th>Decimal</th>
-              <th>Resolución típica</th>
-              <th>Uso principal</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>16:9</strong></td>
-              <td>1.78:1</td>
-              <td>1920×1080 (FHD) / 3840×2160 (4K)</td>
-              <td>Vídeo horizontal, YouTube, pantallas de TV y monitores</td>
-            </tr>
-            <tr>
-              <td><strong>9:16</strong></td>
-              <td>0.56:1</td>
-              <td>1080×1920 / 720×1280</td>
-              <td>TikTok, Instagram Reels, YouTube Shorts, Stories</td>
-            </tr>
-            <tr>
-              <td><strong>1:1</strong></td>
-              <td>1.00:1</td>
-              <td>1080×1080</td>
-              <td>Feed de Instagram, fotos de perfil, carátulas de álbum</td>
-            </tr>
-            <tr>
-              <td><strong>4:5</strong></td>
-              <td>0.80:1</td>
-              <td>1080×1350</td>
-              <td>Publicaciones verticales óptimas en Instagram Feed</td>
-            </tr>
-            <tr>
-              <td><strong>21:9</strong></td>
-              <td>2.33:1</td>
-              <td>2560×1080 / 3440×1440</td>
-              <td>Monitores ultrawide y producciones cinematográficas</td>
-            </tr>
-            <tr>
-              <td><strong>4:3</strong></td>
-              <td>1.33:1</td>
-              <td>1440×1080 / 1024×768</td>
-              <td>iPad estándar, televisión retro, fotografía vintage</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
   </main>
-
-  <!-- Site Footer -->
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <div class="footer-left">
-        <span>© 2026 DanoloTools</span>
-        <span>•</span>
-        <span>Herramientas web de productividad</span>
-      </div>
-      <div class="footer-right">
-        <a href="https://danolotools.vercel.app" target="_blank" rel="noopener">danolotools.vercel.app</a>
-        <span>•</span>
-        <a href="../">Inicio</a>
-      </div>
-    </div>
-  </footer>
 
   <script src="../js/shared.js"></script>
   <script src="../js/aspect-ratio.js"></script>

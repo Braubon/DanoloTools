@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DanoloTools — Herramientas Web Prácticas</title>
-  <meta name="description" content="Portal de herramientas y utilidades web rápidas para diseño, vídeo y desarrollo en danolotools.vercel.app">
+  <title>DanoloTools</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,221 +16,78 @@
   <header class="site-header">
     <div class="container header-inner">
       <div class="brand-wrapper">
-        <a href="./" class="brand-logo">
+        <a href="index.html" class="brand-logo">
           <div class="brand-icon-box">D</div>
           <span>DANOLO<span style="color: var(--cyan);">//</span>TOOLS</span>
         </a>
-        <div class="brand-badge">
-          <span class="status-dot"></span>
-          <span>danolotools.vercel.app</span>
-        </div>
       </div>
-      <nav class="header-nav">
-        <a href="#herramientas" class="nav-link active">
-          <span>Herramientas</span>
-        </a>
-      </nav>
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <main class="container">
-    <section class="hero">
-      <div class="hero-pill">
-        <span>⚡ Colección de herramientas online</span>
-      </div>
-      <h1 class="hero-title">
-        Herramientas web <br>
-        <span class="gradient-text">rápidas y precisas.</span>
-      </h1>
-      <p class="hero-subtitle">
-        Utilidades pensadas para resolver tareas habituales de diseño, vídeo y desarrollo sin fricción, sin publicidad y accesibles desde cualquier navegador.
-      </p>
-
-      <!-- Filter and Search Bar -->
-      <div class="filter-bar" id="herramientas">
-        <div class="search-box">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
-          <input type="text" id="toolSearchInput" class="search-input" placeholder="Buscar herramientas... (Ej: ratio, vídeo, color)">
-        </div>
-
-        <div class="category-tags">
-          <button class="tag-btn active" data-category="all">Todas</button>
-          <button class="tag-btn" data-category="video">Imagen & Vídeo</button>
-          <button class="tag-btn" data-category="dev">Desarrollo</button>
-          <button class="tag-btn" data-category="design">Diseño</button>
-        </div>
-      </div>
-
-      <!-- Tools Grid -->
-      <div class="tools-grid" id="toolsGrid">
-
-        <!-- Tool 1: Aspect Ratio Calculator -->
-        <article class="tool-card featured" data-category="video" data-name="calculadora aspect ratio proporcion video pantalla orientacion">
-          <div>
-            <div class="tool-card-header">
-              <div class="tool-icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                  <line x1="8" y1="21" x2="16" y2="21"></line>
-                  <line x1="12" y1="17" x2="12" y2="21"></line>
-                </svg>
-              </div>
-              <span class="tool-badge active">● ACTIVA</span>
-            </div>
-            <h2 class="tool-title">Calculadora Aspect Ratio</h2>
-            <p class="tool-desc">
-              Calcula proporciones, dimensiones en píxeles y previsualiza el encuadre en tiempo real. Incluye botón directo para invertir entre orientación horizontal y vertical al instante.
-            </p>
-          </div>
-          <div class="tool-footer">
-            <span class="tool-category">Imagen & Vídeo</span>
-            <a href="aspect-ratio/" class="tool-action-btn">
-              <span>Abrir herramienta</span>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
-            </a>
-          </div>
-        </article>
-
-        <!-- Tool 2: Color Contrast & Palette (Upcoming) -->
-        <article class="tool-card" data-category="design" data-name="color contraste wcag paleta accesibilidad ui">
-          <div>
-            <div class="tool-card-header">
-              <div class="tool-icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <path d="M12 2a10 10 0 0 1 0 20z" fill="currentColor"></path>
-                </svg>
-              </div>
-              <span class="tool-badge upcoming">PRÓXIMAMENTE</span>
-            </div>
-            <h2 class="tool-title">Contraste & Paleta WCAG</h2>
-            <p class="tool-desc">
-              Analizador de contraste de texto frente a fondos para accesibilidad WCAG AAA y generador de escalas armónicas de color.
-            </p>
-          </div>
-          <div class="tool-footer">
-            <span class="tool-category">Diseño UI</span>
-            <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">En desarrollo</span>
-          </div>
-        </article>
-
-        <!-- Tool 3: SVG Optimizer & Code Cleaner (Upcoming) -->
-        <article class="tool-card" data-category="dev" data-name="svg optimizador vector limpiador codigo">
-          <div>
-            <div class="tool-card-header">
-              <div class="tool-icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-                  <polyline points="2 17 12 22 22 17"></polyline>
-                  <polyline points="2 12 12 17 22 12"></polyline>
-                </svg>
-              </div>
-              <span class="tool-badge upcoming">PRÓXIMAMENTE</span>
-            </div>
-            <h2 class="tool-title">Optimizador SVG</h2>
-            <p class="tool-desc">
-              Limpia metadatos innecesarios de archivos vectoriales SVG, reduce peso y genera Data URIs directas listas para CSS.
-            </p>
-          </div>
-          <div class="tool-footer">
-            <span class="tool-category">Desarrollo Web</span>
-            <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">En desarrollo</span>
-          </div>
-        </article>
-
-        <!-- Tool 4: Px to Rem & Fluid Typography (Upcoming) -->
-        <article class="tool-card" data-category="dev" data-name="px rem tipografia fluida clamp css unidades conversor">
-          <div>
-            <div class="tool-card-header">
-              <div class="tool-icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="4 7 4 4 20 4 20 7"></polyline>
-                  <line x1="9" y1="20" x2="15" y2="20"></line>
-                  <line x1="12" y1="4" x2="12" y2="20"></line>
-                </svg>
-              </div>
-              <span class="tool-badge upcoming">PRÓXIMAMENTE</span>
-            </div>
-            <h2 class="tool-title">Px a Rem & Fluid Clamp</h2>
-            <p class="tool-desc">
-              Calculadora de escalas tipográficas fluidas usando CSS clamp(), convirtiendo píxeles a unidades relativas adaptativas.
-            </p>
-          </div>
-          <div class="tool-footer">
-            <span class="tool-category">CSS / Maquetación</span>
-            <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">En desarrollo</span>
-          </div>
-        </article>
-
-      </div>
-    </section>
-  </main>
-
-  <!-- Site Footer -->
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <div class="footer-left">
-        <span>© 2026 DanoloTools</span>
-        <span>•</span>
-        <span>danolotools.vercel.app</span>
-      </div>
-      <div class="footer-right">
-        <a href="./aspect-ratio/">Aspect Ratio Calculator</a>
-        <span>•</span>
-        <a href="#herramientas">Volver arriba</a>
+  <!-- Main Content -->
+  <main class="container" style="padding-top: 2rem;">
+    <!-- Search Bar -->
+    <div class="filter-bar" style="margin-bottom: 2rem;">
+      <div class="search-box">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="toolSearchInput" class="search-input" placeholder="Buscar herramienta... (⌘K)">
       </div>
     </div>
-  </footer>
+
+    <!-- Tools Grid -->
+    <div class="tools-grid" id="toolsGrid">
+      <!-- Tool: Aspect Ratio Calculator -->
+      <a href="aspect-ratio/index.html" class="tool-card featured" data-name="calculadora aspect ratio proporcion video pantalla orientacion pixels">
+        <div>
+          <div class="tool-card-header">
+            <div class="tool-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+              </svg>
+            </div>
+          </div>
+          <h2 class="tool-title">Calculadora Aspect Ratio</h2>
+          <p class="tool-desc">
+            Cálculo de proporciones y resolución en tiempo real con selector de orientación horizontal y vertical.
+          </p>
+        </div>
+        <div class="tool-footer">
+          <span class="tool-action-btn">
+            <span>Abrir herramienta</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </span>
+        </div>
+      </a>
+    </div>
+  </main>
 
   <script src="js/shared.js"></script>
   <script>
-    // Search & Category Filtering
+    // Live Search Filter
     document.addEventListener('DOMContentLoaded', () => {
       const searchInput = document.getElementById('toolSearchInput');
-      const categoryBtns = document.querySelectorAll('.tag-btn');
       const cards = document.querySelectorAll('.tool-card');
 
-      let currentCategory = 'all';
-
-      function filterCards() {
-        const query = searchInput.value.toLowerCase().trim();
-
-        cards.forEach(card => {
-          const nameData = card.getAttribute('data-name') || '';
-          const categoryData = card.getAttribute('data-category') || '';
-          const title = card.querySelector('.tool-title')?.textContent.toLowerCase() || '';
-          const desc = card.querySelector('.tool-desc')?.textContent.toLowerCase() || '';
-
-          const matchesQuery = !query || nameData.includes(query) || title.includes(query) || desc.includes(query);
-          const matchesCategory = currentCategory === 'all' || categoryData === currentCategory;
-
-          if (matchesQuery && matchesCategory) {
-            card.style.display = 'flex';
-          } else {
-            card.style.display = 'none';
-          }
-        });
-      }
-
       if (searchInput) {
-        searchInput.addEventListener('input', filterCards);
-      }
-
-      categoryBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          categoryBtns.forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          currentCategory = btn.getAttribute('data-category');
-          filterCards();
+        searchInput.addEventListener('input', () => {
+          const query = searchInput.value.toLowerCase().trim();
+          cards.forEach(card => {
+            const nameData = card.getAttribute('data-name') || '';
+            const title = card.querySelector('.tool-title')?.textContent.toLowerCase() || '';
+            const desc = card.querySelector('.tool-desc')?.textContent.toLowerCase() || '';
+            const match = !query || nameData.includes(query) || title.includes(query) || desc.includes(query);
+            card.style.display = match ? 'flex' : 'none';
+          });
         });
-      });
+      }
     });
   </script>
 </body>
