@@ -1,0 +1,62 @@
+[
+ {
+  "id": "escudo-faltriquera",
+  "nombre": "Escudo faltriquera",
+  "nombre_original": "Bag Shield",
+  "rareza": "raro",
+  "coste": 1000,
+  "def": 2,
+  "mdef": 0,
+  "init": 0,
+  "marcial": false,
+  "cualidad": "Cuando una habilidad te permita recuperar Puntos de Inventario, recuperas 1 PI adicional."
+ },
+ {
+  "id": "escudo-tambor",
+  "nombre": "Escudo tambor",
+  "nombre_original": "Drumshield",
+  "rareza": "raro",
+  "coste": 1700,
+  "def": 2,
+  "mdef": 0,
+  "init": 0,
+  "marcial": false,
+  "cualidad": "Si posees la habilidad Resonancia, considera tu Nivel de Habilidad incrementado en 2 (hasta un máximo de SL 5)."
+ },
+ {
+  "id": "argos",
+  "nombre": "Argos",
+  "nombre_original": "Argus",
+  "rareza": "raro",
+  "coste": 2000,
+  "def": 2,
+  "mdef": 2,
+  "init": 0,
+  "marcial": true,
+  "cualidad": "Al usar las habilidades Enroque del rey y Edicto del alfil, puedes excluir a una criatura visible de sus efectos."
+ },
+ {
+  "id": "escudo-de-hojas",
+  "nombre": "Escudo de hojas",
+  "nombre_original": "Shield of Blades",
+  "rareza": "raro",
+  "coste": 2000,
+  "def": 2,
+  "mdef": 2,
+  "init": 0,
+  "marcial": true,
+  "cualidad": "Al atacar con un arma pesada, lanza o espada que posea la propiedad multi, el ataque causa 5 de daño extra."
+ },
+ {
+  "id": "escudo-de-parada",
+  "nombre": "Escudo de parada",
+  "nombre_original": "Parry Shield",
+  "rareza": "raro",
+  "coste": 2500,
+  "def": 2,
+  "mdef": 2,
+  "init": 0,
+  "marcial": true,
+  "cualidad": "Si posees la habilidad Contraataque, también se activa cuando la tirada de precisión de un ataque cuerpo a cuerpo enemigo sea un número impar."
+ }
+]

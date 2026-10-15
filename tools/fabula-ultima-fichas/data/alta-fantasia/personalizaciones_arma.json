@@ -1,0 +1,96 @@
+[
+ {
+  "id": "precisa",
+  "nombre": "Precisa",
+  "nombre_original": "Accurate",
+  "marcial": false,
+  "cuenta": 1,
+  "efecto": "Otorga un bonificador de +2 a la fórmula de la prueba de precisión del arma.",
+  "arma": {
+   "precision": 2
+  }
+ },
+ {
+  "id": "aumento-defensa",
+  "nombre": "Aumento de defensa",
+  "nombre_original": "Defense Boost",
+  "marcial": false,
+  "cuenta": 1,
+  "efecto": "Obtienes un bonificador de +2 a la Defensa y se te considera equipado con un escudo a efectos de habilidades (como Maestría defensiva o Esquiva).",
+  "modificadores": [
+   {
+    "stat": "def",
+    "valor": "2"
+   }
+  ],
+  "cuenta_como_escudo": true
+ },
+ {
+  "id": "elemental",
+  "nombre": "Elemental",
+  "nombre_original": "Elemental",
+  "marcial": false,
+  "cuenta": 1,
+  "efecto": "Elige un tipo de daño entre aire, rayo, oscuro, tierra, fuego, hielo, luz o veneno. El arma inflige daño del tipo elegido en lugar de físico y causa +2 de daño adicional.",
+  "arma": {
+   "dano": 2,
+   "elige_tipo": true
+  }
+ },
+ {
+  "id": "aumento-defensa-magica",
+  "nombre": "Aumento de defensa mágica",
+  "nombre_original": "Magic Defense Boost",
+  "marcial": true,
+  "cuenta": 1,
+  "efecto": "Obtienes un bonificador de +2 a la Defensa Mágica. Vuelve marcial al arma.",
+  "modificadores": [
+   {
+    "stat": "mdef",
+    "valor": "2"
+   }
+  ]
+ },
+ {
+  "id": "potente",
+  "nombre": "Potente",
+  "nombre_original": "Powerful",
+  "marcial": true,
+  "cuenta": 1,
+  "efecto": "El arma causa +5 de daño extra (+7 si pertenece a la categoría de armas pesadas). No disponible para armas arcanas ni dagas, ni para armas con la personalización Rápida. Vuelve marcial al arma.",
+  "arma": {
+   "dano": 5,
+   "dano_por_categoria": {
+    "pesada": 7
+   }
+  },
+  "excluye_categorias": [
+   "arcana",
+   "daga"
+  ],
+  "incompatible": [
+   "rapida"
+  ]
+ },
+ {
+  "id": "rapida",
+  "nombre": "Rápida",
+  "nombre_original": "Quick",
+  "marcial": true,
+  "cuenta": 2,
+  "efecto": "Cuenta como dos personalizaciones. Al realizar la acción de Ataque con esta arma, puedes realizar dos ataques (contra el mismo objetivo o contra objetivos distintos). Ambos ataques siguen las reglas de Combate con dos armas. Vuelve marcial al arma.",
+  "incompatible": [
+   "potente"
+  ]
+ },
+ {
+  "id": "transformable",
+  "nombre": "Transformable",
+  "nombre_original": "Transforming",
+  "marcial": false,
+  "cuenta": 1,
+  "coste_extra": 100,
+  "efecto": "Incrementa el coste en 100 zenit. El arma posee una segunda forma que se diseña como un arma personalizada independiente (también con Transformable) sin coste adicional. Fuera de conflicto puedes alternar libremente; en conflicto, solo en tu turno, antes o después de una acción y una vez por turno. Si una forma es marcial, necesitas la competencia correspondiente. El arma solo puede portar una única cualidad rara, común a ambas formas.",
+  "segunda_forma": true
+ }
+]

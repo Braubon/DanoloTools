@@ -1,0 +1,601 @@
+[
+ {
+  "id": "arma-antiestado",
+  "nombre": "Antiestado",
+  "nombre_original": "Status Ward",
+  "aplica": [
+   "arma"
+  ],
+  "grupo": "defensiva",
+  "coste": 500,
+  "efecto": "El portador es inmune a un estado alterado específico."
+ },
+ {
+  "id": "arma-resistencia",
+  "nombre": "Resistencia",
+  "nombre_original": "Resistance",
+  "aplica": [
+   "arma"
+  ],
+  "grupo": "defensiva",
+  "coste": 700,
+  "efecto": "El portador es Resistente a un tipo de daño específico (excepto físico)."
+ },
+ {
+  "id": "arma-amuleto",
+  "nombre": "Amuleto",
+  "nombre_original": "Amulet",
+  "aplica": [
+   "arma"
+  ],
+  "grupo": "defensiva",
+  "coste": 800,
+  "efecto": "Otorga un bonificador de +1 a la Defensa Mágica.",
+  "modificadores": [
+   {
+    "stat": "mdef",
+    "valor": "1"
+   }
+  ]
+ },
+ {
+  "id": "arma-baluarte",
+  "nombre": "Baluarte",
+  "nombre_original": "Bulwark",
+  "aplica": [
+   "arma"
+  ],
+  "grupo": "defensiva",
+  "coste": 800,
+  "efecto": "Otorga un bonificador de +1 a la Defensa.",
+  "modificadores": [
+   {
+    "stat": "def",
+    "valor": "1"
+   }
+  ]
+ },
+ {
+  "id": "arma-doble-resistencia",
+  "nombre": "Doble resistencia",
+  "nombre_original": "Dual Resistance",
+  "aplica": [
+   "arma"
+  ],
+  "grupo": "defensiva",
+  "coste": 1000,
+  "efecto": "El portador es Resistente a dos tipos de daño específicos (excepto físico)."
+ },
+ {
+  "id": "arma-rompespadas",
+  "nombre": "Rompespadas",
+  "nombre_original": "Swordbreaker",
+  "aplica": [
+   "arma"
+  ],
+  "grupo": "defensiva",
+  "coste": 1000,
+  "efecto": "El portador es Resistente al daño físico."
+ },
+ {
+  "id": "arma-inmunidad",
+  "nombre": "Inmunidad",
+  "nombre_original": "Immunity",
+  "aplica": [
+   "arma"
+  ],
+  "grupo": "defensiva",
+  "coste": 1500,
+  "efecto": "El portador es Inmune a un tipo de daño específico (excepto físico)."
+ },
+ {
+  "id": "arma-omniescudo",
+  "nombre": "Omniescudo",
+  "nombre_original": "Omni Shield",
+  "aplica": [
+   "arma"
+  ],
+  "grupo": "defensiva",
+  "coste": 2000,
+  "efecto": "Otorga un bonificador de +1 a la Defensa y +1 a la Defensa Mágica.",
+  "modificadores": [
+   {
+    "stat": "def",
+    "valor": "1"
+   },
+   {
+    "stat": "mdef",
+    "valor": "1"
+   }
+  ]
+ },
+ {
+  "id": "arma-salud-perfecta",
+  "nombre": "Salud perfecta",
+  "nombre_original": "Perfect Health",
+  "aplica": [
+   "arma"
+  ],
+  "grupo": "defensiva",
+  "coste": 2000,
+  "efecto": "El portador es inmune a todos los estados alterados."
+ },
+ {
+  "id": "arma-magica",
+  "nombre": "Mágica",
+  "nombre_original": "Magical",
+  "aplica": [
+   "arma"
+  ],
+  "grupo": "ofensiva",
+  "coste": 100,
+  "efecto": "Los ataques con esta arma tienen como objetivo la D. Mágica en lugar de la Defensa."
+ },
+ {
+  "id": "arma-cazadora",
+  "nombre": "Cazadora",
+  "nombre_original": "Hunter",
+  "aplica": [
+   "arma"
+  ],
+  "grupo": "ofensiva",
+  "coste": 300,
+  "efecto": "El arma inflige 5 puntos de daño adicional a criaturas de una especie concreta."
+ },
+ {
+  "id": "arma-perforante",
+  "nombre": "Perforante",
+  "nombre_original": "Piercing",
+  "aplica": [
+   "arma"
+  ],
+  "grupo": "ofensiva",
+  "coste": 400,
+  "efecto": "El daño infligido por esta arma ignora Resistencia."
+ },
+ {
+  "id": "arma-doble-cazadora",
+  "nombre": "Doble cazadora",
+  "nombre_original": "Dual Hunter",
+  "aplica": [
+   "arma"
+  ],
+  "grupo": "ofensiva",
+  "coste": 500,
+  "efecto": "El arma inflige 5 puntos de daño adicional a criaturas de dos especies concretas."
+ },
+ {
+  "id": "arma-multi",
+  "nombre": "Multi",
+  "nombre_original": "Multi",
+  "aplica": [
+   "arma"
+  ],
+  "grupo": "ofensiva",
+  "coste": 1000,
+  "efecto": "Los ataques efectuados con esta arma adquieren la propiedad multi (2)."
+ },
+ {
+  "id": "arma-estado",
+  "nombre": "Estado",
+  "nombre_original": "Inflict Status",
+  "aplica": [
+   "arma"
+  ],
+  "grupo": "ofensiva",
+  "coste": 1500,
+  "efecto": "Cada objetivo impactado sufre un estado alterado (elegir uno: confundido, débil, lento o estremecido)."
+ },
+ {
+  "id": "arma-estado-plus",
+  "nombre": "Estado plus",
+  "nombre_original": "Inflict Status Plus",
+  "aplica": [
+   "arma"
+  ],
+  "grupo": "ofensiva",
+  "coste": 2000,
+  "efecto": "Cada objetivo impactado sufre un estado alterado (elegir uno: envenenado o enfurecido)."
+ },
+ {
+  "id": "armadura-antiestado",
+  "nombre": "Antiestado",
+  "nombre_original": "Status Ward",
+  "aplica": [
+   "armadura",
+   "escudo"
+  ],
+  "grupo": "defensiva",
+  "coste": 500,
+  "efecto": "Eres inmune a un estado alterado específico."
+ },
+ {
+  "id": "armadura-resistencia",
+  "nombre": "Resistencia",
+  "nombre_original": "Resistance",
+  "aplica": [
+   "armadura",
+   "escudo"
+  ],
+  "grupo": "defensiva",
+  "coste": 700,
+  "efecto": "Eres Resistente a un tipo de daño específico (excepto físico)."
+ },
+ {
+  "id": "armadura-doble-resistencia",
+  "nombre": "Doble resistencia",
+  "nombre_original": "Dual Resistance",
+  "aplica": [
+   "armadura",
+   "escudo"
+  ],
+  "grupo": "defensiva",
+  "coste": 1000,
+  "efecto": "Eres Resistente a dos tipos de daño específicos (excepto físico)."
+ },
+ {
+  "id": "armadura-rompespadas",
+  "nombre": "Rompespadas",
+  "nombre_original": "Swordbreaker",
+  "aplica": [
+   "armadura",
+   "escudo"
+  ],
+  "grupo": "defensiva",
+  "coste": 1000,
+  "efecto": "Eres Resistente al daño físico."
+ },
+ {
+  "id": "armadura-inmunidad",
+  "nombre": "Inmunidad",
+  "nombre_original": "Immunity",
+  "aplica": [
+   "armadura",
+   "escudo"
+  ],
+  "grupo": "defensiva",
+  "coste": 1500,
+  "efecto": "Eres Inmune a un tipo de daño específico (excepto físico)."
+ },
+ {
+  "id": "armadura-salud-perfecta",
+  "nombre": "Salud perfecta",
+  "nombre_original": "Perfect Health",
+  "aplica": [
+   "armadura",
+   "escudo"
+  ],
+  "grupo": "defensiva",
+  "coste": 2000,
+  "efecto": "Eres inmune a todos los estados alterados."
+ },
+ {
+  "id": "armadura-iniciativa-plus",
+  "nombre": "Iniciativa plus",
+  "nombre_original": "Initiative Plus",
+  "aplica": [
+   "armadura",
+   "escudo"
+  ],
+  "grupo": "potenciacion",
+  "coste": 500,
+  "efecto": "Bonificador de +4 al modificador de Iniciativa.",
+  "modificadores": [
+   {
+    "stat": "init",
+    "valor": "4"
+   }
+  ]
+ },
+ {
+  "id": "armadura-magia-plus",
+  "nombre": "Magia plus",
+  "nombre_original": "Magic Plus",
+  "aplica": [
+   "armadura",
+   "escudo"
+  ],
+  "grupo": "potenciacion",
+  "coste": 1000,
+  "efecto": "Bonificador de +1 a las pruebas de magia.",
+  "modificadores": [
+   {
+    "stat": "magia",
+    "valor": "1"
+   }
+  ]
+ },
+ {
+  "id": "armadura-precision-plus",
+  "nombre": "Precisión plus",
+  "nombre_original": "Accuracy Plus",
+  "aplica": [
+   "armadura",
+   "escudo"
+  ],
+  "grupo": "potenciacion",
+  "coste": 1000,
+  "efecto": "Bonificador de +1 a las pruebas de Precisión.",
+  "modificadores": [
+   {
+    "stat": "precision",
+    "valor": "1"
+   }
+  ]
+ },
+ {
+  "id": "armadura-vitalidad-plus",
+  "nombre": "Vitalidad plus",
+  "nombre_original": "Vitality Plus",
+  "aplica": [
+   "armadura",
+   "escudo"
+  ],
+  "grupo": "potenciacion",
+  "coste": 1000,
+  "efecto": "Cuando recuperes Puntos de Vida, recuperas 5 PV extra."
+ },
+ {
+  "id": "armadura-sanacion-plus",
+  "nombre": "Sanación plus",
+  "nombre_original": "Healing Plus",
+  "aplica": [
+   "armadura",
+   "escudo"
+  ],
+  "grupo": "potenciacion",
+  "coste": 1500,
+  "efecto": "Los conjuros que lances que recuperen PV hacen recuperar 5 PV adicionales."
+ },
+ {
+  "id": "armadura-armas-plus",
+  "nombre": "Armas plus",
+  "nombre_original": "Weapons Plus",
+  "aplica": [
+   "armadura",
+   "escudo"
+  ],
+  "grupo": "potenciacion",
+  "coste": 2000,
+  "efecto": "Tus ataques con armas (elegir: cuerpo a cuerpo o a distancia) infligen 5 de daño extra."
+ },
+ {
+  "id": "armadura-conjuros-plus",
+  "nombre": "Conjuros plus",
+  "nombre_original": "Spells Plus",
+  "aplica": [
+   "armadura",
+   "escudo"
+  ],
+  "grupo": "potenciacion",
+  "coste": 2000,
+  "efecto": "Los conjuros que lances infligen 5 puntos de daño adicional."
+ },
+ {
+  "id": "accesorio-antiestado",
+  "nombre": "Antiestado",
+  "nombre_original": "Status Ward",
+  "aplica": [
+   "accesorio"
+  ],
+  "grupo": "defensiva",
+  "coste": 500,
+  "efecto": "Eres inmune a un estado alterado específico."
+ },
+ {
+  "id": "accesorio-resistencia",
+  "nombre": "Resistencia",
+  "nombre_original": "Resistance",
+  "aplica": [
+   "accesorio"
+  ],
+  "grupo": "defensiva",
+  "coste": 700,
+  "efecto": "Eres Resistente a un tipo de daño específico (excepto físico)."
+ },
+ {
+  "id": "accesorio-amuleto",
+  "nombre": "Amuleto",
+  "nombre_original": "Amulet",
+  "aplica": [
+   "accesorio"
+  ],
+  "grupo": "defensiva",
+  "coste": 800,
+  "efecto": "Bonificador de +1 a la Defensa Mágica.",
+  "modificadores": [
+   {
+    "stat": "mdef",
+    "valor": "1"
+   }
+  ]
+ },
+ {
+  "id": "accesorio-baluarte",
+  "nombre": "Baluarte",
+  "nombre_original": "Bulwark",
+  "aplica": [
+   "accesorio"
+  ],
+  "grupo": "defensiva",
+  "coste": 800,
+  "efecto": "Bonificador de +1 a la Defensa.",
+  "modificadores": [
+   {
+    "stat": "def",
+    "valor": "1"
+   }
+  ]
+ },
+ {
+  "id": "accesorio-doble-resistencia",
+  "nombre": "Doble resistencia",
+  "nombre_original": "Dual Resistance",
+  "aplica": [
+   "accesorio"
+  ],
+  "grupo": "defensiva",
+  "coste": 1000,
+  "efecto": "Eres Resistente a dos tipos de daño específicos (excepto físico)."
+ },
+ {
+  "id": "accesorio-rompespadas",
+  "nombre": "Rompespadas",
+  "nombre_original": "Swordbreaker",
+  "aplica": [
+   "accesorio"
+  ],
+  "grupo": "defensiva",
+  "coste": 1000,
+  "efecto": "Eres Resistente al daño físico."
+ },
+ {
+  "id": "accesorio-inmunidad",
+  "nombre": "Inmunidad",
+  "nombre_original": "Immunity",
+  "aplica": [
+   "accesorio"
+  ],
+  "grupo": "defensiva",
+  "coste": 1500,
+  "efecto": "Eres Inmune a un tipo de daño específico (excepto físico)."
+ },
+ {
+  "id": "accesorio-omniescudo",
+  "nombre": "Omniescudo",
+  "nombre_original": "Omni Shield",
+  "aplica": [
+   "accesorio"
+  ],
+  "grupo": "defensiva",
+  "coste": 2000,
+  "efecto": "Bonificador de +1 a la Defensa y +1 a la Defensa Mágica.",
+  "modificadores": [
+   {
+    "stat": "def",
+    "valor": "1"
+   },
+   {
+    "stat": "mdef",
+    "valor": "1"
+   }
+  ]
+ },
+ {
+  "id": "accesorio-salud-perfecta",
+  "nombre": "Salud perfecta",
+  "nombre_original": "Perfect Health",
+  "aplica": [
+   "accesorio"
+  ],
+  "grupo": "defensiva",
+  "coste": 2000,
+  "efecto": "Eres inmune a todos los estados alterados."
+ },
+ {
+  "id": "accesorio-cambio-de-dano",
+  "nombre": "Cambio de daño",
+  "nombre_original": "Damage Shift",
+  "aplica": [
+   "accesorio"
+  ],
+  "grupo": "potenciacion",
+  "coste": 300,
+  "efecto": "Todo el daño infligido con armas, conjuros y habilidades pasa a ser de un tipo específico."
+ },
+ {
+  "id": "accesorio-iniciativa-plus",
+  "nombre": "Iniciativa plus",
+  "nombre_original": "Initiative Plus",
+  "aplica": [
+   "accesorio"
+  ],
+  "grupo": "potenciacion",
+  "coste": 500,
+  "efecto": "Bonificador de +4 al modificador de Iniciativa.",
+  "modificadores": [
+   {
+    "stat": "init",
+    "valor": "4"
+   }
+  ]
+ },
+ {
+  "id": "accesorio-magia-plus",
+  "nombre": "Magia plus",
+  "nombre_original": "Magic Plus",
+  "aplica": [
+   "accesorio"
+  ],
+  "grupo": "potenciacion",
+  "coste": 1000,
+  "efecto": "Bonificador de +1 a las pruebas de magia.",
+  "modificadores": [
+   {
+    "stat": "magia",
+    "valor": "1"
+   }
+  ]
+ },
+ {
+  "id": "accesorio-precision-plus",
+  "nombre": "Precisión plus",
+  "nombre_original": "Accuracy Plus",
+  "aplica": [
+   "accesorio"
+  ],
+  "grupo": "potenciacion",
+  "coste": 1000,
+  "efecto": "Bonificador de +1 a las pruebas de Precisión.",
+  "modificadores": [
+   {
+    "stat": "precision",
+    "valor": "1"
+   }
+  ]
+ },
+ {
+  "id": "accesorio-vitalidad-plus",
+  "nombre": "Vitalidad plus",
+  "nombre_original": "Vitality Plus",
+  "aplica": [
+   "accesorio"
+  ],
+  "grupo": "potenciacion",
+  "coste": 1000,
+  "efecto": "Cuando recuperes Puntos de Vida, recuperas 5 PV adicionales."
+ },
+ {
+  "id": "accesorio-sanacion-plus",
+  "nombre": "Sanación plus",
+  "nombre_original": "Healing Plus",
+  "aplica": [
+   "accesorio"
+  ],
+  "grupo": "potenciacion",
+  "coste": 1500,
+  "efecto": "Los conjuros que lances que recuperen PV hacen recuperar 5 PV adicionales."
+ },
+ {
+  "id": "accesorio-armas-plus",
+  "nombre": "Armas plus",
+  "nombre_original": "Weapons Plus",
+  "aplica": [
+   "accesorio"
+  ],
+  "grupo": "potenciacion",
+  "coste": 2000,
+  "efecto": "Tus ataques con armas (cuerpo a cuerpo o a distancia) infligen 5 de daño extra."
+ },
+ {
+  "id": "accesorio-conjuros-plus",
+  "nombre": "Conjuros plus",
+  "nombre_original": "Spells Plus",
+  "aplica": [
+   "accesorio"
+  ],
+  "grupo": "potenciacion",
+  "coste": 2000,
+  "efecto": "Los conjuros que lances infligen 5 puntos de daño adicional."
+ }
+]

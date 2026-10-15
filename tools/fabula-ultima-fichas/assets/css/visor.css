@@ -1,0 +1,63 @@
+/* Estilos propios del visor */
+.selector { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 18px; align-items: center; }
+.selector .pj {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 99px;
+  padding: 5px 6px 5px 14px; color: var(--text); font: inherit; cursor: pointer;
+}
+.selector .pj.solo { padding-right: 14px; }
+.selector .pj[aria-current="true"] { border-color: var(--accent); background: var(--accent-soft); }
+.selector .pj small { color: var(--faint); }
+.selector .pj .quitar { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; color: var(--faint); }
+.selector .pj .quitar:hover { background: var(--surface-2); color: var(--err); }
+
+.cabecera { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; align-items: end; margin-bottom: 16px; }
+.cabecera .nombre { font-size: 38px; line-height: 1; }
+.cabecera .meta { color: var(--muted); margin-top: 6px; }
+.cabecera .meta2 { color: var(--faint); font-size: 12px; margin-top: 2px; }
+.cabecera .chips { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+@media (max-width: 720px) { .cabecera { grid-template-columns: 1fr; } .cabecera .chips { justify-content: flex-start; } .cabecera .nombre { font-size: 30px; } }
+
+.recursos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-bottom: 10px; }
+.recurso { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; }
+.recurso .fila { justify-content: space-between; }
+.recurso .k { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.recurso .v { font-size: 20px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.recurso .v small { font-size: 12px; color: var(--muted); font-weight: 500; }
+.recurso .barra { margin-top: 6px; }
+.recurso.pv .v { color: var(--hp); } .recurso.pm .v { color: var(--mp); } .recurso.pi .v { color: var(--ip); }
+.recurso .crisis { font-size: 11px; color: var(--err); }
+@media (max-width: 560px) { .recursos { grid-template-columns: 1fr; } }
+
+.defensas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) repeat(4, minmax(0, 1fr)); gap: 8px; margin-bottom: 18px; }
+@media (max-width: 860px) { .defensas { grid-template-columns: repeat(3, 1fr); } .defensas .atributo:nth-child(4) { grid-column: 1; } }
+
+.barra-filtros { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 12px; }
+.barra-filtros .buscador { flex: 1; min-width: 180px; }
+.grupo-clase { margin-bottom: 18px; }
+.grupo-clase > .fila { margin-bottom: 8px; }
+.grupo-clase h3 { font-size: 15px; }
+.elec { font-size: 12px; color: var(--muted); margin-top: 8px; }
+.elec b { color: var(--text); font-weight: 500; }
+
+/* Grupo */
+.miembros { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; margin-bottom: 22px; }
+.miembro { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px; cursor: pointer; text-align: left; font: inherit; color: inherit; }
+.miembro:hover { border-color: var(--line-2); }
+.miembro .nombre { font-size: 22px; line-height: 1.1; }
+.miembro .linea { display: grid; grid-template-columns: 28px 1fr auto; gap: 8px; align-items: center; font-size: 12px; margin-top: 6px; }
+.miembro .linea .mono { color: var(--muted); }
+.miembro .def { display: flex; gap: 12px; margin-top: 10px; font-size: 12px; color: var(--muted); }
+.miembro .def b { color: var(--text); font-weight: 600; }
+.miembro.en-crisis { border-color: color-mix(in srgb, var(--err) 50%, var(--line)); }
+
+.matriz { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.matriz table { border-collapse: collapse; width: 100%; font-size: 13px; }
+.matriz th, .matriz td { padding: 8px 10px; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); text-align: left; vertical-align: top; }
+.matriz tr:last-child td { border-bottom: 0; }
+.matriz th:last-child, .matriz td:last-child { border-right: 0; }
+.matriz thead th { background: var(--surface-2); font-weight: 600; color: var(--muted); font-size: 12px; }
+.matriz td.yo { background: var(--surface-2); }
+.matriz .em { display: block; color: var(--text); }
+.matriz .fz { color: var(--accent); font-size: 11px; }
+.matriz .em.emo-pos { color: var(--ok); } .matriz .em.emo-neg { color: var(--err); }

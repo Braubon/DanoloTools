@@ -1,0 +1,107 @@
+[
+ {
+  "id": "armadura-de-la-supremacia",
+  "nombre": "Armadura de la supremacía",
+  "nombre_original": "Armor of Supremacy",
+  "descripcion": "Armadura negra azabache decorada con unas fauces de dragón conscientes que susurran en la mente de quien demuestre ambición y valentía.",
+  "efecto": "El portador puede emplear una acción para infligir daño de fuego pesado a un objetivo visible, ignorando Inmunidades y Resistencias. En lo más profundo del Volcán Negro yace una antigua fortaleza sellada vinculada a sus orígenes."
+ },
+ {
+  "id": "corazon-de-behemoth",
+  "nombre": "Corazón de Behemoth",
+  "nombre_original": "Behemoth's Heart",
+  "descripcion": "El corazón palpitante del Señor de los Dragones, preservado en un cofre de cristal tras la Guerra Celestial.",
+  "efecto": "Otorga la capacidad de metamorfosearse en dragón a quien reciba la aprobación de su espíritu, garantizando el respeto reverencial de toda la especie de los dragones."
+ },
+ {
+  "id": "caliz-de-la-juventud",
+  "nombre": "Cáliz de la juventud",
+  "nombre_original": "Chalice of Youth",
+  "descripcion": "Cáliz metálico adornado con una inquietante gema encarnada.",
+  "efecto": "Quien bebe de él rejuvenece hasta alcanzar su apogeo físico ideal durante varios días. No obstante, cada uso altera sutilmente su personalidad: sus emociones son drenadas por la gema carmesí, erosionando su empatía."
+ },
+ {
+  "id": "piedras-elementales",
+  "nombre": "Piedras elementales",
+  "nombre_original": "Elemental Stones",
+  "descripcion": "Cuatro gemas prismáticas que caben en la palma de la mano (Agua, Fuego, Tierra y Aire).",
+  "efecto": "Permiten a su portador ejecutar Rituales de Elementalismo del elemento correspondiente sin consumir Puntos de Mente y sin requerir prueba de magia. Al combinarse las cuatro, despiertan el legendario Quinto Elemento."
+ },
+ {
+  "id": "emarillon",
+  "nombre": "Emarillón",
+  "nombre_original": "Emarillion",
+  "descripcion": "Tomo pulcro de páginas de pergamino y encuadernación en cuero rojo que registra al instante cualquier suceso del cosmos.",
+  "efecto": "Otorga acceso a la historia universal completa, pero la densidad cognitiva es tal que quien lea más de dos párrafos arriesga su cordura. El libro elige a sus lectores y repele a los indignos."
+ },
+ {
+  "id": "ojo-del-despertar",
+  "nombre": "Ojo del despertar",
+  "nombre_original": "Eye of Awakening",
+  "descripcion": "Esmeralda irregular del tamaño de un guijarro que despierta memorias durmientes.",
+  "efecto": "Al activarse, se incrusta en la frente del usuario como un tercer ojo místico (equivalente a un Ritual de Espiritismo de poder extremo sin coste de PM). Otorga de forma permanente una Habilidad Heroica a elegir entre las vinculadas a una de las clases que el portador haya dominado."
+ },
+ {
+  "id": "linterna-del-descubrimiento",
+  "nombre": "Linterna del descubrimiento",
+  "nombre_original": "Lantern of Discovery",
+  "descripcion": "Pequeña linterna de bronce y cristal que encierra una llama eterna e inextinguible.",
+  "efecto": "Permite comprender y traducir al instante cualquier texto, glifo o idioma bañado por su luz. Al posar la mano sobre el cristal, la traducción se manifiesta como pequeñas llamas danzantes."
+ },
+ {
+  "id": "espejo-de-las-apariencias",
+  "nombre": "Espejo de las apariencias",
+  "nombre_original": "Mirror of Appearances",
+  "descripcion": "Espejo de mano de oro pulido con una superficie irisada reflectante.",
+  "efecto": "El portador puede alterar su fisionomía a voluntad para duplicar con exactitud la apariencia, timbre de voz y complexión de cualquier persona conocida."
+ },
+ {
+  "id": "ajedrez-de-oricalco",
+  "nombre": "Ajedrez de oricalco",
+  "nombre_original": "Orichalcum Chess",
+  "descripcion": "Tablero de ébano con seis estatuillas talladas en oricalco indestructible.",
+  "efecto": "Tras vincular la propia esencia vital al tablero mediante un Ritual de Ritualismo individual extremo, el portador puede disponer una figura sobre el tablero para que cobre vida como servidor leal: el Caballero (guerrero ágil y feroz) o la Reina (hechicera de gran poder). Solo puede manifestarse una pieza simultáneamente."
+ },
+ {
+  "id": "llave-del-leon-rojo",
+  "nombre": "Llave del León Rojo",
+  "nombre_original": "Red Lion Key",
+  "descripcion": "Llave ancestral forjada en metal rojo fuego con una empuñadura en forma de testa de león.",
+  "efecto": "Funciona como ganzúa maestra universal en cualquier cerradura. Al abrir una puerta con ella, conduce a una estancia señorial segura protegida de todo daño donde sirvientes invisibles nutren y curan a los heridos. Abrir una de las puertas interiores para regresar opera como un Ritual de Entropismo sin coste de PM, con un ND ajustado a la lejanía del destino."
+ },
+ {
+  "id": "quevedos-calaalmas",
+  "nombre": "Quevedos calaalmas",
+  "nombre_original": "Soulpiercing Spectacles",
+  "descripcion": "Gafas circulares de cristales grises y montura de tonalidad glacial.",
+  "efecto": "El usuario puede emplear una acción de Habilidad para observar a una criatura y revelar de inmediato su ficha completa de PNJ, objetivos y secretos inconfesables. No obstante, cada uso extiende la influencia de una presencia alienígena latente en los cristales."
+ },
+ {
+  "id": "tiara-de-control",
+  "nombre": "Tiara de control",
+  "nombre_original": "Tiara of Control",
+  "descripcion": "Diadema de oro blanco engarzada con tres diamantes de destellos multicolores.",
+  "efecto": "Permite doblegar la mente y voluntad de seres vivos. El espíritu de una deidad tiránica ancestral habita en las gemas y, tras usos repetidos, puede usurpar el control del cuerpo del portador y encerrar su alma en uno de los diamantes."
+ },
+ {
+  "id": "varita-del-tiempo",
+  "nombre": "Varita del tiempo",
+  "nombre_original": "Time Wand",
+  "descripcion": "Vara metálica de treinta centímetros de la que brota un tic-tac constante.",
+  "efecto": "Al apuntar a un objeto o ser vivo, permite desplazarlo hacia adelante o hacia atrás en el tiempo sin alterar su ubicación física (igual a un Ritual de Entropismo extremo de área grande sin PM). En seres vivos, sus efectos cesan al cabo de un día."
+ },
+ {
+  "id": "brazales-rompetiempo",
+  "nombre": "Brazales rompetiempo",
+  "nombre_original": "Timebreaker Bracers",
+  "descripcion": "Guanteletes de oro y plata que canalizan descargas voltaicas en pequeñas centellas giratorias.",
+  "efecto": "Permite usar una acción para generar una cúpula estática en torno a un máximo de dos criaturas cercanas (incluyendo al portador). El tiempo exterior se congela durante unos segundos, permitiendo realizar una prueba o una acción de combate adicional durante un conflicto. Cada activación reduce permanentemente los PV y PM máximos del usuario en 5 puntos y sobrecalienta el artefacto hasta el final de la escena."
+ },
+ {
+  "id": "vino-del-dolor",
+  "nombre": "Vino del dolor",
+  "nombre_original": "Wine of Sorrow",
+  "descripcion": "Licor rojo sangre espeso contenido en una redoma de cristal tallado.",
+  "efecto": "Sustancia letal que desintegra el cuerpo y el alma, borrándola para siempre de la corriente de almas. Quien sobreviva milagrosamente a su consumo se vuelve cuasidivino, inmune al dolor y desprovisto de debilidades emocionales."
+ }
+]

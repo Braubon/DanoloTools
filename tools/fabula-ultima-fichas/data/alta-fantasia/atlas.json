@@ -1,0 +1,32 @@
+{
+  "id": "alta-fantasia",
+  "nombre": "Atlas de Alta Fantasía",
+  "nombre_original": "High Fantasy Atlas",
+  "abreviatura": "Alta Fantasía",
+  "tipo": "atlas",
+  "obligatorio": false,
+  "descripcion": "Cantor, Comandante, Bailarín y Simbolista; 24 habilidades heroicas y dos Arcanos nuevos. Incluye cuatro reglas opcionales.",
+  "reglas_opcionales": [
+    { "id": "peculiaridades", "nombre": "Peculiaridades", "nombre_original": "Quirks", "descripcion": "Cada protagonista puede elegir una Peculiaridad (sin repetirse en el grupo)." },
+    { "id": "poderes-cero", "nombre": "Poderes Cero", "nombre_original": "Zero Powers", "descripcion": "Reloj de Cero de seis secciones con un Disparador y un Efecto de Cero." },
+    { "id": "armas-personalizadas", "nombre": "Armas personalizadas", "nombre_original": "Custom Weapons", "descripcion": "Diseña un arma icónica con tres personalizaciones (300 z)." },
+    { "id": "equipo-raro", "nombre": "Equipo raro y artefactos", "nombre_original": "Rare Items & Artifacts", "descripcion": "Armas, armaduras, escudos y accesorios raros del atlas, y sus artefactos." }
+  ],
+  "archivos": [
+    { "coleccion": "tablas", "ruta": "tablas.json" },
+    { "coleccion": "clases", "ruta": "clases.json" },
+    { "coleccion": "opciones", "ruta": "opciones.json" },
+    { "coleccion": "habilidades_heroicas", "ruta": "habilidades_heroicas.json" },
+    { "coleccion": "armas", "ruta": "armas.json", "regla_opcional": "equipo-raro" },
+    { "coleccion": "armaduras", "ruta": "armaduras.json", "regla_opcional": "equipo-raro" },
+    { "coleccion": "escudos", "ruta": "escudos.json", "regla_opcional": "equipo-raro" },
+    { "coleccion": "accesorios", "ruta": "accesorios.json", "regla_opcional": "equipo-raro" },
+    { "coleccion": "artefactos", "ruta": "artefactos.json", "regla_opcional": "equipo-raro" },
+    { "coleccion": "peculiaridades", "ruta": "peculiaridades.json", "regla_opcional": "peculiaridades" },
+    { "coleccion": "poderes_cero_disparadores", "ruta": "poderes_cero_disparadores.json", "regla_opcional": "poderes-cero" },
+    { "coleccion": "poderes_cero_efectos", "ruta": "poderes_cero_efectos.json", "regla_opcional": "poderes-cero" },
+    { "coleccion": "tablas", "ruta": "tablas_poderes_cero.json", "regla_opcional": "poderes-cero" },
+    { "coleccion": "personalizaciones_arma", "ruta": "personalizaciones_arma.json", "regla_opcional": "armas-personalizadas" },
+    { "coleccion": "plantillas_arma", "ruta": "plantillas_arma.json", "regla_opcional": "armas-personalizadas" }
+  ]
+}

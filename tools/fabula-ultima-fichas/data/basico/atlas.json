@@ -1,0 +1,23 @@
+{
+  "id": "basico",
+  "nombre": "Manual básico",
+  "nombre_original": "Fabula Ultima Core Rulebook",
+  "abreviatura": "Básico",
+  "tipo": "base",
+  "obligatorio": true,
+  "descripcion": "Reglas, clases, conjuros, habilidades heroicas y equipo del manual básico.",
+  "reglas_opcionales": [],
+  "archivos": [
+    { "coleccion": "tablas", "ruta": "tablas.json" },
+    { "coleccion": "clases", "ruta": "clases.json" },
+    { "coleccion": "conjuros", "ruta": "conjuros.json" },
+    { "coleccion": "opciones", "ruta": "opciones.json" },
+    { "coleccion": "habilidades_heroicas", "ruta": "habilidades_heroicas.json" },
+    { "coleccion": "armas", "ruta": "armas.json" },
+    { "coleccion": "armaduras", "ruta": "armaduras.json" },
+    { "coleccion": "escudos", "ruta": "escudos.json" },
+    { "coleccion": "accesorios", "ruta": "accesorios.json" },
+    { "coleccion": "cualidades", "ruta": "cualidades.json" },
+    { "coleccion": "artefactos", "ruta": "artefactos.json" }
+  ]
+}

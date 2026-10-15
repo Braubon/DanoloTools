@@ -1,0 +1,549 @@
+[
+  {
+    "id": "arcanista",
+    "nombre": "Arcanista",
+    "nombre_original": "Arcanist",
+    "descripcion": "Invocador místico capaz de vincular y proyectar fragmentos de almas míticas ancestrales.",
+    "beneficios": { "pv": 0, "pm": 5, "pi": 0, "competencias": [], "rituales": [], "texto": "Aumentas permanentemente tus Puntos de Mente (PM) máximos en 5." },
+    "habilidades": [
+      {
+        "id": "arcanismo-ritual", "nombre": "Arcanismo ritual", "nombre_original": "Ritual Arcanism", "sl_max": 1, "tipo": "pasiva",
+        "activacion": "Pasiva.",
+        "efecto": "Puedes realizar rituales de la disciplina de Arcanismo, siempre que sus efectos encajen dentro de los dominios de uno o más de los Arcanos que tengas vinculados. Los rituales de Arcanismo emplean [VOL + VOL] para la prueba de magia.",
+        "rituales": ["arcanismo"]
+      },
+      {
+        "id": "arcano-emergencia", "nombre": "Arcano de emergencia", "nombre_original": "Emergency Arcanum", "sl_max": 6, "tipo": "pasiva",
+        "activacion": "Pasiva.",
+        "efecto": "Mientras te encuentres en Crisis, el coste en Puntos de Mente para invocar a tus Arcanos se reduce en [SL × 5] PM."
+      },
+      {
+        "id": "circulo-arcano", "nombre": "Círculo arcano", "nombre_original": "Arcane Circle", "sl_max": 4, "tipo": "reaccion",
+        "activacion": "Reacción al disolver un Arcano voluntariamente en tu turno.",
+        "efecto": "Tras disolver voluntariamente un Arcano en tu turno durante un conflicto, si ese Arcano no había sido invocado durante este mismo turno y tienes un arma de la categoría arcana equipada, puedes ejecutar de forma gratuita la acción de Conjuro. El conjuro lanzado de este modo debe tener un coste total en PM igual o inferior a [SL × 5] (debes abonar normalmente su coste en PM)."
+      },
+      {
+        "id": "regeneracion-arcana", "nombre": "Regeneración arcana", "nombre_original": "Arcane Regeneration", "sl_max": 2, "tipo": "reaccion",
+        "activacion": "Automática al invocar un Arcano.",
+        "efecto": "Cada vez que invocas un Arcano, recuperas de inmediato [SL × 5] Puntos de Vida (PV)."
+      },
+      {
+        "id": "vincular-invocar", "nombre": "Vincular e invocar", "nombre_original": "Bind and Summon", "sl_max": 1, "tipo": "accion",
+        "activacion": "1 acción y 40 PM.",
+        "efecto": "Puedes vincular Arcanos a tu alma para manifestar su poder. Al adquirir esta habilidad en la creación de personaje, comienzas con **un Arcano vinculado** a tu elección. Nuevos Arcanos solo pueden obtenerse mediante la exploración y el avance de la historia; el DJ determina el ritual o desafío de vinculación al descubrir una nueva entidad.\n- Puedes gastar 1 acción y 40 PM para invocar un Arcano vinculado: obtienes de inmediato sus beneficios de **Fusión** hasta que sea disuelto.\n- No puedes invocar un Arcano si ya estás fusionado con otro; debes disolver primero el actual.\n\n**Reglas de los Arcanos:** Un Arcano se disuelve automáticamente al concluir la escena, al caer inconsciente o morir el Arcanista, al abandonar la escena o voluntariamente en el turno del Arcanista (no consume acción). Los efectos de disolución solo se activan si el Arcanista disuelve el Arcano de forma voluntaria. Si el efecto causa daño, inflige 10 de daño extra a nivel 20 o superior, y 20 de daño extra a nivel 40 o superior.",
+        "elecciones": [
+          { "clave": "arcanos", "tipo": "opciones", "grupos": ["arcano"], "etiqueta": "Arcanos vinculados", "min": "1", "max": "99", "nota": "Al crear el personaje empiezas con uno; el resto se obtiene durante la historia." }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "artifice",
+    "nombre": "Artífice",
+    "nombre_original": "Tinkerer",
+    "descripcion": "Inventor e ingeniero genial que solventa adversidades mediante artilugios, alquimia y magitecnología.",
+    "beneficios": { "pv": 0, "pm": 0, "pi": 2, "competencias": [], "rituales": [], "proyectos": true, "texto": "Aumentas permanentemente tus Puntos de Inventario (PI) máximos en 2. Puedes iniciar Proyectos." },
+    "habilidades": [
+      {
+        "id": "formula-secreta", "nombre": "Fórmula secreta", "nombre_original": "Secret Formula", "sl_max": 5, "tipo": "pasiva",
+        "activacion": "Pasiva.",
+        "efecto": "Cuando gastas PI para crear una poción o magisfera que recupere PV y/o PM, cada cantidad recuperada se incrementa en [SL × 5]. Cuando creas una esquirla elemental, poción o magisfera que inflija daño, dicho objeto causa [SL] puntos de daño extra."
+      },
+      {
+        "id": "objeto-emergencia", "nombre": "Objeto de emergencia", "nombre_original": "Emergency Item", "sl_max": 1, "tipo": "accion",
+        "activacion": "1 vez por escena de conflicto, mientras estés en Crisis.",
+        "efecto": "En tu turno durante un conflicto, si estás en Crisis, puedes realizar una acción adicional. Esta acción debe ser obligatoriamente la acción de Inventario."
+      },
+      {
+        "id": "lluvia-pociones", "nombre": "Lluvia de pociones", "nombre_original": "Potion Rain", "sl_max": 2, "tipo": "reaccion",
+        "activacion": "Al usar la acción de Inventario para crear una poción de recuperación.",
+        "efecto": "Cuando gastas PI para producir una poción que restaure PV y/o PM a una sola criatura, puedes extender sus efectos hasta a [SL] criaturas adicionales. Si lo haces, la poción restaura a cada una de las criaturas afectadas la mitad de la cantidad habitual de PV y PM."
+      },
+      {
+        "id": "tecnologias", "nombre": "Tecnologías", "nombre_original": "Gadgets", "sl_max": 5, "tipo": "pasiva",
+        "activacion": "Pasiva al adquirir la habilidad.",
+        "efecto": "Al adquirir esta habilidad por primera vez, eliges una disciplina tecnológica: **alquimia**, **infusiones** o **magitech** y obtienes sus beneficios base. Cada vez que vuelvas a adquirir esta habilidad, eliges una opción:\n- Obtener los beneficios base de una disciplina tecnológica nueva.\n- Obtener los beneficios avanzados de una disciplina de la que ya tengas los beneficios base.\n- Obtener los beneficios superiores de una disciplina de la que ya tengas los beneficios avanzados.",
+        "elecciones": [
+          { "clave": "disciplinas", "tipo": "opciones", "grupos": ["disciplina_tecnologica"], "etiqueta": "Disciplinas tecnológicas", "min": "SL", "max": "SL" },
+          { "clave": "magisferas", "tipo": "conjuros", "filtro": { "lista": ["elementalista", "entropista", "espiritista"], "supremo": false }, "etiqueta": "Magisferas (solo con Magitech superior)", "min": "0", "max": "NIVEL>=40?7:(NIVEL>=20?5:3)", "requiere_opcion": "magitech-superior" }
+        ]
+      },
+      {
+        "id": "visionario", "nombre": "Visionario", "nombre_original": "Visionary", "sl_max": 5, "tipo": "pasiva",
+        "activacion": "Pasiva.",
+        "efecto": "Cuando trabajas en un Proyecto, hasta [SL × 100] z de los costes de materiales quedan automáticamente cubiertos sin coste alguno, y generas [SL] puntos de progreso adicional cada jornada de trabajo. Si varios personajes con esta habilidad colaboran en el mismo proyecto, sus efectos son acumulativos."
+      }
+    ]
+  },
+  {
+    "id": "picaro",
+    "nombre": "Pícaro",
+    "nombre_original": "Rogue",
+    "descripcion": "Especialista del subterfugio, la velocidad táctica y el aprovechamiento despiadado de cualquier vulnerabilidad.",
+    "beneficios": { "pv": 0, "pm": 0, "pi": 2, "competencias": [], "rituales": [], "texto": "Aumentas permanentemente tus Puntos de Inventario (PI) máximos en 2." },
+    "habilidades": [
+      {
+        "id": "alta-velocidad", "nombre": "Alta velocidad", "nombre_original": "High Speed", "sl_max": 3, "tipo": "accion",
+        "activacion": "10 PM al inicio de un conflicto.",
+        "efecto": "Al comenzar un conflicto, puedes gastar 10 PM para ejecutar una acción individual antes del primer asalto; esta acción debe ser obligatoriamente un **Ataque**, **Entorpecer** u **Objetivo**. Obtienes un bonificador de [SL] a todas las pruebas realizadas como parte de esta acción."
+      },
+      {
+        "id": "nos-vemos", "nombre": "¡Nos vemos!", "nombre_original": "See You Later", "sl_max": 1, "tipo": "accion",
+        "activacion": "1 acción y 1 Punto Fábula.",
+        "efecto": "Puedes usar 1 acción y gastar 1 PF para desvanecerte de la escena actual y reaparecer de inmediato en otra escena activa en la que participe otro PJ. Describes tu huida y tu milagrosa llegada."
+      },
+      {
+        "id": "golpe-bajo", "nombre": "Golpe bajo", "nombre_original": "Cheap Shot", "sl_max": 5, "tipo": "reaccion",
+        "activacion": "Al impactar un ataque contra un objetivo único aquejado por estados alterados.",
+        "efecto": "Cuando golpeas a una criatura con un ataque que la designaba como único objetivo y se encuentra bajo uno o más estados alterados, el ataque inflige daño extra igual a [SL + número de estados alterados activos en la criatura]."
+      },
+      {
+        "id": "robaalmas", "nombre": "Robaalmas", "nombre_original": "Soul Steal", "sl_max": 5, "tipo": "accion",
+        "activacion": "1 acción; prueba de [DES + VOL] contra la M.DEF de una criatura visible.",
+        "efecto": "Obtienes un bonificador de [SL] a la prueba de [DES + VOL]. Si tienes éxito:\n- Si el objetivo es de rango soldado, recargas [SL] Puntos de Inventario de inmediato.\n- Si es de rango élite o campeón, el DJ te entrega su **tesoro espiritual**: un objeto de valor en zenit igual o inferior a [nivel del objetivo × 30 z] (o [nivel × 50 z] si es un Villano). Aparece en tu mochila. Cada criatura solo puede ser desvalijada con éxito una vez por encuentro."
+      },
+      {
+        "id": "esquiva", "nombre": "Esquiva", "nombre_original": "Dodge", "sl_max": 3, "tipo": "pasiva",
+        "activacion": "Pasiva.",
+        "efecto": "Mientras no tengas armadura marcial ni escudos equipados, tu puntuación de Defensa (DEF) se incrementa en [SL].",
+        "modificadores": [ { "stat": "def", "valor": "SL", "condicion": "sin_armadura_marcial_ni_escudo" } ]
+      }
+    ]
+  },
+  {
+    "id": "quimerista",
+    "nombre": "Quimerista",
+    "nombre_original": "Chimerist",
+    "descripcion": "Hechicero indómito que asimila las habilidades innatas de las bestias y monstruos del mundo.",
+    "beneficios": { "pv": 0, "pm": 5, "pi": 0, "competencias": [], "rituales": ["ritualismo"], "texto": "Aumentas permanentemente tus Puntos de Mente (PM) máximos en 5. Acceso a rituales de Ritualismo." },
+    "habilidades": [
+      {
+        "id": "quimerismo-ritual", "nombre": "Quimerismo ritual", "nombre_original": "Ritual Chimerism", "sl_max": 1, "tipo": "pasiva",
+        "activacion": "Pasiva al adquirir la habilidad.",
+        "efecto": "Puedes realizar rituales de la disciplina de Quimerismo. Al elegir esta habilidad, escoges permanentemente si emplearás [PER + VOL] o [VIG + VOL] para tus pruebas de magia de Quimerismo ritual.",
+        "rituales": ["quimerismo"],
+        "elecciones": [
+          { "clave": "atributos", "tipo": "seleccion", "etiqueta": "Atributos de magia ritual", "valores": ["PER + VOL", "VIG + VOL"], "cantidad": 1 }
+        ]
+      },
+      {
+        "id": "devorar", "nombre": "Devorar", "nombre_original": "Consume", "sl_max": 5, "tipo": "reaccion",
+        "activacion": "Tras infligir daño con un conjuro teniendo un arma arcana, daga o mayal equipado.",
+        "efecto": "Recuperas [SL × 2] Puntos de Mente cada vez que causas daño a una o más criaturas con un conjuro."
+      },
+      {
+        "id": "mimetismo-magico", "nombre": "Mimetismo mágico", "nombre_original": "Spell Mimic", "sl_max": 10, "tipo": "reaccion",
+        "activacion": "Reacción al ver lanzar un conjuro a una bestia, monstruo o planta.",
+        "efecto": "Aprendes de inmediato ese conjuro como un conjuro de Quimerista propio; anotas la especie de la que procede.\n- Al adquirir esta habilidad, eliges si tus conjuros ofensivos de Quimerista emplearán permanentemente [PER + VOL] o [VIG + VOL] para la prueba de magia.\n- Puedes almacenar hasta [SL + 2] conjuros de Quimerista en memoria. Si aprendes uno nuevo habiendo alcanzado el límite, debes olvidar uno antiguo.",
+        "elecciones": [
+          { "clave": "atributos", "tipo": "seleccion", "etiqueta": "Atributos de magia", "valores": ["PER + VOL", "VIG + VOL"], "cantidad": 1 },
+          { "clave": "memorizados", "tipo": "lista_texto", "etiqueta": "Conjuros memorizados (nombre · especie)", "min": "0", "max": "SL+2" }
+        ]
+      },
+      {
+        "id": "patogenesis", "nombre": "Patogénesis", "nombre_original": "Pathogenesis", "sl_max": 1, "tipo": "reaccion",
+        "activacion": "Al causar daño con un conjuro de Quimerista.",
+        "efecto": "Cuando infliges daño a una o más criaturas con tus conjuros de Quimerista, infliges el estado **envenenado** a todo objetivo que comparta la misma Especie que la criatura de la que aprendiste originalmente dicho conjuro."
+      },
+      {
+        "id": "voz-salvaje", "nombre": "Voz salvaje", "nombre_original": "Feral Speech", "sl_max": 1, "tipo": "pasiva",
+        "activacion": "Pasiva.",
+        "efecto": "Puedes comunicarte verbalmente y comprender a criaturas pertenecientes a las especies **bestia**, **monstruo** y **planta**."
+      }
+    ]
+  },
+  {
+    "id": "elementalista",
+    "nombre": "Elementalista",
+    "nombre_original": "Elementalist",
+    "descripcion": "Mago destructor que domina las energías primordiales de la tierra, el viento, el hielo, el rayo y las llamas.",
+    "beneficios": { "pv": 0, "pm": 5, "pi": 0, "competencias": [], "rituales": ["ritualismo"], "texto": "Aumentas permanentemente tus Puntos de Mente (PM) máximos en 5. Acceso a rituales." },
+    "habilidades": [
+      {
+        "id": "artilleria-magica", "nombre": "Artillería mágica", "nombre_original": "Magical Artillery", "sl_max": 3, "tipo": "pasiva",
+        "activacion": "Pasiva al lanzar conjuros con arma arcana equipada.",
+        "efecto": "Obtienes un bonificador de [SL] a tus pruebas de magia al lanzar conjuros si tienes un arma de la categoría arcana equipada.",
+        "modificadores": [ { "stat": "magia", "valor": "SL", "condicion": "arma_arcana_equipada" } ]
+      },
+      {
+        "id": "cataclismo", "nombre": "Cataclismo", "nombre_original": "Cataclysm", "sl_max": 3, "tipo": "reaccion",
+        "activacion": "Al infligir daño elemental a una criatura vulnerable.",
+        "efecto": "Cuando causas daño a una criatura mediante un conjuro de Elementalista y dicha criatura es Vulnerable a ese tipo de daño, el daño infligido se incrementa en [SL × 5]."
+      },
+      {
+        "id": "elementalismo-ritual", "nombre": "Elementalismo ritual", "nombre_original": "Ritual Elementalism", "sl_max": 1, "tipo": "pasiva",
+        "activacion": "Pasiva.",
+        "efecto": "Puedes realizar rituales de la disciplina de Elementalismo. Utilizan [PER + VOL] para la prueba de magia.",
+        "rituales": ["elementalismo"]
+      },
+      {
+        "id": "filohechizo", "nombre": "Filohechizo", "nombre_original": "Spellblade", "sl_max": 4, "tipo": "reaccion",
+        "activacion": "Al realizar la acción de Ataque con arma de melé tras lanzar un conjuro de Elementalista.",
+        "efecto": "Si lanzas un conjuro de Elementalista en tu turno, el próximo ataque cuerpo a cuerpo que realices antes de que termine tu turno inflige [SL × 2] puntos de daño extra."
+      },
+      {
+        "id": "magia-elemental", "nombre": "Magia elemental", "nombre_original": "Elemental Magic", "sl_max": 10, "tipo": "pasiva",
+        "activacion": "Pasiva por cada nivel invertido.",
+        "efecto": "Cada vez que adquieres esta habilidad, aprendes un conjuro del catálogo de Elementalista. Los conjuros ofensivos emplean [PER + VOL] para la prueba de magia.",
+        "elecciones": [
+          { "clave": "conjuros", "tipo": "conjuros", "filtro": { "lista": ["elementalista"] }, "etiqueta": "Conjuros de Elementalista", "min": "SL", "max": "SL" }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "entropista",
+    "nombre": "Entropista",
+    "nombre_original": "Entropist",
+    "descripcion": "Canalizador del caos cósmico, los horizontes de sucesos y la alteración de la probabilidad y el tiempo.",
+    "beneficios": { "pv": 0, "pm": 5, "pi": 0, "competencias": [], "rituales": ["ritualismo"], "texto": "Aumentas permanentemente tus Puntos de Mente (PM) máximos en 5. Acceso a rituales de Ritualismo." },
+    "habilidades": [
+      {
+        "id": "absorber-pm", "nombre": "Absorber PM", "nombre_original": "Absorb MP", "sl_max": 5, "tipo": "reaccion",
+        "activacion": "Reacción tras recibir daño.",
+        "efecto": "Tras sufrir daño por cualquier fuente, recuperas de inmediato [SL × 2] Puntos de Mente."
+      },
+      {
+        "id": "entropismo-ritual", "nombre": "Entropismo ritual", "nombre_original": "Ritual Entropism", "sl_max": 1, "tipo": "pasiva",
+        "activacion": "Pasiva.",
+        "efecto": "Puedes realizar rituales de la disciplina de Entropismo. Emplean [PER + VOL] para la prueba de magia.",
+        "rituales": ["entropismo"]
+      },
+      {
+        "id": "magia-entropica", "nombre": "Magia entrópica", "nombre_original": "Entropic Magic", "sl_max": 10, "tipo": "pasiva",
+        "activacion": "Pasiva por cada nivel invertido.",
+        "efecto": "Cada vez que adquieres esta habilidad, aprendes un conjuro de la lista de Entropista. Los conjuros ofensivos utilizan [PER + VOL] para la prueba de magia.",
+        "elecciones": [
+          { "clave": "conjuros", "tipo": "conjuros", "filtro": { "lista": ["entropista"] }, "etiqueta": "Conjuros de Entropista", "min": "SL", "max": "SL" }
+        ]
+      },
+      {
+        "id": "siete-suerte", "nombre": "Siete de la suerte", "nombre_original": "Lucky Seven", "sl_max": 1, "tipo": "reaccion",
+        "activacion": "1 vez por escena, tras realizar una prueba de dados.",
+        "efecto": "Inicias cada sesión con el **7** como tu «número de la suerte». Una vez por escena, tras tirar los dados en una prueba, puedes sustituir el resultado de uno de tus dados por tu número de la suerte actual (incluso en dados donde sea físicamente imposible, como poner un 7 en un d6). Al hacerlo, el número reemplazado pasa a ser tu nuevo número de la suerte para futuros usos."
+      },
+      {
+        "id": "tiempo-robado", "nombre": "Tiempo robado", "nombre_original": "Stolen Time", "sl_max": 4, "tipo": "accion",
+        "activacion": "1 acción; gasta hasta [SL × 5] PM.",
+        "efecto": "Por cada 5 PM gastados, eliges una opción distinta de la lista siguiente:\n- Una criatura visible sufre el estado **lento**.\n- Una criatura visible se cura del estado **lento**.\n- Una criatura visible ejecuta de inmediato la acción de Equipo de forma gratuita.\n- Un aliado visible que aún no haya actuado en este asalto actúa de inmediato justo después de tu turno."
+      }
+    ]
+  },
+  {
+    "id": "furia",
+    "nombre": "Furia",
+    "nombre_original": "Fury",
+    "descripcion": "Guerrero indomable que canaliza sus emociones ardientes y el dolor de las heridas en pura potencia destructiva.",
+    "beneficios": { "pv": 5, "pm": 0, "pi": 0, "competencias": ["armas_marciales_cuerpo", "armaduras_marciales"], "rituales": [], "texto": "Aumentas permanentemente tus Puntos de Vida (PV) máximos en 5. Competencias: armas cuerpo a cuerpo marciales y armaduras marciales." },
+    "habilidades": [
+      {
+        "id": "adrenalina", "nombre": "Adrenalina", "nombre_original": "Adrenaline", "sl_max": 5, "tipo": "pasiva",
+        "activacion": "Pasiva.",
+        "efecto": "Mientras te encuentres en Crisis, infliges [SL × 2] puntos de daño adicional con cualquier método (ataques, conjuros, Arcanos, objetos o cualquier otra fuente de daño)."
+      },
+      {
+        "id": "frenesi", "nombre": "Frenesí", "nombre_original": "Frenzy", "sl_max": 1, "tipo": "pasiva",
+        "activacion": "Pasiva.",
+        "efecto": "Tus tiradas de Precisión con flagelos, armas arrojadizas, dagas y armas de pelea generan un éxito crítico si ambos dados muestran el mismo número (siempre que no resulte en una pifia)."
+      },
+      {
+        "id": "provocacion", "nombre": "Provocación", "nombre_original": "Provoke", "sl_max": 5, "tipo": "accion",
+        "activacion": "1 acción y 5 PM.",
+        "efecto": "Puedes usar 1 acción y gastar 5 PM para realizar una tirada enfrentada de [VIG + VOL] contra una criatura visible para ti (debes describir cómo la provocas). Si tienes éxito, el objetivo sufre el estado enfurecido y se ve obligado a centrar su atención en ti: sus ataques y conjuros ofensivos deben incluirte obligatoriamente entre sus objetivos siempre que sea posible.\n- Esta obligación termina si caes inconsciente o abandonas la escena, si la criatura se cura del estado enfurecido, o si es provocada con éxito por otra criatura.\n- Además, obtienes un bonificador igual a [SL] a todas tus tiradas de [VIG + VOL] para esta habilidad."
+      },
+      {
+        "id": "resistencia", "nombre": "Resistencia", "nombre_original": "Withstand", "sl_max": 5, "tipo": "reaccion",
+        "activacion": "Reacción al realizar la acción de Guardia.",
+        "efecto": "Cuando ejecutas la acción de Guardia, si decides no cubrir a otra criatura, recuperas una cantidad de Puntos de Vida igual a [SL × la mayor fuerza entre tus vínculos] y eliges Vigor o Voluntad: hasta el final de tu próximo turno, consideras que el atributo seleccionado aumenta en un tamaño de dado (hasta un máximo de d12)."
+      },
+      {
+        "id": "espiritu-indomable", "nombre": "Espíritu indomable", "nombre_original": "Indomitable Spirit", "sl_max": 4, "tipo": "reaccion",
+        "activacion": "Reacción al gastar Puntos Fábula.",
+        "efecto": "Cuando gastas 1 o más Puntos Fábula, obtienes un beneficio adicional a tu elección entre:\n- Recuperas [SL × 5] Puntos de Vida.\n- Recuperas [SL × 5] Puntos de Mente.\n- Te curas de un único estado alterado a tu elección."
+      }
+    ]
+  },
+  {
+    "id": "guardian",
+    "nombre": "Guardián",
+    "nombre_original": "Guardian",
+    "descripcion": "Defensor inquebrantable dispuesto a ofrecer su propia integridad física para blindar a sus compañeros.",
+    "beneficios": { "pv": 5, "pm": 0, "pi": 0, "competencias": ["armaduras_marciales", "escudos_marciales"], "rituales": [], "texto": "Aumentas permanentemente tus Puntos de Vida (PV) máximos en 5. Competencias: armaduras marciales y escudos marciales." },
+    "habilidades": [
+      {
+        "id": "doble-escudo", "nombre": "Doble escudo", "nombre_original": "Dual Shieldbearer", "sl_max": 1, "tipo": "pasiva",
+        "activacion": "Pasiva.",
+        "efecto": "Puedes equipar un escudo en tu espacio de mano principal. Mientras tengas equipados dos escudos a la vez, recibes los beneficios de ambos objetos y puedes considerarlos conjuntamente como la siguiente arma combinada a dos manos de la categoría de armas de pelea:\n\n| Arma | Precisión | Daño | Manos | Alcance |\n| :--- | :---: | :---: | :---: | :---: |\n| Escudos gemelos | [VIG + VIG] | [TM + 5] físico | Dos manos | Cuerpo a cuerpo |\n\nInflige daño adicional igual a tu nivel en la habilidad Maestría defensiva."
+      },
+      {
+        "id": "fortaleza", "nombre": "Fortaleza", "nombre_original": "Fortress", "sl_max": 5, "tipo": "pasiva",
+        "activacion": "Pasiva.",
+        "efecto": "Aumentas permanentemente tus Puntos de Vida (PV) máximos en [SL × 3].",
+        "modificadores": [ { "stat": "pv_max", "valor": "SL*3" } ]
+      },
+      {
+        "id": "guardaespaldas", "nombre": "Guardaespaldas", "nombre_original": "Bodyguard", "sl_max": 1, "tipo": "reaccion",
+        "activacion": "Reacción al realizar la acción de Guardia.",
+        "efecto": "Cuando ejecutas la acción de Guardia y eliges cubrir a otra criatura, esa criatura obtiene Resistencia a todos los tipos de daño hasta el comienzo de tu próximo turno."
+      },
+      {
+        "id": "maestria-defensiva", "nombre": "Maestría defensiva", "nombre_original": "Defensive Mastery", "sl_max": 5, "tipo": "pasiva",
+        "activacion": "Pasiva.",
+        "efecto": "Mientras tengas una armadura marcial o un escudo marcial equipado, todo el daño que recibas se reduce en [SL] (esta reducción se aplica antes de calcular las posibles afinidades de daño)."
+      },
+      {
+        "id": "proteccion", "nombre": "Protección", "nombre_original": "Protect", "sl_max": 1, "tipo": "reaccion",
+        "activacion": "Reacción cuando otra criatura sufra un ataque o peligro.",
+        "efecto": "Cuando otra criatura vaya a ser objetivo de un ataque, conjuro u otro peligro, puedes interponerte y ocupar su lugar. Cualquier tirada requerida por el peligro se resolverá contra ti; puedes declarar el uso de esta habilidad antes o después de que se efectúen dichas tiradas.\n- Si ya estabas incluido entre los objetivos originales de dicho peligro, lo sufrirás dos veces (resuelve cada instancia de manera totalmente independiente).\n- Solo puedes proteger a una criatura de un mismo peligro.\n- Si empleas esta habilidad durante un conflicto, no puedes volver a utilizarla hasta el inicio de tu próximo turno."
+      }
+    ]
+  },
+  {
+    "id": "hoja-oscura",
+    "nombre": "Hoja Oscura",
+    "nombre_original": "Darkblade",
+    "descripcion": "Guerrero sombrío marcado por la tragedia que sacrifica su propia vitalidad y explota sus pesares para asestar golpes letales.",
+    "beneficios": { "pv": 5, "pm": 0, "pi": 0, "competencias": ["armas_marciales_cuerpo", "armaduras_marciales"], "rituales": [], "texto": "Aumentas permanentemente tus Puntos de Vida (PV) máximos en 5. Competencias: armas cuerpo a cuerpo marciales y armaduras marciales." },
+    "habilidades": [
+      {
+        "id": "agonia", "nombre": "Agonía", "nombre_original": "Agony", "sl_max": 5, "tipo": "reaccion",
+        "activacion": "Reacción tras infligir daño.",
+        "efecto": "Tras causar daño a una o más criaturas, si tienes un vínculo con al menos una de ellas, puedes recuperar [SL × 2] Puntos de Vida y [SL × 2] Puntos de Mente."
+      },
+      {
+        "id": "corazon-tinieblas", "nombre": "Corazón de tinieblas", "nombre_original": "Heart of Darkness", "sl_max": 1, "tipo": "reaccion",
+        "activacion": "Reacción al entrar en Crisis (1 vez por escena).",
+        "efecto": "Una vez por escena, cuando entres en Crisis, puedes elegir una criatura visible específica con la que no tengas ningún vínculo. Si lo haces, forjas de inmediato un vínculo de odio hacia ella."
+      },
+      {
+        "id": "leccion-dolorosa", "nombre": "Lección dolorosa", "nombre_original": "Painful Lesson", "sl_max": 3, "tipo": "reaccion",
+        "activacion": "Reacción inmediata tras perder PV por causa de otra criatura.",
+        "efecto": "Inmediatamente después de perder Puntos de Vida a causa de otra criatura (por un ataque, conjuro o cualquier otro medio), puedes ejecutar de forma gratuita la acción de Estudio sobre esa criatura. Si lo haces, obtienes un bonificador igual a [SL] a tu tirada. Recuerda que solo se puede estudiar a una misma criatura una vez."
+      },
+      {
+        "id": "tajo-oscuro", "nombre": "Tajo oscuro", "nombre_original": "Shadow Strike", "sl_max": 5, "tipo": "accion",
+        "activacion": "1 acción y tirada del dado de Vigor en PV.",
+        "efecto": "Puedes usar 1 acción para asestar un Tajo Oscuro: tira tu dado actual de Vigor y pierde tantos Puntos de Vida como el resultado obtenido en dicho dado. Si esto no reduce tus PV a 0, puedes ejecutar a continuación un ataque gratuito con un arma que tengas equipada: si el ataque impacta a uno o más objetivos, inflige [SL + resultado del dado de Vigor] puntos de daño adicional.\n- Todo el daño causado por este ataque pasa a ser de tipo oscuro de manera obligatoria y su tipo de daño no puede alterarse por ningún medio."
+      },
+      {
+        "id": "sangre-negra", "nombre": "Sangre negra", "nombre_original": "Dark Blood", "sl_max": 1, "tipo": "pasiva",
+        "activacion": "Pasiva.",
+        "efecto": "Mientras te encuentres en Crisis, posees Resistencia a los tipos de daño oscuro y veneno."
+      }
+    ]
+  },
+  {
+    "id": "maestro-de-armas",
+    "nombre": "Maestro de Armas",
+    "nombre_original": "Weaponmaster",
+    "descripcion": "Especialista consumado en el combate cercano, el manejo técnico del armamento cuerpo a cuerpo y la anulación táctica del enemigo.",
+    "beneficios": { "pv": 5, "pm": 0, "pi": 0, "competencias": ["armas_marciales_cuerpo", "escudos_marciales"], "rituales": [], "texto": "Aumentas permanentemente tus Puntos de Vida (PV) máximos en 5. Competencias: armas cuerpo a cuerpo marciales y escudos marciales." },
+    "habilidades": [
+      {
+        "id": "brecha", "nombre": "Brecha", "nombre_original": "Breach", "sl_max": 3, "tipo": "accion",
+        "activacion": "1 acción y 5 PM.",
+        "efecto": "Puedes usar 1 acción y gastar 5 PM para ejecutar un ataque gratuito con un arma cuerpo a cuerpo equipada contra un único objetivo. Si el ataque impacta, no causa ningún daño y eliges una opción:\n- Destruyes un escudo equipado por el objetivo.\n- Destruyes la armadura equipada por el objetivo.\n- Cada vez que el objetivo sufra daño de cualquier fuente antes del comienzo de tu próximo turno, esa fuente le inflige [SL × 2] puntos de daño adicional."
+      },
+      {
+        "id": "contraataque", "nombre": "Contraataque", "nombre_original": "Counterattack", "sl_max": 1, "tipo": "reaccion",
+        "activacion": "Reacción tras un ataque cuerpo a cuerpo enemigo.",
+        "efecto": "Después de que un enemigo te impacte o falle con un ataque cuerpo a cuerpo, si el resultado total de su tirada de Precisión es un número par, puedes ejecutar un ataque gratuito contra ese enemigo con un arma cuerpo a cuerpo equipada (una vez resuelto completamente el ataque hostil).\n- Este ataque solo puede dirigirse contra ese enemigo específico.\n- Tu Tirada Mayor (TM) se considera igual a 0 al calcular el daño infligido por este contraataque."
+      },
+      {
+        "id": "maestria-armas-cuerpo-a-cuerpo", "nombre": "Maestría con armas cuerpo a cuerpo", "nombre_original": "Melee Weapon Mastery", "sl_max": 4, "tipo": "pasiva",
+        "activacion": "Pasiva.",
+        "efecto": "Obtienes un bonificador igual a [SL] a todas tus tiradas de Precisión realizadas con armas cuerpo a cuerpo.",
+        "modificadores": [ { "stat": "precision_cuerpo", "valor": "SL" } ]
+      },
+      {
+        "id": "rompehuesos", "nombre": "Rompehuesos", "nombre_original": "Bone Crusher", "sl_max": 4, "tipo": "reaccion",
+        "activacion": "Reacción al impactar con un ataque cuerpo a cuerpo.",
+        "efecto": "Cuando impactes a uno o más objetivos con un ataque cuerpo a cuerpo que fuera a causar daño, puedes renunciar a infligir daño. Si lo haces, escoges una opción:\n- Todos los objetivos impactados sufren el estado confundido.\n- Todos los objetivos impactados sufren el estado débil.\n- Cada objetivo impactado pierde [SL × 10] Puntos de Mente."
+      },
+      {
+        "id": "torbellino-hojas", "nombre": "Torbellino de hojas", "nombre_original": "Bladestorm", "sl_max": 1, "tipo": "reaccion",
+        "activacion": "10 PM al ejecutar un ataque cuerpo a cuerpo.",
+        "efecto": "Al realizar un ataque cuerpo a cuerpo, puedes gastar 10 PM para elegir una opción:\n- El ataque adquiere la propiedad **multi (2)**.\n- Si el ataque ya poseía la propiedad multi, aumentas su valor en 1 (hasta un máximo de **multi (3)**)."
+      }
+    ]
+  },
+  {
+    "id": "orador",
+    "nombre": "Orador",
+    "nombre_original": "Orator",
+    "descripcion": "Diplomático y líder elocuente capaz de inspirar a sus camaradas, negociar soluciones y desmoralizar a sus adversarios.",
+    "beneficios": { "pv": 0, "pm": 5, "pi": 0, "competencias": [], "rituales": [], "texto": "Aumentas permanentemente tus Puntos de Mente (PM) máximos en 5." },
+    "habilidades": [
+      {
+        "id": "aliado-inesperado", "nombre": "Aliado inesperado", "nombre_original": "Unexpected Ally", "sl_max": 1, "tipo": "accion",
+        "activacion": "1 acción y 1 Punto Fábula.",
+        "efecto": "Puedes usar 1 acción y gastar 1 Punto Fábula para elegir a una criatura no hostil capaz de escucharte y entenderte. La criatura se mostrará dispuesta a ayudarte mientras mantengas un trato respetuoso y cordial y tus peticiones resulten razonables."
+      },
+      {
+        "id": "condena", "nombre": "Condena", "nombre_original": "Condemn", "sl_max": 4, "tipo": "accion",
+        "activacion": "1 acción y 5 PM.",
+        "efecto": "Puedes usar 1 acción y gastar 5 PM para llevar a cabo una tirada enfrentada de [PER + VOL] contra una criatura capaz de escucharte y comprenderte (debes narrar tu acusación). Si tienes éxito, el objetivo pierde [SL × 10] Puntos de Mente y sufre un estado alterado a tu elección entre confundido o estremecido.\n- Además, obtienes un bonificador igual a [SL] a todas tus tiradas de [PER + VOL] para esta habilidad."
+      },
+      {
+        "id": "animo", "nombre": "Ánimo", "nombre_original": "Encourage", "sl_max": 6, "tipo": "accion",
+        "activacion": "1 acción y 5 PM (durante un conflicto).",
+        "efecto": "Durante un conflicto, puedes usar 1 acción y gastar 5 PM para elegir a otra criatura capaz de escucharte y comprenderte. Dicha criatura recupera de inmediato [SL × 5] Puntos de Vida y elige uno de sus atributos: Destreza, Perspicacia, Vigor o Voluntad. Hasta el comienzo de tu próximo turno, el objetivo considera el atributo seleccionado aumentado en un tamaño de dado (hasta un máximo de d12)."
+      },
+      {
+        "id": "confio-en-ti", "nombre": "Confío en ti", "nombre_original": "My Trust in You", "sl_max": 2, "tipo": "reaccion",
+        "activacion": "Reacción tras la tirada de otro PJ y 1 Punto Fábula.",
+        "efecto": "Después de que otro personaje jugador capaz de escucharte realice una tirada de dados, puedes gastar 1 Punto Fábula e invocar uno de sus rasgos o vínculos para concederle la posibilidad de repetir los dados o sumar un bonificador al resultado (según las reglas estándar de gasto de Puntos Fábula).\n- A continuación, si posees un vínculo hacia ese personaje, este recupera de inmediato [SL × 10] Puntos de Mente."
+      },
+      {
+        "id": "persuasion", "nombre": "Persuasión", "nombre_original": "Persuasion", "sl_max": 2, "tipo": "reaccion",
+        "activacion": "Reacción tras tener éxito en una tirada de reloj.",
+        "efecto": "Cuando obtengas un éxito en una tirada destinada a llenar o vaciar las secciones de un reloj, si tu proceder se apoyaba en la diplomacia, el carisma, el engaño o la intimidación, puedes gastar hasta [SL × 20] Puntos de Mente. Si lo haces, llenas o vacías 1 sección adicional de dicho reloj por cada 20 PM gastados de este modo."
+      }
+    ]
+  },
+  {
+    "id": "erudito",
+    "nombre": "Erudito",
+    "nombre_original": "Loremaster",
+    "descripcion": "Investigador incansable y sabio observador que emplea el estudio analítico y el conocimiento enciclopédico para descifrar misterios.",
+    "beneficios": { "pv": 0, "pm": 5, "pi": 0, "competencias": [], "rituales": [], "texto": "Aumentas permanentemente tus Puntos de Mente (PM) máximos en 5." },
+    "habilidades": [
+      {
+        "id": "concentracion", "nombre": "Concentración", "nombre_original": "Focus", "sl_max": 5, "tipo": "pasiva",
+        "activacion": "Pasiva.",
+        "efecto": "Cuando realices una tirada abierta usando [PER + PER], sumas un bonificador igual a [SL] al resultado (solo se aplica a tiradas abiertas). Además, aumentas permanentemente tus Puntos de Mente (PM) máximos en [SL × 3].",
+        "modificadores": [ { "stat": "pm_max", "valor": "SL*3" } ]
+      },
+      {
+        "id": "intuicion-fulgurante", "nombre": "Intuición fulgurante", "nombre_original": "Flash of Insight", "sl_max": 3, "tipo": "reaccion",
+        "activacion": "Reacción al obtener 13 o más al examinar.",
+        "efecto": "Cuando alcances un resultado total de 13 o superior en una tirada para examinar a una criatura, un objeto o un lugar (incluida la acción de Estudio en conflictos), puedes formular al DJ hasta [SL] preguntas relativas a lo que estás analizando.\n- Puedes realizar estas preguntas en el acto o reservarlas para más adelante en la escena actual.\n- Cuando formules una de estas preguntas, el DJ debe responder con la estricta verdad y tú describes el razonamiento deductivo de tu personaje.\n- Esta habilidad solo puede emplearse una única vez sobre la misma criatura, objeto o localización."
+      },
+      {
+        "id": "memoria-entrenada", "nombre": "Memoria entrenada", "nombre_original": "Trained Memory", "sl_max": 1, "tipo": "pasiva",
+        "activacion": "Pasiva.",
+        "efecto": "Recuerdas con absoluta exactitud cada detalle de todas las escenas en las que hayas tomado parte durante los últimos siete días. Puedes «repasar mentalmente» dichas escenas para analizarlas e investigarlas (Intuición fulgurante puede aplicarse sobre estos recuerdos pasados)."
+      },
+      {
+        "id": "conocimiento-es-poder", "nombre": "El conocimiento es poder", "nombre_original": "Knowledge is Power", "sl_max": 1, "tipo": "pasiva",
+        "activacion": "Pasiva.",
+        "efecto": "Al efectuar una tirada de Precisión con cualquier arma, puedes reemplazar uno de los dos atributos requeridos por Perspicacia (por ejemplo, tirando [PER + PER] con una pistola en lugar de [DES + PER], o [PER + VIG] con un hacha de guerra en lugar de [DES + VIG])."
+      },
+      {
+        "id": "evaluacion-rapida", "nombre": "Evaluación rápida", "nombre_original": "Quick Assessment", "sl_max": 6, "tipo": "reaccion",
+        "activacion": "Al comienzo de un conflicto (hasta [SL × 5] PM).",
+        "efecto": "Al inicio de un conflicto, puedes gastar hasta [SL × 5] Puntos de Mente. Por cada 5 PM invertidos de esta forma, escoges una opción:\n- El DJ te revela uno de los rasgos de una criatura visible a tu elección.\n- Eliges una criatura visible y un tipo de daño concreto: el DJ te revela la afinidad de dicha criatura hacia ese tipo de daño."
+      }
+    ]
+  },
+  {
+    "id": "espiritista",
+    "nombre": "Espiritista",
+    "nombre_original": "Spiritist",
+    "descripcion": "Canalizador místico conectado con las corrientes vitales del alma, las emociones, la sanación y la energía de la luz.",
+    "beneficios": { "pv": 0, "pm": 5, "pi": 0, "competencias": [], "rituales": ["ritualismo"], "texto": "Aumentas permanentemente tus Puntos de Mente (PM) máximos en 5. Puedes ejecutar rituales cuyos efectos pertenezcan a la disciplina de Ritualismo." },
+    "habilidades": [
+      {
+        "id": "magia-espiritual", "nombre": "Magia espiritual", "nombre_original": "Spiritual Magic", "sl_max": 10, "tipo": "pasiva",
+        "activacion": "Pasiva.",
+        "efecto": "Cada vez que adquieres un nivel en esta habilidad, aprendes un conjuro de la lista de conjuros de Espiritista. Los conjuros ofensivos de Espiritista emplean [PER + VOL] para la prueba de magia.",
+        "elecciones": [
+          { "clave": "conjuros", "tipo": "conjuros", "filtro": { "lista": ["espiritista"] }, "etiqueta": "Conjuros de Espiritista", "min": "SL", "max": "SL" }
+        ]
+      },
+      {
+        "id": "magia-apoyo", "nombre": "Magia de apoyo", "nombre_original": "Support Magic", "sl_max": 1, "tipo": "reaccion",
+        "activacion": "Reacción al lanzar un conjuro a múltiples aliados.",
+        "efecto": "Cuando lanzas un conjuro que tenga como objetivo a dos o más aliados, si tienes un arma de la categoría arcana equipada, puedes elegir a uno de esos aliados con quien tengas un vínculo. Si lo haces, ese aliado suma la fuerza de tu vínculo con él como bonificador a su próxima tirada efectuada durante la escena actual."
+      },
+      {
+        "id": "poder-curativo", "nombre": "Poder curativo", "nombre_original": "Healing Power", "sl_max": 2, "tipo": "reaccion",
+        "activacion": "Reacción al lanzar un conjuro a aliados.",
+        "efecto": "Cuando lanzas un conjuro que tenga como objetivo a uno o más aliados, si portas equipada un arma de la categoría arcana, cada uno de esos aliados recupera de inmediato una cantidad de Puntos de Vida igual a [SL × número total de vínculos que posees]. Esta recuperación es independiente de los efectos que cause el conjuro propiamente dicho."
+      },
+      {
+        "id": "espiritismo-ritual", "nombre": "Espiritismo ritual", "nombre_original": "Ritual Spiritism", "sl_max": 1, "tipo": "pasiva",
+        "activacion": "Pasiva.",
+        "efecto": "Puedes realizar rituales cuyos efectos encajen dentro de la disciplina de Espiritismo. Las pruebas de magia para los rituales de Espiritismo emplean [PER + VOL].",
+        "rituales": ["espiritismo"]
+      },
+      {
+        "id": "vismagus", "nombre": "Vismagus", "nombre_original": "Vismagus", "sl_max": 1, "tipo": "reaccion",
+        "activacion": "Reacción al lanzar un conjuro.",
+        "efecto": "Al lanzar un conjuro, si no dispones de suficientes Puntos de Mente para costear su lanzamiento total, puedes optar por pagar el doble de su coste en Puntos de Vida.\n- No puedes emplear esta habilidad si el gasto causaría que tus PV descendieran a 0.\n- Si un conjuro lanzado mediante esta habilidad fuera a restaurar tus propios Puntos de Vida, no recuperas ningún PV (el conjuro sana normalmente al resto de objetivos)."
+      }
+    ]
+  },
+  {
+    "id": "tirador",
+    "nombre": "Tirador",
+    "nombre_original": "Sharpshooter",
+    "descripcion": "Combatiente a distancia letal y metódico que domina arcos y armas de fuego.",
+    "beneficios": { "pv": 5, "pm": 0, "pi": 0, "competencias": ["armas_marciales_distancia", "escudos_marciales"], "rituales": [], "texto": "Aumentas permanentemente tus Puntos de Vida (PV) máximos en 5. Competencias: armas a distancia marciales y escudos marciales." },
+    "habilidades": [
+      {
+        "id": "disparo-advertencia", "nombre": "Disparo de advertencia", "nombre_original": "Warning Shot", "sl_max": 4, "tipo": "reaccion",
+        "activacion": "Reacción al impactar con un ataque a distancia.",
+        "efecto": "Cuando alcances a uno o más objetivos con un ataque a distancia que fuera a causar daño, puedes renunciar a infligir daño. Si lo haces, eliges una opción:\n- Cada objetivo impactado sufre el estado lento.\n- Cada objetivo impactado sufre el estado estremecido.\n- Cada objetivo impactado pierde [SL × 10] Puntos de Mente."
+      },
+      {
+        "id": "fuego-cruzado", "nombre": "Fuego cruzado", "nombre_original": "Crossfire", "sl_max": 1, "tipo": "reaccion",
+        "activacion": "Reacción tras un ataque a distancia hostil (gasto de PM).",
+        "efecto": "Después de que una criatura visible para ti realice un ataque a distancia, puedes gastar una cantidad de Puntos de Mente exactamente igual al resultado de su tirada de Precisión para hacer que su ataque falle a todos sus objetivos.\n- Solo puedes usar esta habilidad si tienes un arma a distancia equipada.\n- No surte efecto si la tirada de Precisión del atacante fue un éxito crítico."
+      },
+      {
+        "id": "maestria-armas-a-distancia", "nombre": "Maestría con armas a distancia", "nombre_original": "Ranged Weapon Mastery", "sl_max": 4, "tipo": "pasiva",
+        "activacion": "Pasiva.",
+        "efecto": "Obtienes un bonificador igual a [SL] a todas tus tiradas de Precisión efectuadas con armas a distancia.",
+        "modificadores": [ { "stat": "precision_distancia", "valor": "SL" } ]
+      },
+      {
+        "id": "ojo-de-halcon", "nombre": "Ojo de halcón", "nombre_original": "Hawkeye", "sl_max": 5, "tipo": "reaccion",
+        "activacion": "Reacción al realizar la acción de Guardia.",
+        "efecto": "Cuando ejecutes la acción de Guardia, si decides no cubrir a otra criatura, escoges una opción:\n- El próximo ataque a distancia que realices antes del final de la escena actual inflige [SL × 2] puntos de daño adicional.\n- Ejecutas inmediatamente un ataque gratuito con un arma de la categoría arco o arma de fuego que tengas equipada, considerando tu Tirada Mayor (TM) igual a 0 al calcular el daño infligido."
+      },
+      {
+        "id": "rafaga", "nombre": "Ráfaga", "nombre_original": "Barrage", "sl_max": 1, "tipo": "reaccion",
+        "activacion": "10 PM al realizar un ataque a distancia.",
+        "efecto": "Al realizar un ataque a distancia, puedes gastar 10 PM para escoger una opción:\n- El ataque obtiene la propiedad **multi (2)**.\n- Si el ataque ya tenía la propiedad multi, aumentas su valor en 1 (hasta un máximo de **multi (3)**)."
+      }
+    ]
+  },
+  {
+    "id": "caminante",
+    "nombre": "Caminante",
+    "nombre_original": "Wayfarer",
+    "descripcion": "Explorador incansable y superviviente de los caminos salvajes, asistido por un vínculo leal con la naturaleza o un compañero fiel.",
+    "beneficios": { "pv": 0, "pm": 0, "pi": 2, "competencias": [], "rituales": [], "texto": "Aumentas permanentemente tus Puntos de Inventario (PI) máximos en 2." },
+    "habilidades": [
+      {
+        "id": "cazatesoros", "nombre": "Cazatesoros", "nombre_original": "Treasure Hunter", "sl_max": 2, "tipo": "pasiva",
+        "activacion": "Pasiva al viajar.",
+        "efecto": "Cuando tu grupo viaja por el mapa del mundo, hacéis un descubrimiento con un resultado igual o inferior a [SL + 1] en la tirada de viaje (en lugar de únicamente con un resultado de 1)."
+      },
+      {
+        "id": "charlas-de-taberna", "nombre": "Charlas de taberna", "nombre_original": "Tavern Talk", "sl_max": 3, "tipo": "pasiva",
+        "activacion": "Al descansar en posadas o tabernas.",
+        "efecto": "Cuando descanses en una posada o taberna, puedes formular al DJ hasta [SL] preguntas relativas a los alrededores y a las gentes que los habitan; el DJ te responderá diciendo la verdad y tú describirás cómo lograste averiguar esa información."
+      },
+      {
+        "id": "companero-fiel", "nombre": "Compañero fiel", "nombre_original": "Faithful Companion", "sl_max": 5, "tipo": "pasiva",
+        "activacion": "Creación de personaje o subida de nivel.",
+        "efecto": "Diseñas conjuntamente con el DJ a tu compañero fiel: una criatura de nivel 5 perteneciente a la especie bestia, constructo, elemental o planta (siguiendo las reglas de Creación de PNJ).\n- La criatura no posee puntuación de iniciativa individual ni sube de nivel.\n- Puede poseer hasta dos ataques básicos.\n- Suma un bonificador igual a [SL] a sus tiradas de Precisión y de Magia.\n- Sus Puntos de Vida máximos equivalen a: (SL × tamaño base del dado de Vigor del compañero) + mitad del nivel del PJ.\n- En combate, el compañero no realiza turnos independientes, pero durante tu turno puedes cederle tu propia acción para permitirle realizar una (solo una vez por turno). Si abandonas la escena, tu compañero se retira contigo.\n- Si tu compañero queda reducido a 0 Puntos de Vida, huye de la escena y se reúne contigo al comienzo de la próxima escena en la que participes, con sus PV restablecidos a su valor de Crisis.\n- Al descansar, el compañero recibe todos los beneficios de la recuperación.",
+        "elecciones": [
+          { "clave": "companero", "tipo": "texto_largo", "etiqueta": "Compañero fiel (nombre, especie, atributos, ataques)" }
+        ]
+      },
+      {
+        "id": "trotamundos", "nombre": "Trotamundos", "nombre_original": "Well-Traveled", "sl_max": 1, "tipo": "pasiva",
+        "activacion": "Pasiva al viajar.",
+        "efecto": "Reduces en un tamaño el dado utilizado para las tiradas de viaje del grupo (mínimo d6). Si varios miembros del grupo poseen esta habilidad, su efecto no es acumulativo."
+      },
+      {
+        "id": "ingenioso", "nombre": "Ingenioso", "nombre_original": "Resourceful", "sl_max": 4, "tipo": "reaccion",
+        "activacion": "Automática tras viajar.",
+        "efecto": "Recargas [SL] Puntos de Inventario (PI) de inmediato tras cada tirada de viaje."
+      }
+    ]
+  }
+]

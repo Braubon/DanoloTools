@@ -1,0 +1,183 @@
+{
+  "formato": "fabula-ultima-pj",
+  "version": 1,
+  "id": "3pe35wy5cseu",
+  "creado": "2026-10-15T11:25:28.657Z",
+  "modificado": "2026-10-15T11:25:28.668Z",
+  "contenido": {
+    "atlas": [
+      "basico",
+      "alta-fantasia"
+    ],
+    "reglas": {
+      "alta-fantasia": [
+        "equipo-raro"
+      ]
+    }
+  },
+  "modo_libre": false,
+  "creacion_completa": true,
+  "identidad": {
+    "nombre": "Aria Valen",
+    "pronombres": "ella",
+    "jugador": "Marta",
+    "identidad": "Capitana exiliada de la guardia real",
+    "tema": "Deber",
+    "origen": "Oniria, el Reino Inicial",
+    "especie": "Humana",
+    "apariencia": "Cabello corto y cano antes de tiempo; armadura abollada con el escudo real limado."
+  },
+  "nivel": 7,
+  "px": 3,
+  "pf": 2,
+  "zenit": 40,
+  "ahorros": {
+    "restante": 0,
+    "d6": 4,
+    "total": 40
+  },
+  "atributos": {
+    "perfil": "versatil",
+    "base": {
+      "DES": 8,
+      "PER": 6,
+      "VIG": 10,
+      "VOL": 8
+    },
+    "mejoras": []
+  },
+  "clases": [
+    {
+      "id": "guardian",
+      "habilidades": {
+        "fortaleza": 3,
+        "proteccion": 1
+      },
+      "beneficio": null
+    },
+    {
+      "id": "comandante",
+      "habilidades": {
+        "caballeria-a-la-carga": 1,
+        "gambito-de-dama": 1,
+        "enroque-del-rey": 1
+      },
+      "beneficio": null
+    }
+  ],
+  "heroicas": [],
+  "elecciones": {},
+  "equipo": {
+    "equipado": {
+      "mano_principal": "of7wydp7cseu",
+      "mano_secundaria": "deocx9d9cseu",
+      "armadura": "vv0n8ozncseu",
+      "accesorio": null
+    },
+    "objetos": [
+      {
+        "uid": "of7wydp7cseu",
+        "coleccion": "armas",
+        "ref": "espada-de-bronce",
+        "coste_pagado": 0,
+        "comprado": 200
+      },
+      {
+        "uid": "deocx9d9cseu",
+        "coleccion": "escudos",
+        "ref": "escudo-runico",
+        "coste_pagado": 0,
+        "comprado": 150
+      },
+      {
+        "uid": "vv0n8ozncseu",
+        "coleccion": "armaduras",
+        "ref": "brigantina",
+        "coste_pagado": 0,
+        "comprado": 150
+      }
+    ]
+  },
+  "vinculos": [
+    {
+      "hacia": "Lio Arden",
+      "emociones": [
+        "lealtad",
+        "afecto"
+      ]
+    },
+    {
+      "hacia": "Nim",
+      "emociones": [
+        "desconfianza"
+      ]
+    },
+    {
+      "hacia": "El Imperio de Hierro",
+      "emociones": [
+        "odio"
+      ]
+    }
+  ],
+  "opcionales": {
+    "peculiaridad": null,
+    "poder_cero": null
+  },
+  "estado": {
+    "pv": 55,
+    "pm": 37,
+    "pi": 4,
+    "estados": [
+      "debil"
+    ]
+  },
+  "notas": "Busca al general que ordenó la purga de la guardia.",
+  "historial": [
+    {
+      "nivel": 6,
+      "clase": "guardian",
+      "habilidad": "fortaleza",
+      "nueva_clase": false,
+      "heroica": null,
+      "atributo": null,
+      "px_gastados": 10,
+      "fecha": "2026-10-15T11:25:28.666Z"
+    },
+    {
+      "nivel": 7,
+      "clase": "comandante",
+      "habilidad": "enroque-del-rey",
+      "nueva_clase": false,
+      "heroica": null,
+      "atributo": null,
+      "px_gastados": 10,
+      "fecha": "2026-10-15T11:25:28.666Z"
+    }
+  ],
+  "calculado": {
+    "nota": "Valores derivados en el momento de exportar. El visor los recalcula a partir de la base de datos.",
+    "pv_max": 76,
+    "pm_max": 47,
+    "pi_max": 6,
+    "crisis": 38,
+    "def": 12,
+    "mdef": 8,
+    "init": -2,
+    "atributos": {
+      "DES": 8,
+      "PER": 6,
+      "VIG": 10,
+      "VOL": 8
+    },
+    "clases": [
+      {
+        "id": "guardian",
+        "nivel": 4
+      },
+      {
+        "id": "comandante",
+        "nivel": 3
+      }
+    ]
+  }
+}

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Generador · Fabula Ultima</title>
+  <meta name="description" content="Crea y sube de nivel personajes de Fabula Ultima.">
+  <script>try { var t = localStorage.getItem('fu-tema'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3l11 7v12l-11 7-11-7V10z' fill='%23d4b072'/%3E%3C/svg%3E">
+</head>
+<body>
+  <header class="topbar">
+    <a href="../../../index.html" class="btn fantasma" style="text-decoration:none;margin-right:8px;font-size:13px;" title="Volver a DanoloTools">← Hub</a>
+    <div class="marca"><h1 class="display">Fabula Ultima</h1><span>Generador de personajes</span></div>
+    <div class="acciones">
+      <button class="btn fantasma" data-act="nuevo" title="Empezar un personaje nuevo">Nuevo</button>
+      <label class="btn fantasma" title="Cargar un personaje en JSON">Cargar<input type="file" accept=".json,application/json" id="cargar" class="sr"></label>
+      <button class="btn" data-act="descargar" title="Descargar el personaje en JSON">Descargar JSON</button>
+      <button class="chip" data-act="modo-libre" id="modo-libre" aria-pressed="false" title="Permite saltarse las reglas">Modo libre</button>
+      <a class="btn fantasma" href="../visor/">Visor</a>
+      <button class="btn icono fantasma" data-tema-toggle aria-label="Cambiar tema"></button>
+    </div>
+  </header>
+
+  <div class="contenedor">
+    <div class="disposicion">
+      <main>
+        <nav class="pestanas" role="tablist" id="pestanas"></nav>
+        <section id="panel" role="tabpanel" aria-live="polite"><p class="muted">Cargando base de datos…</p></section>
+      </main>
+      <aside id="resumen"></aside>
+    </div>
+  </div>
+
+  <dialog id="dialogo"></dialog>
+  <script type="module" src="../assets/js/generador.js"></script>
+</body>
+</html>

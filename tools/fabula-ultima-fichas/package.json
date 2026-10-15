@@ -1,0 +1,11 @@
+{
+  "name": "fabula-ultima-fichas",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Generador y visor de fichas de Fabula Ultima (estático, sin compilación).",
+  "type": "module",
+  "scripts": {
+    "validar": "node tools/validar.mjs",
+    "servir": "npx --yes serve ."
+  }
+}

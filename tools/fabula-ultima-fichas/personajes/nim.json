@@ -1,0 +1,165 @@
+{
+  "formato": "fabula-ultima-pj",
+  "version": 1,
+  "id": "svcah06ecsey",
+  "creado": "2026-10-15T11:25:28.666Z",
+  "modificado": "2026-10-15T11:25:28.676Z",
+  "contenido": {
+    "atlas": [
+      "basico",
+      "alta-fantasia"
+    ],
+    "reglas": {
+      "alta-fantasia": [
+        "peculiaridades"
+      ]
+    }
+  },
+  "modo_libre": false,
+  "creacion_completa": true,
+  "identidad": {
+    "nombre": "Nim",
+    "pronombres": "elle",
+    "jugador": "Sergio",
+    "identidad": "Bailarine del carnaval nómada con un secreto prohibido",
+    "tema": "Libertad",
+    "origen": "Mirage, el Carnaval Nómada",
+    "especie": "Mitad hada",
+    "apariencia": "Cintas de colores, cascabeles en los tobillos y una sonrisa que no se fía de nadie."
+  },
+  "nivel": 5,
+  "px": 0,
+  "pf": 3,
+  "zenit": 150,
+  "ahorros": {
+    "restante": 100,
+    "d6": 5,
+    "total": 150
+  },
+  "atributos": {
+    "perfil": "versatil",
+    "base": {
+      "DES": 10,
+      "PER": 8,
+      "VIG": 6,
+      "VOL": 8
+    },
+    "mejoras": []
+  },
+  "clases": [
+    {
+      "id": "bailarin",
+      "habilidades": {
+        "danza": 2,
+        "cambio-rapido": 1
+      },
+      "beneficio": "pv"
+    },
+    {
+      "id": "picaro",
+      "habilidades": {
+        "esquiva": 1,
+        "golpe-bajo": 1
+      },
+      "beneficio": null
+    }
+  ],
+  "heroicas": [],
+  "elecciones": {
+    "hab:danza": {
+      "danzas": [
+        "danza-del-fenix",
+        "danza-del-leon"
+      ]
+    }
+  },
+  "equipo": {
+    "equipado": {
+      "mano_principal": "ugswtukkcsey",
+      "mano_secundaria": "le7tcx8xcsey",
+      "armadura": "8ogufvnfcsey",
+      "accesorio": null
+    },
+    "objetos": [
+      {
+        "uid": "ugswtukkcsey",
+        "coleccion": "armas",
+        "ref": "daga-de-acero",
+        "coste_pagado": 0,
+        "comprado": 150
+      },
+      {
+        "uid": "le7tcx8xcsey",
+        "coleccion": "armas",
+        "ref": "shuriken",
+        "coste_pagado": 0,
+        "comprado": 150
+      },
+      {
+        "uid": "8ogufvnfcsey",
+        "coleccion": "armaduras",
+        "ref": "ropa-de-viaje",
+        "coste_pagado": 0,
+        "comprado": 100
+      }
+    ]
+  },
+  "vinculos": [
+    {
+      "hacia": "Aria Valen",
+      "emociones": [
+        "admiracion",
+        "desconfianza"
+      ]
+    },
+    {
+      "hacia": "Lio Arden",
+      "emociones": [
+        "afecto"
+      ]
+    }
+  ],
+  "opcionales": {
+    "peculiaridad": {
+      "id": "mundo-distante",
+      "elecciones": {
+        "origen": "Un mundo sin magia, al otro lado de un espejo"
+      }
+    },
+    "poder_cero": null
+  },
+  "estado": {
+    "pv": 33,
+    "pm": 45,
+    "pi": 8,
+    "estados": []
+  },
+  "notas": "",
+  "historial": [],
+  "calculado": {
+    "nota": "Valores derivados en el momento de exportar. El visor los recalcula a partir de la base de datos.",
+    "pv_max": 40,
+    "pm_max": 45,
+    "pi_max": 8,
+    "crisis": 20,
+    "def": 12,
+    "mdef": 9,
+    "init": -1,
+    "atributos": {
+      "DES": 10,
+      "PER": 8,
+      "VIG": 6,
+      "VOL": 8
+    },
+    "clases": [
+      {
+        "id": "bailarin",
+        "nivel": 3
+      },
+      {
+        "id": "picaro",
+        "nivel": 2
+      }
+    ]
+  }
+}

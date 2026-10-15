@@ -1,0 +1,268 @@
+[
+ {
+  "id": "cinturon-del-explorador",
+  "nombre": "Cinturón del explorador",
+  "nombre_original": "Explorer Belt",
+  "rareza": "raro",
+  "coste": 500,
+  "cualidad": "Bonificador de +4 al modificador de Iniciativa.",
+  "modificadores": [
+   {
+    "stat": "init",
+    "valor": "4"
+   }
+  ]
+ },
+ {
+  "id": "guantes-calidos",
+  "nombre": "Guantes cálidos",
+  "nombre_original": "Warm Gloves",
+  "rareza": "raro",
+  "coste": 500,
+  "cualidad": "Eres inmune al estado estremecido."
+ },
+ {
+  "id": "guantes-elegantes",
+  "nombre": "Guantes elegantes",
+  "nombre_original": "Fancy Gloves",
+  "rareza": "raro",
+  "coste": 500,
+  "cualidad": "Eres inmune al estado confundido."
+ },
+ {
+  "id": "guantes-asperos",
+  "nombre": "Guantes ásperos",
+  "nombre_original": "Rough Gloves",
+  "rareza": "raro",
+  "coste": 500,
+  "cualidad": "Eres inmune al estado débil."
+ },
+ {
+  "id": "guantes-mullidos",
+  "nombre": "Guantes mullidos",
+  "nombre_original": "Fluffy Gloves",
+  "rareza": "raro",
+  "coste": 500,
+  "cualidad": "Eres inmune al estado lento."
+ },
+ {
+  "id": "botas-del-novato",
+  "nombre": "Botas del novato",
+  "nombre_original": "Rookie Boots",
+  "rareza": "raro",
+  "coste": 600,
+  "cualidad": "Al obtener una pifia, si tienes menos de 10 PX, obtienes de inmediato 1 PX."
+ },
+ {
+  "id": "colgante-de-ambar",
+  "nombre": "Colgante de ámbar",
+  "nombre_original": "Amber Pendant",
+  "rareza": "raro",
+  "coste": 700,
+  "cualidad": "Eres Resistente al daño de tierra."
+ },
+ {
+  "id": "colgante-de-amatista",
+  "nombre": "Colgante de amatista",
+  "nombre_original": "Amethyst Pendant",
+  "rareza": "raro",
+  "coste": 700,
+  "cualidad": "Eres Resistente al daño oscuro."
+ },
+ {
+  "id": "colgante-de-diamante",
+  "nombre": "Colgante de diamante",
+  "nombre_original": "Diamond Pendant",
+  "rareza": "raro",
+  "coste": 700,
+  "cualidad": "Eres Resistente al daño de luz."
+ },
+ {
+  "id": "colgante-de-opalo",
+  "nombre": "Colgante de ópalo",
+  "nombre_original": "Opal Pendant",
+  "rareza": "raro",
+  "coste": 700,
+  "cualidad": "Eres Resistente al daño de aire."
+ },
+ {
+  "id": "colgante-de-rubi",
+  "nombre": "Colgante de rubí",
+  "nombre_original": "Ruby Pendant",
+  "rareza": "raro",
+  "coste": 700,
+  "cualidad": "Eres Resistente al daño de fuego."
+ },
+ {
+  "id": "colgante-de-esmeralda",
+  "nombre": "Colgante de esmeralda",
+  "nombre_original": "Emerald Pendant",
+  "rareza": "raro",
+  "coste": 700,
+  "cualidad": "Eres Resistente al daño de veneno."
+ },
+ {
+  "id": "colgante-de-topacio",
+  "nombre": "Colgante de topacio",
+  "nombre_original": "Topaz Pendant",
+  "rareza": "raro",
+  "coste": 700,
+  "cualidad": "Eres Resistente al daño de rayo."
+ },
+ {
+  "id": "colgante-de-zafiro",
+  "nombre": "Colgante de zafiro",
+  "nombre_original": "Sapphire Pendant",
+  "rareza": "raro",
+  "coste": 700,
+  "cualidad": "Eres Resistente al daño de hielo."
+ },
+ {
+  "id": "mascara-hannya",
+  "nombre": "Máscara hannya",
+  "nombre_original": "Han'nya Mask",
+  "rareza": "raro",
+  "coste": 700,
+  "cualidad": "El daño infligido a criaturas estremecidas ignora Resistencia."
+ },
+ {
+  "id": "anillo-de-la-hechiceria",
+  "nombre": "Anillo de la hechicería",
+  "nombre_original": "Sorcery Ring",
+  "rareza": "raro",
+  "coste": 800,
+  "cualidad": "Bonificador de +1 a la Defensa Mágica.",
+  "modificadores": [
+   {
+    "stat": "mdef",
+    "valor": "1"
+   }
+  ]
+ },
+ {
+  "id": "botas-del-viajero",
+  "nombre": "Botas del viajero",
+  "nombre_original": "Traveler Boots",
+  "rareza": "raro",
+  "coste": 900,
+  "cualidad": "Cuando el grupo haga un descubrimiento al viajar, obtienes de inmediato 1 Punto Fábula."
+ },
+ {
+  "id": "gorro-puntiagudo-amarillo",
+  "nombre": "Gorro puntiagudo amarillo",
+  "nombre_original": "Yellow Pointy Hat",
+  "rareza": "raro",
+  "coste": 1000,
+  "cualidad": "Bonificador de +1 a las pruebas de magia.",
+  "modificadores": [
+   {
+    "stat": "magia",
+    "valor": "1"
+   }
+  ]
+ },
+ {
+  "id": "yelmo-con-cresta",
+  "nombre": "Yelmo con cresta",
+  "nombre_original": "Crested Helm",
+  "rareza": "raro",
+  "coste": 1000,
+  "cualidad": "Bonificador de +1 a las pruebas de Precisión.",
+  "modificadores": [
+   {
+    "stat": "precision",
+    "valor": "1"
+   }
+  ]
+ },
+ {
+  "id": "guantes-carmesies",
+  "nombre": "Guantes carmesíes",
+  "nombre_original": "Crimson Gloves",
+  "rareza": "raro",
+  "coste": 1000,
+  "cualidad": "Bonificador de +2 a la tirada de Precisión al atacar con armas con propiedad multi."
+ },
+ {
+  "id": "anillo-del-aprendiz",
+  "nombre": "Anillo del aprendiz",
+  "nombre_original": "Apprentice Ring",
+  "rareza": "raro",
+  "coste": 1500,
+  "cualidad": "Si tienes al menos dos vínculos de admiración, obtienes +1 a DEF y +1 a D. MÁG."
+ },
+ {
+  "id": "anillo-del-buho",
+  "nombre": "Anillo del búho",
+  "nombre_original": "Owl Ring",
+  "rareza": "raro",
+  "coste": 1500,
+  "cualidad": "Bonificador de +2 a pruebas enfrentadas que utilicen Perspicacia."
+ },
+ {
+  "id": "anillo-del-leon",
+  "nombre": "Anillo del león",
+  "nombre_original": "Lion Ring",
+  "rareza": "raro",
+  "coste": 1500,
+  "cualidad": "Bonificador de +2 a pruebas enfrentadas que utilicen Voluntad."
+ },
+ {
+  "id": "anillo-de-las-leyendas",
+  "nombre": "Anillo de las leyendas",
+  "nombre_original": "Tales Ring",
+  "rareza": "raro",
+  "coste": 1500,
+  "cualidad": "En un éxito crítico, puedes gastar la oportunidad para obtener 1 Punto Fábula."
+ },
+ {
+  "id": "anillo-cebolla",
+  "nombre": "Anillo cebolla",
+  "nombre_original": "Onion Ring",
+  "rareza": "raro",
+  "coste": 2000,
+  "cualidad": "Aumenta tus PV y PM máximos en 2 puntos por cada clase que poseas.",
+  "modificadores": [
+   {
+    "stat": "pv_max",
+    "valor": "2*CLASES"
+   },
+   {
+    "stat": "pm_max",
+    "valor": "2*CLASES"
+   }
+  ]
+ },
+ {
+  "id": "guantes-de-cuero-de-multigroa",
+  "nombre": "Guantes de cuero de multigroa",
+  "nombre_original": "Multigroa Gloves",
+  "rareza": "raro",
+  "coste": 2000,
+  "cualidad": "Eres inmune a todos los estados alterados."
+ },
+ {
+  "id": "anillo-de-la-escarcha",
+  "nombre": "Anillo de la escarcha",
+  "nombre_original": "Frost Ring",
+  "rareza": "raro",
+  "coste": 2500,
+  "cualidad": "Absorbes el daño de hielo, pero eres Vulnerable al daño de fuego."
+ },
+ {
+  "id": "anillo-del-magma",
+  "nombre": "Anillo del magma",
+  "nombre_original": "Magma Ring",
+  "rareza": "raro",
+  "coste": 2500,
+  "cualidad": "Absorbes el daño de fuego, pero eres Vulnerable al daño de hielo."
+ },
+ {
+  "id": "anillo-del-huevo",
+  "nombre": "Anillo del huevo",
+  "nombre_original": "Egg Ring",
+  "rareza": "raro",
+  "coste": 3000,
+  "cualidad": "Al caer a 0 PV, puedes sobrevivir quedando con 1 PV. El anillo se rompe (repararlo cuesta 2000 z)."
+ }
+]

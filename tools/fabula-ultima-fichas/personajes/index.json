@@ -1,0 +1,8 @@
+{
+  "descripcion": "Personajes que el visor carga por defecto. Añade aquí el nombre de cada archivo .json de esta carpeta.",
+  "personajes": [
+    "aria-valen.json",
+    "lio-arden.json",
+    "nim.json"
+  ]
+}

@@ -1,0 +1,549 @@
+[
+ {
+  "id": "ropa-de-viaje",
+  "nombre": "Ropa de viaje",
+  "nombre_original": "Travel Garb",
+  "rareza": "basico",
+  "coste": 100,
+  "def": {
+   "dado": "DES",
+   "bonus": 1
+  },
+  "mdef": {
+   "dado": "PER",
+   "bonus": 1
+  },
+  "init": -1,
+  "marcial": false,
+  "cualidad": ""
+ },
+ {
+  "id": "camisa-de-seda",
+  "nombre": "Camisa de seda",
+  "nombre_original": "Silk Shirt",
+  "rareza": "basico",
+  "coste": 100,
+  "def": {
+   "dado": "DES",
+   "bonus": 0
+  },
+  "mdef": {
+   "dado": "PER",
+   "bonus": 2
+  },
+  "init": -1,
+  "marcial": false,
+  "cualidad": ""
+ },
+ {
+  "id": "tunica-de-combate",
+  "nombre": "Túnica de combate",
+  "nombre_original": "Combat Tunic",
+  "rareza": "basico",
+  "coste": 150,
+  "def": {
+   "dado": "DES",
+   "bonus": 1
+  },
+  "mdef": {
+   "dado": "PER",
+   "bonus": 1
+  },
+  "init": 0,
+  "marcial": false,
+  "cualidad": ""
+ },
+ {
+  "id": "habito-del-sabio",
+  "nombre": "Hábito del sabio",
+  "nombre_original": "Sage Robe",
+  "rareza": "basico",
+  "coste": 200,
+  "def": {
+   "dado": "DES",
+   "bonus": 1
+  },
+  "mdef": {
+   "dado": "PER",
+   "bonus": 2
+  },
+  "init": -2,
+  "marcial": false,
+  "cualidad": ""
+ },
+ {
+  "id": "brigantina",
+  "nombre": "Brigantina",
+  "nombre_original": "Brigandine",
+  "rareza": "basico",
+  "coste": 150,
+  "def": {
+   "fijo": 10
+  },
+  "mdef": {
+   "dado": "PER",
+   "bonus": 0
+  },
+  "init": -2,
+  "marcial": true,
+  "cualidad": ""
+ },
+ {
+  "id": "coraza-de-bronce",
+  "nombre": "Coraza de bronce",
+  "nombre_original": "Bronze Plate",
+  "rareza": "basico",
+  "coste": 200,
+  "def": {
+   "fijo": 11
+  },
+  "mdef": {
+   "dado": "PER",
+   "bonus": 0
+  },
+  "init": -3,
+  "marcial": true,
+  "cualidad": ""
+ },
+ {
+  "id": "coraza-runica",
+  "nombre": "Coraza rúnica",
+  "nombre_original": "Runic Plate",
+  "rareza": "basico",
+  "coste": 250,
+  "def": {
+   "fijo": 11
+  },
+  "mdef": {
+   "dado": "PER",
+   "bonus": 1
+  },
+  "init": -3,
+  "marcial": true,
+  "cualidad": ""
+ },
+ {
+  "id": "coraza-de-acero",
+  "nombre": "Coraza de acero",
+  "nombre_original": "Steel Plate",
+  "rareza": "basico",
+  "coste": 300,
+  "def": {
+   "fijo": 12
+  },
+  "mdef": {
+   "dado": "PER",
+   "bonus": 0
+  },
+  "init": -4,
+  "marcial": true,
+  "cualidad": ""
+ },
+ {
+  "id": "chaqueta-gelatinosa",
+  "nombre": "Chaqueta gelatinosa",
+  "nombre_original": "Flanjacket",
+  "rareza": "raro",
+  "coste": 600,
+  "def": {
+   "dado": "DES",
+   "bonus": 1
+  },
+  "mdef": {
+   "dado": "PER",
+   "bonus": 1
+  },
+  "init": -1,
+  "marcial": false,
+  "cualidad": "Eres inmune al estado envenenado."
+ },
+ {
+  "id": "tunica-de-las-sombras",
+  "nombre": "Túnica de las sombras",
+  "nombre_original": "Shadow Tunic",
+  "rareza": "raro",
+  "coste": 650,
+  "def": {
+   "dado": "DES",
+   "bonus": 1
+  },
+  "mdef": {
+   "dado": "PER",
+   "bonus": 1
+  },
+  "init": 4,
+  "marcial": false,
+  "cualidad": "Bonificador de +4 al modificador de Iniciativa (ya incluido)."
+ },
+ {
+  "id": "vesta-de-la-zorra",
+  "nombre": "Vesta de la zorra",
+  "nombre_original": "Fox Vest",
+  "rareza": "raro",
+  "coste": 650,
+  "def": {
+   "dado": "DES",
+   "bonus": 1
+  },
+  "mdef": {
+   "dado": "PER",
+   "bonus": 1
+  },
+  "init": 0,
+  "marcial": false,
+  "cualidad": "Eres inmune al estado lento."
+ },
+ {
+  "id": "desperado",
+  "nombre": "Desperado",
+  "nombre_original": "Desperado",
+  "rareza": "raro",
+  "coste": 750,
+  "def": {
+   "dado": "DES",
+   "bonus": 1
+  },
+  "mdef": {
+   "dado": "PER",
+   "bonus": 1
+  },
+  "init": -1,
+  "marcial": false,
+  "cualidad": "Al usar la habilidad Ráfaga, su coste en PM se reduce a la mitad."
+ },
+ {
+  "id": "librea-de-sirviente",
+  "nombre": "Librea de sirviente",
+  "nombre_original": "Maid Livery",
+  "rareza": "raro",
+  "coste": 800,
+  "def": {
+   "dado": "DES",
+   "bonus": 1
+  },
+  "mdef": {
+   "dado": "PER",
+   "bonus": 2
+  },
+  "init": -2,
+  "marcial": false,
+  "cualidad": "Cuando una poción creada con PI cure PV, recupera 5 PV adicionales."
+ },
+ {
+  "id": "habito-domestico",
+  "nombre": "Hábito doméstico",
+  "nombre_original": "Butler Suit",
+  "rareza": "raro",
+  "coste": 800,
+  "def": {
+   "dado": "DES",
+   "bonus": 1
+  },
+  "mdef": {
+   "dado": "PER",
+   "bonus": 2
+  },
+  "init": -2,
+  "marcial": false,
+  "cualidad": "Cuando una poción creada con PI restaure PM, recupera 5 PM adicionales."
+ },
+ {
+  "id": "alas-de-la-valquiria",
+  "nombre": "Alas de la valquiria",
+  "nombre_original": "Valkyrie Wings",
+  "rareza": "raro",
+  "coste": 900,
+  "def": {
+   "fijo": 11
+  },
+  "mdef": {
+   "dado": "PER",
+   "bonus": 1
+  },
+  "init": -3,
+  "marcial": true,
+  "cualidad": "Al lanzar Salto, su coste en Puntos de Mente se reduce a la mitad."
+ },
+ {
+  "id": "coraza-de-cristal",
+  "nombre": "Coraza de cristal",
+  "nombre_original": "Crystal Cuirass",
+  "rareza": "raro",
+  "coste": 900,
+  "def": {
+   "fijo": 11
+  },
+  "mdef": {
+   "dado": "PER",
+   "bonus": 0
+  },
+  "init": -3,
+  "marcial": true,
+  "cualidad": "Eres Resistente al daño oscuro."
+ },
+ {
+  "id": "chaqueta-tachonada",
+  "nombre": "Chaqueta tachonada",
+  "nombre_original": "Studded Jacket",
+  "rareza": "raro",
+  "coste": 900,
+  "def": {
+   "dado": "DES",
+   "bonus": 1
+  },
+  "mdef": {
+   "dado": "PER",
+   "bonus": 1
+  },
+  "init": -1,
+  "marcial": false,
+  "cualidad": "Bonificador de +1 a las tiradas de Precisión con dagas."
+ },
+ {
+  "id": "armadura-heroica",
+  "nombre": "Armadura heroica",
+  "nombre_original": "Heroic Armor",
+  "rareza": "raro",
+  "coste": 1000,
+  "def": {
+   "fijo": 12
+  },
+  "mdef": {
+   "dado": "PER",
+   "bonus": 0
+  },
+  "init": -4,
+  "marcial": true,
+  "cualidad": "Los éxitos críticos de ataques y conjuros hostiles contra ti no generan oportunidades."
+ },
+ {
+  "id": "cinturon-negro",
+  "nombre": "Cinturón negro",
+  "nombre_original": "Black Belt",
+  "rareza": "raro",
+  "coste": 1000,
+  "def": {
+   "dado": "DES",
+   "bonus": 0
+  },
+  "mdef": {
+   "dado": "PER",
+   "bonus": 0
+  },
+  "init": 0,
+  "marcial": false,
+  "cualidad": "Tus ataques con armas de la categoría de pelea infligen 5 daños extra."
+ },
+ {
+  "id": "tunica-de-meditacion",
+  "nombre": "Túnica de meditación",
+  "nombre_original": "Meditation Robe",
+  "rareza": "raro",
+  "coste": 1000,
+  "def": {
+   "dado": "DES",
+   "bonus": 1
+  },
+  "mdef": {
+   "dado": "PER",
+   "bonus": 2
+  },
+  "init": -2,
+  "marcial": false,
+  "cualidad": "Cuando recuperes Puntos de Mente, recuperas 5 PM adicionales."
+ },
+ {
+  "id": "tunica-del-archimago",
+  "nombre": "Túnica del archimago",
+  "nombre_original": "Archmage Robe",
+  "rareza": "raro",
+  "coste": 1200,
+  "def": {
+   "dado": "DES",
+   "bonus": 1
+  },
+  "mdef": {
+   "dado": "PER",
+   "bonus": 2
+  },
+  "init": -2,
+  "marcial": false,
+  "cualidad": "Bonificador de +1 a las pruebas de magia.",
+  "modificadores": [
+   {
+    "stat": "magia",
+    "valor": "1"
+   }
+  ]
+ },
+ {
+  "id": "robottraje",
+  "nombre": "Robottraje",
+  "nombre_original": "Robosuit",
+  "rareza": "raro",
+  "coste": 1250,
+  "def": {
+   "fijo": 11
+  },
+  "mdef": {
+   "dado": "PER",
+   "bonus": 1
+  },
+  "init": -3,
+  "marcial": true,
+  "cualidad": "Eres Inmune a tierra y veneno, pero Vulnerable al daño de rayo."
+ },
+ {
+  "id": "placa-adamantina",
+  "nombre": "Placa adamantina",
+  "nombre_original": "Adamantite Plate",
+  "rareza": "raro",
+  "coste": 1300,
+  "def": {
+   "fijo": 12
+  },
+  "mdef": {
+   "dado": "PER",
+   "bonus": 0
+  },
+  "init": -4,
+  "marcial": true,
+  "cualidad": "Eres Resistente al daño físico."
+ },
+ {
+  "id": "yoroi-ardiente",
+  "nombre": "Yoroi ardiente",
+  "nombre_original": "Blazing Yoroi",
+  "rareza": "raro",
+  "coste": 1300,
+  "def": {
+   "fijo": 12
+  },
+  "mdef": {
+   "dado": "PER",
+   "bonus": 0
+  },
+  "init": -4,
+  "marcial": true,
+  "cualidad": "Bonificador de +1 a las pruebas de Precisión.",
+  "modificadores": [
+   {
+    "stat": "precision",
+    "valor": "1"
+   }
+  ]
+ },
+ {
+  "id": "mueca-diabolica",
+  "nombre": "Mueca diabólica",
+  "nombre_original": "Fiend Grin",
+  "rareza": "raro",
+  "coste": 1500,
+  "def": {
+   "fijo": 12
+  },
+  "mdef": {
+   "dado": "PER",
+   "bonus": 0
+  },
+  "init": -4,
+  "marcial": true,
+  "cualidad": "Tras recibir un ataque cuerpo a cuerpo, infliges 5 daños de fuego al atacante."
+ },
+ {
+  "id": "bioarmadura",
+  "nombre": "Bioarmadura",
+  "nombre_original": "Bioarmor",
+  "rareza": "raro",
+  "coste": 1700,
+  "def": {
+   "fijo": 11
+  },
+  "mdef": {
+   "dado": "PER",
+   "bonus": 0
+  },
+  "init": -3,
+  "marcial": true,
+  "cualidad": "Eres Inmune al daño de veneno."
+ },
+ {
+  "id": "tunica-blanca",
+  "nombre": "Túnica blanca",
+  "nombre_original": "White Robe",
+  "rareza": "raro",
+  "coste": 1700,
+  "def": {
+   "dado": "DES",
+   "bonus": 1
+  },
+  "mdef": {
+   "dado": "PER",
+   "bonus": 2
+  },
+  "init": -2,
+  "marcial": false,
+  "cualidad": "Los conjuros que lances que curen PV restauran 5 PV adicionales."
+ },
+ {
+  "id": "ropaje-de-la-abuela",
+  "nombre": "Ropaje de la abuela",
+  "nombre_original": "Grandma's Dress",
+  "rareza": "raro",
+  "coste": 2000,
+  "def": {
+   "dado": "DES",
+   "bonus": 0
+  },
+  "mdef": {
+   "dado": "PER",
+   "bonus": 2
+  },
+  "init": -1,
+  "marcial": false,
+  "cualidad": "Consideras tu dado de Voluntad incrementado en un tamaño (máximo d12).",
+  "modificadores": [
+   {
+    "stat": "dado_VOL",
+    "valor": "1"
+   }
+  ]
+ },
+ {
+  "id": "tunica-negra",
+  "nombre": "Túnica negra",
+  "nombre_original": "Black Robe",
+  "rareza": "raro",
+  "coste": 2200,
+  "def": {
+   "dado": "DES",
+   "bonus": 1
+  },
+  "mdef": {
+   "dado": "PER",
+   "bonus": 2
+  },
+  "init": -2,
+  "marcial": false,
+  "cualidad": "Los conjuros que lances infligen 5 puntos de daño adicional."
+ },
+ {
+  "id": "tunica-roja",
+  "nombre": "Túnica roja",
+  "nombre_original": "Red Robe",
+  "rareza": "raro",
+  "coste": 2500,
+  "def": {
+   "dado": "DES",
+   "bonus": 0
+  },
+  "mdef": {
+   "dado": "PER",
+   "bonus": 2
+  },
+  "init": -1,
+  "marcial": false,
+  "cualidad": "Se te considera equipado con un arma arcana para los requisitos de habilidades.",
+  "cuenta_como_arma_arcana": true
+ }
+]

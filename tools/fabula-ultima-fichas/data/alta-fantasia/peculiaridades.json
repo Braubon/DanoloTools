@@ -1,0 +1,283 @@
+[
+ {
+  "id": "arboreo",
+  "nombre": "Arbóreo",
+  "nombre_original": "Arboreal",
+  "descripcion": "Eres una criatura vegetal consciente dotada de inteligencia humanoide.",
+  "efecto": "- Elige un estado alterado entre confundido, enfurecido o estremecido: eres inmune al estado elegido. No obstante, te vuelves Vulnerable a un tipo de daño a elegir entre aire, rayo, tierra, fuego o hielo.\n- Aprendes un conjuro de PNJ (del catálogo del manual básico, excepto Devastación). Si requiere prueba de magia, utiliza [PER + VOL]. Puedes personalizar su nombre y estética. Cuando lances este conjuro bajo la luz solar directa, su coste de PM se reduce en 5 (mínimo 0 PM).",
+  "elecciones": [
+   {
+    "clave": "inmunidad",
+    "tipo": "seleccion",
+    "valores": [
+     "Confundido",
+     "Enfurecido",
+     "Estremecido"
+    ],
+    "etiqueta": "Inmune a",
+    "cantidad": 1
+   },
+   {
+    "clave": "vulnerabilidad",
+    "tipo": "seleccion",
+    "valores": [
+     "Aire",
+     "Rayo",
+     "Tierra",
+     "Fuego",
+     "Hielo"
+    ],
+    "etiqueta": "Vulnerable a",
+    "cantidad": 1
+   },
+   {
+    "clave": "conjuro",
+    "tipo": "conjuros",
+    "filtro": {
+     "lista": [
+      "pnj"
+     ],
+     "excluir": [
+      "pnj-devastacion"
+     ]
+    },
+    "etiqueta": "Conjuro de PNJ",
+    "min": "1",
+    "max": "1"
+   }
+  ]
+ },
+ {
+  "id": "maldito",
+  "nombre": "Maldito",
+  "nombre_original": "Cursed",
+  "descripcion": "Cargas con una maldición sobrenatural vinculada a una de las grandes amenazas del mundo.",
+  "efecto": "- Cuando vayas a realizar una prueba, puedes describir cómo tu maldición interfiere y obtener automáticamente una pifia (ambos dados muestran un 1). Si lo haces, recibes 2 Puntos Fábula en lugar de 1 y generas una oportunidad de forma habitual.\n- Si logras romper la maldición resolviendo la amenaza, obtienes de inmediato una Habilidad Heroica a tu elección (incluso de clases que no poseas o sin cumplir sus requisitos previos).",
+  "elecciones": [
+   {
+    "clave": "maldicion",
+    "tipo": "texto_largo",
+    "etiqueta": "Maldición y amenaza vinculada"
+   }
+  ]
+ },
+ {
+  "id": "alma-elemental",
+  "nombre": "Alma elemental",
+  "nombre_original": "Elemental Soul",
+  "descripcion": "Estás imbuido de la esencia de un elemento primordial.",
+  "efecto": "- Elige tu tipo elemental: aire, rayo, tierra, fuego o hielo. Obtienes Resistencia al tipo elegido y, siempre que inflijas daño, puedes convertirlo a ese tipo. Te vuelves Vulnerable a otro tipo distinto entre esos cinco.\n- Obtienes la capacidad de realizar Rituales de Elementalismo que manipulen exclusivamente tu elemento escogido sin necesidad de poseer la clase correspondiente.",
+  "elecciones": [
+   {
+    "clave": "elemento",
+    "tipo": "seleccion",
+    "valores": [
+     "Aire",
+     "Rayo",
+     "Tierra",
+     "Fuego",
+     "Hielo"
+    ],
+    "etiqueta": "Elemento (Resistencia)",
+    "cantidad": 1
+   },
+   {
+    "clave": "vulnerabilidad",
+    "tipo": "seleccion",
+    "valores": [
+     "Aire",
+     "Rayo",
+     "Tierra",
+     "Fuego",
+     "Hielo"
+    ],
+    "etiqueta": "Vulnerable a",
+    "cantidad": 1
+   }
+  ]
+ },
+ {
+  "id": "manos-vacias",
+  "nombre": "Manos vacías",
+  "nombre_original": "Empty Hands",
+  "descripcion": "Has renunciado al uso de armas, combatiendo solo con puños y pies.",
+  "efecto": "- Tus ataques desarmados causan +6 de daño adicional (+10 de daño adicional si eres de nivel 30 o superior).\n- Mientras no tengas armas ni escudos equipados (salvo ataques desarmados), obtienes un bonificador de +1 a la Defensa y +1 a la Defensa Mágica.",
+  "modificadores": [
+   {
+    "stat": "def",
+    "valor": "1",
+    "condicion": "sin_armas_ni_escudos"
+   },
+   {
+    "stat": "mdef",
+    "valor": "1",
+    "condicion": "sin_armas_ni_escudos"
+   }
+  ]
+ },
+ {
+  "id": "corazon-encadenado",
+  "nombre": "Corazón encadenado",
+  "nombre_original": "Fettered Heart",
+  "descripcion": "",
+  "efecto": "- Creas un Vínculo con 3 emociones hacia la figura o institución que moldeó tu vida y formulas tres preceptos obligatorios (cosas que siempre debes hacer o nunca debes hacer).\n- La primera vez en cada escena que quebrantes un precepto, sufres de inmediato los estados débil y estremecido, y pierdes la mitad de tus PV y PM actuales, pero ganas 2 Puntos Fábula.\n- Al quebrantar preceptos por 7.ª vez, pierdes esta Peculiaridad, cambias tu Tema a Pertenencia, Culpa, Justicia o Venganza, recuperas todos tus PV y PM, eliminas todos tus estados, obtienes una Habilidad Heroica inmediata y la fuerza de todos tus Vínculos aumenta en +1 punto de forma permanente.",
+  "requisitos": {
+   "texto": "Tu Tema debe ser Duda (y no puede cambiarse mientras poseas esta Peculiaridad).",
+   "tema": "Duda"
+  },
+  "elecciones": [
+   {
+    "clave": "figura",
+    "tipo": "texto",
+    "etiqueta": "Figura o institución (vínculo de 3 emociones)"
+   },
+   {
+    "clave": "preceptos",
+    "tipo": "lista_texto",
+    "etiqueta": "Preceptos",
+    "min": "3",
+    "max": "3"
+   },
+   {
+    "clave": "quebrantos",
+    "tipo": "texto",
+    "etiqueta": "Preceptos quebrantados (n.º)"
+   }
+  ]
+ },
+ {
+  "id": "vuelo",
+  "nombre": "Vuelo",
+  "nombre_original": "Flight",
+  "descripcion": "Posees alas o levitas por naturaleza mágica.",
+  "efecto": "- Puedes volar de forma constante: tus ataques cuerpo a cuerpo pueden alcanzar a objetivos voladores y no puedes ser blanco de ataques cuerpo a cuerpo a menos que el atacante vuele o alcance objetivos aéreos.\n- Pierdes los beneficios de volar mientras estés en Crisis o en espacios cerrados estrechos. Si sufres daño de aire, rayo o hielo durante un conflicto, pierdes los beneficios de volar hasta el inicio de tu próximo turno."
+ },
+ {
+  "id": "mundo-distante",
+  "nombre": "De un mundo distante",
+  "nombre_original": "From a Distant World",
+  "descripcion": "Procedes de otro planeta, dimensión o época temporal.",
+  "efecto": "- Al participar en una escena de conflicto, obtienes automáticamente 1 Punto Fábula adicional.\n- Puedes invocar un Rasgo para repetir dados incluso tras haber obtenido una pifia (si lo haces, renuncias al Punto Fábula otorgado por la pifia).",
+  "elecciones": [
+   {
+    "clave": "origen",
+    "tipo": "texto",
+    "etiqueta": "Mundo, dimensión o época de procedencia"
+   }
+  ]
+ },
+ {
+  "id": "destino-glorioso",
+  "nombre": "Destino glorioso",
+  "nombre_original": "Glorious Fate",
+  "descripcion": "Existe una profecía formal sobre tus hazañas vinculada a una gran crisis mundial.",
+  "efecto": "- Al final de cada sesión (aproximadamente 4 horas de juego), antes de asignar PX, evalúas tus actos frente a la profecía:\n  - *La profecía se cumplió:* Pierdes esta Peculiaridad, restauras todos tus PV y PM, eliminas todos tus estados y obtienes una Habilidad Heroica a tu elección.\n  - *Actuaste conforme a la profecía:* Restauras todos tus PV y PM, y eliminas todos tus estados.\n  - *Actuaste de forma neutra:* No ocurre nada.\n  - *Actuaste en contra de la profecía:* Ganas 1 Punto Fábula.\n  - *La profecía jamás podrá cumplirse:* Pierdes esta Peculiaridad, ganas 6 Puntos Fábula y una Habilidad Heroica inmediata.",
+  "elecciones": [
+   {
+    "clave": "profecia",
+    "tipo": "texto_largo",
+    "etiqueta": "Profecía"
+   }
+  ]
+ },
+ {
+  "id": "reliquia-familiar",
+  "nombre": "Reliquia familiar",
+  "nombre_original": "Heirloom",
+  "descripcion": "Posees un objeto raro de gran trascendencia personal.",
+  "efecto": "- Obtienes un objeto raro valorado en 1200 z o menos, o dos objetos raros de hasta 800 z cada uno.\n- Una vez por sesión, el DJ puede entregarte 1 Punto Fábula para introducir complicaciones derivadas de la posesión de la reliquia.\n- Los objetos obtenidos por esta Peculiaridad no pueden ser destruidos, dañados, perdidos ni robados sin tu consentimiento expreso.",
+  "elecciones": [
+   {
+    "clave": "reliquia",
+    "tipo": "texto_largo",
+    "etiqueta": "Reliquia (añádela también en Equipo)"
+   }
+  ]
+ },
+ {
+  "id": "vehiculo-viejo",
+  "nombre": "Vehículo viejo",
+  "nombre_original": "Old Transport",
+  "descripcion": "Posees un vehículo antiguo (terrestre, barco o aeronave) con espacio para tu grupo y 2–3 invitados, no apto para combate.",
+  "efecto": "- Una vez por sesión, el DJ puede darte 2 Puntos Fábula para provocar averías de motor, impactos o percances mecánicos.\n- El vehículo jamás puede ser destruido sin tu permiso como jugador.",
+  "elecciones": [
+   {
+    "clave": "vehiculo",
+    "tipo": "texto_largo",
+    "etiqueta": "Vehículo"
+   }
+  ]
+ },
+ {
+  "id": "resurgido",
+  "nombre": "Resurgido",
+  "nombre_original": "Revenant",
+  "descripcion": "Has regresado de la muerte incapaz de integrarte en la corriente de almas.",
+  "efecto": "- No se te considera una criatura viva: obtienes Inmunidad a daño de sombra, Inmunidad a daño de veneno e Inmunidad al estado envenenado, pero eres Vulnerable a daño de luz.\n- No necesitas respirar, comer ni beber, pero sigues las reglas normales de descanso y recuperación de PV (los efectos curativos no te dañan).\n- Siempre que inflijas daño, puedes convertirlo en daño de sombra. Todo el daño de sombra que inflijas ignora Inmunidades y Resistencias."
+ },
+ {
+  "id": "prodigios-rivales",
+  "nombre": "Prodigios rivales",
+  "nombre_original": "Rival Prodigies",
+  "descripcion": "Posees un talento supremo empañado por la sombra de tu eterno rival.",
+  "efecto": "- Escoges tu especialización: Rituales, Habilidades o Conjuros. Defines a tu rival (PNJ que se convierte en Villano menor con 5 Puntos Última) y creas un Vínculo hacia él con Admiración o Inferioridad.\n- Cuando una regla vinculada a tu especialización requiera gastar PV o PM, puedes gastar 1 Punto Fábula para ignorar totalmente ese coste.\n- Mientras tu rival esté presente en la escena con 1 o más Puntos Última, cualquier prueba que falles se convierte automáticamente en pifia (no puede repetirse y ganas 1 PF).",
+  "elecciones": [
+   {
+    "clave": "especialidad",
+    "tipo": "seleccion",
+    "valores": [
+     "Rituales",
+     "Habilidades",
+     "Conjuros"
+    ],
+    "etiqueta": "Especialización",
+    "cantidad": 1
+   },
+   {
+    "clave": "rival",
+    "tipo": "texto",
+    "etiqueta": "Rival"
+   }
+  ]
+ },
+ {
+  "id": "robot",
+  "nombre": "Robot",
+  "nombre_original": "Robot",
+  "descripcion": "Eres un ser artificial animado mediante magia o ciencia.",
+  "efecto": "- No se te considera una criatura viva: obtienes Inmunidad a daño de veneno, Resistencia a daño de tierra e Inmunidad al estado envenenado. No necesitas respirar, comer ni beber.\n- Obtienes un bonificador de +2 a todas las pruebas realizadas para examinar o interactuar con maquinaria, tecnología y constructos (salvo pruebas de precisión y magia)."
+ },
+ {
+  "id": "heraldo-ruina",
+  "nombre": "Heraldo de la ruina",
+  "nombre_original": "Ruinbringer",
+  "descripcion": "Estás destinado a desatar una catástrofe que amenaza al mundo.",
+  "efecto": "- Defines la Ruina que traerás al mundo (se convierte en amenaza del escenario). Hasta que acontezca, no puedes recurrir al Sacrificio.\n- Cuando una regla requiera gastar PV, PM o Puntos Fábula, puedes hacer avanzar tu Ruina en 1 punto para ignorar el coste (el DJ recibe una oportunidad inmediata al acabar la escena).\n- Al final de cada sesión, lanzas 2d20: si obtienes un resultado igual o inferior a tu nivel, la Ruina avanza 1 punto (avanza siempre si eres nivel 40+).\n- Al avanzar por 9.ª vez, pierdes la Peculiaridad, la Ruina se manifiesta como Villano supremo (15 Puntos Última) y obtienes de inmediato una Habilidad Heroica a tu elección.",
+  "elecciones": [
+   {
+    "clave": "ruina",
+    "tipo": "texto_largo",
+    "etiqueta": "La Ruina"
+   },
+   {
+    "clave": "avance",
+    "tipo": "texto",
+    "etiqueta": "Avance de la Ruina (0-9)"
+   }
+  ]
+ },
+ {
+  "id": "almas-entrelazadas",
+  "nombre": "Almas entrelazadas",
+  "nombre_original": "Souls Entwined",
+  "descripcion": "Habitas dentro del cuerpo de otro personaje jugador tras un pacto mágico.",
+  "efecto": "- Ambos creáis un Vínculo mutuo con Admiración, Afecto o Lealtad y podéis comunicarros telepáticamente.\n- Fuera de conflicto puedes entrar o salir del cuerpo del anfitrión a voluntad; en conflicto, entrar o salir se realiza al inicio de tu turno sin consumir acción. Dentro del cuerpo, no puedes percibir el exterior con tus 5 sentidos ni ser dañado o interactuar físicamente.\n- Cuando el anfitrión se rinde, entras en su cuerpo y no puedes salir hasta que recupere el conocimiento.\n- Si el anfitrión se Sacrifica, eliges: Sobrevivir (sales del cuerpo con 0 PV, pierdes la Peculiaridad, te rindes y ganas +10 PV y +10 PM máximos permanentes) o Despedida Final (te Sacrificas tú en su lugar, curándole PV iguales a su valor de Crisis).",
+  "elecciones": [
+   {
+    "clave": "anfitrion",
+    "tipo": "texto",
+    "etiqueta": "Personaje anfitrión"
+   }
+  ]
+ }
+]

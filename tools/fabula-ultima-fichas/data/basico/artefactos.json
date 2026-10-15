@@ -1,0 +1,79 @@
+[
+ {
+  "id": "astroscopio",
+  "nombre": "Astroscopio",
+  "nombre_original": "Astroscopium",
+  "descripcion": "Un orbe de proporciones titánicas en cuyo interior giran vórtices de nubes estelares.",
+  "efecto": "Quien pose su mano sobre este artefacto y sincronice su mente con las energías interiores puede manipular la alternancia del día y de la noche en un radio de 1 jornada de viaje. En esa misma área puede alterar por completo el clima. Su funcionamiento emula un ritual de Entropismo (ciclo día/noche) o Elementalismo (meteorología), pero no consume Puntos de Mente ni requiere dominar dichas disciplinas."
+ },
+ {
+  "id": "varita-de-las-selvas",
+  "nombre": "Varita de las selvas",
+  "nombre_original": "Wand of the Woods",
+  "descripcion": "Una vara de madera viva del tamaño de un dedo, adornada con brotes de esmeralda.",
+  "efecto": "Quien la empuñe puede usar 1 acción para transformar a una criatura voluntaria (incluyéndose a sí mismo) en un animal de tamaño diminuto. Mientras mantenga esta forma, no puede hablar, combatir ni lanzar magia. El portador puede emplear 1 acción para revertir el efecto. Si la varita se extravía, la reversión solo puede lograrse mediante un ritual de Quimerismo de potencia extrema."
+ },
+ {
+  "id": "yelmo-de-los-pensamientos",
+  "nombre": "Yelmo de los pensamientos",
+  "nombre_original": "Helm of Thoughts",
+  "descripcion": "Forjado a partir del cráneo pulido de una entidad biomecánica desconocida; extremadamente ligero.",
+  "efecto": "Quien porte el yelmo percibe sin esfuerzo las emociones y pensamientos superficiales de quienes lo rodean. Concentrándose y empleando 1 acción, puede sondear la mente de una criatura viva concreta sin que esta sospeche."
+ },
+ {
+  "id": "hendedora-de-almas",
+  "nombre": "Hendedora de almas",
+  "nombre_original": "Soulcleaver",
+  "descripcion": "Una hoja rota que emana un brillo espectral y fosforescente.",
+  "efecto": "Inútil como arma convencional: ejecutando una coreografía ritual precisa, su portador puede aislar una conciencia concreta de la corriente de las almas y cercenar su conexión con el ciclo vital. Emula un efecto de Ritualismo de potencia extrema."
+ },
+ {
+  "id": "pluma-ultima",
+  "nombre": "Pluma Última",
+  "nombre_original": "Ultima Feather",
+  "descripcion": "Una pluma de longitud similar a un antebrazo que fulgura con iridiscencias de arcoíris.",
+  "efecto": "Las leyendas afirman que triturar la pluma hasta reducirla a polvo permite resucitar a una criatura muerta recientemente. Comprobarlo implica la destrucción definitiva del artefacto."
+ },
+ {
+  "id": "sangre-oscura",
+  "nombre": "Sangre oscura",
+  "nombre_original": "Dark Blood",
+  "descripcion": "Un frasco denso que contiene un licor viscoso, negro y alquitranado.",
+  "efecto": "Quien ingiera este elixir, al morir, no retorna a la corriente vital del mundo: retiene su consciencia y permanece anclado al plano de los vivos en forma de espíritu."
+ },
+ {
+  "id": "escama-del-viento",
+  "nombre": "Escama del viento",
+  "nombre_original": "Scale of the Wind",
+  "descripcion": "Una escama dorada traslúcida del tamaño aproximado de una cabeza humana.",
+  "efecto": "Quien mantenga esta escama en contacto directo con su piel puede levitar y volar a voluntad. El uso prolongado puede inducir mutaciones fisiológicas drásticas."
+ },
+ {
+  "id": "cetro-de-la-tierra-ascendente",
+  "nombre": "Cetro de la tierra ascendente",
+  "nombre_original": "Scepter of the Rising Earth",
+  "descripcion": "Una maza dorada de oricalco con un cristal que aprisiona espíritus telúricos primordiales.",
+  "efecto": "Si se inserta en el epicentro de un «anillo de oricalco» adecuado, es capaz de arrancar del suelo masas continentales enteras y hacerlas levitar como islas flotantes."
+ },
+ {
+  "id": "esquirla-de-la-voz",
+  "nombre": "Esquirla de la Voz",
+  "nombre_original": "Shard of the Voice",
+  "descripcion": "Un fragmento cristalino vítreo del tamaño de un puño.",
+  "efecto": "Quien sostenga el cristal escucha voces espectrales que susurran revelaciones sobre riquezas, maquinaciones políticas y fórmulas arcanas. Solo las oye quien lo empuña."
+ },
+ {
+  "id": "tomo-del-portal",
+  "nombre": "Tomo del Portal",
+  "nombre_original": "Tome of the Gate",
+  "descripcion": "Un tomo encuadernado en cuero fósil cuyo ojo carmesí central parpadea y vigila.",
+  "efecto": "Expuesto a la luz de la luna llena, abre un portal bidireccional estable hacia el Cosmos que permanece abierto hasta el alba."
+ },
+ {
+  "id": "zenit-del-difunto",
+  "nombre": "Zenit del difunto",
+  "nombre_original": "Dead Man's Zenit",
+  "descripcion": "Una moneda antigua de oro desgastada que exhibe una calavera sonriente en su reverso.",
+  "efecto": "Quien la porte puede comandar a una tripulación de corsarios fantasmales y su navío espectral para una batalla, a cambio de condenar su propia alma a formar parte de la tripulación al morir."
+ }
+]

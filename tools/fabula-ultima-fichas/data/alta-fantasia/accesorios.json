@@ -1,0 +1,72 @@
+[
+ {
+  "id": "anillo-de-negacion",
+  "nombre": "Anillo de negación",
+  "nombre_original": "Ring of Denial",
+  "rareza": "raro",
+  "coste": 600,
+  "cualidad": "Al lanzar el conjuro Antimagia, su coste de PM pasa a ser «10 × obj.» y su objetivo pasa a ser «Hasta tres criaturas»."
+ },
+ {
+  "id": "anillo-del-ocultista",
+  "nombre": "Anillo del ocultista",
+  "nombre_original": "Ring of the Occultist",
+  "rareza": "raro",
+  "coste": 600,
+  "cualidad": "Los conjuros que lances cuyo objetivo sea «Hasta tres criaturas» pasan a tener como objetivo «Hasta cuatro criaturas» (debes gastar los PM adicionales correspondientes al cuarto objetivo)."
+ },
+ {
+  "id": "anillo-de-marfil",
+  "nombre": "Anillo de marfil",
+  "nombre_original": "Ivory Ring",
+  "rareza": "raro",
+  "coste": 700,
+  "cualidad": "Cuando tu Compañero fiel sufra pérdida de PV, puedes optar por perder una cantidad idéntica de PV en su lugar."
+ },
+ {
+  "id": "paleta-magica",
+  "nombre": "Paleta mágica",
+  "nombre_original": "Magic Palette",
+  "rareza": "raro",
+  "coste": 700,
+  "cualidad": "Al infligir daño a una criatura que porte uno de tus símbolos, dicho daño ignora Resistencias."
+ },
+ {
+  "id": "diadema-del-estratega",
+  "nombre": "Diadema del estratega",
+  "nombre_original": "Tactician's Diadem",
+  "rareza": "raro",
+  "coste": 800,
+  "cualidad": "Cuando un aliado actúe inmediatamente después de ti en la misma ronda de conflicto (por efectos como Cuadriga arrolladora, Danza del uróboros o Tiempo robado), recupera 5 PM al inicio de su turno."
+ },
+ {
+  "id": "bolsa-de-alquimista",
+  "nombre": "Bolsa de alquimista",
+  "nombre_original": "Alchemist's Bag",
+  "rareza": "raro",
+  "coste": 1000,
+  "cualidad": "Al preparar una poción mediante la habilidad Tecnologías (Alquimia), puedes lanzar un d20 adicional en la tabla de efectos."
+ },
+ {
+  "id": "colgante-del-brujo",
+  "nombre": "Colgante del brujo",
+  "nombre_original": "Sorcerer's Pendant",
+  "rareza": "raro",
+  "coste": 1200,
+  "cualidad": "Si has adquirido la habilidad Golpe bajo, su daño extra también se aplica a conjuros ofensivos que tengan como único objetivo a una criatura que sufra al menos un estado alterado."
+ },
+ {
+  "id": "lazo-danzante",
+  "nombre": "Lazo danzante",
+  "nombre_original": "Dancing Ribbon",
+  "rareza": "raro",
+  "coste": 2000,
+  "cualidad": "Mientras tengas equipado este accesorio, tu dado de Destreza aumenta en un tamaño de dado (máximo d12).",
+  "modificadores": [
+   {
+    "stat": "dado_DES",
+    "valor": "1"
+   }
+  ]
+ }
+]

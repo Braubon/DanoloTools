@@ -1,0 +1,148 @@
+{
+  "formato": "fabula-ultima-pj",
+  "version": 1,
+  "id": "c7gf5da7csey",
+  "creado": "2026-10-15T11:25:28.666Z",
+  "modificado": "2026-10-15T11:25:28.676Z",
+  "contenido": {
+    "atlas": [
+      "basico"
+    ],
+    "reglas": {}
+  },
+  "modo_libre": false,
+  "creacion_completa": true,
+  "identidad": {
+    "nombre": "Lio Arden",
+    "pronombres": "él",
+    "jugador": "Dani",
+    "identidad": "Erudito errante obsesionado con las ruinas antiguas",
+    "tema": "Duda",
+    "origen": "Biblioteca de Artemis",
+    "especie": "Elfo",
+    "apariencia": "Gafas redondas, túnica llena de bolsillos y tinta en los dedos."
+  },
+  "nivel": 5,
+  "px": 0,
+  "pf": 3,
+  "zenit": 220,
+  "ahorros": {
+    "restante": 200,
+    "d6": 2,
+    "total": 220
+  },
+  "atributos": {
+    "perfil": "especializado",
+    "base": {
+      "DES": 6,
+      "PER": 10,
+      "VIG": 6,
+      "VOL": 10
+    },
+    "mejoras": []
+  },
+  "clases": [
+    {
+      "id": "elementalista",
+      "habilidades": {
+        "magia-elemental": 2,
+        "elementalismo-ritual": 1
+      },
+      "beneficio": null
+    },
+    {
+      "id": "erudito",
+      "habilidades": {
+        "concentracion": 1,
+        "intuicion-fulgurante": 1
+      },
+      "beneficio": null
+    }
+  ],
+  "heroicas": [],
+  "elecciones": {
+    "hab:magia-elemental": {
+      "conjuros": [
+        "ignis",
+        "fulgur"
+      ]
+    }
+  },
+  "equipo": {
+    "equipado": {
+      "mano_principal": "wu4zfsj4csey",
+      "mano_secundaria": "wu4zfsj4csey",
+      "armadura": "2xcq4rbncsey",
+      "accesorio": null
+    },
+    "objetos": [
+      {
+        "uid": "wu4zfsj4csey",
+        "coleccion": "armas",
+        "ref": "baston",
+        "coste_pagado": 0,
+        "comprado": 100
+      },
+      {
+        "uid": "2xcq4rbncsey",
+        "coleccion": "armaduras",
+        "ref": "habito-del-sabio",
+        "coste_pagado": 0,
+        "comprado": 200
+      }
+    ]
+  },
+  "vinculos": [
+    {
+      "hacia": "Aria Valen",
+      "emociones": [
+        "admiracion"
+      ]
+    },
+    {
+      "hacia": "Nim",
+      "emociones": [
+        "afecto",
+        "lealtad"
+      ]
+    }
+  ],
+  "opcionales": {
+    "peculiaridad": null,
+    "poder_cero": null
+  },
+  "estado": {
+    "pv": 35,
+    "pm": 48,
+    "pi": 6,
+    "estados": []
+  },
+  "notas": "",
+  "historial": [],
+  "calculado": {
+    "nota": "Valores derivados en el momento de exportar. El visor los recalcula a partir de la base de datos.",
+    "pv_max": 35,
+    "pm_max": 68,
+    "pi_max": 6,
+    "crisis": 17,
+    "def": 7,
+    "mdef": 12,
+    "init": -2,
+    "atributos": {
+      "DES": 6,
+      "PER": 10,
+      "VIG": 6,
+      "VOL": 10
+    },
+    "clases": [
+      {
+        "id": "elementalista",
+        "nivel": 3
+      },
+      {
+        "id": "erudito",
+        "nivel": 2
+      }
+    ]
+  }
+}

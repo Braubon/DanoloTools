@@ -1,0 +1,173 @@
+[
+  {
+    "id": "atributos",
+    "nombre": "Atributos",
+    "valores": [
+      { "id": "DES", "nombre": "Destreza", "nombre_original": "Dexterity" },
+      { "id": "PER", "nombre": "Perspicacia", "nombre_original": "Insight" },
+      { "id": "VIG", "nombre": "Vigor", "nombre_original": "Might" },
+      { "id": "VOL", "nombre": "Voluntad", "nombre_original": "Willpower" }
+    ]
+  },
+  {
+    "id": "perfiles_atributos",
+    "nombre": "Perfiles de atributos",
+    "valores": [
+      { "id": "equilibrado", "nombre": "Equilibrado", "nombre_original": "All-Rounder", "dados": [8, 8, 8, 8], "descripcion": "Sin puntos débiles; apto para héroes multirrol." },
+      { "id": "versatil", "nombre": "Versátil", "nombre_original": "Standard", "dados": [10, 8, 8, 6], "descripcion": "Un atributo estelar, dos competentes y una debilidad." },
+      { "id": "especializado", "nombre": "Especializado", "nombre_original": "Specialized", "dados": [10, 10, 6, 6], "descripcion": "Dos atributos al máximo inicial." }
+    ]
+  },
+  {
+    "id": "tipos_dano",
+    "nombre": "Tipos de daño",
+    "valores": [
+      { "id": "fisico", "nombre": "Físico" },
+      { "id": "aire", "nombre": "Aire" },
+      { "id": "rayo", "nombre": "Rayo" },
+      { "id": "oscuro", "nombre": "Oscuro" },
+      { "id": "tierra", "nombre": "Tierra" },
+      { "id": "fuego", "nombre": "Fuego" },
+      { "id": "hielo", "nombre": "Hielo" },
+      { "id": "luz", "nombre": "Luz" },
+      { "id": "veneno", "nombre": "Veneno" }
+    ]
+  },
+  {
+    "id": "estados",
+    "nombre": "Estados alterados",
+    "valores": [
+      { "id": "confundido", "nombre": "Confundido", "sinonimos": ["aturdido"] },
+      { "id": "debil", "nombre": "Débil" },
+      { "id": "enfurecido", "nombre": "Enfurecido" },
+      { "id": "envenenado", "nombre": "Envenenado", "sinonimos": ["avenenado"] },
+      { "id": "estremecido", "nombre": "Estremecido", "sinonimos": ["sacudido"] },
+      { "id": "lento", "nombre": "Lento" }
+    ]
+  },
+  {
+    "id": "emociones",
+    "nombre": "Emociones de los vínculos",
+    "descripcion": "Cada vínculo puede tener como máximo una emoción de cada pareja. La fuerza del vínculo es su número de emociones (máximo 3). Un personaje puede tener hasta 6 vínculos.",
+    "valores": [
+      { "id": "admiracion", "nombre": "Admiración", "pareja": "respeto", "opuesta": "inferioridad" },
+      { "id": "inferioridad", "nombre": "Inferioridad", "pareja": "respeto", "opuesta": "admiracion" },
+      { "id": "lealtad", "nombre": "Lealtad", "pareja": "confianza", "opuesta": "desconfianza" },
+      { "id": "desconfianza", "nombre": "Desconfianza", "pareja": "confianza", "opuesta": "lealtad" },
+      { "id": "afecto", "nombre": "Afecto", "pareja": "sentimiento", "opuesta": "odio" },
+      { "id": "odio", "nombre": "Odio", "pareja": "sentimiento", "opuesta": "afecto" }
+    ]
+  },
+  {
+    "id": "categorias_arma",
+    "nombre": "Categorías de arma",
+    "valores": [
+      { "id": "arcana", "nombre": "Arcana" },
+      { "id": "arco", "nombre": "Arco" },
+      { "id": "pelea", "nombre": "Pelea" },
+      { "id": "daga", "nombre": "Daga" },
+      { "id": "fuego", "nombre": "Arma de fuego" },
+      { "id": "flagelo", "nombre": "Flagelo" },
+      { "id": "pesada", "nombre": "Pesada" },
+      { "id": "lanza", "nombre": "Lanza" },
+      { "id": "espada", "nombre": "Espada" },
+      { "id": "arrojadiza", "nombre": "Arrojadiza" }
+    ]
+  },
+  {
+    "id": "competencias",
+    "nombre": "Competencias marciales",
+    "valores": [
+      { "id": "armas_marciales_cuerpo", "nombre": "Armas cuerpo a cuerpo marciales" },
+      { "id": "armas_marciales_distancia", "nombre": "Armas a distancia marciales" },
+      { "id": "armaduras_marciales", "nombre": "Armaduras marciales" },
+      { "id": "escudos_marciales", "nombre": "Escudos marciales" }
+    ]
+  },
+  {
+    "id": "disciplinas_rituales",
+    "nombre": "Disciplinas de rituales",
+    "valores": [
+      { "id": "arcanismo", "nombre": "Arcanismo" },
+      { "id": "quimerismo", "nombre": "Quimerismo" },
+      { "id": "elementalismo", "nombre": "Elementalismo" },
+      { "id": "entropismo", "nombre": "Entropismo" },
+      { "id": "espiritismo", "nombre": "Espiritismo" },
+      { "id": "ritualismo", "nombre": "Ritualismo" }
+    ]
+  },
+  {
+    "id": "listas_conjuros",
+    "nombre": "Listas de conjuros",
+    "valores": [
+      { "id": "elementalista", "nombre": "Elementalista", "atributos_magia": "PER + VOL" },
+      { "id": "entropista", "nombre": "Entropista", "atributos_magia": "PER + VOL" },
+      { "id": "espiritista", "nombre": "Espiritista", "atributos_magia": "PER + VOL" },
+      { "id": "pnj", "nombre": "PNJ", "atributos_magia": "VIG + VOL o PER + VOL" }
+    ]
+  },
+  {
+    "id": "especies_pnj",
+    "nombre": "Especies de criatura",
+    "valores": [
+      { "id": "bestia", "nombre": "Bestia" },
+      { "id": "constructo", "nombre": "Constructo" },
+      { "id": "demonio", "nombre": "Demonio" },
+      { "id": "elemental", "nombre": "Elemental" },
+      { "id": "monstruo", "nombre": "Monstruo" },
+      { "id": "no-muerto", "nombre": "No muerto" },
+      { "id": "planta", "nombre": "Planta" },
+      { "id": "humanoide", "nombre": "Humanoide" }
+    ]
+  },
+  {
+    "id": "temas",
+    "nombre": "Temas",
+    "valores": ["Ambición", "Pertenencia", "Culpa", "Deber", "Duda", "Justicia", "Ira", "Libertad", "Esperanza", "Venganza"]
+  },
+  {
+    "id": "identidad_concepto",
+    "nombre": "Identidad: concepto",
+    "valores": ["Caballero", "Cazarrecompensas", "Artista marcial", "Cazatesoros", "Extranjero", "Sacerdote", "Cronista", "Samurái", "Bardo", "Soldado", "Inventor", "Guardián de la fe", "Cazador", "Mercenario", "Ladrón", "Minero", "Criador de bestias", "Marinero", "Escudero", "Vagabundo", "Guardaespaldas", "Bandido", "Artesano", "Erudito", "Artista", "Ingeniero magitecnológico", "Arquero", "Ocultista", "Paladín", "Monje", "Pistolero", "Asesino", "Explorador de mazmorras", "Piloto de aeronaves", "Alquimista", "Místico", "Herrero", "Mercader", "Exiliado", "Ilusionista", "Marioneta animada", "Saqueador de ruinas", "Agente rebelde", "Mago de combate", "Noble de cuna", "Duelista", "Cazador de monstruos", "Médico", "Cambiaformas", "Pirata", "Tahúr", "Diplomático", "Huérfano de guerra", "Erudito errante", "Mensajero", "Bailarín", "Guardabosques", "Clérigo castrense", "Superviviente", "Protector comunal"]
+  },
+  {
+    "id": "identidad_adjetivo",
+    "nombre": "Identidad: adjetivo",
+    "valores": ["Fascinante", "Traidor", "Elegido", "Ex-imperial", "Atormentado", "Valeroso", "Ingenuo", "Infame", "Visionario", "Cínico", "Olvidado", "Rebelde", "Idealista", "Vengativo", "Curtido", "Melodramático", "Ferviente", "Arrepentido", "Jovial", "Sabio", "Devoto", "Último de su estirpe", "Enigmático", "Orgulloso", "Proscrito", "Cauteloso", "Letal", "Melancólico", "Tenaz", "Noble de espíritu", "Resuelto", "Austero", "Ambicioso", "Curioso", "Apasionado", "Silencioso", "Pragmático", "Audaz", "Escéptico", "Severo"]
+  },
+  {
+    "id": "identidad_detalle",
+    "nombre": "Identidad: detalle de trasfondo",
+    "valores": ["de un linaje ancestral caído", "en fuga permanente", "fiel a la Vieja Fe", "en busca de justicia", "en desgracia pública", "de las Alas Carmesíes", "sin recuerdos de infancia", "custodio de un juramento", "de la guardia real", "con un secreto prohibido", "portador de una maldición", "juramentado a una orden disuelta", "poseedor de una reliquia sellada", "con una deuda de sangre impagada", "marcado por los espíritus", "con un precio por su cabeza", "rechazado por su pueblo natal", "en busca de redención", "último superviviente de su orden", "heredero de una corona perdida"]
+  },
+  {
+    "id": "arquetipos_grupo",
+    "nombre": "Arquetipos de grupo",
+    "valores": [
+      { "id": "buscadores", "nombre": "Buscadores", "descripcion": "Persiguen un misterio legendario, un artefacto perdido o una verdad oculta." },
+      { "id": "resistencia", "nombre": "Héroes de la Resistencia", "descripcion": "Combaten en desventaja contra una fuerza invasora o un régimen tiránico." },
+      { "id": "guardianes", "nombre": "Guardianes", "descripcion": "Custodian un lugar sagrado, una reliquia o a un «Elegido»." },
+      { "id": "revolucionarios", "nombre": "Revolucionarios", "descripcion": "Célula clandestina que busca derrocar a las élites gobernantes." },
+      { "id": "destino", "nombre": "Unidos por el Destino", "descripcion": "Individuos dispares unidos por coincidencias, presagios o la voluntad de los espíritus." }
+    ]
+  },
+  {
+    "id": "creacion",
+    "nombre": "Parámetros de creación",
+    "descripcion": "Valores que usa el motor de reglas. Cambiarlos altera la validación.",
+    "valores": [
+      { "id": "nivel_inicial", "valor": 5 },
+      { "id": "clases_iniciales_min", "valor": 2 },
+      { "id": "clases_iniciales_max", "valor": 3 },
+      { "id": "presupuesto_inicial", "valor": 500 },
+      { "id": "pf_iniciales", "valor": 3 },
+      { "id": "pi_base", "valor": 6 },
+      { "id": "nivel_max", "valor": 50 },
+      { "id": "nivel_clase_max", "valor": 10 },
+      { "id": "clases_no_dominadas_max", "valor": 3 },
+      { "id": "vinculos_max", "valor": 6 },
+      { "id": "px_por_nivel", "valor": 10 },
+      { "id": "niveles_mejora_atributo", "valor": [20, 40] }
+    ]
+  }
+]

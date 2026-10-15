@@ -1,0 +1,3149 @@
+[
+ {
+  "id": "baston",
+  "nombre": "Bastón",
+  "nombre_original": "Staff",
+  "rareza": "basico",
+  "categoria": "arcana",
+  "coste": 100,
+  "precision": {
+   "atributos": [
+    "VOL",
+    "VOL"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 6,
+   "tipo": "fisico"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": ""
+ },
+ {
+  "id": "tomo",
+  "nombre": "Tomo",
+  "nombre_original": "Tome",
+  "rareza": "basico",
+  "categoria": "arcana",
+  "coste": 100,
+  "precision": {
+   "atributos": [
+    "PER",
+    "PER"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 6,
+   "tipo": "fisico"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": ""
+ },
+ {
+  "id": "ballesta",
+  "nombre": "Ballesta",
+  "nombre_original": "Crossbow",
+  "rareza": "basico",
+  "categoria": "arco",
+  "coste": 150,
+  "precision": {
+   "atributos": [
+    "DES",
+    "PER"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 8,
+   "tipo": "fisico"
+  },
+  "manos": 2,
+  "alcance": "distancia",
+  "marcial": false,
+  "cualidad": ""
+ },
+ {
+  "id": "arco-corto",
+  "nombre": "Arco corto",
+  "nombre_original": "Shortbow",
+  "rareza": "basico",
+  "categoria": "arco",
+  "coste": 200,
+  "precision": {
+   "atributos": [
+    "DES",
+    "DES"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 8,
+   "tipo": "fisico"
+  },
+  "manos": 2,
+  "alcance": "distancia",
+  "marcial": false,
+  "cualidad": ""
+ },
+ {
+  "id": "latigo-cadena",
+  "nombre": "Látigo-cadena",
+  "nombre_original": "Chain Whip",
+  "rareza": "basico",
+  "categoria": "flagelo",
+  "coste": 150,
+  "precision": {
+   "atributos": [
+    "DES",
+    "DES"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 8,
+   "tipo": "fisico"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": ""
+ },
+ {
+  "id": "pistola",
+  "nombre": "Pistola",
+  "nombre_original": "Pistol",
+  "rareza": "basico",
+  "categoria": "fuego",
+  "coste": 250,
+  "precision": {
+   "atributos": [
+    "DES",
+    "PER"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 8,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "distancia",
+  "marcial": true,
+  "cualidad": ""
+ },
+ {
+  "id": "lanza-ligera",
+  "nombre": "Lanza ligera",
+  "nombre_original": "Light Spear",
+  "rareza": "basico",
+  "categoria": "lanza",
+  "coste": 200,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 8,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": ""
+ },
+ {
+  "id": "lanza-pesada",
+  "nombre": "Lanza pesada",
+  "nombre_original": "Heavy Spear",
+  "rareza": "basico",
+  "categoria": "lanza",
+  "coste": 200,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 12,
+   "tipo": "fisico"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": ""
+ },
+ {
+  "id": "improvisada-distancia",
+  "nombre": "Improvisada (distancia)",
+  "nombre_original": "Improvised Thrown",
+  "rareza": "basico",
+  "categoria": "arrojadiza",
+  "coste": 0,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 2,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "distancia",
+  "marcial": false,
+  "cualidad": "Se destruye tras el ataque.",
+  "comprable": false
+ },
+ {
+  "id": "shuriken",
+  "nombre": "Shuriken",
+  "nombre_original": "Shuriken",
+  "rareza": "basico",
+  "categoria": "arrojadiza",
+  "coste": 150,
+  "precision": {
+   "atributos": [
+    "DES",
+    "PER"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 4,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "distancia",
+  "marcial": false,
+  "cualidad": ""
+ },
+ {
+  "id": "martillo-de-hierro",
+  "nombre": "Martillo de hierro",
+  "nombre_original": "Iron Hammer",
+  "rareza": "basico",
+  "categoria": "pesada",
+  "coste": 200,
+  "precision": {
+   "atributos": [
+    "VIG",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 6,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": ""
+ },
+ {
+  "id": "hacha",
+  "nombre": "Hacha",
+  "nombre_original": "Waraxe",
+  "rareza": "basico",
+  "categoria": "pesada",
+  "coste": 250,
+  "precision": {
+   "atributos": [
+    "VIG",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 10,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": ""
+ },
+ {
+  "id": "hacha-de-guerra",
+  "nombre": "Hacha de guerra",
+  "nombre_original": "Great Axe",
+  "rareza": "basico",
+  "categoria": "pesada",
+  "coste": 250,
+  "precision": {
+   "atributos": [
+    "VIG",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 14,
+   "tipo": "fisico"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": ""
+ },
+ {
+  "id": "daga-de-acero",
+  "nombre": "Daga de acero",
+  "nombre_original": "Steel Dagger",
+  "rareza": "basico",
+  "categoria": "daga",
+  "coste": 150,
+  "precision": {
+   "atributos": [
+    "DES",
+    "PER"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 4,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": ""
+ },
+ {
+  "id": "golpe-desarmado",
+  "nombre": "Golpe desarmado",
+  "nombre_original": "Unarmed Strike",
+  "rareza": "basico",
+  "categoria": "pelea",
+  "coste": 0,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 0,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "Siempre equipado en ranuras de mano vacías.",
+  "comprable": false
+ },
+ {
+  "id": "improvisada-mele",
+  "nombre": "Improvisada (melé)",
+  "nombre_original": "Improvised Melee",
+  "rareza": "basico",
+  "categoria": "pelea",
+  "coste": 0,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 2,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "Se destruye tras el ataque.",
+  "comprable": false
+ },
+ {
+  "id": "puno-de-hierro",
+  "nombre": "Puño de hierro",
+  "nombre_original": "Iron Knuckle",
+  "rareza": "basico",
+  "categoria": "pelea",
+  "coste": 150,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 6,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": ""
+ },
+ {
+  "id": "katana",
+  "nombre": "Katana",
+  "nombre_original": "Katana",
+  "rareza": "basico",
+  "categoria": "espada",
+  "coste": 200,
+  "precision": {
+   "atributos": [
+    "DES",
+    "PER"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 10,
+   "tipo": "fisico"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": ""
+ },
+ {
+  "id": "espada-de-bronce",
+  "nombre": "Espada de bronce",
+  "nombre_original": "Bronze Sword",
+  "rareza": "basico",
+  "categoria": "espada",
+  "coste": 200,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 6,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": ""
+ },
+ {
+  "id": "espadon",
+  "nombre": "Espadón",
+  "nombre_original": "Greatsword",
+  "rareza": "basico",
+  "categoria": "espada",
+  "coste": 200,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 10,
+   "tipo": "fisico"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": ""
+ },
+ {
+  "id": "estoque",
+  "nombre": "Estoque",
+  "nombre_original": "Rapier",
+  "rareza": "basico",
+  "categoria": "espada",
+  "coste": 200,
+  "precision": {
+   "atributos": [
+    "DES",
+    "PER"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 6,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": ""
+ },
+ {
+  "id": "maza-bendita",
+  "nombre": "Maza bendita",
+  "nombre_original": "Blessed Mace",
+  "rareza": "raro",
+  "categoria": "arcana",
+  "coste": 200,
+  "precision": {
+   "atributos": [
+    "VOL",
+    "VOL"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 2,
+   "tipo": "luz"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": ""
+ },
+ {
+  "id": "enciclopedia",
+  "nombre": "Enciclopedia",
+  "nombre_original": "Encyclopedia",
+  "rareza": "raro",
+  "categoria": "arcana",
+  "coste": 600,
+  "precision": {
+   "atributos": [
+    "PER",
+    "PER"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 6,
+   "tipo": "fisico"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "Eres inmune al estado confundido."
+ },
+ {
+  "id": "ars-goetia",
+  "nombre": "Ars Goetia",
+  "nombre_original": "Ars Goetia",
+  "rareza": "raro",
+  "categoria": "arcana",
+  "coste": 800,
+  "precision": {
+   "atributos": [
+    "PER",
+    "PER"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 6,
+   "tipo": "luz"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "Bonificador de +2 a pruebas de magia y pruebas enfrentadas contra demonios."
+ },
+ {
+  "id": "ferula",
+  "nombre": "Férula",
+  "nombre_original": "Ferule",
+  "rareza": "raro",
+  "categoria": "arcana",
+  "coste": 1050,
+  "precision": {
+   "atributos": [
+    "PER",
+    "VOL"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 2,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "Bonificador de +1 a las pruebas de magia.",
+  "modificadores": [
+   {
+    "stat": "magia",
+    "valor": "1"
+   }
+  ]
+ },
+ {
+  "id": "cetro-del-tirano",
+  "nombre": "Cetro del tirano",
+  "nombre_original": "Tyrant Scepter",
+  "rareza": "raro",
+  "categoria": "arcana",
+  "coste": 1200,
+  "precision": {
+   "atributos": [
+    "VOL",
+    "VOL"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 6,
+   "tipo": "oscuro"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "Al impactar a una o más criaturas, cada una pierde 10 Puntos de Mente."
+ },
+ {
+  "id": "cultes-des-ghoules",
+  "nombre": "Cultes des Ghoules",
+  "nombre_original": "Cultes des Ghoules",
+  "rareza": "raro",
+  "categoria": "arcana",
+  "coste": 1400,
+  "precision": {
+   "atributos": [
+    "PER",
+    "PER"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 6,
+   "tipo": "aire"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "Al impactar a una o más criaturas con esta arma, puedes recuperar 5 PV."
+ },
+ {
+  "id": "caduceo",
+  "nombre": "Caduceo",
+  "nombre_original": "Caduceus",
+  "rareza": "raro",
+  "categoria": "arcana",
+  "coste": 1600,
+  "precision": {
+   "atributos": [
+    "VOL",
+    "VOL"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 6,
+   "tipo": "fisico"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "Los conjuros que lances que restauren PV hacen recuperar 5 PV extra."
+ },
+ {
+  "id": "necronomicon",
+  "nombre": "Necronomicón",
+  "nombre_original": "Necronomicon",
+  "rareza": "raro",
+  "categoria": "arcana",
+  "coste": 1800,
+  "precision": {
+   "atributos": [
+    "PER",
+    "VOL"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 6,
+   "tipo": "oscuro"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "Al impactar con un conjuro ofensivo, cada objetivo sufre el estado estremecido."
+ },
+ {
+  "id": "libro-amarillo",
+  "nombre": "Libro amarillo",
+  "nombre_original": "Yellow Book",
+  "rareza": "raro",
+  "categoria": "arcana",
+  "coste": 2100,
+  "precision": {
+   "atributos": [
+    "PER",
+    "PER"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 6,
+   "tipo": "fisico"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "Los conjuros que lances infligen 5 puntos de daño adicional."
+ },
+ {
+  "id": "vara-rafflesia",
+  "nombre": "Vara rafflesia",
+  "nombre_original": "Rafflesia Staff",
+  "rareza": "raro",
+  "categoria": "arcana",
+  "coste": 2200,
+  "precision": {
+   "atributos": [
+    "VOL",
+    "VOL"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 6,
+   "tipo": "veneno"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "Al impactar con un conjuro ofensivo, cada objetivo sufre el estado envenenado."
+ },
+ {
+  "id": "ballestin",
+  "nombre": "Ballestín",
+  "nombre_original": "Hand Crossbow",
+  "rareza": "raro",
+  "categoria": "arco",
+  "coste": 150,
+  "precision": {
+   "atributos": [
+    "DES",
+    "PER"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 4,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "distancia",
+  "marcial": false,
+  "cualidad": ""
+ },
+ {
+  "id": "arco-compuesto",
+  "nombre": "Arco compuesto",
+  "nombre_original": "Composite Bow",
+  "rareza": "raro",
+  "categoria": "arco",
+  "coste": 250,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 8,
+   "tipo": "fisico"
+  },
+  "manos": 2,
+  "alcance": "distancia",
+  "marcial": false,
+  "cualidad": ""
+ },
+ {
+  "id": "quiebrasitios",
+  "nombre": "Quiebrasitios",
+  "nombre_original": "Siegebreaker",
+  "rareza": "raro",
+  "categoria": "arco",
+  "coste": 750,
+  "precision": {
+   "atributos": [
+    "DES",
+    "PER"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 12,
+   "tipo": "fisico"
+  },
+  "manos": 2,
+  "alcance": "distancia",
+  "marcial": true,
+  "cualidad": "El daño infligido por esta arma ignora Resistencia."
+ },
+ {
+  "id": "yoichi",
+  "nombre": "Yoichi",
+  "nombre_original": "Yoichi",
+  "rareza": "raro",
+  "categoria": "arco",
+  "coste": 900,
+  "precision": {
+   "atributos": [
+    "DES",
+    "DES"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 8,
+   "tipo": "aire"
+  },
+  "manos": 2,
+  "alcance": "distancia",
+  "marcial": false,
+  "cualidad": "Eres inmune al estado estremecido."
+ },
+ {
+  "id": "fulgur",
+  "nombre": "Fúlgur",
+  "nombre_original": "Thunderbolt",
+  "rareza": "raro",
+  "categoria": "arco",
+  "coste": 1000,
+  "precision": {
+   "atributos": [
+    "DES",
+    "DES"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 8,
+   "tipo": "rayo"
+  },
+  "manos": 2,
+  "alcance": "distancia",
+  "marcial": false,
+  "cualidad": "Eres Resistente al daño de rayo."
+ },
+ {
+  "id": "arco-del-salteador",
+  "nombre": "Arco del salteador",
+  "nombre_original": "Raider Bow",
+  "rareza": "raro",
+  "categoria": "arco",
+  "coste": 1250,
+  "precision": {
+   "atributos": [
+    "DES",
+    "PER"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 8,
+   "tipo": "fuego"
+  },
+  "manos": 2,
+  "alcance": "distancia",
+  "marcial": false,
+  "cualidad": "Al reducir a una criatura a 0 PV con esta arma, recargas de inmediato 2 PI."
+ },
+ {
+  "id": "ballesta-gatling",
+  "nombre": "Ballesta Gatling",
+  "nombre_original": "Gatling Crossbow",
+  "rareza": "raro",
+  "categoria": "arco",
+  "coste": 1350,
+  "precision": {
+   "atributos": [
+    "DES",
+    "PER"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 12,
+   "tipo": "fisico"
+  },
+  "manos": 2,
+  "alcance": "distancia",
+  "marcial": true,
+  "cualidad": "Los ataques con esta arma tienen la propiedad multi (2)."
+ },
+ {
+  "id": "cazadragones",
+  "nombre": "Cazadragones",
+  "nombre_original": "Dragonslayer Bow",
+  "rareza": "raro",
+  "categoria": "arco",
+  "coste": 1500,
+  "precision": {
+   "atributos": [
+    "DES",
+    "DES"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 12,
+   "tipo": "tierra"
+  },
+  "manos": 2,
+  "alcance": "distancia",
+  "marcial": true,
+  "cualidad": "Al impactar a un objetivo volador, puedes obligarlo a aterrizar de inmediato."
+ },
+ {
+  "id": "envidia-gelida",
+  "nombre": "Envidia gélida",
+  "nombre_original": "Chilling Envy",
+  "rareza": "raro",
+  "categoria": "arco",
+  "coste": 1500,
+  "precision": {
+   "atributos": [
+    "DES",
+    "DES"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 12,
+   "tipo": "hielo"
+  },
+  "manos": 2,
+  "alcance": "distancia",
+  "marcial": true,
+  "cualidad": "Al impactar con esta arma, si tienes al menos un vínculo de inferioridad, recuperas 10 PM."
+ },
+ {
+  "id": "ojo-meduseo",
+  "nombre": "Ojo meduseo",
+  "nombre_original": "Medusa Eye",
+  "rareza": "raro",
+  "categoria": "arco",
+  "coste": 2000,
+  "precision": {
+   "atributos": [
+    "DES",
+    "DES"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 12,
+   "tipo": "veneno"
+  },
+  "manos": 2,
+  "alcance": "distancia",
+  "marcial": true,
+  "cualidad": "Los objetivos impactados sufren el estado lento."
+ },
+ {
+  "id": "artemisa",
+  "nombre": "Artemisa",
+  "nombre_original": "Artemis",
+  "rareza": "raro",
+  "categoria": "arco",
+  "coste": 2100,
+  "precision": {
+   "atributos": [
+    "DES",
+    "DES"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 12,
+   "tipo": "luz"
+  },
+  "manos": 2,
+  "alcance": "distancia",
+  "marcial": true,
+  "cualidad": "Eres Inmune al daño oscuro."
+ },
+ {
+  "id": "latigo-viejo",
+  "nombre": "Látigo viejo",
+  "nombre_original": "Old Whip",
+  "rareza": "raro",
+  "categoria": "flagelo",
+  "coste": 650,
+  "precision": {
+   "atributos": [
+    "DES",
+    "DES"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 8,
+   "tipo": "fisico"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "Inflige 5 puntos de daño adicional a bestias y monstruos."
+ },
+ {
+  "id": "lucero-del-atardecer",
+  "nombre": "Lucero del atardecer",
+  "nombre_original": "Evening Star",
+  "rareza": "raro",
+  "categoria": "flagelo",
+  "coste": 750,
+  "precision": {
+   "atributos": [
+    "DES",
+    "DES"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 4,
+   "tipo": "oscuro"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "Eres inmune al estado estremecido."
+ },
+ {
+  "id": "ahuyentabrujas",
+  "nombre": "Ahuyentabrujas",
+  "nombre_original": "Witchbane",
+  "rareza": "raro",
+  "categoria": "flagelo",
+  "coste": 800,
+  "precision": {
+   "atributos": [
+    "DES",
+    "DES"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 8,
+   "tipo": "fisico"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "El daño infligido reduce los PM del objetivo en lugar de sus PV; el daño sobrante reduce PV."
+ },
+ {
+  "id": "salamandra",
+  "nombre": "Salamandra",
+  "nombre_original": "Salamander",
+  "rareza": "raro",
+  "categoria": "flagelo",
+  "coste": 1000,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 8,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "Eres Resistente al daño de fuego."
+ },
+ {
+  "id": "nunchaku",
+  "nombre": "Nunchaku",
+  "nombre_original": "Nunchaku",
+  "rareza": "raro",
+  "categoria": "flagelo",
+  "coste": 1100,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 8,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "Bonificador de +1 a la Defensa.",
+  "modificadores": [
+   {
+    "stat": "def",
+    "valor": "1"
+   }
+  ]
+ },
+ {
+  "id": "dominatrix",
+  "nombre": "Dominatrix",
+  "nombre_original": "Dominatrix",
+  "rareza": "raro",
+  "categoria": "flagelo",
+  "coste": 1200,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VOL"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 8,
+   "tipo": "fuego"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "Bonificador de +2 a tiradas de Precisión y de Magia contra objetivos enfurecidos."
+ },
+ {
+  "id": "latigo-de-hojas",
+  "nombre": "Látigo de hojas",
+  "nombre_original": "Bladed Flail",
+  "rareza": "raro",
+  "categoria": "flagelo",
+  "coste": 1400,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 12,
+   "tipo": "fisico"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Los ataques con esta arma tienen la propiedad multi (2)."
+ },
+ {
+  "id": "hebra-de-seda",
+  "nombre": "Hebra de seda",
+  "nombre_original": "Silk Strand",
+  "rareza": "raro",
+  "categoria": "flagelo",
+  "coste": 1450,
+  "precision": {
+   "atributos": [
+    "DES",
+    "DES"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 12,
+   "tipo": "aire"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "Eres Resistente al daño físico."
+ },
+ {
+  "id": "kusarigama",
+  "nombre": "Kusarigama",
+  "nombre_original": "Kusarigama",
+  "rareza": "raro",
+  "categoria": "flagelo",
+  "coste": 1650,
+  "precision": {
+   "atributos": [
+    "DES",
+    "DES"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 8,
+   "tipo": "fisico"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "Los objetivos impactados sufren el estado lento."
+ },
+ {
+  "id": "jormungandr",
+  "nombre": "Jormungandr",
+  "nombre_original": "Jormungandr",
+  "rareza": "raro",
+  "categoria": "flagelo",
+  "coste": 2400,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 12,
+   "tipo": "oscuro"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Los ataques con esta arma tienen la propiedad multi (3)."
+ },
+ {
+  "id": "bigote-de-koi",
+  "nombre": "Bigote de koi",
+  "nombre_original": "Koi Whisker",
+  "rareza": "raro",
+  "categoria": "flagelo",
+  "coste": 2800,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VOL"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 12,
+   "tipo": "fisico"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Eres Inmune al daño de luz y al daño oscuro."
+ },
+ {
+  "id": "revolver",
+  "nombre": "Revólver",
+  "nombre_original": "Revolver",
+  "rareza": "raro",
+  "categoria": "fuego",
+  "coste": 300,
+  "precision": {
+   "atributos": [
+    "DES",
+    "DES"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 8,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "distancia",
+  "marcial": true,
+  "cualidad": ""
+ },
+ {
+  "id": "istinggar",
+  "nombre": "Istinggar",
+  "nombre_original": "Istinggar",
+  "rareza": "raro",
+  "categoria": "fuego",
+  "coste": 350,
+  "precision": {
+   "atributos": [
+    "DES",
+    "PER"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 12,
+   "tipo": "fisico"
+  },
+  "manos": 2,
+  "alcance": "distancia",
+  "marcial": true,
+  "cualidad": ""
+ },
+ {
+  "id": "disparamagias",
+  "nombre": "Disparamagias",
+  "nombre_original": "Spellgun",
+  "rareza": "raro",
+  "categoria": "fuego",
+  "coste": 400,
+  "precision": {
+   "atributos": [
+    "PER",
+    "PER"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 8,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "distancia",
+  "marcial": true,
+  "cualidad": "Los ataques con esta arma tienen como objetivo la D. Mágica."
+ },
+ {
+  "id": "diamantela",
+  "nombre": "Diamantela",
+  "nombre_original": "Diamantella",
+  "rareza": "raro",
+  "categoria": "fuego",
+  "coste": 650,
+  "precision": {
+   "atributos": [
+    "DES",
+    "PER"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 8,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "distancia",
+  "marcial": true,
+  "cualidad": "Inflige 5 puntos de daño adicional a constructos."
+ },
+ {
+  "id": "cazacabezas",
+  "nombre": "Cazacabezas",
+  "nombre_original": "Headhunter",
+  "rareza": "raro",
+  "categoria": "fuego",
+  "coste": 800,
+  "precision": {
+   "atributos": [
+    "DES",
+    "PER"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 8,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "distancia",
+  "marcial": true,
+  "cualidad": "Inflige 5 de daño adicional a objetivos hacia quienes tengas un vínculo de odio."
+ },
+ {
+  "id": "pistola-cometa",
+  "nombre": "Pistola cometa",
+  "nombre_original": "Comet Pistol",
+  "rareza": "raro",
+  "categoria": "fuego",
+  "coste": 950,
+  "precision": {
+   "atributos": [
+    "DES",
+    "PER"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 8,
+   "tipo": "oscuro"
+  },
+  "manos": 1,
+  "alcance": "distancia",
+  "marcial": true,
+  "cualidad": "Eres inmune al estado confundido."
+ },
+ {
+  "id": "canon-escudo",
+  "nombre": "Cañón escudo",
+  "nombre_original": "Shield Cannon",
+  "rareza": "raro",
+  "categoria": "fuego",
+  "coste": 1050,
+  "precision": {
+   "atributos": [
+    "DES",
+    "PER"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 12,
+   "tipo": "fisico"
+  },
+  "manos": 2,
+  "alcance": "distancia",
+  "marcial": true,
+  "cualidad": "Bonificador de +1 a la Defensa.",
+  "modificadores": [
+   {
+    "stat": "def",
+    "valor": "1"
+   }
+  ]
+ },
+ {
+  "id": "alquebucerio",
+  "nombre": "Alquebucerío",
+  "nombre_original": "Alchebuser",
+  "rareza": "raro",
+  "categoria": "fuego",
+  "coste": 1300,
+  "precision": {
+   "atributos": [
+    "DES",
+    "PER"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 8,
+   "tipo": "veneno"
+  },
+  "manos": 1,
+  "alcance": "distancia",
+  "marcial": true,
+  "cualidad": "Las pociones creadas con PI infligen 5 de daño extra y curan 5 PV extra."
+ },
+ {
+  "id": "calamidad",
+  "nombre": "Calamidad",
+  "nombre_original": "Calamity",
+  "rareza": "raro",
+  "categoria": "fuego",
+  "coste": 1550,
+  "precision": {
+   "atributos": [
+    "DES",
+    "PER"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 16,
+   "tipo": "fuego"
+  },
+  "manos": 2,
+  "alcance": "distancia",
+  "marcial": true,
+  "cualidad": "Los ataques con esta arma tienen la propiedad multi (2)."
+ },
+ {
+  "id": "disparo-fulminante",
+  "nombre": "Disparo fulminante",
+  "nombre_original": "Chillshot",
+  "rareza": "raro",
+  "categoria": "fuego",
+  "coste": 1850,
+  "precision": {
+   "atributos": [
+    "DES",
+    "PER"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 8,
+   "tipo": "hielo"
+  },
+  "manos": 1,
+  "alcance": "distancia",
+  "marcial": true,
+  "cualidad": "Los objetivos impactados sufren el estado lento."
+ },
+ {
+  "id": "quatermain",
+  "nombre": "Quatermain",
+  "nombre_original": "Quatermain",
+  "rareza": "raro",
+  "categoria": "fuego",
+  "coste": 2600,
+  "precision": {
+   "atributos": [
+    "DES",
+    "PER"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 12,
+   "tipo": "aire"
+  },
+  "manos": 2,
+  "alcance": "distancia",
+  "marcial": true,
+  "cualidad": "Inflige daño extra igual a tus PI máximos menos tus PI actuales."
+ },
+ {
+  "id": "lengua-de-dragon",
+  "nombre": "Lengua de dragón",
+  "nombre_original": "Dragon Tongue",
+  "rareza": "raro",
+  "categoria": "lanza",
+  "coste": 500,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 12,
+   "tipo": "fuego"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Los ataques con esta arma tienen como objetivo la D. Mágica."
+ },
+ {
+  "id": "rocinante",
+  "nombre": "Rocinante",
+  "nombre_original": "Rocinante",
+  "rareza": "raro",
+  "categoria": "lanza",
+  "coste": 500,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 8,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Inflige 1 punto de daño adicional por cada estado que padezcas."
+ },
+ {
+  "id": "serpelanza",
+  "nombre": "Serpelanza",
+  "nombre_original": "Serpent Spear",
+  "rareza": "raro",
+  "categoria": "lanza",
+  "coste": 800,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 16,
+   "tipo": "fisico"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "El daño infligido por esta arma ignora Resistencia."
+ },
+ {
+  "id": "alabarda",
+  "nombre": "Alabarda",
+  "nombre_original": "Halberd",
+  "rareza": "raro",
+  "categoria": "lanza",
+  "coste": 1000,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 12,
+   "tipo": "fisico"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Bonificador de +1 a la Defensa.",
+  "modificadores": [
+   {
+    "stat": "def",
+    "valor": "1"
+   }
+  ]
+ },
+ {
+  "id": "cuerno-de-narval",
+  "nombre": "Cuerno de narval",
+  "nombre_original": "Narwhal Horn",
+  "rareza": "raro",
+  "categoria": "lanza",
+  "coste": 1200,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 12,
+   "tipo": "hielo"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Eres Resistente al daño de hielo."
+ },
+ {
+  "id": "alabarda-de-honor",
+  "nombre": "Alabarda de honor",
+  "nombre_original": "Valor Halberd",
+  "rareza": "raro",
+  "categoria": "lanza",
+  "coste": 1300,
+  "precision": {
+   "atributos": [
+    "VIG",
+    "VOL"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 12,
+   "tipo": "tierra"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Si tienes al menos tres vínculos de lealtad o afecto, obtienes +1 a DEF y +1 a D. MÁG."
+ },
+ {
+  "id": "morrigan",
+  "nombre": "Morrigan",
+  "nombre_original": "Morrigan",
+  "rareza": "raro",
+  "categoria": "lanza",
+  "coste": 1400,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 12,
+   "tipo": "oscuro"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Al impactar a una o más criaturas con esta arma, puedes recuperar 10 PM."
+ },
+ {
+  "id": "gae-bulg",
+  "nombre": "Gáe Bulg",
+  "nombre_original": "Gae Bolg",
+  "rareza": "raro",
+  "categoria": "lanza",
+  "coste": 1800,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 12,
+   "tipo": "fisico"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "En un éxito crítico, puedes gastar la oportunidad para infligir 10 daños extra."
+ },
+ {
+  "id": "longinos",
+  "nombre": "Longinos",
+  "nombre_original": "Longinus",
+  "rareza": "raro",
+  "categoria": "lanza",
+  "coste": 2000,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 16,
+   "tipo": "fisico"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Los objetivos impactados sufren el estado débil."
+ },
+ {
+  "id": "nueve-dientes",
+  "nombre": "Nueve dientes",
+  "nombre_original": "Nine Teeth",
+  "rareza": "raro",
+  "categoria": "lanza",
+  "coste": 2500,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 16,
+   "tipo": "veneno"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Absorbes el daño de veneno."
+ },
+ {
+  "id": "gungnir",
+  "nombre": "Gungnir",
+  "nombre_original": "Gungnir",
+  "rareza": "raro",
+  "categoria": "lanza",
+  "coste": 3000,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 16,
+   "tipo": "luz"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Eres Inmune al daño de fuego y al daño de hielo."
+ },
+ {
+  "id": "hacha-arrojadiza",
+  "nombre": "Hacha arrojadiza",
+  "nombre_original": "Throwing Axe",
+  "rareza": "raro",
+  "categoria": "arrojadiza",
+  "coste": 350,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 8,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "distancia",
+  "marcial": false,
+  "cualidad": ""
+ },
+ {
+  "id": "media-luna",
+  "nombre": "Media luna",
+  "nombre_original": "Crescent Moon",
+  "rareza": "raro",
+  "categoria": "arrojadiza",
+  "coste": 350,
+  "precision": {
+   "atributos": [
+    "DES",
+    "PER"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 4,
+   "tipo": "luz"
+  },
+  "manos": 1,
+  "alcance": "distancia",
+  "marcial": false,
+  "cualidad": "Los ataques con esta arma tienen como objetivo la D. Mágica."
+ },
+ {
+  "id": "estrella-fugaz",
+  "nombre": "Estrella fugaz",
+  "nombre_original": "Falling Star",
+  "rareza": "raro",
+  "categoria": "arrojadiza",
+  "coste": 350,
+  "precision": {
+   "atributos": [
+    "DES",
+    "PER"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 4,
+   "tipo": "fuego"
+  },
+  "manos": 1,
+  "alcance": "distancia",
+  "marcial": false,
+  "cualidad": ""
+ },
+ {
+  "id": "bumeran",
+  "nombre": "Búmeran",
+  "nombre_original": "Boomerang",
+  "rareza": "raro",
+  "categoria": "arrojadiza",
+  "coste": 750,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 4,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "distancia",
+  "marcial": false,
+  "cualidad": "Inflige 5 puntos de daño adicional a bestias y monstruos."
+ },
+ {
+  "id": "viento-danzante",
+  "nombre": "Viento danzante",
+  "nombre_original": "Dancing Wind",
+  "rareza": "raro",
+  "categoria": "arrojadiza",
+  "coste": 850,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VOL"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 8,
+   "tipo": "aire"
+  },
+  "manos": 1,
+  "alcance": "distancia",
+  "marcial": false,
+  "cualidad": "El daño infligido por esta arma ignora Resistencia."
+ },
+ {
+  "id": "acupuntor",
+  "nombre": "Acupuntor",
+  "nombre_original": "Acupuncturist",
+  "rareza": "raro",
+  "categoria": "arrojadiza",
+  "coste": 950,
+  "precision": {
+   "atributos": [
+    "DES",
+    "PER"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 8,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "distancia",
+  "marcial": false,
+  "cualidad": "Eres inmune al estado envenenado."
+ },
+ {
+  "id": "molinillo-azul",
+  "nombre": "Molinillo azul",
+  "nombre_original": "Blue Pinwheel",
+  "rareza": "raro",
+  "categoria": "arrojadiza",
+  "coste": 950,
+  "precision": {
+   "atributos": [
+    "DES",
+    "PER"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 4,
+   "tipo": "hielo"
+  },
+  "manos": 1,
+  "alcance": "distancia",
+  "marcial": false,
+  "cualidad": "Eres Resistente al daño de hielo."
+ },
+ {
+  "id": "aguja-de-la-hechicera",
+  "nombre": "Aguja de la hechicera",
+  "nombre_original": "Hag Needle",
+  "rareza": "raro",
+  "categoria": "arrojadiza",
+  "coste": 1050,
+  "precision": {
+   "atributos": [
+    "DES",
+    "PER"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 4,
+   "tipo": "tierra"
+  },
+  "manos": 1,
+  "alcance": "distancia",
+  "marcial": false,
+  "cualidad": "Eres Resistente al daño oscuro."
+ },
+ {
+  "id": "chakram",
+  "nombre": "Chakram",
+  "nombre_original": "Chakram",
+  "rareza": "raro",
+  "categoria": "arrojadiza",
+  "coste": 1250,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 4,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "distancia",
+  "marcial": false,
+  "cualidad": "Los ataques con esta arma tienen la propiedad multi (2)."
+ },
+ {
+  "id": "vajra",
+  "nombre": "Vajra",
+  "nombre_original": "Vajra",
+  "rareza": "raro",
+  "categoria": "arrojadiza",
+  "coste": 2050,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VOL"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 8,
+   "tipo": "rayo"
+  },
+  "manos": 1,
+  "alcance": "distancia",
+  "marcial": false,
+  "cualidad": "Los objetivos impactados sufren el estado estremecido."
+ },
+ {
+  "id": "asteroide-negro",
+  "nombre": "Asteroide negro",
+  "nombre_original": "Black Asteroid",
+  "rareza": "raro",
+  "categoria": "arrojadiza",
+  "coste": 2250,
+  "precision": {
+   "atributos": [
+    "DES",
+    "PER"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 4,
+   "tipo": "oscuro"
+  },
+  "manos": 1,
+  "alcance": "distancia",
+  "marcial": false,
+  "cualidad": "Bonificador de +1 a la Defensa y +1 a la Defensa Mágica.",
+  "modificadores": [
+   {
+    "stat": "def",
+    "valor": "1"
+   },
+   {
+    "stat": "mdef",
+    "valor": "1"
+   }
+  ]
+ },
+ {
+  "id": "dardo-del-enjambre",
+  "nombre": "Dardo del enjambre",
+  "nombre_original": "Swarm Dart",
+  "rareza": "raro",
+  "categoria": "arrojadiza",
+  "coste": 2300,
+  "precision": {
+   "atributos": [
+    "DES",
+    "DES"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 4,
+   "tipo": "veneno"
+  },
+  "manos": 1,
+  "alcance": "distancia",
+  "marcial": false,
+  "cualidad": "Los objetivos impactados sufren el estado envenenado."
+ },
+ {
+  "id": "barda",
+  "nombre": "Barda",
+  "nombre_original": "Bardiche",
+  "rareza": "raro",
+  "categoria": "pesada",
+  "coste": 350,
+  "precision": {
+   "atributos": [
+    "VIG",
+    "VIG"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 14,
+   "tipo": "fisico"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": ""
+ },
+ {
+  "id": "mazo-del-artesano",
+  "nombre": "Mazo del artesano",
+  "nombre_original": "Artisan Mallet",
+  "rareza": "raro",
+  "categoria": "pesada",
+  "coste": 450,
+  "precision": {
+   "atributos": [
+    "PER",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 6,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "Inflige 5 puntos de daño adicional a constructos."
+ },
+ {
+  "id": "beowulf",
+  "nombre": "Beowulf",
+  "nombre_original": "Beowulf",
+  "rareza": "raro",
+  "categoria": "pesada",
+  "coste": 550,
+  "precision": {
+   "atributos": [
+    "VIG",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 10,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Inflige 5 puntos de daño adicional a monstruos."
+ },
+ {
+  "id": "vientre-de-la-bestia",
+  "nombre": "Vientre de la bestia",
+  "nombre_original": "Beast Belly",
+  "rareza": "raro",
+  "categoria": "pesada",
+  "coste": 650,
+  "precision": {
+   "atributos": [
+    "VIG",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 14,
+   "tipo": "veneno"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Inflige 5 puntos de daño adicional a humanoides."
+ },
+ {
+  "id": "talador",
+  "nombre": "Talador",
+  "nombre_original": "Woodcleaver",
+  "rareza": "raro",
+  "categoria": "pesada",
+  "coste": 750,
+  "precision": {
+   "atributos": [
+    "VIG",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 10,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Inflige 5 puntos de daño adicional a bestias y plantas."
+ },
+ {
+  "id": "adamamartillo",
+  "nombre": "Adamamartillo",
+  "nombre_original": "Adama-Hammer",
+  "rareza": "raro",
+  "categoria": "pesada",
+  "coste": 1050,
+  "precision": {
+   "atributos": [
+    "VIG",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 14,
+   "tipo": "fisico"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Bonificador de +1 a la Defensa.",
+  "modificadores": [
+   {
+    "stat": "def",
+    "valor": "1"
+   }
+  ]
+ },
+ {
+  "id": "auromazo",
+  "nombre": "Auromazo",
+  "nombre_original": "Auramace",
+  "rareza": "raro",
+  "categoria": "pesada",
+  "coste": 1350,
+  "precision": {
+   "atributos": [
+    "VIG",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 14,
+   "tipo": "luz"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Los ataques con esta arma tienen la propiedad multi (2)."
+ },
+ {
+  "id": "gravitomazo",
+  "nombre": "Gravitomazo",
+  "nombre_original": "Gravitomace",
+  "rareza": "raro",
+  "categoria": "pesada",
+  "coste": 1850,
+  "precision": {
+   "atributos": [
+    "VIG",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 14,
+   "tipo": "tierra"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Los objetivos impactados sufren el estado lento."
+ },
+ {
+  "id": "mjolnir",
+  "nombre": "Mjolnir",
+  "nombre_original": "Mjolnir",
+  "rareza": "raro",
+  "categoria": "pesada",
+  "coste": 1850,
+  "precision": {
+   "atributos": [
+    "VIG",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 10,
+   "tipo": "rayo"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Los objetivos impactados sufren el estado confundido."
+ },
+ {
+  "id": "ala-de-wyrm",
+  "nombre": "Ala de wyrm",
+  "nombre_original": "Wyrm Wing",
+  "rareza": "raro",
+  "categoria": "pesada",
+  "coste": 2050,
+  "precision": {
+   "atributos": [
+    "VIG",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 18,
+   "tipo": "fuego"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Eres Inmune al daño de fuego."
+ },
+ {
+  "id": "alma-predadora",
+  "nombre": "Alma predadora",
+  "nombre_original": "Predator Soul",
+  "rareza": "raro",
+  "categoria": "pesada",
+  "coste": 2550,
+  "precision": {
+   "atributos": [
+    "VIG",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 18,
+   "tipo": "oscuro"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Los objetivos impactados sufren el estado enfurecido."
+ },
+ {
+  "id": "coloso-de-invierno",
+  "nombre": "Coloso de invierno",
+  "nombre_original": "Winter Colossus",
+  "rareza": "raro",
+  "categoria": "pesada",
+  "coste": 2550,
+  "precision": {
+   "atributos": [
+    "VIG",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 18,
+   "tipo": "hielo"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Bonificador de +1 a la Defensa y +1 a la Defensa Mágica.",
+  "modificadores": [
+   {
+    "stat": "def",
+    "valor": "1"
+   },
+   {
+    "stat": "mdef",
+    "valor": "1"
+   }
+  ]
+ },
+ {
+  "id": "latrodectus",
+  "nombre": "Latrodectus",
+  "nombre_original": "Latrodectus",
+  "rareza": "raro",
+  "categoria": "daga",
+  "coste": 250,
+  "precision": {
+   "atributos": [
+    "DES",
+    "PER"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 4,
+   "tipo": "veneno"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": ""
+ },
+ {
+  "id": "buscacorazones",
+  "nombre": "Buscacorazones",
+  "nombre_original": "Heartseeker Dagger",
+  "rareza": "raro",
+  "categoria": "daga",
+  "coste": 550,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VOL"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 4,
+   "tipo": "luz"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "Inflige 5 puntos de daño adicional a demonios."
+ },
+ {
+  "id": "hendedora-de-atomos",
+  "nombre": "Hendedora de átomos",
+  "nombre_original": "Atom Splitter",
+  "rareza": "raro",
+  "categoria": "daga",
+  "coste": 600,
+  "precision": {
+   "atributos": [
+    "DES",
+    "DES"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 4,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "El daño infligido por esta arma ignora Resistencia."
+ },
+ {
+  "id": "hoja-silenciosa",
+  "nombre": "Hoja silenciosa",
+  "nombre_original": "Silent Blade",
+  "rareza": "raro",
+  "categoria": "daga",
+  "coste": 700,
+  "precision": {
+   "atributos": [
+    "DES",
+    "DES"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 4,
+   "tipo": "aire"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "Eres inmune al estado lento."
+ },
+ {
+  "id": "magibisturi",
+  "nombre": "Magibisturí",
+  "nombre_original": "Magiscalpel",
+  "rareza": "raro",
+  "categoria": "daga",
+  "coste": 850,
+  "precision": {
+   "atributos": [
+    "DES",
+    "PER"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 4,
+   "tipo": "oscuro"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "Si impactas como objetivo único a una criatura bajo un conjuro de duración «Escena», puedes disiparlo sobre ella."
+ },
+ {
+  "id": "hoja-del-asesino",
+  "nombre": "Hoja del asesino",
+  "nombre_original": "Assassin Blade",
+  "rareza": "raro",
+  "categoria": "daga",
+  "coste": 1000,
+  "precision": {
+   "atributos": [
+    "DES",
+    "PER"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 4,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "Inflige 5 puntos de daño adicional a objetivos en Crisis."
+ },
+ {
+  "id": "hacha-del-chef",
+  "nombre": "Hacha del chef",
+  "nombre_original": "Chef Cleaver",
+  "rareza": "raro",
+  "categoria": "daga",
+  "coste": 1350,
+  "precision": {
+   "atributos": [
+    "DES",
+    "PER"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 8,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "Al impactar a una o más criaturas con esta arma, puedes recuperar 5 PV."
+ },
+ {
+  "id": "cuchillo-espinado",
+  "nombre": "Cuchillo espinado",
+  "nombre_original": "Barbed Knife",
+  "rareza": "raro",
+  "categoria": "daga",
+  "coste": 1650,
+  "precision": {
+   "atributos": [
+    "DES",
+    "PER"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 4,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "Los objetivos impactados sufren el estado estremecido."
+ },
+ {
+  "id": "dedo-gelido",
+  "nombre": "Dedo gélido",
+  "nombre_original": "Frostfinger",
+  "rareza": "raro",
+  "categoria": "daga",
+  "coste": 1950,
+  "precision": {
+   "atributos": [
+    "DES",
+    "PER"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 8,
+   "tipo": "hielo"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "Los objetivos impactados sufren el estado débil."
+ },
+ {
+  "id": "avispon",
+  "nombre": "Avispón",
+  "nombre_original": "Hornet",
+  "rareza": "raro",
+  "categoria": "daga",
+  "coste": 2200,
+  "precision": {
+   "atributos": [
+    "DES",
+    "DES"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 4,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "Los ataques con esta arma tienen la propiedad multi (3)."
+ },
+ {
+  "id": "espina-punzante",
+  "nombre": "Espina punzante",
+  "nombre_original": "Thorn in the Side",
+  "rareza": "raro",
+  "categoria": "daga",
+  "coste": 2450,
+  "precision": {
+   "atributos": [
+    "PER",
+    "PER"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 8,
+   "tipo": "fuego"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "Los objetivos impactados sufren el estado enfurecido."
+ },
+ {
+  "id": "nekode",
+  "nombre": "Nekode",
+  "nombre_original": "Nekode",
+  "rareza": "raro",
+  "categoria": "pelea",
+  "coste": 250,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 6,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": ""
+ },
+ {
+  "id": "puno-infernal",
+  "nombre": "Puño infernal",
+  "nombre_original": "Hell Fist",
+  "rareza": "raro",
+  "categoria": "pelea",
+  "coste": 350,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 6,
+   "tipo": "oscuro"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "Los ataques con esta arma tienen como objetivo la D. Mágica."
+ },
+ {
+  "id": "agarre-helado",
+  "nombre": "Agarre helado",
+  "nombre_original": "Frost Grip",
+  "rareza": "raro",
+  "categoria": "pelea",
+  "coste": 750,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 6,
+   "tipo": "hielo"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "Eres inmune al estado enfurecido."
+ },
+ {
+  "id": "zarpa-de-oso",
+  "nombre": "Zarpa de oso",
+  "nombre_original": "Bear Paw",
+  "rareza": "raro",
+  "categoria": "pelea",
+  "coste": 850,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 10,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Eres inmune al estado débil."
+ },
+ {
+  "id": "puno-explosivo",
+  "nombre": "Puño explosivo",
+  "nombre_original": "Blast Fist",
+  "rareza": "raro",
+  "categoria": "pelea",
+  "coste": 950,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 6,
+   "tipo": "fuego"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "Eres Resistente al daño de fuego."
+ },
+ {
+  "id": "garra-plateada",
+  "nombre": "Garra plateada",
+  "nombre_original": "Silver Claw",
+  "rareza": "raro",
+  "categoria": "pelea",
+  "coste": 1100,
+  "precision": {
+   "atributos": [
+    "DES",
+    "DES"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 6,
+   "tipo": "luz"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "Bonificador de +1 a la Defensa Mágica.",
+  "modificadores": [
+   {
+    "stat": "mdef",
+    "valor": "1"
+   }
+  ]
+ },
+ {
+  "id": "vendas-antiguas",
+  "nombre": "Vendas antiguas",
+  "nombre_original": "Ancient Wraps",
+  "rareza": "raro",
+  "categoria": "pelea",
+  "coste": 1250,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 6,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "Eres Resistente al daño oscuro y al daño de veneno."
+ },
+ {
+  "id": "puno-tormenta",
+  "nombre": "Puño tormenta",
+  "nombre_original": "Storm Fist",
+  "rareza": "raro",
+  "categoria": "pelea",
+  "coste": 1300,
+  "precision": {
+   "atributos": [
+    "VIG",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 6,
+   "tipo": "rayo"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "Los ataques con esta arma tienen la propiedad multi (2)."
+ },
+ {
+  "id": "pinza-de-bogavante",
+  "nombre": "Pinza de bogavante",
+  "nombre_original": "Lobster Claw",
+  "rareza": "raro",
+  "categoria": "pelea",
+  "coste": 1950,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 10,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Los objetivos impactados sufren el estado lento."
+ },
+ {
+  "id": "puno-demoledor",
+  "nombre": "Puño demoledor",
+  "nombre_original": "Demolition Fist",
+  "rareza": "raro",
+  "categoria": "pelea",
+  "coste": 2000,
+  "precision": {
+   "atributos": [
+    "VIG",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 10,
+   "tipo": "tierra"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Los objetivos impactados sufren el estado confundido."
+ },
+ {
+  "id": "garra-venenifera",
+  "nombre": "Garra venenífera",
+  "nombre_original": "Venom Claw",
+  "rareza": "raro",
+  "categoria": "pelea",
+  "coste": 2250,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 6,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "Los objetivos impactados sufren el estado envenenado."
+ },
+ {
+  "id": "mano-de-dios",
+  "nombre": "Mano de Dios",
+  "nombre_original": "Hand of God",
+  "rareza": "raro",
+  "categoria": "pelea",
+  "coste": 2550,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 10,
+   "tipo": "luz"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "El daño infligido por esta arma ignora Inmunidad."
+ },
+ {
+  "id": "zweihander",
+  "nombre": "Zweihänder",
+  "nombre_original": "Zweihänder",
+  "rareza": "raro",
+  "categoria": "espada",
+  "coste": 400,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 14,
+   "tipo": "fisico"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": ""
+ },
+ {
+  "id": "lluvia-glacial",
+  "nombre": "Lluvia glacial",
+  "nombre_original": "Falling Rain",
+  "rareza": "raro",
+  "categoria": "espada",
+  "coste": 450,
+  "precision": {
+   "atributos": [
+    "DES",
+    "DES"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 10,
+   "tipo": "hielo"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Los ataques con esta arma tienen como objetivo la D. Mágica."
+ },
+ {
+  "id": "flamigera",
+  "nombre": "Flamígera",
+  "nombre_original": "Flamberge",
+  "rareza": "raro",
+  "categoria": "espada",
+  "coste": 500,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 10,
+   "tipo": "fuego"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": ""
+ },
+ {
+  "id": "hoja-elegante",
+  "nombre": "Hoja elegante",
+  "nombre_original": "Elegant Blade",
+  "rareza": "raro",
+  "categoria": "espada",
+  "coste": 700,
+  "precision": {
+   "atributos": [
+    "DES",
+    "PER"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 6,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Eres inmune al estado enfurecido."
+ },
+ {
+  "id": "joyeuse",
+  "nombre": "Joyeuse",
+  "nombre_original": "Joyeuse",
+  "rareza": "raro",
+  "categoria": "espada",
+  "coste": 900,
+  "precision": {
+   "atributos": [
+    "VIG",
+    "VOL"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 10,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Eres inmune al estado estremecido."
+ },
+ {
+  "id": "daga-zurda",
+  "nombre": "Daga zurda",
+  "nombre_original": "Parrying Dagger",
+  "rareza": "raro",
+  "categoria": "espada",
+  "coste": 1000,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 6,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Bonificador de +1 a la Defensa.",
+  "modificadores": [
+   {
+    "stat": "def",
+    "valor": "1"
+   }
+  ]
+ },
+ {
+  "id": "sable-fusil",
+  "nombre": "Sable fusil",
+  "nombre_original": "Gunblade",
+  "rareza": "raro",
+  "categoria": "espada",
+  "coste": 1000,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 10,
+   "tipo": "fisico"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Esta arma puede designar como objetivo a criaturas voladoras."
+ },
+ {
+  "id": "hoja-mortifera",
+  "nombre": "Hoja mortífera",
+  "nombre_original": "Deathbringer",
+  "rareza": "raro",
+  "categoria": "espada",
+  "coste": 1000,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 6,
+   "tipo": "oscuro"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Mientras te encuentres en Crisis, esta arma inflige 5 de daño adicional."
+ },
+ {
+  "id": "rikizo",
+  "nombre": "Rikizō",
+  "nombre_original": "Rikizo",
+  "rareza": "raro",
+  "categoria": "espada",
+  "coste": 1200,
+  "precision": {
+   "atributos": [
+    "DES",
+    "PER"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 10,
+   "tipo": "fisico"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Inflige 2 puntos de daño adicional por cada clase que hayas dominado."
+ },
+ {
+  "id": "tragacarnes",
+  "nombre": "Tragacarnes",
+  "nombre_original": "Flesh-Eater",
+  "rareza": "raro",
+  "categoria": "espada",
+  "coste": 1300,
+  "precision": {
+   "atributos": [
+    "VIG",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 10,
+   "tipo": "veneno"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Inflige 5 puntos de daño adicional a objetivos afligidos por el estado débil."
+ },
+ {
+  "id": "kusanagi",
+  "nombre": "Kusanagi",
+  "nombre_original": "Kusanagi",
+  "rareza": "raro",
+  "categoria": "espada",
+  "coste": 1500,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 14,
+   "tipo": "aire"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Los ataques con esta arma tienen la propiedad multi (2)."
+ },
+ {
+  "id": "excalibur",
+  "nombre": "Excalibur",
+  "nombre_original": "Excalibur",
+  "rareza": "raro",
+  "categoria": "espada",
+  "coste": 2300,
+  "precision": {
+   "atributos": [
+    "VIG",
+    "VOL"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 10,
+   "tipo": "luz"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Eres inmune a todos los estados alterados."
+ }
+]

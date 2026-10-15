@@ -1,0 +1,77 @@
+[
+ {
+  "id": "asalto-cero",
+  "nombre": "Asalto Cero",
+  "nombre_original": "Zero Blitz",
+  "efecto": "Realizas un ataque gratuito con cada arma equipada. Si solo tienes un arma equipada, causa +20 de daño adicional; si tienes dos, obtienes +5 a la prueba de precisión de cada ataque."
+ },
+ {
+  "id": "azar-cero",
+  "nombre": "Azar Cero",
+  "nombre_original": "Zero Chance",
+  "efecto": "Eliges par o impar y lanzas 3d6, contando cuántos dados coinciden con tu predicción:\n- *Ninguno:* Llenas 3 secciones de tu Reloj de Cero y 1 sección del Reloj de cada aliado visible; realizas una acción adicional este turno.\n- *Uno:* Ataque gratuito con un arma equipada que causa daño extra igual al total sumado de los 3d6.\n- *Dos:* Infliges [30 + mitad de tu nivel + total de los 3d6] de daño sin tipo (ignora Afinidades) a una criatura visible.\n- *Tres:* Tú y todos los aliados visibles elimináis todos los estados y recuperáis PV y PM iguales a [tu valor de Crisis + total de los 3d6].\n- *Tres dados iguales:* Si los tres dados muestran el mismo número, ejecutas una acción adicional este turno (acumulable con el resultado de «Ninguno»)."
+ },
+ {
+  "id": "coste-cero",
+  "nombre": "Coste Cero",
+  "nombre_original": "Zero Cost",
+  "efecto": "Hasta el final de la escena, todos los costes de Puntos de Inventario se reducen a la mitad. Puedes ejecutar de inmediato la acción de Inventario de forma gratuita."
+ },
+ {
+  "id": "elementos-cero",
+  "nombre": "Elementos Cero",
+  "nombre_original": "Zero Elements",
+  "efecto": "Eliges dos tipos de daño al crear el poder. Hasta el final de la escena, todo el daño que inflijas se vuelve de uno de esos dos tipos, su tipo no puede ser alterado e ignora Absorciones, Inmunidades y Resistencias, sumando +5 de daño extra. Realizas una acción adicional este turno.",
+  "elecciones": [
+   {
+    "clave": "tipos",
+    "tipo": "seleccion",
+    "tabla": "tipos_dano",
+    "etiqueta": "Dos tipos de daño",
+    "cantidad": 2
+   }
+  ]
+ },
+ {
+  "id": "limites-cero",
+  "nombre": "Límites Cero",
+  "nombre_original": "Zero Limits",
+  "efecto": "Hasta el final de la escena, todos tus atributos se consideran aumentados en un tamaño de dado (máximo d12). Realizas una acción adicional este turno."
+ },
+ {
+  "id": "magia-cero",
+  "nombre": "Magia Cero",
+  "nombre_original": "Zero Magic",
+  "efecto": "Ejecutas de inmediato la acción de Conjuro de forma gratuita lanzando un conjuro conocido con coste 0 PM. Causa +10 de daño adicional y, si es ofensivo, suma +5 a la prueba de magia."
+ },
+ {
+  "id": "objetivo-cero",
+  "nombre": "Objetivo Cero",
+  "nombre_original": "Zero Objective",
+  "efecto": "Rellenas o borras 3 secciones de un Reloj vinculado a la escena actual."
+ },
+ {
+  "id": "remedio-cero",
+  "nombre": "Remedio Cero",
+  "nombre_original": "Zero Remedy",
+  "efecto": "Tú y cualquier número de aliados visibles elimináis todos los estados alterados y recuperáis [40 + mitad de tu nivel] Puntos de Vida."
+ },
+ {
+  "id": "azote-cero",
+  "nombre": "Azote Cero",
+  "nombre_original": "Zero Scourge",
+  "efecto": "Eliges un tipo de daño y dos estados entre confundido, estremecido, lento y débil. Cualquier número de criaturas visibles sufre [30 + mitad de tu nivel] de daño de ese tipo y los dos estados seleccionados."
+ },
+ {
+  "id": "escudo-cero",
+  "nombre": "Escudo Cero",
+  "nombre_original": "Zero Shield",
+  "efecto": "Hasta el inicio de tu próximo turno, todo el daño sufrido por ti y tus aliados en escena se reduce a la mitad (antes de aplicar Afinidades)."
+ },
+ {
+  "id": "triangulo-cero",
+  "nombre": "Triángulo Cero",
+  "nombre_original": "Zero Triangle",
+  "efecto": "Tú y hasta dos aliados visibles realizáis de inmediato un ataque gratuito con armas equipadas, con un bonificador de +5 a la prueba de precisión."
+ }
+]

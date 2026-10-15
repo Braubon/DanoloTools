@@ -4,7 +4,7 @@
 **DanoloTools** (`danolotools.vercel.app`) es un portal personal de utilidades y herramientas prácticas para uso propio cotidiano (variadas: cálculo, vídeo, imagen, utilidades de texto, conversiones, etc.).
 - **Enfoque**: Herramientas directas, sin ruido visual, sin textos explicativos ni marketing innecesario.
 - **Alojamiento y Despliegue**: Repositorio en GitHub desplegado automáticamente en **Vercel**, funcional también en local (`file://` o servidor estático).
-- **Arquitectura**: Web estática nativa (HTML5, CSS moderno y JS modular). Las herramientas se organizan en subcarpetas dentro de `tools/` (ej. `tools/aspect-ratio/index.html`, `tools/map-designer/index.html`). Enlaces relativos explícitos a `index.html` (con `../../index.html` para retornar a la raíz) para compatibilidad tanto en servidor web como abriendo archivos directamente desde disco (`file://`).
+- **Arquitectura**: Web estática nativa (HTML5, CSS moderno y JS modular). Las herramientas se organizan en subcarpetas dentro de `tools/` (ej. `tools/aspect-ratio/index.html`, `tools/map-designer/index.html`, `tools/fabula-ultima-fichas/index.html`). Enlaces relativos explícitos a `index.html` (con `../../index.html` para retornar a la raíz) para compatibilidad tanto en servidor web como abriendo archivos directamente desde disco (`file://`).
 
 ---
 

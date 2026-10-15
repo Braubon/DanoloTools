@@ -1,0 +1,61 @@
+[
+ {
+  "id": "vestido-de-danza",
+  "nombre": "Vestido de danza",
+  "nombre_original": "Dancing Dress",
+  "rareza": "raro",
+  "coste": 1000,
+  "def": {
+   "dado": "DES",
+   "bonus": 0
+  },
+  "mdef": {
+   "dado": "PER",
+   "bonus": 2
+  },
+  "init": -1,
+  "marcial": false,
+  "cualidad": "Al realizar una danza con duración «Hasta el inicio de tu próximo turno», puedes curarte de un estado alterado a tu elección."
+ },
+ {
+  "id": "habito-elemental",
+  "nombre": "Hábito elemental",
+  "nombre_original": "Elemental Robe",
+  "rareza": "raro",
+  "coste": 1800,
+  "def": {
+   "dado": "DES",
+   "bonus": 1
+  },
+  "mdef": {
+   "dado": "PER",
+   "bonus": 2
+  },
+  "init": -2,
+  "marcial": false,
+  "cualidad": "Mientras estés en Crisis, los conjuros que lances que inflijan daño de aire, fuego, rayo, hielo o tierra causan 5 de daño adicional."
+ },
+ {
+  "id": "oricalco",
+  "nombre": "Oricalco",
+  "nombre_original": "Orichalcum",
+  "rareza": "raro",
+  "coste": 2500,
+  "def": {
+   "fijo": 12
+  },
+  "mdef": {
+   "dado": "PER",
+   "bonus": 0
+  },
+  "init": -4,
+  "marcial": true,
+  "cualidad": "Mientras tengas equipada esta armadura, tus PV máximos aumentan en 10. Esta armadura es indestructible.",
+  "modificadores": [
+   {
+    "stat": "pv_max",
+    "valor": "10"
+   }
+  ]
+ }
+]

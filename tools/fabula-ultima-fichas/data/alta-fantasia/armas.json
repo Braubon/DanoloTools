@@ -1,0 +1,324 @@
+[
+ {
+  "id": "portador-de-justicia",
+  "nombre": "Portador de justicia",
+  "nombre_original": "Bringer of Justice",
+  "rareza": "raro",
+  "categoria": "pelea",
+  "coste": 600,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 6,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "Al usar la habilidad Provocación contra una criatura cuyos PV actuales superen a los tuyos, tiene éxito automático (no requiere prueba)."
+ },
+ {
+  "id": "cola-de-quimera",
+  "nombre": "Cola de quimera",
+  "nombre_original": "Chimera Tail",
+  "rareza": "raro",
+  "categoria": "flagelo",
+  "coste": 900,
+  "precision": {
+   "atributos": [
+    "DES",
+    "DES"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 12,
+   "tipo": "fisico"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Los ataques con esta arma causan +1 de daño adicional por cada Especie de criatura distinta de la que hayas aprendido conjuros conocidos de Quimerista."
+ },
+ {
+  "id": "arcanos-mayores",
+  "nombre": "Arcanos mayores",
+  "nombre_original": "Major Arcana",
+  "rareza": "raro",
+  "categoria": "arrojadiza",
+  "coste": 900,
+  "precision": {
+   "atributos": [
+    "DES",
+    "PER"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 4,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "distancia",
+  "marcial": false,
+  "cualidad": "Mientras estés fusionado con un Arcano, las pruebas de precisión con esta arma logran un éxito crítico si ambos dados muestran el mismo número (y no es pifia)."
+ },
+ {
+  "id": "midas",
+  "nombre": "Midas",
+  "nombre_original": "Midas",
+  "rareza": "raro",
+  "categoria": "daga",
+  "coste": 900,
+  "precision": {
+   "atributos": [
+    "DES",
+    "PER"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 4,
+   "tipo": "oscuro"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "Al usar con éxito la habilidad Robaalmas contra una criatura élite o campeón, el valor de su tesoro espiritual aumenta en 100 zenit."
+ },
+ {
+  "id": "aquiles",
+  "nombre": "Aquiles",
+  "nombre_original": "Achilles",
+  "rareza": "raro",
+  "categoria": "lanza",
+  "coste": 1000,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 12,
+   "tipo": "fisico"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Mientras tus PV actuales sean iguales o superiores a tus PV máximos, eres inmune a todos los estados alterados."
+ },
+ {
+  "id": "bestiario",
+  "nombre": "Bestiario",
+  "nombre_original": "Bestiarium",
+  "rareza": "raro",
+  "categoria": "arcana",
+  "coste": 1200,
+  "precision": {
+   "atributos": [
+    "PER",
+    "PER"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 6,
+   "tipo": "luz"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": false,
+  "cualidad": "Obtienes un bonificador de +2 a las pruebas de magia dirigidas contra la Defensa Mágica de criaturas de las que conozcas dos o más Rasgos (y a pruebas enfrentadas contra ellas)."
+ },
+ {
+  "id": "claroscuro",
+  "nombre": "Claroscuro",
+  "nombre_original": "Chiaroscuro",
+  "rareza": "raro",
+  "categoria": "arcana",
+  "coste": 1200,
+  "precision": {
+   "atributos": [
+    "PER",
+    "VOL"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 10,
+   "tipo": "fisico"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Al aplicar un símbolo a una o más criaturas, eliges: cada una recupera 5 PV o cada una pierde 5 PV."
+ },
+ {
+  "id": "filo-flotante",
+  "nombre": "Filo flotante",
+  "nombre_original": "Floating Edge",
+  "rareza": "raro",
+  "categoria": "espada",
+  "coste": 1200,
+  "precision": {
+   "atributos": [
+    "DES",
+    "PER"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 10,
+   "tipo": "aire"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "El daño infligido por conjuros que lances cuyo coste total de PM sea igual o inferior a 20 ignora Inmunidades y Resistencias."
+ },
+ {
+  "id": "vals-sombrio",
+  "nombre": "Vals sombrío",
+  "nombre_original": "Grim Waltz",
+  "rareza": "raro",
+  "categoria": "lanza",
+  "coste": 1200,
+  "precision": {
+   "atributos": [
+    "DES",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 12,
+   "tipo": "fisico"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Tras reducir los PV de una criatura a 0 con esta arma, puedes ejecutar de inmediato una danza aprendida con duración Instantánea (su coste nunca puede ser inferior a 10 PM)."
+ },
+ {
+  "id": "metal-pesado",
+  "nombre": "Metal pesado",
+  "nombre_original": "Heavy Metal",
+  "rareza": "raro",
+  "categoria": "pesada",
+  "coste": 1200,
+  "precision": {
+   "atributos": [
+    "VIG",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 14,
+   "tipo": "rayo"
+  },
+  "manos": 2,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Al atacar con esta arma usando la habilidad Vibrato, todo el daño causado adopta el mismo tipo que el tipo clave de la última estrofa cantada."
+ },
+ {
+  "id": "tametomo",
+  "nombre": "Tametomo",
+  "nombre_original": "Tametomo",
+  "rareza": "raro",
+  "categoria": "arco",
+  "coste": 1500,
+  "precision": {
+   "atributos": [
+    "DES",
+    "DES"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 12,
+   "tipo": "hielo"
+  },
+  "manos": 2,
+  "alcance": "distancia",
+  "marcial": true,
+  "cualidad": "Los ataques con esta arma causan +5 de daño extra contra criaturas que sufran el estado lento y/o estremecido."
+ },
+ {
+  "id": "immernacht",
+  "nombre": "Immernacht",
+  "nombre_original": "Immernacht",
+  "rareza": "raro",
+  "categoria": "arco",
+  "coste": 1800,
+  "precision": {
+   "atributos": [
+    "DES",
+    "DES"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 8,
+   "tipo": "oscuro"
+  },
+  "manos": 2,
+  "alcance": "distancia",
+  "marcial": true,
+  "cualidad": "Cuando una criatura te incluya entre los objetivos de un conjuro ofensivo, si estás en Crisis, debe gastar Puntos de Vida en vez de PM para lanzarlo."
+ },
+ {
+  "id": "ultimatum",
+  "nombre": "Ultimátum",
+  "nombre_original": "Ultimatum",
+  "rareza": "raro",
+  "categoria": "fuego",
+  "coste": 1800,
+  "precision": {
+   "atributos": [
+    "DES",
+    "PER"
+   ],
+   "bonus": 1
+  },
+  "dano": {
+   "bonus": 12,
+   "tipo": "tierra"
+  },
+  "manos": 1,
+  "alcance": "distancia",
+  "marcial": true,
+  "cualidad": "Cuando una criatura te incluya entre los objetivos de un ataque o conjuro ofensivo, debe gastar previamente 5 PM o no podrá seleccionarte."
+ },
+ {
+  "id": "vengadora",
+  "nombre": "Vengadora",
+  "nombre_original": "Revenger",
+  "rareza": "raro",
+  "categoria": "pesada",
+  "coste": 2000,
+  "precision": {
+   "atributos": [
+    "VIG",
+    "VIG"
+   ],
+   "bonus": 0
+  },
+  "dano": {
+   "bonus": 14,
+   "tipo": "fuego"
+  },
+  "manos": 1,
+  "alcance": "cuerpo",
+  "marcial": true,
+  "cualidad": "Cuando una criatura te inflija un estado alterado, sufre de inmediato ese mismo estado (no surte efecto si eres inmune o ya lo padecías)."
+ }
+]

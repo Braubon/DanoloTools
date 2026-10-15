@@ -1,0 +1,75 @@
+[
+  { "id": "arcano-puerta", "grupo": "arcano", "nombre": "Arcano de la Puerta", "nombre_original": "Arcanum of the Gate",
+    "detalles": [
+      { "etiqueta": "Dominios", "texto": "Espacio, viajes, vacío." },
+      { "etiqueta": "Fusión", "texto": "Obtienes Resistencia al daño oscuro y un bonificador de +1 a tu Defensa Mágica (M.DEF)." },
+      { "etiqueta": "Disolución", "texto": "Eliges una opción:\n- *Distorsión:* Te teletransportas a ti mismo y hasta a cinco criaturas voluntarias cercanas a un lugar que hayas visitado con anterioridad, siempre que dicho destino se encuentre a 1 día de viaje o menos.\n- *Olvido:* Eliges cualquier número de criaturas visibles en la escena: cada una de ellas sufre 30 puntos de daño oscuro. Este daño ignora Resistencias." }
+    ] },
+  { "id": "arcano-firmamento", "grupo": "arcano", "nombre": "Arcano del Firmamento", "nombre_original": "Arcanum of the Sky",
+    "detalles": [
+      { "etiqueta": "Dominios", "texto": "Niebla, lluvia, tormentas." },
+      { "etiqueta": "Fusión", "texto": "Obtienes Resistencia al daño de aire y al daño de rayo. Puedes emplear 1 acción para predecir con absoluta certeza las condiciones meteorológicas del día siguiente en una zona situada a 2 días de marcha o menos." },
+      { "etiqueta": "Disolución", "texto": "*Tempestad:* Eliges cualquier número de criaturas visibles en la escena: cada una de ellas sufre 30 puntos de daño de rayo. Este daño ignora Resistencias." }
+    ] },
+  { "id": "arcano-forja", "grupo": "arcano", "nombre": "Arcano de la Forja", "nombre_original": "Arcanum of the Forge",
+    "detalles": [
+      { "etiqueta": "Dominios", "texto": "Calor, fuego, metal." },
+      { "etiqueta": "Fusión", "texto": "Obtienes Resistencia al daño de fuego. Cualquier daño de fuego que inflijas ignora Resistencias." },
+      { "etiqueta": "Disolución", "texto": "Eliges una opción:\n- *Forja:* Creas de la nada una única arma, armadura o escudo básico a tu elección. Si eliges esta opción de nuevo, la pieza creada anteriormente se desvanece. Si creas un arma, inflige daño de fuego en lugar de daño físico.\n- *Infierno:* Eliges cualquier número de criaturas visibles: cada una de ellas sufre 30 puntos de daño de fuego. Este daño ignora Resistencias." }
+    ] },
+  { "id": "arcano-escarcha", "grupo": "arcano", "nombre": "Arcano de la Escarcha", "nombre_original": "Arcanum of the Frost",
+    "detalles": [
+      { "etiqueta": "Dominios", "texto": "Frío, hielo, silencio." },
+      { "etiqueta": "Fusión", "texto": "Obtienes Resistencia al daño de hielo y eres inmune al estado enfurecido. Cualquier daño de hielo que inflijas ignora Resistencias." },
+      { "etiqueta": "Disolución", "texto": "*Era Glacial:* Eliges cualquier número de criaturas visibles en la escena: cada una de ellas sufre 30 puntos de daño de hielo. Este daño ignora Resistencias." }
+    ] },
+  { "id": "arcano-grimorio", "grupo": "arcano", "nombre": "Arcano del Grimorio", "nombre_original": "Arcanum of the Grimoire",
+    "detalles": [
+      { "etiqueta": "Dominios", "texto": "Comprensión, conocimiento, revelación." },
+      { "etiqueta": "Fusión", "texto": "Puedes leer, escribir, hablar y comprender todas las lenguas. Tu atributo de Perspicacia se considera incrementado en un tamaño de dado (hasta un máximo de d12)." },
+      { "etiqueta": "Disolución", "texto": "*Oráculo:* Planteas una única pregunta al DJ. El DJ te responde con la verdad absoluta. Una vez empleado, este efecto no puede volver a utilizarse hasta el amanecer siguiente, y la misma pregunta no puede repetirse jamás." }
+    ] },
+  { "id": "arcano-roble", "grupo": "arcano", "nombre": "Arcano del Roble", "nombre_original": "Arcanum of the Oak",
+    "detalles": [
+      { "etiqueta": "Dominios", "texto": "Plantas, tierra, veneno." },
+      { "etiqueta": "Fusión", "texto": "Obtienes Resistencia al daño de tierra y de veneno, y eres inmune al estado envenenado. Cada vez que recuperes Puntos de Vida por cualquier fuente, recuperas 5 PV adicionales." },
+      { "etiqueta": "Disolución", "texto": "*Florecimiento:* Eliges cualquier número de criaturas visibles: cada una de ellas se cura del estado envenenado y recupera 40 Puntos de Vida (50 PV a nivel 20+, 60 PV a nivel 40+)." }
+    ] },
+  { "id": "arcano-rueda", "grupo": "arcano", "nombre": "Arcano de la Rueda", "nombre_original": "Arcanum of the Wheel",
+    "detalles": [
+      { "etiqueta": "Dominios", "texto": "Destino, tiempo, velocidad." },
+      { "etiqueta": "Fusión", "texto": "Eres inmune al estado lento y obtienes un bonificador de +1 a tu Defensa (DEF)." },
+      { "etiqueta": "Disolución", "texto": "*Detener el tiempo:* Eliges cualquier número de criaturas visibles en la escena: cada una sufre el estado lento y ejecuta una acción menos durante su siguiente turno (hasta un mínimo de cero acciones)." }
+    ] },
+  { "id": "arcano-espada", "grupo": "arcano", "nombre": "Arcano de la Espada", "nombre_original": "Arcanum of the Sword",
+    "detalles": [
+      { "etiqueta": "Dominios", "texto": "Conquista, heroísmo, liderazgo." },
+      { "etiqueta": "Fusión", "texto": "Tus ataques infligen 5 puntos de daño extra y todo el daño que causan se considera sin tipo (por lo que ignora Afinidades). Mientras estés fusionado con este Arcano, tu daño no puede adquirir ningún tipo elemental." },
+      { "etiqueta": "Disolución", "texto": "*Tajo total:* Al realizar un ataque, puedes conferirle la propiedad multi (cualquier número de objetivos). Si lo haces, este Arcano se disuelve automáticamente una vez resuelto el ataque." }
+    ] },
+  { "id": "arcano-torre", "grupo": "arcano", "nombre": "Arcano de la Torre", "nombre_original": "Arcanum of the Tower",
+    "detalles": [
+      { "etiqueta": "Dominios", "texto": "Juicio, protección, sacrificio." },
+      { "etiqueta": "Fusión", "texto": "Al invocar este Arcano, eliges un tipo de daño: aire, rayo, fuego, hielo, oscuro o tierra. Mientras el Arcano permanezca activo, todos tus aliados en la escena obtienen Resistencia al tipo de daño elegido (tú no recibes esta Resistencia)." },
+      { "etiqueta": "Disolución", "texto": "*Juicio:* Eliges cualquier número de criaturas visibles en la escena: cada una de ellas sufre 30 puntos de daño de luz. Este daño ignora Resistencias." }
+    ] },
+
+  { "id": "alquimia-base", "grupo": "disciplina_tecnologica", "disciplina": "alquimia", "grado": "base", "nombre": "Alquimia (base)", "nombre_original": "Alchemy (basic)",
+    "efecto": "Puedes usar la acción de Inventario para mezclar un brebaje improvisado gastando **3 PI**: lanzas dos d20 y asignas uno al Área y otro al Efecto.\n\n**Área (d20):** 1–6 el artífice o un aliado visible · 7–11 un enemigo visible · 12–16 el artífice y todos sus aliados · 17–20 todos los enemigos.\n\n**Efecto (d20):** siempre disponible: sufre 20 de daño de veneno, o recupera 30 PV.\n- **1:** DES y VIG aumentan un tamaño de dado hasta el final de tu siguiente turno.\n- **2:** PER y VOL aumentan un tamaño de dado hasta el final de tu siguiente turno.\n- **3–8:** Sufre 20 de daño de aire (3), rayo (4), oscuro (5), tierra (6), fuego (7) o hielo (8); 30 a nivel 20+, 40 a nivel 40+.\n- **9:** Resistencia a aire y fuego hasta el final de la escena.\n- **10:** Resistencia a rayo y hielo hasta el final de la escena.\n- **11:** Resistencia a oscuro y tierra hasta el final de la escena.\n- **12:** Sufre enfurecido. **13:** Sufre envenenado. **14:** Sufre confundido, débil, lento y estremecido.\n- **15:** Se cura de todos los estados alterados.\n- **16–17:** Recupera 50 PV y 50 PM. **18:** Recupera 100 PV. **19:** Recupera 100 PM. **20:** Recupera 100 PV y 100 PM." },
+  { "id": "alquimia-avanzada", "grupo": "disciplina_tecnologica", "disciplina": "alquimia", "grado": "avanzada", "requiere": ["alquimia-base"], "nombre": "Alquimia (avanzada)", "nombre_original": "Alchemy (advanced)",
+    "efecto": "Puedes gastar **4 PI** para lanzar tres d20: asignas uno al Área, uno al Efecto y descartas el restante." },
+  { "id": "alquimia-superior", "grupo": "disciplina_tecnologica", "disciplina": "alquimia", "grado": "superior", "requiere": ["alquimia-avanzada"], "nombre": "Alquimia (superior)", "nombre_original": "Alchemy (superior)",
+    "efecto": "Puedes gastar **5 PI** para lanzar cuatro d20: asignas uno al Área, uno al Efecto y descartas los dos restantes." },
+  { "id": "infusiones-base", "grupo": "disciplina_tecnologica", "disciplina": "infusiones", "grado": "base", "nombre": "Infusiones (base)", "nombre_original": "Infusions (basic)",
+    "efecto": "Al impactar a uno o más objetivos con un ataque, gastas **2 PI** como parte de la misma acción para aplicar una infusión al arma. El ataque inflige 5 de daño extra y todo el daño pasa a ser del tipo indicado:\n- *Cryo:* hielo.\n- *Pyro:* fuego.\n- *Volt:* rayo." },
+  { "id": "infusiones-avanzada", "grupo": "disciplina_tecnologica", "disciplina": "infusiones", "grado": "avanzada", "requiere": ["infusiones-base"], "nombre": "Infusiones (avanzada)", "nombre_original": "Infusions (advanced)",
+    "efecto": "Nuevas infusiones (+5 de daño extra y cambio de tipo):\n- *Ciclón:* aire.\n- *Exorcismo:* luz.\n- *Sismo:* tierra.\n- *Tinieblas:* oscuro." },
+  { "id": "infusiones-superior", "grupo": "disciplina_tecnologica", "disciplina": "infusiones", "grado": "superior", "requiere": ["infusiones-avanzada"], "nombre": "Infusiones (superior)", "nombre_original": "Infusions (superior)",
+    "efecto": "Nuevas infusiones:\n- *Toxina:* +5 de daño extra, todo el daño pasa a ser de veneno y los impactados sufren envenenado.\n- *Vampiro:* solo en ataques a un único objetivo. Recuperas PV, o PM, iguales a la mitad de los PV perdidos por el objetivo." },
+  { "id": "magitech-base", "grupo": "disciplina_tecnologica", "disciplina": "magitech", "grado": "base", "nombre": "Magitech (base): Control magitecnológico", "nombre_original": "Magitech Control",
+    "efecto": "Gastas 1 acción y 10 PM para realizar una prueba enfrentada de [PER + PER] contra un constructo de rango soldado visible. Si tienes éxito, tomas el control total de la criatura hasta el fin de la escena. Cesa de inmediato si tú o un aliado le infligís daño." },
+  { "id": "magitech-avanzada", "grupo": "disciplina_tecnologica", "disciplina": "magitech", "grado": "avanzada", "requiere": ["magitech-base"], "nombre": "Magitech (avanzada): Cañón mágico", "nombre_original": "Magicannon",
+    "efecto": "Gastas la acción de Inventario y **3 PI** para ensamblar un arma de fuego pesada a dos manos que dura hasta que construyas otra. Eliges su tipo de daño (físico, aire, rayo, fuego, hielo o tierra).\n\n*Cañón mágico:* Precisión [DES + PER] + 1 · Daño [TM + 10] · 2 manos · Distancia · No marcial." },
+  { "id": "magitech-superior", "grupo": "disciplina_tecnologica", "disciplina": "magitech", "grado": "superior", "requiere": ["magitech-avanzada"], "nombre": "Magitech (superior): Magisferas", "nombre_original": "Magispheres",
+    "efecto": "Desarrollas tres prototipos de magisfera que replican un conjuro a tu elección de las listas de Elementalista, Entropista o Espiritista (2 más a nivel 20 y 2 más a nivel 40). Gastas la acción de Inventario y **2 PI** para crear la magisfera y lanzar de inmediato ese conjuro gratis como acción (pagando sus PM y tirando magia). La magisfera se destruye tras su uso." }
+]

@@ -1,0 +1,427 @@
+[
+ {
+  "id": "marca-arcana",
+  "nombre": "Marca arcana",
+  "nombre_original": "Arcane Mark",
+  "requisitos": {
+   "texto": "Haber dominado una o más clases entre Simbolista, Tirador o Maestro de Armas.",
+   "dominar": {
+    "clases": [
+     "simbolista",
+     "tirador",
+     "maestro-de-armas"
+    ]
+   }
+  },
+  "resumen": "Mejora la posibilidad de crítico de conjuros con armas arcanas.",
+  "efecto": "Cuando impactas a una o más criaturas con un ataque usando un arma perteneciente a la categoría arcana, el ataque inflige 5 de daño adicional y puedes elegir a una de esas criaturas. Si el siguiente conjuro ofensivo que lances durante esta escena incluye únicamente a la criatura elegida entre sus objetivos, su prueba de Magia genera un éxito crítico si ambos dados muestran el mismo número (y la tirada no es una pifia)."
+ },
+ {
+  "id": "bimago",
+  "nombre": "Bimago",
+  "nombre_original": "Bimagus",
+  "requisitos": {
+   "texto": "Haber dominado dos o más clases entre Elementalista, Entropista y Espiritista, y tu personaje debe ser de nivel 30 o superior.",
+   "dominar": {
+    "clases": [
+     "elementalista",
+     "entropista",
+     "espiritista"
+    ],
+    "n": 2
+   },
+   "nivel_min": 30
+  },
+  "resumen": "Lanza un conjuro inmediatamente tras otro, ahorrando PM.",
+  "efecto": "Una vez por turno durante un conflicto, si tienes un arma arcana equipada, puedes usar una acción y gastar entre 20 y 50 Puntos de Mente para realizar la acción de Conjuro de forma gratuita dos veces seguidas, lanzando dos conjuros sin necesidad de pagar sus costes individuales en PM.\nLos dos conjuros deben cumplir dos condiciones: su coste total combinado de PM debe ser igual o inferior a [20 + la cantidad de PM gastados en activar esta habilidad], y el segundo conjuro debe tener un coste total de PM igual o inferior a la mitad del coste de PM del primer conjuro."
+ },
+ {
+  "id": "adepto-de-la-hoja",
+  "nombre": "Adepto de la hoja",
+  "nombre_original": "Blade Adept",
+  "requisitos": {
+   "texto": "Haber dominado una o más clases entre Pícaro y Maestro de Armas.",
+   "dominar": {
+    "clases": [
+     "picaro",
+     "maestro-de-armas"
+    ]
+   }
+  },
+  "resumen": "Bonificaciones con dagas y compatibilidad con categorías de pelea, espada y arrojadiza.",
+  "efecto": "Mientras tengas equipada una o más armas cuerpo a cuerpo de la categoría daga, obtienes un bonificador de +1 a Defensa y a Defensa Mágica, y tratas dichas armas como si también perteneciesen a las categorías de pelea, espada y arrojadizas a efectos de habilidades y efectos.\nAdemás, tus ataques con armas de la categoría daga pueden tener como objetivo a criaturas que normalmente no pueden ser alcanzadas por ataques cuerpo a cuerpo.",
+  "modificadores": [
+   {
+    "stat": "def",
+    "valor": "1",
+    "condicion": "daga_equipada"
+   },
+   {
+    "stat": "mdef",
+    "valor": "1",
+    "condicion": "daga_equipada"
+   }
+  ]
+ },
+ {
+  "id": "quiebrabalas",
+  "nombre": "Quiebrabalas",
+  "nombre_original": "Bullet Break",
+  "requisitos": {
+   "texto": "Haber dominado la clase Tirador.",
+   "dominar": {
+    "clases": [
+     "tirador"
+    ]
+   }
+  },
+  "resumen": "Contraataca con armas de fuego tras usar Fuego cruzado.",
+  "efecto": "Tras anular un ataque a distancia con la habilidad Fuego cruzado, si el resultado de la prueba de Precisión fue un número par, puedes realizar de inmediato un ataque gratuito contra el atacante con un arma de fuego a distancia equipada. Este ataque debe tener a ese enemigo como su único objetivo; considera tu Tirada Mayor (TM) como 0 al calcular el daño infligido."
+ },
+ {
+  "id": "campo-de-batalla-incesante",
+  "nombre": "Campo de batalla incesante",
+  "nombre_original": "Ceaseless Battlefield",
+  "requisitos": {
+   "texto": "Haber dominado la clase Comandante.",
+   "dominar": {
+    "clases": [
+     "comandante"
+    ]
+   }
+  },
+  "resumen": "Reduce a la mitad el coste en PM de las habilidades de Comandante.",
+  "efecto": "Los costes en PM de tus habilidades Edicto del alfil, Caballería a la carga y Enroque del rey se reducen a la mitad."
+ },
+ {
+  "id": "borron-y-cuenta-nueva",
+  "nombre": "Borrón y cuenta nueva",
+  "nombre_original": "Clean Slate",
+  "requisitos": {
+   "texto": "Haber dominado la clase Simbolista.",
+   "dominar": {
+    "clases": [
+     "simbolista"
+    ]
+   }
+  },
+  "resumen": "Elimina estados alterados y conjuros de múltiples criaturas.",
+  "efecto": "Puedes usar una acción y gastar hasta 30 Puntos de Mente para elegir una criatura visible por cada 5 PM gastados de este modo. Cada criatura elegida se recupera de todos los estados alterados que sufra y deja de estar afectada por cualquier conjuro activo con duración «Escena»."
+ },
+ {
+  "id": "flecha-doble",
+  "nombre": "Flecha doble",
+  "nombre_original": "Double Arrow",
+  "requisitos": {
+   "texto": "Haber dominado una o más clases entre Comandante y Tirador.",
+   "dominar": {
+    "clases": [
+     "comandante",
+     "tirador"
+    ]
+   }
+  },
+  "resumen": "Dispara dos ataques separados con arcos.",
+  "efecto": "Cuando realizas la acción de Ataque con un arma a distancia de la categoría arco, si no tienes ninguna otra arma equipada, puedes realizar dos ataques separados en lugar de uno (contra el mismo objetivo o contra objetivos diferentes).\nAmbos ataques siguen las reglas de combate con dos armas: cada ataque pierde la propiedad multi y no puede obtenerla, y consideras la Tirada Mayor (TM) de cada prueba de Precisión como 0 al determinar el daño.\n*Nota:* No se acumula con la personalización rápida de un arma personalizada (no permite realizar más de dos ataques)."
+ },
+ {
+  "id": "rituales-rapidos",
+  "nombre": "Rituales rápidos",
+  "nombre_original": "Fast Rituals",
+  "requisitos": {
+   "texto": "Haber dominado una o más clases entre Quimerista, Elementalista, Entropista y Espiritista.",
+   "dominar": {
+    "clases": [
+     "quimerista",
+     "elementalista",
+     "entropista",
+     "espiritista"
+    ]
+   }
+  },
+  "resumen": "Reduce las secciones de los relojes de ritual en conflicto.",
+  "efecto": "Cuando inicias un ritual durante una escena de conflicto, su reloj de ritual se crea con dos secciones menos de lo normal, hasta un mínimo de cuatro secciones."
+ },
+ {
+  "id": "momento-fugaz",
+  "nombre": "Momento fugaz",
+  "nombre_original": "Fleeting Moment",
+  "requisitos": {
+   "texto": "Haber dominado la clase Maestro de Armas y poseer la habilidad Contraataque.",
+   "dominar": {
+    "clases": [
+     "maestro-de-armas"
+    ]
+   },
+   "habilidades": [
+    "contraataque"
+   ]
+  },
+  "resumen": "Suma la Tirada Mayor al contraatacar con espadas.",
+  "efecto": "Cuando realizas un Contraataque usando un arma cuerpo a cuerpo de la categoría espada, puedes sumar tu Tirada Mayor (TM) al daño infligido por el ataque en lugar de considerarla como 0."
+ },
+ {
+  "id": "gran-invocacion",
+  "nombre": "Gran invocación",
+  "nombre_original": "Grand Summoning",
+  "requisitos": {
+   "texto": "Haber dominado la clase Arcanista y tener nivel de personaje 30 o superior.",
+   "dominar": {
+    "clases": [
+     "arcanista"
+    ]
+   },
+   "nivel_min": 30
+  },
+  "resumen": "Manifiesta Arcanos como criaturas físicas independientes.",
+  "efecto": "Al invocar un Arcano, puedes gastar 1 Punto Fábula y la mitad de tus Puntos de Vida actuales (redondeando hacia abajo) para manifestar su poder en forma física completa. El Arcano se manifiesta como una criatura aliada bajo tu control, de rango soldado y especie demonio, disponiendo de su propio turno independiente durante los conflictos (si se activa durante un conflicto, se incorpora al final de la ronda actual). No recibes los beneficios de fusión habituales del Arcano.\n\n**Perfil de la criatura invocada:**\n- **Nivel:** Igual a tu nivel actual (aplica las bonificaciones a tiradas y daño según los pasos estándar de creación de PNJ).\n- **Atributos:** Un atributo con dado d10 a tu elección; d8 en todos los demás atributos.\n- **PV máximos:** [el doble del tamaño base del dado de Vigor de la criatura + la mitad de tus PV máximos]. No posee Puntos de Mente.\n- **Resistencias:** Resistencia a dos tipos de daño a tu elección.\n- **Beneficios de fusión:** La criatura recibe todos los beneficios de fusión que el Arcano te otorgaría habitualmente (afinidades, inmunidades, mejora de dados de atributos, etc.). Si un beneficio de fusión exigiese descartar el Arcano, la criatura desaparece salvo que gastes 20 PM para impedirlo.\n- **Ataque básico:** Un ataque básico cuerpo a cuerpo cuya prueba de Precisión utiliza dos atributos distintos a tu elección e inflige [TM + 8] de daño físico. Elige dos opciones diferentes entre: el ataque es a distancia; inflige 4 de daño adicional; inflige daño de un tipo elemental distinto a físico; o su prueba de Precisión se calcula con un único atributo.\n- **Efecto de descarte:** La criatura puede usar la acción de Habilidad para liberar uno de los efectos de descarte propios de ese Arcano, pero hacerlo provoca su desaparición inmediata salvo que gastes 20 PM.\n\n**Reglas de permanencia:** Aparece a PV máximos y sin estados alterados. Desaparece si queda reducida a 0 PV, si tú mueres, caes inconsciente o abandonas la escena, si finaliza la escena, si le ordenas retirarse (no activa descarte) o si realizas otra invocación o Gran invocación. Las elecciones de atributos y ataque básico quedan fijadas permanentemente para cada Arcano desde la primera vez que es manifestado."
+ },
+ {
+  "id": "hoplita",
+  "nombre": "Hoplita",
+  "nombre_original": "Hoplite",
+  "requisitos": {
+   "texto": "Haber dominado una o más clases entre Comandante y Guardián.",
+   "dominar": {
+    "clases": [
+     "comandante",
+     "guardian"
+    ]
+   }
+  },
+  "resumen": "Potencia los ataques y la Defensa al luchar con arma y escudo.",
+  "efecto": "Mientras tengas un arma equipada en tu mano principal y un escudo en tu mano secundaria, tus ataques con dicha arma infligen 5 de daño adicional y obtienes un bonificador de +1 a Defensa.\n*Incompatibilidad:* No puede combinarse con armas personalizadas dotadas de mejora defensiva ni con la habilidad Doble escudo.",
+  "modificadores": [
+   {
+    "stat": "def",
+    "valor": "1",
+    "condicion": "arma_y_escudo"
+   }
+  ]
+ },
+ {
+  "id": "bosque-de-hierro",
+  "nombre": "Bosque de hierro",
+  "nombre_original": "Iron Forest",
+  "requisitos": {
+   "texto": "Haber dominado una o más clases entre Comandante y Maestro de Armas.",
+   "dominar": {
+    "clases": [
+     "comandante",
+     "maestro-de-armas"
+    ]
+   }
+  },
+  "resumen": "Obliga a los enemigos a gastar PM para actuar tras golpear con lanza.",
+  "efecto": "Tras impactar a una o más criaturas con un ataque cuerpo a cuerpo usando un arma de la categoría lanza, si no tienes otra arma equipada, puedes gastar 20 PM y elegir a una de esas criaturas. El ataque inflige la mitad de daño normal a cada objetivo y eliges un tipo de acción entre: Ataque, Guardia, Objetivo, Conjuro o Habilidad. La criatura elegida debe gastar 10 PM cada vez que desee realizar ese tipo de acción; si no puede abonarlos, debe realizar una acción diferente. Este efecto dura hasta el inicio de tu siguiente turno o hasta que vuelvas a utilizar esta habilidad."
+ },
+ {
+  "id": "guardia-magica",
+  "nombre": "Guardia mágica",
+  "nombre_original": "Magic Guard",
+  "requisitos": {
+   "texto": "Haber dominado una o más clases entre Quimerista, Elementalista, Entropista y Espiritista.",
+   "dominar": {
+    "clases": [
+     "quimerista",
+     "elementalista",
+     "entropista",
+     "espiritista"
+    ]
+   }
+  },
+  "resumen": "Anula conjuros enemigos mientras estás en posición de Guardia.",
+  "efecto": "Al realizar la acción de Guardia, si eliges no otorgar cobertura a otra criatura, obtienes el siguiente beneficio hasta el inicio de tu siguiente turno: cuando una criatura visible lance un conjuro, tras pagar su coste en PM, puedes gastar una cantidad de Puntos de Mente igual a [10 + coste total en PM del conjuro] para neutralizar completamente el conjuro y anular sus efectos (el conjuro no se lanza, pero la criatura gasta su acción)."
+ },
+ {
+  "id": "pasodoble",
+  "nombre": "Pasodoble",
+  "nombre_original": "Paso Doble",
+  "requisitos": {
+   "texto": "Haber dominado la clase Bailarín y poseer la habilidad Sigue mis pasos.",
+   "dominar": {
+    "clases": [
+     "bailarin"
+    ]
+   },
+   "habilidades": [
+    "sigue-mis-pasos"
+   ]
+  },
+  "resumen": "Ignora el coste en PM de Sigue mis pasos al estar en Crisis.",
+  "efecto": "Mientras te encuentres en Crisis, ignoras el coste en PM al activar la habilidad Sigue mis pasos."
+ },
+ {
+  "id": "acorde-de-poder",
+  "nombre": "Acorde de poder",
+  "nombre_original": "Power Chord",
+  "requisitos": {
+   "texto": "Haber dominado la clase Cantor.",
+   "dominar": {
+    "clases": [
+     "cantor"
+    ]
+   }
+  },
+  "resumen": "Otorga críticos expandidos a los aliados mediante canciones.",
+  "efecto": "Al cantar una estrofa a volumen medio o alto, puedes duplicar su coste en Puntos de Mente o gastar 1 Punto Fábula. Si lo haces, tú y cada aliado que pueda oírte obtenéis el siguiente beneficio hasta el inicio de tu siguiente turno: vuestras pruebas de Precisión provocan un éxito crítico si ambos dados muestran el mismo número (siempre que la tirada no resulte en pifia)."
+ },
+ {
+  "id": "golpe-pulverizador",
+  "nombre": "Golpe pulverizador",
+  "nombre_original": "Pulverizing Strike",
+  "requisitos": {
+   "texto": "Haber dominado una o más clases entre Hoja Oscura, Furia y Maestro de Armas.",
+   "dominar": {
+    "clases": [
+     "hoja-oscura",
+     "furia",
+     "maestro-de-armas"
+    ]
+   }
+  },
+  "resumen": "Brecha inflige daño con armas pesadas.",
+  "efecto": "Tras impactar a una criatura con la habilidad Brecha, si atacaste con un arma cuerpo a cuerpo de la categoría pesada, puedes hacer que el ataque inflija daño igual a tu Tirada Mayor (TM) en lugar de infligir daño cero. Cualquier daño adicional (incluyendo el de la tercera opción de Brecha) se suma con normalidad, ignorando únicamente el daño base del arma."
+ },
+ {
+  "id": "marea-creciente",
+  "nombre": "Marea creciente",
+  "nombre_original": "Rising Tide",
+  "requisitos": {
+   "texto": "Haber dominado una o más clases entre Furia y Maestro de Armas.",
+   "dominar": {
+    "clases": [
+     "furia",
+     "maestro-de-armas"
+    ]
+   }
+  },
+  "resumen": "Acumula Puntos de Valentía con ataques consecutivos de pelea.",
+  "efecto": "Cuando realizas un ataque cuerpo a cuerpo usando un arma de la categoría pelea, si no llevas armadura marcial ni escudos equipados, obtienes 1 **Punto de Valentía** (*Bravery Point*). Tus ataques cuerpo a cuerpo con armas de pelea infligen daño adicional igual a tus Puntos de Valentía actuales.\nAl final de cada escena, o si acumulas 5 o más Puntos de Valentía al terminar tu turno, debes gastar todos tus Puntos de Valentía acumulados y recuperar 10 Puntos de Vida y 10 Puntos de Mente."
+ },
+ {
+  "id": "sellos-rituales",
+  "nombre": "Sellos rituales",
+  "nombre_original": "Ritual Seals",
+  "requisitos": {
+   "texto": "Haber dominado la clase Simbolista.",
+   "dominar": {
+    "clases": [
+     "simbolista"
+    ]
+   }
+  },
+  "resumen": "Almacena rituales en sellos con activación condicional.",
+  "efecto": "Al realizar un ritual fuera de escenas de conflicto con un coste total igual o inferior a 60 PM, puedes detener el proceso justo antes de la prueba de Magia y almacenar su efecto dentro de un **sello ritual** inscrito sobre una superficie que puedas tocar. Estableces una condición desencadenante (por ejemplo, «cuando entre en Crisis» o «al chasquear los dedos»).\nAl cumplirse la condición, el sello desaparece y el ritual se desata en ese lugar: realizas la prueba de Magia y aplicas sus efectos normalmente (incluso si estás inconsciente o ausente de la escena). Solo puedes mantener un sello ritual activo a la vez; si mueres o creas otro, el anterior se desvanece de inmediato."
+ },
+ {
+  "id": "espectaculo-estelar",
+  "nombre": "Espectáculo estelar",
+  "nombre_original": "Showstopper",
+  "requisitos": {
+   "texto": "Haber dominado la clase Bailarín.",
+   "dominar": {
+    "clases": [
+     "bailarin"
+    ]
+   }
+  },
+  "resumen": "Ejecuta tres danzas consecutivas a cambio de una pausa posterior.",
+  "efecto": "Al inicio de tu turno durante un conflicto, si no vistes armadura marcial, puedes gastar 1 Punto Fábula para ejecutar inmediatamente hasta tres danzas diferentes de entre las que conoces, en el orden deseado y sin pagar su coste en PM. Si lo haces, no podrás ejecutar danzas bajo ningún concepto hasta el final de tu siguiente turno."
+ },
+ {
+  "id": "telarana",
+  "nombre": "Telaraña",
+  "nombre_original": "Spider’s Web",
+  "requisitos": {
+   "texto": "Haber dominado la clase Maestro de Armas.",
+   "dominar": {
+    "clases": [
+     "maestro-de-armas"
+    ]
+   }
+  },
+  "resumen": "Realiza dos ataques separados con flagelos.",
+  "efecto": "Cuando realizas la acción de Ataque con un arma cuerpo a cuerpo de la categoría flagelo, si no tienes otra arma equipada, puedes realizar dos ataques separados en lugar de uno (contra el mismo objetivo o contra objetivos diferentes). Ambos ataques siguen las reglas de combate con dos armas: pierden la propiedad multi y consideran su TM como 0 al determinar el daño.\n*Nota:* No se acumula con la personalización rápida de armas personalizadas."
+ },
+ {
+  "id": "enjambre-giratorio",
+  "nombre": "Enjambre giratorio",
+  "nombre_original": "Swirling Swarm",
+  "requisitos": {
+   "texto": "Haber dominado una o más clases entre Bailarín, Furia y Tirador.",
+   "dominar": {
+    "clases": [
+     "bailarin",
+     "furia",
+     "tirador"
+    ]
+   }
+  },
+  "resumen": "Acumula Puntos de Inercia con armas arrojadizas para daño o Defensa.",
+  "efecto": "Cuando realizas un ataque a distancia usando un arma de la categoría arrojadiza, si no llevas armadura marcial ni escudos equipados, obtienes 1 **Punto de Inercia** (*Momentum Point*). El máximo acumulable es de 5 Puntos de Inercia.\nTus ataques a distancia con armas arrojadizas infligen daño adicional igual a tus Puntos de Inercia actuales.\nCuando una criatura te impacte con un ataque dirigido contra tu Defensa, debes consumir todos tus Puntos de Inercia e incrementar tu puntuación de Defensa en dicha cantidad contra ese ataque específico (pudiendo convertir el impacto en un fallo). Pierdes todos los Puntos de Inercia acumulados al final de cada escena."
+ },
+ {
+  "id": "tabla-rasa",
+  "nombre": "Tabla rasa",
+  "nombre_original": "Tabula Rasa",
+  "requisitos": {
+   "texto": "Haber dominado la clase Comandante.",
+   "dominar": {
+    "clases": [
+     "comandante"
+    ]
+   }
+  },
+  "resumen": "Hace perder PV a todos los enemigos tras usar habilidades en Crisis.",
+  "efecto": "Tras usar las habilidades Edicto del alfil o Enroque del rey, si te encuentras en Crisis, puedes hacer que cada enemigo presente en la escena pierda 10 Puntos de Vida. Esta pérdida asciende a 20 PV si eres de nivel 20 o superior, o a 30 PV si eres de nivel 40 o superior."
+ },
+ {
+  "id": "tema-musical",
+  "nombre": "Tema musical",
+  "nombre_original": "Theme Song",
+  "requisitos": {
+   "texto": "Haber dominado la clase Cantor.",
+   "dominar": {
+    "clases": [
+     "cantor"
+    ]
+   }
+  },
+  "resumen": "Activa una canción temática personal con bonificaciones persistentes.",
+  "efecto": "Al adquirir esta habilidad, diseñas un tema musical propio: dale un título y asígnale una clave aprendida de Cantor.\nUna vez por escena de conflicto tras cantar una estrofa en la clave del tema musical, puedes iniciar tu tema musical.\nMientras dure el tema musical, obtienes los siguientes beneficios:\n- Obtienes Resistencia al daño del [tipo de daño de la clave del tema musical].\n- Cuando inflijas daño del [tipo de daño de la clave del tema musical], infliges 5 de daño adicional y su tipo no puede ser modificado.\n- El coste en PM para cantar estrofas en la misma clave que tu tema musical se reduce a la mitad (aplicable a ti y a cualquier aliado capaz de cantar estrofas).\nEl tema musical perdura hasta el fin de la escena o hasta que mueras, caigas inconsciente o abandones la escena. Concluye de inmediato si cantas una estrofa en una clave diferente, si finaliza tu turno sin haber cantado ninguna estrofa, o si otro personaje inicia su propio tema musical.",
+  "elecciones": [
+   {
+    "clave": "titulo",
+    "tipo": "texto",
+    "etiqueta": "Título del tema"
+   },
+   {
+    "clave": "clave",
+    "tipo": "opciones",
+    "grupos": [
+     "clave_cantor"
+    ],
+    "etiqueta": "Clave del tema",
+    "min": "1",
+    "max": "1"
+   }
+  ]
+ },
+ {
+  "id": "tajo-triple",
+  "nombre": "Tajo triple",
+  "nombre_original": "Triple Slash",
+  "requisitos": {
+   "texto": "Haber dominado una o más clases entre Bailarín y Maestro de Armas.",
+   "dominar": {
+    "clases": [
+     "bailarin",
+     "maestro-de-armas"
+    ]
+   }
+  },
+  "resumen": "Equipa tres dagas o espadas y realiza triples ataques.",
+  "efecto": "Mientras tengas equipada un arma cuerpo a cuerpo a una mano de la categoría daga o espada en cada una de tus ranuras normales de mano, puedes tratar tu ranura de armadura como una segunda mano secundaria (*off-hand*). Esta ranura especial solo puede utilizarse para equipar un arma cuerpo a cuerpo a una mano de la categoría daga o espada (la habilidad Agarre del mono no permite equipar armas a dos manos en esta ranura).\nAl realizar la acción de Ataque portando tres dagas o espadas, puedes atacar una vez con cada una de las tres armas. Cada uno de los tres ataques sigue las reglas de combate con dos armas: pierde la propiedad multi y considera su TM como 0 al calcular el daño."
+ }
+]

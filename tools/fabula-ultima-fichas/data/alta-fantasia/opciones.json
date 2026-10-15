@@ -1,0 +1,552 @@
+[
+ {
+  "id": "clave-llama",
+  "grupo": "clave_cantor",
+  "nombre": "Clave de Llama",
+  "nombre_original": "Flame key",
+  "detalles": [
+   {
+    "etiqueta": "Tipo de daño",
+    "texto": "Fuego"
+   },
+   {
+    "etiqueta": "Estado alterado",
+    "texto": "Estremecido"
+   },
+   {
+    "etiqueta": "Atributo",
+    "texto": "Vigor"
+   },
+   {
+    "etiqueta": "Recuperación",
+    "texto": "Puntos de Vida"
+   }
+  ]
+ },
+ {
+  "id": "clave-escarcha",
+  "grupo": "clave_cantor",
+  "nombre": "Clave de Escarcha",
+  "nombre_original": "Frost key",
+  "detalles": [
+   {
+    "etiqueta": "Tipo de daño",
+    "texto": "Hielo"
+   },
+   {
+    "etiqueta": "Estado alterado",
+    "texto": "Débil"
+   },
+   {
+    "etiqueta": "Atributo",
+    "texto": "Voluntad"
+   },
+   {
+    "etiqueta": "Recuperación",
+    "texto": "Puntos de Mente"
+   }
+  ]
+ },
+ {
+  "id": "clave-hierro",
+  "grupo": "clave_cantor",
+  "nombre": "Clave de Hierro",
+  "nombre_original": "Iron key",
+  "detalles": [
+   {
+    "etiqueta": "Tipo de daño",
+    "texto": "Físico"
+   },
+   {
+    "etiqueta": "Estado alterado",
+    "texto": "Lento"
+   },
+   {
+    "etiqueta": "Atributo",
+    "texto": "Voluntad"
+   },
+   {
+    "etiqueta": "Recuperación",
+    "texto": "Puntos de Mente"
+   }
+  ]
+ },
+ {
+  "id": "clave-resplandor",
+  "grupo": "clave_cantor",
+  "nombre": "Clave de Resplandor",
+  "nombre_original": "Radiance key",
+  "detalles": [
+   {
+    "etiqueta": "Tipo de daño",
+    "texto": "Rayo"
+   },
+   {
+    "etiqueta": "Estado alterado",
+    "texto": "Estremecido"
+   },
+   {
+    "etiqueta": "Atributo",
+    "texto": "Destreza"
+   },
+   {
+    "etiqueta": "Recuperación",
+    "texto": "Puntos de Vida"
+   }
+  ]
+ },
+ {
+  "id": "clave-sombra",
+  "grupo": "clave_cantor",
+  "nombre": "Clave de Sombra",
+  "nombre_original": "Shadow key",
+  "detalles": [
+   {
+    "etiqueta": "Tipo de daño",
+    "texto": "Luz"
+   },
+   {
+    "etiqueta": "Estado alterado",
+    "texto": "Confundido"
+   },
+   {
+    "etiqueta": "Atributo",
+    "texto": "Perspicacia"
+   },
+   {
+    "etiqueta": "Recuperación",
+    "texto": "Puntos de Vida"
+   }
+  ]
+ },
+ {
+  "id": "clave-piedra",
+  "grupo": "clave_cantor",
+  "nombre": "Clave de Piedra",
+  "nombre_original": "Stone key",
+  "detalles": [
+   {
+    "etiqueta": "Tipo de daño",
+    "texto": "Oscuridad"
+   },
+   {
+    "etiqueta": "Estado alterado",
+    "texto": "Débil"
+   },
+   {
+    "etiqueta": "Atributo",
+    "texto": "Destreza"
+   },
+   {
+    "etiqueta": "Recuperación",
+    "texto": "Puntos de Mente"
+   }
+  ]
+ },
+ {
+  "id": "clave-trueno",
+  "grupo": "clave_cantor",
+  "nombre": "Clave de Trueno",
+  "nombre_original": "Thunder key",
+  "detalles": [
+   {
+    "etiqueta": "Tipo de daño",
+    "texto": "Tierra"
+   },
+   {
+    "etiqueta": "Estado alterado",
+    "texto": "Confundido"
+   },
+   {
+    "etiqueta": "Atributo",
+    "texto": "Vigor"
+   },
+   {
+    "etiqueta": "Recuperación",
+    "texto": "Puntos de Vida"
+   }
+  ]
+ },
+ {
+  "id": "clave-viento",
+  "grupo": "clave_cantor",
+  "nombre": "Clave de Viento",
+  "nombre_original": "Wind key",
+  "detalles": [
+   {
+    "etiqueta": "Tipo de daño",
+    "texto": "Aire"
+   },
+   {
+    "etiqueta": "Estado alterado",
+    "texto": "Lento"
+   },
+   {
+    "etiqueta": "Atributo",
+    "texto": "Perspicacia"
+   },
+   {
+    "etiqueta": "Recuperación",
+    "texto": "Puntos de Mente"
+   }
+  ]
+ },
+ {
+  "id": "tono-calmo",
+  "grupo": "tono_cantor",
+  "nombre": "Tono calmo",
+  "nombre_original": "Calm tone",
+  "efecto": "Cada objetivo recupera [recuperación de la clave] igual a [10 + el doble del tamaño de tu dado actual de Voluntad]. Esta cantidad aumenta en 10 si eres de nivel 20 o superior, o en 20 si eres de nivel 40 o superior. Si este tono causa recuperación de Puntos de Mente, no tiene efecto sobre el personaje que canta la estrofa."
+ },
+ {
+  "id": "tono-energico",
+  "grupo": "tono_cantor",
+  "nombre": "Tono enérgico",
+  "nombre_original": "Energetic tone",
+  "efecto": "Hasta el inicio de tu siguiente turno, cuando un objetivo tiene éxito en una prueba que incluya el [atributo de la clave] y dicha prueba le permita avanzar o retroceder un reloj, puede rellenar o borrar una sección adicional de ese reloj."
+ },
+ {
+  "id": "tono-frenetico",
+  "grupo": "tono_cantor",
+  "nombre": "Tono frenético",
+  "nombre_original": "Frantic tone",
+  "efecto": "Cada objetivo sufre daño de [tipo de daño de la clave] igual al doble del tamaño de tu dado actual de Voluntad. Este tono inflige 10 de daño adicional si eres de nivel 20 o superior, o 20 de daño adicional si eres de nivel 40 o superior."
+ },
+ {
+  "id": "tono-inquietante",
+  "grupo": "tono_cantor",
+  "nombre": "Tono inquietante",
+  "nombre_original": "Haunting tone",
+  "efecto": "Cada objetivo sufre el estado alterado [estado alterado de la clave]. Además, cada objetivo pierde la Resistencia al daño de [tipo de daño de la clave] (si la tuviese) hasta el inicio de tu siguiente turno."
+ },
+ {
+  "id": "tono-animado",
+  "grupo": "tono_cantor",
+  "nombre": "Tono animado",
+  "nombre_original": "Lively tone",
+  "efecto": "Cada objetivo considera su [atributo de la clave] como un tamaño de dado superior (hasta un máximo de d12) hasta el inicio de tu siguiente turno."
+ },
+ {
+  "id": "tono-amenazante",
+  "grupo": "tono_cantor",
+  "nombre": "Tono amenazante",
+  "nombre_original": "Menacing tone",
+  "efecto": "La primera vez que cada objetivo sufra daño antes del inicio de tu siguiente turno, ese daño se convierte en daño de [tipo de daño de la clave]. Este efecto se activa de forma independiente una vez por cada objetivo de la estrofa."
+ },
+ {
+  "id": "tono-solemne",
+  "grupo": "tono_cantor",
+  "nombre": "Tono solemne",
+  "nombre_original": "Solemn tone",
+  "efecto": "Cada objetivo se recupera del estado alterado [estado alterado de la clave]. Además, cada objetivo obtiene Resistencia al daño de [tipo de daño de la clave] hasta el inicio de tu siguiente turno."
+ },
+ {
+  "id": "danza-del-angel",
+  "grupo": "danza",
+  "nombre": "Danza del ángel",
+  "nombre_original": "Angel Dance",
+  "duracion": "Hasta el inicio de tu siguiente turno",
+  "efecto": "Elige una opción: obtienes Resistencia al daño de luz; o todo el daño infligido por tus ataques y conjuros se convierte en daño de luz."
+ },
+ {
+  "id": "danza-de-la-banshee",
+  "grupo": "danza",
+  "nombre": "Danza de la banshee",
+  "nombre_original": "Banshee Dance",
+  "duracion": "Instantánea",
+  "efecto": "Elige a otra criatura visible. Si dicha criatura ya está lenta, sufre inmediatamente el estado estremecido."
+ },
+ {
+  "id": "danza-del-murcielago",
+  "grupo": "danza",
+  "nombre": "Danza del murciélago",
+  "nombre_original": "Bat Dance",
+  "duracion": "Hasta el inicio de tu siguiente turno",
+  "efecto": "Elige una opción: obtienes Resistencia al daño de oscuridad; o todo el daño infligido por tus ataques y conjuros se convierte en daño de oscuridad."
+ },
+ {
+  "id": "danza-del-golem",
+  "grupo": "danza",
+  "nombre": "Danza del gólem",
+  "nombre_original": "Golem Dance",
+  "duracion": "Hasta el inicio de tu siguiente turno",
+  "efecto": "Elige una opción: obtienes Resistencia al daño de rayo; o todo el daño infligido por tus ataques y conjuros se convierte en daño de rayo."
+ },
+ {
+  "id": "danza-del-grifo",
+  "grupo": "danza",
+  "nombre": "Danza del grifo",
+  "nombre_original": "Griffin Dance",
+  "duracion": "Hasta el inicio de tu siguiente turno",
+  "efecto": "Elige una opción: obtienes Resistencia al daño de aire; o todo el daño infligido por tus ataques y conjuros se convierte en daño de aire."
+ },
+ {
+  "id": "danza-de-la-hidra",
+  "grupo": "danza",
+  "nombre": "Danza de la hidra",
+  "nombre_original": "Hydra Dance",
+  "duracion": "Hasta el inicio de tu siguiente turno",
+  "efecto": "Tras sufrir daño, elige una opción: recuperas 5 Puntos de Vida, o recuperas 5 Puntos de Mente."
+ },
+ {
+  "id": "danza-del-kraken",
+  "grupo": "danza",
+  "nombre": "Danza del kraken",
+  "nombre_original": "Kraken Dance",
+  "duracion": "Instantánea",
+  "efecto": "Elige a otra criatura visible. Si dicha criatura ya está confundida, sufre inmediatamente el estado lento."
+ },
+ {
+  "id": "danza-del-leon",
+  "grupo": "danza",
+  "nombre": "Danza del león",
+  "nombre_original": "Lion Dance",
+  "duracion": "Instantánea",
+  "efecto": "Te recuperas de inmediato de un único estado alterado a tu elección."
+ },
+ {
+  "id": "danza-de-la-menade",
+  "grupo": "danza",
+  "nombre": "Danza de la ménade",
+  "nombre_original": "Maenad Dance",
+  "duracion": "Instantánea",
+  "efecto": "Elige a otra criatura visible. Dicha criatura pierde una cantidad de Puntos de Mente igual al tamaño de tu dado actual de Destreza."
+ },
+ {
+  "id": "danza-del-mirmidon",
+  "grupo": "danza",
+  "nombre": "Danza del mirmidón",
+  "nombre_original": "Myrmidon Dance",
+  "duracion": "Hasta el inicio de tu siguiente turno",
+  "efecto": "Elige una opción: obtienes Resistencia al daño de tierra; o todo el daño infligido por tus ataques y conjuros se convierte en daño de tierra."
+ },
+ {
+  "id": "danza-de-la-pesadilla",
+  "grupo": "danza",
+  "nombre": "Danza de la pesadilla",
+  "nombre_original": "Nightmare Dance",
+  "duracion": "Instantánea",
+  "efecto": "Elige a otra criatura visible. Si dicha criatura ya está estremecida, sufre inmediatamente el estado débil."
+ },
+ {
+  "id": "danza-del-uroboros",
+  "grupo": "danza",
+  "nombre": "Danza del uróboros",
+  "nombre_original": "Ouroboros Dance",
+  "duracion": "Instantánea",
+  "efecto": "Elige a un aliado visible que aún no haya tomado un turno en esta ronda. Dicho aliado puede tomar su turno inmediatamente después del tuyo en esta misma ronda."
+ },
+ {
+  "id": "danza-del-pavo-real",
+  "grupo": "danza",
+  "nombre": "Danza del pavo real",
+  "nombre_original": "Peacock Dance",
+  "duracion": "Instantánea",
+  "efecto": "Elige a otra criatura visible. La próxima vez que realice un ataque o lance un conjuro ofensivo durante esta escena, dicho ataque o conjuro debe incluirte entre sus objetivos si es posible."
+ },
+ {
+  "id": "danza-del-fenix",
+  "grupo": "danza",
+  "nombre": "Danza del fénix",
+  "nombre_original": "Phoenix Dance",
+  "duracion": "Hasta el inicio de tu siguiente turno",
+  "efecto": "Elige una opción: obtienes Resistencia al daño de fuego; o todo el daño infligido por tus ataques y conjuros se convierte en daño de fuego."
+ },
+ {
+  "id": "danza-del-satiro",
+  "grupo": "danza",
+  "nombre": "Danza del sátiro",
+  "nombre_original": "Satyr Dance",
+  "duracion": "Instantánea",
+  "efecto": "Elige a otra criatura visible. Si dicha criatura ya está débil, sufre inmediatamente el estado confundido."
+ },
+ {
+  "id": "danza-del-unicornio",
+  "grupo": "danza",
+  "nombre": "Danza del unicornio",
+  "nombre_original": "Unicorn Dance",
+  "duracion": "Instantánea",
+  "efecto": "Elige a un aliado visible que posea un Vínculo hacia ti: tanto tú como dicho aliado recuperáis una cantidad de Puntos de Vida igual al tamaño de tu dado actual de Destreza. Esta cantidad aumenta en 5 PV si eres de nivel 20 o superior, o en 10 PV si eres de nivel 40 o superior."
+ },
+ {
+  "id": "danza-del-yeti",
+  "grupo": "danza",
+  "nombre": "Danza del yeti",
+  "nombre_original": "Yeti Dance",
+  "duracion": "Hasta el inicio de tu siguiente turno",
+  "efecto": "Elige una opción: obtienes Resistencia al daño de hielo; o todo el daño infligido por tus ataques y conjuros se convierte en daño de hielo."
+ },
+ {
+  "id": "simbolo-de-atadura",
+  "grupo": "simbolo",
+  "nombre": "Símbolo de atadura",
+  "nombre_original": "Symbol of Binding",
+  "efecto": "El tamaño de dado actual de los atributos de la criatura portadora no puede ser superior a sus tamaños base correspondientes (no anula efectos o conjuros activos, pero neutraliza cualquier bonificación temporal a sus atributos)."
+ },
+ {
+  "id": "simbolo-de-creacion",
+  "grupo": "simbolo",
+  "nombre": "Símbolo de creación",
+  "nombre_original": "Symbol of Creation",
+  "efecto": "Cuando la criatura portadora necesite gastar Puntos de Inventario durante un conflicto, puede destruir este símbolo para no gastar ningún Punto de Inventario."
+ },
+ {
+  "id": "simbolo-de-desesperanza",
+  "grupo": "simbolo",
+  "nombre": "Símbolo de desesperanza",
+  "nombre_original": "Symbol of Despair",
+  "efecto": "Cuando la criatura portadora recupera Puntos de Vida y/o Puntos de Mente durante un conflicto, solo recupera la mitad de la cantidad normal de PV y/o PM, respectivamente."
+ },
+ {
+  "id": "simbolo-de-destino",
+  "grupo": "simbolo",
+  "nombre": "Símbolo de destino",
+  "nombre_original": "Symbol of Destiny",
+  "efecto": "Tras realizar una tirada la criatura portadora, si puedes verla, puedes gastar 1 Punto Fábula para obligarla a repetir ambos dados. Solo puedes hacerlo una vez por tirada y únicamente si el resultado no fue un éxito crítico ni una pifia."
+ },
+ {
+  "id": "simbolo-de-los-elementos",
+  "grupo": "simbolo",
+  "nombre": "Símbolo de los elementos",
+  "nombre_original": "Symbol of Elements",
+  "efecto": "Al crear este símbolo, elige un tipo de daño: aire, rayo, oscuridad, tierra, fuego, hielo, luz o veneno. Cuando la criatura portadora inflija daño a una o más criaturas, si puedes verla, puedes gastar una cantidad de Puntos de Mente igual a un tercio del daño total infligido a dichas criaturas (incluyendo cualquier fuente de daño adicional). Si lo haces, todo el daño infligido cambia su tipo al elegido al crear el símbolo."
+ },
+ {
+  "id": "simbolo-de-enemistad",
+  "grupo": "simbolo",
+  "nombre": "Símbolo de enemistad",
+  "nombre_original": "Symbol of Enmity",
+  "efecto": "Mientras la criatura portadora se encuentre en Crisis, cualquier enemigo que pueda verla debe incluirla obligatoriamente entre los objetivos de sus ataques y conjuros ofensivos, si es posible."
+ },
+ {
+  "id": "simbolo-de-flujo",
+  "grupo": "simbolo",
+  "nombre": "Símbolo de flujo",
+  "nombre_original": "Symbol of Flux",
+  "efecto": "Al crear este símbolo, elige un estado alterado: confundido, estremecido, lento o débil. A continuación, elige una opción:\n- La criatura portadora obtiene inmunidad al estado alterado elegido.\n- La criatura portadora pierde la inmunidad al estado alterado elegido y no puede obtenerla mientras porte el símbolo."
+ },
+ {
+  "id": "simbolo-de-prohibicion",
+  "grupo": "simbolo",
+  "nombre": "Símbolo de prohibición",
+  "nombre_original": "Symbol of Forbiddance",
+  "efecto": "Al crear este símbolo, elige un tipo de acción: Ataque, Guardia, Objetivo, Conjuro o Habilidad. Cuando la criatura portadora realice la acción elegida, pierde 5 Puntos de Vida y 5 Puntos de Mente (antes de ejecutar dicha acción). Ambas pérdidas aumentan a 10 si eres de nivel 20 o superior, o a 20 si eres de nivel 40 o superior."
+ },
+ {
+  "id": "simbolo-de-crecimiento",
+  "grupo": "simbolo",
+  "nombre": "Símbolo de crecimiento",
+  "nombre_original": "Symbol of Growth",
+  "efecto": "Los conjuros con objetivo «Hasta tres criaturas» lanzados por la criatura portadora pasan a tener un objetivo de «Hasta cuatro criaturas». La criatura debe abonar los PM correspondientes al cuarto objetivo."
+ },
+ {
+  "id": "simbolo-de-metamorfosis",
+  "grupo": "simbolo",
+  "nombre": "Símbolo de metamorfosis",
+  "nombre_original": "Symbol of Metamorphosis",
+  "efecto": "Al crear este símbolo, elige una especie: bestia, constructo, demonio, elemental, monstruo, planta o no muerto. La criatura portadora es tratada como perteneciente a la especie elegida a efectos de habilidades y efectos en lugar de su especie habitual (no altera el resto de su perfil, como afinidades o reglas especiales). Este símbolo no puede aplicarse a Personajes Jugadores."
+ },
+ {
+  "id": "simbolo-de-prosperidad",
+  "grupo": "simbolo",
+  "nombre": "Símbolo de prosperidad",
+  "nombre_original": "Symbol of Prosperity",
+  "efecto": "Cuando la criatura portadora gaste 1 Punto Fábula para invocar un Rasgo o un Vínculo, también recibe 100 zenit."
+ },
+ {
+  "id": "simbolo-de-proteccion",
+  "grupo": "simbolo",
+  "nombre": "Símbolo de protección",
+  "nombre_original": "Symbol of Protection",
+  "efecto": "Al crear este símbolo, elige un tipo de daño: aire, rayo, oscuridad, tierra, fuego, hielo, luz o veneno. La criatura portadora obtiene Resistencia al tipo de daño elegido."
+ },
+ {
+  "id": "simbolo-de-rebelion",
+  "grupo": "simbolo",
+  "nombre": "Símbolo de rebelión",
+  "nombre_original": "Symbol of Rebellion",
+  "efecto": "Si hay un Villano presente en la escena, cualquier prueba enfrentada realizada por la criatura portadora genera un éxito crítico si ambos dados muestran el mismo número (siempre que la tirada no sea una pifia)."
+ },
+ {
+  "id": "simbolo-de-renacimiento",
+  "grupo": "simbolo",
+  "nombre": "Símbolo de renacimiento",
+  "nombre_original": "Symbol of Rebirth",
+  "efecto": "Si la criatura portadora está a punto de quedar reducida a 0 Puntos de Vida, puede destruir este símbolo: si lo hace, sus PV quedan fijados exactamente en 1 en su lugar."
+ },
+ {
+  "id": "simbolo-de-venganza",
+  "grupo": "simbolo",
+  "nombre": "Símbolo de venganza",
+  "nombre_original": "Symbol of Revenge",
+  "efecto": "Cuando una criatura en Crisis impacte a la criatura portadora con un ataque o conjuro ofensivo, la criatura en Crisis recupera 5 Puntos de Vida y 5 Puntos de Mente."
+ },
+ {
+  "id": "simbolo-de-sacrificio",
+  "grupo": "simbolo",
+  "nombre": "Símbolo de sacrificio",
+  "nombre_original": "Symbol of Sacrifice",
+  "efecto": "Cuando la criatura portadora sufra daño, si puedes verla, puedes destruir este símbolo: si lo haces, sufres tú esa misma cantidad de daño en lugar de la criatura portadora."
+ },
+ {
+  "id": "simbolo-de-hechiceria",
+  "grupo": "simbolo",
+  "nombre": "Símbolo de hechicería",
+  "nombre_original": "Symbol of Sorcery",
+  "efecto": "El coste total en Puntos de Mente de los conjuros que tengan como objetivo a la criatura portadora se reduce en 5 PM (hasta un coste total mínimo de 5 PM). Si un conjuro tiene como objetivo a múltiples criaturas portadoras de este símbolo, el efecto es acumulativo."
+ },
+ {
+  "id": "simbolo-de-verdad",
+  "grupo": "simbolo",
+  "nombre": "Símbolo de verdad",
+  "nombre_original": "Symbol of Truth",
+  "efecto": "Las pruebas realizadas para examinar o localizar a la criatura portadora, así como las pruebas de Precisión y pruebas de Magia para ataques y conjuros ofensivos que la incluyan entre sus objetivos, obtienen una bonificación de +2. Si un ataque o conjuro tiene como objetivo a múltiples criaturas portadoras de este símbolo, el efecto es acumulativo."
+ },
+ {
+  "id": "simbolo-de-debilidad",
+  "grupo": "simbolo",
+  "nombre": "Símbolo de debilidad",
+  "nombre_original": "Symbol of Weakness",
+  "efecto": "Al crear este símbolo, elige un tipo de daño: aire, rayo, oscuridad, tierra, fuego, hielo, luz o veneno. La criatura portadora sufre 5 de daño adicional de fuentes que inflijan daño del tipo elegido."
+ },
+ {
+  "id": "arcano-tauro",
+  "grupo": "arcano",
+  "nombre": "Arcano de Tauro",
+  "nombre_original": "Arcanum of Taurus",
+  "detalles": [
+   {
+    "etiqueta": "Dominios",
+    "texto": "Paciencia, tenacidad, tierra."
+   },
+   {
+    "etiqueta": "Fusión",
+    "texto": "Eres inmune a los estados débil y enfurecido. Al recuperar Puntos de Mente por cualquier fuente, recuperas 5 PM adicionales."
+   },
+   {
+    "etiqueta": "Disolución",
+    "texto": "*Terremoto:* Elige cualquier número de criaturas que puedas ver: cada una sufre 30 de daño de tierra. Este daño ignora Resistencias."
+   }
+  ]
+ },
+ {
+  "id": "arcano-boudica",
+  "grupo": "arcano",
+  "nombre": "Boudica, Lanza Rebelde",
+  "nombre_original": "Boudicca, Rebel Lance",
+  "detalles": [
+   {
+    "etiqueta": "Dominios",
+    "texto": "Batalla, independencia, rebelión."
+   },
+   {
+    "etiqueta": "Fusión",
+    "texto": "Tus ataques causan 5 de daño extra. Todo el daño que inflijas se convierte en daño de luz y su tipo no puede ser modificado por ningún otro efecto."
+   },
+   {
+    "etiqueta": "Disolución",
+    "texto": "*Segunda oportunidad:* *Solo puede activarse mientras estés en Crisis.* Elige cualquier número de criaturas que puedas ver: cada una se cura de todos sus estados alterados y recupera 30 Puntos de Vida (40 PV a nivel 20+, 50 PV a nivel 40+)."
+   }
+  ]
+ }
+]

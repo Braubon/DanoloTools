@@ -1,0 +1,39 @@
+[
+ {
+  "id": "arma-personalizada",
+  "nombre": "Arma personalizada",
+  "nombre_original": "Custom Weapon",
+  "coste": 300,
+  "manos": 2,
+  "dano_base": 5,
+  "tipo_dano": "fisico",
+  "personalizaciones": 3,
+  "precision_opciones": [
+   [
+    "DES",
+    "PER"
+   ],
+   [
+    "DES",
+    "VIG"
+   ]
+  ],
+  "alcance_opciones": [
+   "cuerpo",
+   "distancia"
+  ],
+  "categorias": [
+   "arcana",
+   "arco",
+   "pelea",
+   "daga",
+   "fuego",
+   "flagelo",
+   "pesada",
+   "lanza",
+   "espada",
+   "arrojadiza"
+  ],
+  "efecto": "Arma icónica diseñable durante la creación de personaje o adquirible por 300 z. Siempre a dos manos; alcance a elección; precisión [DES + PER] o [DES + VIG]; daño [TM + 5] físico. Recibe exactamente tres personalizaciones (cada una una sola vez). No es marcial de base, pero algunas personalizaciones la vuelven marcial."
+ }
+]

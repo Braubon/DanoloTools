@@ -1,0 +1,51 @@
+[
+ {
+  "id": "compasion",
+  "nombre": "Compasión",
+  "nombre_original": "Compassion",
+  "secciones": "1",
+  "efecto": "Cuando restableces PV y/o PM de uno o más aliados mediante efectos autónomos directos."
+ },
+ {
+  "id": "desafio",
+  "nombre": "Desafío",
+  "nombre_original": "Defiance",
+  "secciones": "1",
+  "efecto": "Al inicio de tu turno en conflicto si hay presentes Villanos y/o enemigos de rango Campeón."
+ },
+ {
+  "id": "amor",
+  "nombre": "Amor",
+  "nombre_original": "Love",
+  "secciones": "1",
+  "efecto": "Vinculado a otro PJ del que estás enamorado: se activa cuando dicho PJ pierde PV o se Rinde. Si se Sacrifica, el Reloj de Cero se llena al instante."
+ },
+ {
+  "id": "venganza",
+  "nombre": "Venganza",
+  "nombre_original": "Revenge",
+  "secciones": "3",
+  "efecto": "Cuando entras en Crisis por primera vez durante la escena."
+ },
+ {
+  "id": "secuencia",
+  "nombre": "Secuencia",
+  "nombre_original": "Sequence",
+  "secciones": "2",
+  "efecto": "Cuando un aliado visible desata su Efecto de Cero."
+ },
+ {
+  "id": "estrategia",
+  "nombre": "Estrategia",
+  "nombre_original": "Strategy",
+  "secciones": "1",
+  "efecto": "Al final de tu turno si los enemigos en escena sufren en total dos o más estados alterados diferentes."
+ },
+ {
+  "id": "sinergia",
+  "nombre": "Sinergia",
+  "nombre_original": "Synergy",
+  "secciones": "Variable",
+  "efecto": "Al infligir daño: llena 1 sección por cada criatura impactada que fuera Vulnerable al daño infligido."
+ }
+]
