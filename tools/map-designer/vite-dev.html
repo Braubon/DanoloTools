@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cartógrafo de Asentamientos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark"></span>Cartógrafo</div>
+    <nav class="steps" id="steps">
+      <button data-step="1"><span>1</span>Terreno</button>
+      <button data-step="2"><span>2</span>Generación</button>
+      <button data-step="3"><span>3</span>Edición</button>
+    </nav>
+    <div class="spacer"></div>
+    <div class="actions">
+      <button id="undo" class="icon" title="Deshacer (Ctrl+Z)"><svg viewBox="0 0 20 20"><path d="M7 5L3 9l4 4M3.5 9H12a5 5 0 010 10h-2" /></svg></button>
+      <button id="redo" class="icon" title="Rehacer (Ctrl+Shift+Z)"><svg viewBox="0 0 20 20"><path d="M13 5l4 4-4 4M16.5 9H8a5 5 0 000 10h2" /></svg></button>
+      <span class="sep"></span>
+      <div class="theme-wrap"><button id="themeBtn" class="ghost">Tema</button><div id="themePanel" class="theme-panel" hidden></div></div>
+      <button id="random" class="ghost">Aleatorizar</button>
+      <div class="theme-wrap"><button id="fileBtn" class="ghost">Archivo</button><div id="fileMenu" class="menu-panel" hidden></div></div>
+      <div class="theme-wrap"><button id="exportBtn" class="primary">Exportar</button><div id="exportMenu" class="menu-panel" hidden></div></div>
+    </div>
+  </header>
+  <div class="layout">
+    <aside class="panel" id="panel"></aside>
+    <main class="stage" id="stage">
+      <svg id="svg" xmlns="http://www.w3.org/2000/svg">
+        <g id="view">
+          <g id="map"></g>
+          <image id="densImg" x="0" y="0" preserveAspectRatio="none" opacity="1"></image>
+          <image id="distImg" x="0" y="0" preserveAspectRatio="none"></image>
+          <g id="overlay"></g>
+        </g>
+      </svg>
+      <div class="hint" id="hint"></div>
+      <div class="busy" id="busy">Generando…</div>
+      <div class="zoom">
+        <button id="zoomIn" title="Acercar">+</button>
+        <button id="zoomOut" title="Alejar">−</button>
+        <button id="zoomFit" title="Encajar">⤢</button>
+      </div>
+      <div class="stats" id="stats"></div>
+    </main>
+  </div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

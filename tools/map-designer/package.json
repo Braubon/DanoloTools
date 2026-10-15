@@ -1,0 +1,26 @@
+{
+  "name": "cartografo",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "clipper-lib": "^6.4.2",
+    "d3-delaunay": "^6.0.4"
+  },
+  "overrides": {
+    "rollup": "4.40.0"
+  },
+  "devDependencies": {
+    "vite": "^5.4.10",
+    "vite-plugin-singlefile": "^2.0.3"
+  },
+  "private": true,
+  "type": "module"
+}
