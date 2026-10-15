@@ -1,0 +1,132 @@
+[
+  {
+    "id": "maestro-trampero",
+    "nombre": "Maestro trampero",
+    "nombre_original": "Master Trapper",
+    "requisitos": {
+      "texto": "Haber dominado la clase Cazador.",
+      "dominar": {
+        "clases": [
+          "cazador"
+        ]
+      }
+    },
+    "resumen": "Reduce en 1 el coste en PI de trampas SL 2+ y permite almacenar y lanzar una trampa en combate.",
+    "efecto": "El coste en PI para desplegar trampas de SL 2 o superior se reduce en 1 (por ejemplo, una trampa de SL 2 cuesta 1 PI y una de SL 5 cuesta 4 PI). Además, puedes preparar y almacenar una trampa durante escenas de descanso siguiendo los costes habituales. En cualquier turno durante un conflicto, puedes gastar una acción para lanzar la trampa almacenada contra los objetivos mediante una prueba enfrentada de [DES + PER] contra ellos."
+  },
+  {
+    "id": "punteria-certera",
+    "nombre": "Puntería certera",
+    "nombre_original": "Unerring Focus",
+    "requisitos": {
+      "texto": "Haber dominado la clase Cazador y poseer la habilidad Fijar blanco.",
+      "dominar": {
+        "clases": [
+          "cazador"
+        ]
+      },
+      "habilidades": [
+        "fijar-blanco"
+      ]
+    },
+    "resumen": "Aumenta el bonificador de Fijar blanco a +4 pagando 20 PM.",
+    "efecto": "Al usar Fijar blanco, puedes gastar 20 PM en lugar de 10. Si lo haces, el bonificador a las pruebas de los aliados contra el objetivo aumenta a +4 (en vez de +2)."
+  },
+  {
+    "id": "persecucion-implacable",
+    "nombre": "Persecución implacable",
+    "nombre_original": "Relentless Pursuit",
+    "requisitos": {
+      "texto": "Haber dominado la clase Cazador y poseer la habilidad Rastrear.",
+      "dominar": {
+        "clases": [
+          "cazador"
+        ]
+      },
+      "habilidades": [
+        "rastrear"
+      ]
+    },
+    "resumen": "Bonificador [SL + 2] a Rastrear y activa Fijar blanco o una trampa al iniciar conflicto.",
+    "efecto": "El bonificador a tu prueba de Rastrear pasa a ser [SL + 2]. Si se desata un conflicto, elige una opción: la presa queda inmediatamente afectada por Fijar blanco; o la presa activa de forma inmediata una trampa elegida sin prueba enfrentada (manteniendo el gasto de PI y PM habitual)."
+  },
+  {
+    "id": "precision-fatal",
+    "nombre": "Precisión fatal",
+    "nombre_original": "Fatal Precision",
+    "requisitos": {
+      "texto": "Haber dominado la clase Cazador y poseer la habilidad Golpe vital.",
+      "dominar": {
+        "clases": [
+          "cazador"
+        ]
+      },
+      "habilidades": [
+        "golpe-vital"
+      ]
+    },
+    "resumen": "Golpe vital inflige daño extra según dado de DES + 5 y causa débil o estremecido.",
+    "efecto": "Al acertar con Golpe vital, el daño adicional infligido es igual a [dado de Destreza + 5] y el objetivo sufre débil. Si la criatura ya estaba en Crisis o entra en Crisis con el golpe, recibe 10 de daño adicional (en vez de 5) y sufre débil y estremecido."
+  },
+  {
+    "id": "reflejos-del-depredador",
+    "nombre": "Reflejos del depredador",
+    "nombre_original": "Predator's Reflexes",
+    "requisitos": {
+      "texto": "Haber dominado la clase Cazador y poseer la habilidad Reflejos salvajes.",
+      "dominar": {
+        "clases": [
+          "cazador"
+        ]
+      },
+      "habilidades": [
+        "reflejos-salvajes"
+      ]
+    },
+    "resumen": "Reflejos salvajes otorga [SL + 1] a DEF y contraataca con Tirada Mayor normal.",
+    "efecto": "Reflejos salvajes otorga un bonificador a tu Defensa igual a [SL + 1]. Además, al realizar el contraataque gratuito tras el fallo enemigo, calculas el daño utilizando tu Tirada Mayor de forma normal (en lugar de tratarla como 0)."
+  },
+  {
+    "id": "crear-fantasma-numen",
+    "nombre": "Crear fantasma: Numen",
+    "nombre_original": "Create Phantasm: Numen",
+    "requisitos": {
+      "texto": "Haber dominado la clase Ilusionista.",
+      "dominar": {
+        "clases": [
+          "ilusionista"
+        ]
+      }
+    },
+    "resumen": "Permite invocar un cuarto fantasma (Numen) con turno propio y daño que ignora Resistencias e Inmunidades.",
+    "efecto": "Puedes mantener hasta 4 fantasmas activos simultáneamente, siempre que uno de ellos sea obligatoriamente un **Numen** (solo puedes tener un Numen activo a la vez). Este fantasma no puede consumirse para alimentar otras habilidades o conjuros de Ilusionista.\n- Cuesta 50 PM de invocar.\n- Su Vitalidad Fantasmal es igual a [el doble de tu dado base de Perspicacia + tu nivel].\n- Posee su propio turno y una acción independiente por ronda (actúa justo antes o después del turno del ilusionista).\n- Al invocarlo eliges su esencia, que determina su tipo de daño: **Ravana** (Físico), **Asura** (Luz) o **Diablos** (Oscuro).\n- Su ataque inflige [TM + 14] de daño del tipo elegido (aumenta a 18 a nivel 20+ y a 20 a nivel 40+), ignorando Resistencias e Inmunidades."
+  },
+  {
+    "id": "claro-como-el-cristal",
+    "nombre": "Claro como el cristal",
+    "nombre_original": "Crystal Clear",
+    "requisitos": {
+      "texto": "Haber dominado la habilidad Claridad (SL 3).",
+      "habilidades": [
+        "claridad"
+      ]
+    },
+    "resumen": "+2 a DEF, D. Mág y Precisión con la reserva completa de Cuentas de Determinación, y comparte +1 a aliados.",
+    "efecto": "Siempre que tengas tu reserva completa de Cuentas de Determinación, recibes un bonificador de +2 a tu Defensa, Defensa Mágica y pruebas de Precisión. A efectos de Claridad resonante, compartes estos beneficios con tus aliados como un bonificador de +1 a su Defensa, Defensa Mágica y pruebas de Precisión."
+  },
+  {
+    "id": "arma-engarzada",
+    "nombre": "Arma engarzada",
+    "nombre_original": "Beaded Weapon",
+    "requisitos": {
+      "texto": "Haber dominado la clase Monje.",
+      "dominar": {
+        "clases": [
+          "monje"
+        ]
+      }
+    },
+    "resumen": "Imbuye un arma con tus cuentas para otorgarle +3 a Precisión, ignorar Resistencias y alcance a distancia.",
+    "efecto": "En cualquier momento durante un conflicto, si tienes tu reserva de cuentas completa, puedes gastar 40 PM para imbuir un arma equipada con todas tus cuentas. Hasta que termine la escena, el arma obtiene +3 a pruebas de Precisión y su daño ignora Resistencias. Si es un arma cuerpo a cuerpo, pasa a ser también un arma a distancia. Si la tienes equipada al imbuirla, puedes realizar un ataque gratuito con ella como parte de la misma acción.\nMientras estén imbuidas en el arma, pierdes el acceso a esas cuentas y no computan para Claridad (puedes volver a generar cuentas con normalidad a partir del siguiente turno). Solo un arma puede beneficiarse de esta habilidad a la vez."
+  }
+]

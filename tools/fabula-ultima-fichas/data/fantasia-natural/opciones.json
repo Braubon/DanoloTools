@@ -1,0 +1,560 @@
+[
+  {
+    "id": "magisemilla-narciso-artico",
+    "grupo": "magisemilla",
+    "nombre": "Narciso ártico",
+    "nombre_original": "Arctic Narcissus",
+    "detalles": [
+      { "etiqueta": "Secciones 0–1", "texto": "Obtienes Resistencia al daño de tierra y de hielo." },
+      { "etiqueta": "Secciones 2–3", "texto": "Tú y todos tus aliados presentes en la escena obtenéis Resistencia al daño de tierra y de hielo." }
+    ]
+  },
+  {
+    "id": "magisemilla-crisantemo-llameante",
+    "grupo": "magisemilla",
+    "nombre": "Crisantemo llameante",
+    "nombre_original": "Blazing Chrysanthemum",
+    "detalles": [
+      { "etiqueta": "Secciones 1–3", "texto": "Al final de tu turno, elige tierra o fuego: todo el daño infligido por ti y tus aliados se convierte en el tipo elegido, no puede cambiar e ignora Resistencias." }
+    ]
+  },
+  {
+    "id": "magisemilla-dalia-del-desierto",
+    "grupo": "magisemilla",
+    "nombre": "Dalia del desierto",
+    "nombre_original": "Desert Dahlia",
+    "detalles": [
+      { "etiqueta": "Secciones 0–1", "texto": "Obtienes Resistencia al daño de aire y de fuego." },
+      { "etiqueta": "Secciones 2–3", "texto": "Tú y todos tus aliados presentes en la escena obtenéis Resistencia al daño de aire y de fuego." }
+    ]
+  },
+  {
+    "id": "magisemilla-ginkgo-dorado",
+    "grupo": "magisemilla",
+    "nombre": "Ginkgo dorado",
+    "nombre_original": "Golden Ginkgo",
+    "detalles": [
+      { "etiqueta": "Sección 1", "texto": "Al final de tu turno, tú y cada aliado visible os curáis de confundido, enfurecido y estremecido." },
+      { "etiqueta": "Secciones 2–3", "texto": "Al final de tu turno, tú y cada aliado visible recuperáis [5 + SL en Cloromancia] PM." }
+    ]
+  },
+  {
+    "id": "magisemilla-asfodelo-de-ultratumba",
+    "grupo": "magisemilla",
+    "nombre": "Asfódelo de ultratumba",
+    "nombre_original": "Grave Asphodel",
+    "detalles": [
+      { "etiqueta": "Sección 1", "texto": "Al final de tu turno, un enemigo visible sufre estremecido." },
+      { "etiqueta": "Sección 2", "texto": "Al final de tu turno, cada enemigo visible sufre estremecido." },
+      { "etiqueta": "Sección 3", "texto": "Al final de tu turno, infliges [15 + SL en Cloromancia] de daño oscuro a cada enemigo visible que sufra estremecido." }
+    ]
+  },
+  {
+    "id": "magisemilla-iris-del-ermitano",
+    "grupo": "magisemilla",
+    "nombre": "Iris del ermitaño",
+    "nombre_original": "Hermit Iris",
+    "detalles": [
+      { "etiqueta": "Sección 1", "texto": "Al final de tu turno, el DJ revela Nivel, Rango, Especie, PV máx., PM máx., Rasgos, Atributos, DEF y D.MÁG de un enemigo visible." },
+      { "etiqueta": "Secciones 2–3", "texto": "Como el anterior, revelando además todas sus Afinidades." }
+    ]
+  },
+  {
+    "id": "magisemilla-belladona-ganchuda",
+    "grupo": "magisemilla",
+    "nombre": "Belladona ganchuda",
+    "nombre_original": "Hookleaf Nightshade",
+    "detalles": [
+      { "etiqueta": "Secciones 0–1", "texto": "Todo el daño que infliges se convierte en veneno, no puede cambiar e ignora Inmunidades y Resistencias." },
+      { "etiqueta": "Secciones 2–3", "texto": "Como el anterior; además, la primera vez en tu turno que inflijas daño de veneno, infliges [SL en Cloromancia] daño adicional y los objetivos pierden PV y sufren envenenado." }
+    ]
+  },
+  {
+    "id": "magisemilla-espino-corneo",
+    "grupo": "magisemilla",
+    "nombre": "Espino córneo",
+    "nombre_original": "Horned Hawthorn",
+    "detalles": [
+      { "etiqueta": "Secciones 0–1", "texto": "Obtienes Resistencia al daño oscuro y de veneno." },
+      { "etiqueta": "Secciones 2–3", "texto": "Tú y tus aliados presentes obtenéis Resistencia al daño oscuro y de veneno." }
+    ]
+  },
+  {
+    "id": "magisemilla-magnolia-lunar",
+    "grupo": "magisemilla",
+    "nombre": "Magnolia lunar",
+    "nombre_original": "Lunar Magnolia",
+    "detalles": [
+      { "etiqueta": "Secciones 1–3", "texto": "Al final de tu turno, elige hielo o luz: todo el daño infligido por ti y tus aliados se convierte en el tipo elegido, no puede cambiar e ignora Resistencias." }
+    ]
+  },
+  {
+    "id": "magisemilla-loto-oceanico",
+    "grupo": "magisemilla",
+    "nombre": "Loto oceánico",
+    "nombre_original": "Ocean Lotus",
+    "detalles": [
+      { "etiqueta": "Secciones 0–1", "texto": "Eres inmune a confundido y lento." },
+      { "etiqueta": "Sección 2", "texto": "Consideras tu Destreza y Perspicacia como un tamaño de dado superior (máx. d12)." },
+      { "etiqueta": "Sección 3", "texto": "Tú y cada aliado visible consideráis Destreza y Perspicacia como un tamaño de dado superior (máx. d12)." }
+    ]
+  },
+  {
+    "id": "magisemilla-gazania-del-peregrino",
+    "grupo": "magisemilla",
+    "nombre": "Gazania del peregrino",
+    "nombre_original": "Pilgrim Gazalia",
+    "detalles": [
+      { "etiqueta": "Secciones 1–2", "texto": "Al final de tu turno, tú u otro PJ visible recupera 2 Puntos de Inventario." },
+      { "etiqueta": "Sección 3", "texto": "Al final de tu turno, tú y cada otro PJ visible recuperáis 1 Punto de Inventario." }
+    ]
+  },
+  {
+    "id": "magisemilla-diente-de-leon-danzante",
+    "grupo": "magisemilla",
+    "nombre": "Diente de león danzante",
+    "nombre_original": "Prancing Dandelion",
+    "detalles": [
+      { "etiqueta": "Secciones 1–3", "texto": "Al final de tu turno, elige aire o rayo: todo el daño infligido por ti y tus aliados se convierte en el tipo elegido, no puede cambiar e ignora Resistencias." }
+    ]
+  },
+  {
+    "id": "magisemilla-protea-regia",
+    "grupo": "magisemilla",
+    "nombre": "Protea regia",
+    "nombre_original": "Regal Protea",
+    "detalles": [
+      { "etiqueta": "Secciones 0–1", "texto": "Eres inmune a estremecido y débil." },
+      { "etiqueta": "Sección 2", "texto": "Consideras tu Vigor y Voluntad como un tamaño de dado superior (máx. d12)." },
+      { "etiqueta": "Sección 3", "texto": "Tú y cada aliado visible consideráis Vigor y Voluntad como un tamaño de dado superior (máx. d12)." }
+    ]
+  },
+  {
+    "id": "magisemilla-lirio-del-remedio",
+    "grupo": "magisemilla",
+    "nombre": "Lirio del remedio",
+    "nombre_original": "Remedy Lily",
+    "detalles": [
+      { "etiqueta": "Sección 1", "texto": "Al final de tu turno, tú y cada aliado visible os curáis de envenenado, lento y débil." },
+      { "etiqueta": "Secciones 2–3", "texto": "Al final de tu turno, tú y cada aliado visible recuperáis [15 + SL en Cloromancia] PV." }
+    ]
+  },
+  {
+    "id": "magisemilla-rosa-aserrada",
+    "grupo": "magisemilla",
+    "nombre": "Rosa aserrada",
+    "nombre_original": "Serrated Rose",
+    "detalles": [
+      { "etiqueta": "Sección 1", "texto": "Al final de tu turno, un enemigo visible sufre lento." },
+      { "etiqueta": "Sección 2", "texto": "Al final de tu turno, cada enemigo visible sufre lento." },
+      { "etiqueta": "Sección 3", "texto": "Al final de tu turno, infliges [15 + SL en Cloromancia] de daño físico a cada enemigo visible que sufra lento." }
+    ]
+  },
+  {
+    "id": "magisemilla-estrelitzia-plateada",
+    "grupo": "magisemilla",
+    "nombre": "Estrelitzia plateada",
+    "nombre_original": "Silver Strelitzia",
+    "detalles": [
+      { "etiqueta": "Secciones 0–1", "texto": "Obtienes Resistencia al daño de rayo y de luz." },
+      { "etiqueta": "Secciones 2–3", "texto": "Tú y tus aliados presentes obtenéis Resistencia al daño de rayo y de luz." }
+    ]
+  },
+  {
+    "id": "magisemilla-peonia-estelar",
+    "grupo": "magisemilla",
+    "nombre": "Peonía estelar",
+    "nombre_original": "Star Peony",
+    "detalles": [
+      { "etiqueta": "Sección 1", "texto": "Al final de tu turno, un enemigo visible sufre confundido." },
+      { "etiqueta": "Sección 2", "texto": "Al final de tu turno, cada enemigo visible sufre confundido." },
+      { "etiqueta": "Sección 3", "texto": "Al final de tu turno, infliges [15 + SL en Cloromancia] de daño de luz a cada enemigo visible que sufra confundido." }
+    ]
+  },
+  {
+    "id": "magisemilla-orquidea-rayada",
+    "grupo": "magisemilla",
+    "nombre": "Orquídea rayada",
+    "nombre_original": "Striped Orchid",
+    "detalles": [
+      { "etiqueta": "Sección 1", "texto": "Al final de tu turno, un enemigo visible sufre débil." },
+      { "etiqueta": "Sección 2", "texto": "Al final de tu turno, cada enemigo visible sufre débil." },
+      { "etiqueta": "Sección 3", "texto": "Al final de tu turno, infliges [15 + SL en Cloromancia] de daño de veneno a cada enemigo visible que sufra débil." }
+    ]
+  },
+  {
+    "id": "magisemilla-acacia-protectora",
+    "grupo": "magisemilla",
+    "nombre": "Acacia protectora",
+    "nombre_original": "Wardwattle",
+    "detalles": [
+      { "etiqueta": "Secciones 0–1", "texto": "Obtienes Resistencia al daño físico." },
+      { "etiqueta": "Sección 2", "texto": "Resistencia a daño físico; tras recibir un impacto cuerpo a cuerpo, infliges [5 + SL en Cloromancia] de daño físico al atacante." },
+      { "etiqueta": "Sección 3", "texto": "Resistencia a daño físico; tras recibir un impacto cuerpo a cuerpo, infliges [5 + SL en Cloromancia] de daño físico y [5 + SL en Cloromancia] de daño de veneno al atacante." }
+    ]
+  },
+  {
+    "id": "magisemilla-clavel-colerico",
+    "grupo": "magisemilla",
+    "nombre": "Clavel colérico",
+    "nombre_original": "Wrathful Carnation",
+    "detalles": [
+      { "etiqueta": "Secciones 1–4", "texto": "Al abandonar tu jardín, hasta un enemigo visible debe incluirte entre sus blancos de ataques o conjuros ofensivos si puede. Al final de tu turno, puedes retirar esta magisemilla voluntariamente vaciando tu reloj." }
+    ]
+  },
+  {
+    "id": "invocacion-rafaga-aerea",
+    "grupo": "invocacion",
+    "nombre": "Ráfaga aérea",
+    "nombre_original": "Aero Blast",
+    "detalles": [
+      { "etiqueta": "Manantial", "texto": "Aire" },
+      { "etiqueta": "Tipo", "texto": "Ráfaga" }
+    ],
+    "efecto": "Infliges 20 de daño de aire al objetivo (25 a nivel 20+, 30 a nivel 40+)."
+  },
+  {
+    "id": "invocacion-maleficio-aereo",
+    "grupo": "invocacion",
+    "nombre": "Maleficio aéreo",
+    "nombre_original": "Aero Hex",
+    "detalles": [
+      { "etiqueta": "Manantial", "texto": "Aire" },
+      { "etiqueta": "Tipo", "texto": "Maleficio" }
+    ],
+    "efecto": "Hasta el inicio de tu siguiente turno, el objetivo sufre 5 de daño adicional de fuentes de rayo y fuego."
+  },
+  {
+    "id": "invocacion-brisa",
+    "grupo": "invocacion",
+    "nombre": "Brisa",
+    "nombre_original": "Breeze",
+    "detalles": [
+      { "etiqueta": "Manantial", "texto": "Aire" },
+      { "etiqueta": "Tipo", "texto": "Especial" }
+    ],
+    "efecto": "El objetivo recupera 30 Puntos de Vida (40 a nivel 20+, 50 a nivel 40+)."
+  },
+  {
+    "id": "invocacion-torbellino",
+    "grupo": "invocacion",
+    "nombre": "Torbellino",
+    "nombre_original": "Twister",
+    "detalles": [
+      { "etiqueta": "Manantial", "texto": "Aire" },
+      { "etiqueta": "Tipo", "texto": "Especial" }
+    ],
+    "efecto": "Infliges 10 de daño de aire al objetivo (15 a nivel 20+, 20 a nivel 40+) y sufre confundido."
+  },
+  {
+    "id": "invocacion-rafaga-telurica",
+    "grupo": "invocacion",
+    "nombre": "Ráfaga telúrica",
+    "nombre_original": "Geo Blast",
+    "detalles": [
+      { "etiqueta": "Manantial", "texto": "Tierra" },
+      { "etiqueta": "Tipo", "texto": "Ráfaga" }
+    ],
+    "efecto": "Infliges 20 de daño de tierra al objetivo (25 a nivel 20+, 30 a nivel 40+)."
+  },
+  {
+    "id": "invocacion-maleficio-telurico",
+    "grupo": "invocacion",
+    "nombre": "Maleficio telúrico",
+    "nombre_original": "Geo Hex",
+    "detalles": [
+      { "etiqueta": "Manantial", "texto": "Tierra" },
+      { "etiqueta": "Tipo", "texto": "Maleficio" }
+    ],
+    "efecto": "Hasta el inicio de tu siguiente turno, el objetivo sufre 5 de daño adicional de fuentes de aire e hielo."
+  },
+  {
+    "id": "invocacion-crecimiento",
+    "grupo": "invocacion",
+    "nombre": "Crecimiento",
+    "nombre_original": "Growth",
+    "detalles": [
+      { "etiqueta": "Manantial", "texto": "Tierra" },
+      { "etiqueta": "Tipo", "texto": "Especial" }
+    ],
+    "efecto": "El objetivo recupera 30 Puntos de Vida (40 a nivel 20+, 50 a nivel 40+)."
+  },
+  {
+    "id": "invocacion-arenas-movedizas",
+    "grupo": "invocacion",
+    "nombre": "Arenas movedizas",
+    "nombre_original": "Quicksand",
+    "detalles": [
+      { "etiqueta": "Manantial", "texto": "Tierra" },
+      { "etiqueta": "Tipo", "texto": "Especial" }
+    ],
+    "efecto": "Infliges 10 de daño de tierra al objetivo (15 a nivel 20+, 20 a nivel 40+) y sufre lento."
+  },
+  {
+    "id": "invocacion-rafaga-ignea",
+    "grupo": "invocacion",
+    "nombre": "Ráfaga ígnea",
+    "nombre_original": "Pyro Blast",
+    "detalles": [
+      { "etiqueta": "Manantial", "texto": "Fuego" },
+      { "etiqueta": "Tipo", "texto": "Ráfaga" }
+    ],
+    "efecto": "Infliges 20 de daño de fuego al objetivo (25 a nivel 20+, 30 a nivel 40+)."
+  },
+  {
+    "id": "invocacion-maleficio-igneo",
+    "grupo": "invocacion",
+    "nombre": "Maleficio ígneo",
+    "nombre_original": "Pyro Hex",
+    "detalles": [
+      { "etiqueta": "Manantial", "texto": "Fuego" },
+      { "etiqueta": "Tipo", "texto": "Maleficio" }
+    ],
+    "efecto": "Hasta el inicio de tu siguiente turno, el objetivo sufre 5 de daño adicional de fuentes de tierra e hielo."
+  },
+  {
+    "id": "invocacion-deflagracion",
+    "grupo": "invocacion",
+    "nombre": "Deflagración",
+    "nombre_original": "Burst",
+    "detalles": [
+      { "etiqueta": "Manantial", "texto": "Fuego" },
+      { "etiqueta": "Tipo", "texto": "Especial" }
+    ],
+    "efecto": "Infliges 10 de daño de fuego al objetivo (15 a nivel 20+, 20 a nivel 40+) y sufre estremecido."
+  },
+  {
+    "id": "invocacion-humo",
+    "grupo": "invocacion",
+    "nombre": "Humo",
+    "nombre_original": "Smoke",
+    "detalles": [
+      { "etiqueta": "Manantial", "texto": "Fuego" },
+      { "etiqueta": "Tipo", "texto": "Especial" }
+    ],
+    "efecto": "El objetivo pierde 20 Puntos de Mente (30 a nivel 20+, 40 a nivel 40+) y sufre débil."
+  },
+  {
+    "id": "invocacion-rafaga-electrica",
+    "grupo": "invocacion",
+    "nombre": "Ráfaga eléctrica",
+    "nombre_original": "Electro Blast",
+    "detalles": [
+      { "etiqueta": "Manantial", "texto": "Rayo" },
+      { "etiqueta": "Tipo", "texto": "Ráfaga" }
+    ],
+    "efecto": "Infliges 20 de daño de rayo al objetivo (25 a nivel 20+, 30 a nivel 40+)."
+  },
+  {
+    "id": "invocacion-maleficio-electrico",
+    "grupo": "invocacion",
+    "nombre": "Maleficio eléctrico",
+    "nombre_original": "Electro Hex",
+    "detalles": [
+      { "etiqueta": "Manantial", "texto": "Rayo" },
+      { "etiqueta": "Tipo", "texto": "Maleficio" }
+    ],
+    "efecto": "Hasta el inicio de tu siguiente turno, el objetivo sufre 5 de daño adicional de fuentes de tierra y fuego."
+  },
+  {
+    "id": "invocacion-estatica",
+    "grupo": "invocacion",
+    "nombre": "Estática",
+    "nombre_original": "Static",
+    "detalles": [
+      { "etiqueta": "Manantial", "texto": "Rayo" },
+      { "etiqueta": "Tipo", "texto": "Especial" }
+    ],
+    "efecto": "Infliges 10 de daño de rayo al objetivo (15 a nivel 20+, 20 a nivel 40+) y sufre lento."
+  },
+  {
+    "id": "invocacion-trueno",
+    "grupo": "invocacion",
+    "nombre": "Trueno",
+    "nombre_original": "Thunder",
+    "detalles": [
+      { "etiqueta": "Manantial", "texto": "Rayo" },
+      { "etiqueta": "Tipo", "texto": "Especial" }
+    ],
+    "efecto": "El objetivo pierde 20 Puntos de Mente (30 a nivel 20+, 40 a nivel 40+) y sufre confundido."
+  },
+  {
+    "id": "invocacion-rafaga-hidroelectrica",
+    "grupo": "invocacion",
+    "nombre": "Ráfaga hidroeléctrica",
+    "nombre_original": "Hydro Blast",
+    "detalles": [
+      { "etiqueta": "Manantial", "texto": "Agua / Hielo" },
+      { "etiqueta": "Tipo", "texto": "Ráfaga" }
+    ],
+    "efecto": "Infliges 20 de daño de hielo al objetivo (25 a nivel 20+, 30 a nivel 40+)."
+  },
+  {
+    "id": "invocacion-maleficio-hidroelectrico",
+    "grupo": "invocacion",
+    "nombre": "Maleficio hidroeléctrico",
+    "nombre_original": "Hydro Hex",
+    "detalles": [
+      { "etiqueta": "Manantial", "texto": "Agua / Hielo" },
+      { "etiqueta": "Tipo", "texto": "Maleficio" }
+    ],
+    "efecto": "Hasta el inicio de tu siguiente turno, el objetivo sufre 5 de daño adicional de fuentes de aire y rayo."
+  },
+  {
+    "id": "invocacion-escalofrio",
+    "grupo": "invocacion",
+    "nombre": "Escalofrío",
+    "nombre_original": "Chill",
+    "detalles": [
+      { "etiqueta": "Manantial", "texto": "Agua / Hielo" },
+      { "etiqueta": "Tipo", "texto": "Especial" }
+    ],
+    "efecto": "El objetivo pierde 20 Puntos de Mente (30 a nivel 20+, 40 a nivel 40+) y sufre estremecido."
+  },
+  {
+    "id": "invocacion-congelacion",
+    "grupo": "invocacion",
+    "nombre": "Congelación",
+    "nombre_original": "Frostbite",
+    "detalles": [
+      { "etiqueta": "Manantial", "texto": "Agua / Hielo" },
+      { "etiqueta": "Tipo", "texto": "Especial" }
+    ],
+    "efecto": "Infliges 10 de daño de hielo al objetivo (15 a nivel 20+, 20 a nivel 40+) y sufre débil."
+  },
+  {
+    "id": "actividad-forja-de-campamento",
+    "grupo": "actividad_campamento",
+    "regla_opcional": "actividades-campamento",
+    "nombre": "Forja de campamento",
+    "nombre_original": "Camp Forge",
+    "duracion": "Uno mismo",
+    "efecto": "Elige una opción: reparas un objeto dañado del grupo; o creas un arma, armadura o escudo básico sin pagar su coste en zenit; o destruyes una pieza de equipo para obtener un material de igual valor en zenit."
+  },
+  {
+    "id": "actividad-cartografia",
+    "grupo": "actividad_campamento",
+    "regla_opcional": "actividades-campamento",
+    "nombre": "Cartografía",
+    "nombre_original": "Cartography",
+    "duracion": "Uno mismo",
+    "efecto": "Una vez antes del siguiente descanso, tras una tirada de viaje del grupo, puedes volver a tirar el dado de viaje y quedarte con el nuevo resultado."
+  },
+  {
+    "id": "actividad-leccion-de-combate",
+    "grupo": "actividad_campamento",
+    "regla_opcional": "actividades-campamento",
+    "nombre": "Lección de combate",
+    "nombre_original": "Combat Lesson",
+    "duracion": "Un aliado",
+    "efecto": "Una vez antes del siguiente descanso, tras una prueba de Precisión o prueba de Magia ofensiva, el objetivo puede sumar +4 al resultado de la prueba."
+  },
+  {
+    "id": "actividad-sonar-despierto",
+    "grupo": "actividad_campamento",
+    "regla_opcional": "actividades-campamento",
+    "nombre": "Soñar despierto",
+    "nombre_original": "Daydream",
+    "duracion": "Uno mismo",
+    "efecto": "Una vez antes del siguiente descanso, cuando vayas a perder Puntos de Vida por cualquier motivo, puedes reducir esa pérdida a la mitad."
+  },
+  {
+    "id": "actividad-racion-doble",
+    "grupo": "actividad_campamento",
+    "regla_opcional": "actividades-campamento",
+    "nombre": "Ración doble",
+    "nombre_original": "Double Portion",
+    "duracion": "Un aliado",
+    "efecto": "Una vez antes del siguiente descanso, cuando el objetivo vaya a recuperar Puntos de Vida, puede duplicar la cantidad de PV recuperados."
+  },
+  {
+    "id": "actividad-exploracion",
+    "grupo": "actividad_campamento",
+    "regla_opcional": "actividades-campamento",
+    "nombre": "Exploración",
+    "nombre_original": "Exploration",
+    "duracion": "Uno mismo o aliado",
+    "efecto": "Buscas recursos y tiras 1d6:\n- **1:** Recuperas la mitad de PV y PM en este descanso.\n- **2:** Recuperas 2 PI.\n- **3–5:** Recuperas 3 PI.\n- **6:** Recuperas 3 PI y encuentras zenit igual a [nivel × 50]."
+  },
+  {
+    "id": "actividad-recoleccion",
+    "grupo": "actividad_campamento",
+    "regla_opcional": "actividades-campamento",
+    "nombre": "Recolección",
+    "nombre_original": "Gathering",
+    "duracion": "Un Gourmet",
+    "efecto": "Buscas ingredientes y tiras 1d6:\n- **1:** Conflicto fácil contra amenaza de tu nivel al salir del descanso.\n- **2:** Recibes 2 ingredientes aleatorios.\n- **3–5:** Recibes 3 ingredientes aleatorios.\n- **6:** Recibes 3 ingredientes a tu elección."
+  },
+  {
+    "id": "actividad-leccion-de-magia",
+    "grupo": "actividad_campamento",
+    "regla_opcional": "actividades-campamento",
+    "nombre": "Lección de magia",
+    "nombre_original": "Magic Lesson",
+    "duracion": "Un aliado",
+    "efecto": "Elige un conjuro que conozcas. Una vez antes del siguiente descanso, el objetivo puede realizar la acción de Conjuro para lanzarlo (pagando su coste en PM y haciendo tiradas)."
+  },
+  {
+    "id": "actividad-practica-marcial",
+    "grupo": "actividad_campamento",
+    "regla_opcional": "actividades-campamento",
+    "nombre": "Práctica marcial",
+    "nombre_original": "Martial Practice",
+    "duracion": "Uno mismo",
+    "efecto": "Una vez antes del siguiente descanso, al realizar un ataque, puedes otorgarle la propiedad multi (2) o aumentar su valor de multi en +1."
+  },
+  {
+    "id": "actividad-masaje",
+    "grupo": "actividad_campamento",
+    "regla_opcional": "actividades-campamento",
+    "nombre": "Masaje",
+    "nombre_original": "Massage",
+    "duracion": "Un aliado",
+    "efecto": "Una vez antes del siguiente descanso, cuando el objetivo vaya a pagar un coste en PM, puede reducirlo a la mitad (no aplicable a rituales)."
+  },
+  {
+    "id": "actividad-quemar-pestanas",
+    "grupo": "actividad_campamento",
+    "regla_opcional": "actividades-campamento",
+    "nombre": "Quemar pestañas",
+    "nombre_original": "Midnight Oil",
+    "duracion": "Uno mismo",
+    "efecto": "Generas 3 puntos de progreso para un Proyecto de tu elección."
+  },
+  {
+    "id": "actividad-charla-de-animo",
+    "grupo": "actividad_campamento",
+    "regla_opcional": "actividades-campamento",
+    "nombre": "Charla de ánimo",
+    "nombre_original": "Pep Talk",
+    "duracion": "Un aliado",
+    "efecto": "Una vez antes del siguiente descanso, cuando el objetivo vaya a recuperar Puntos de Mente, puede duplicar la cantidad de PM recuperados."
+  },
+  {
+    "id": "actividad-planificacion",
+    "grupo": "actividad_campamento",
+    "regla_opcional": "actividades-campamento",
+    "nombre": "Planificación",
+    "nombre_original": "Planning",
+    "duracion": "Un aliado",
+    "efecto": "Una vez antes del siguiente descanso, tras una prueba de grupo como líder o una prueba para examinar algo, puede sumar +4 al resultado."
+  },
+  {
+    "id": "actividad-dormir-a-pierna-suelta",
+    "grupo": "actividad_campamento",
+    "regla_opcional": "actividades-campamento",
+    "nombre": "Dormir a pierna suelta",
+    "nombre_original": "Sleep Soundly",
+    "duracion": "Uno mismo",
+    "efecto": "Una vez antes del siguiente descanso, puedes realizar una acción adicional en tu turno en conflicto (debe usarse para Equipo, Entorpecer o Inventario)."
+  },
+  {
+    "id": "actividad-entrenamiento",
+    "grupo": "actividad_campamento",
+    "regla_opcional": "actividades-campamento",
+    "nombre": "Entrenamiento",
+    "nombre_original": "Training",
+    "duracion": "Uno mismo",
+    "efecto": "Una vez antes del siguiente descanso, si vas a sufrir uno o más estados alterados de la misma fuente, puedes elegir no sufrir ninguno de ellos."
+  }
+]

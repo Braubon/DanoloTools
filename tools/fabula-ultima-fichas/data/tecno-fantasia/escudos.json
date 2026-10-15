@@ -1,0 +1,80 @@
+[
+  {
+    "id": "rompehielos",
+    "nombre": "Rompehielos",
+    "nombre_original": "Icebreaker",
+    "rareza": "raro",
+    "coste": 700,
+    "def": 2,
+    "mdef": 2,
+    "init": 0,
+    "marcial": true,
+    "cualidad": "Marcial. Todo el daño físico y de fuego que inflijas ignora Resistencias.",
+    "modificadores": []
+  },
+  {
+    "id": "escudo-balistico",
+    "nombre": "Escudo balístico",
+    "nombre_original": "Ballistic Shield",
+    "rareza": "raro",
+    "coste": 800,
+    "def": 2,
+    "mdef": 0,
+    "init": 0,
+    "marcial": false,
+    "cualidad": "Obtienes un bonificador de +1 a tus pruebas de Precisión con armas a distancia.",
+    "modificadores": []
+  },
+  {
+    "id": "parabrisas",
+    "nombre": "Parabrisas",
+    "nombre_original": "Windshield",
+    "rareza": "raro",
+    "coste": 1000,
+    "def": 2,
+    "mdef": 2,
+    "init": 0,
+    "marcial": true,
+    "cualidad": "Marcial. Mientras conduzcas tu vehículo personal, adquieres Resistencia al daño de aire y hielo.",
+    "modificadores": []
+  },
+  {
+    "id": "escudo-de-hecate",
+    "nombre": "Escudo de Hécate",
+    "nombre_original": "Hekat Shield",
+    "rareza": "raro",
+    "coste": 2000,
+    "def": 2,
+    "mdef": 2,
+    "init": 0,
+    "marcial": true,
+    "cualidad": "Marcial. Posees Resistencia al daño infligido por conjuros. Cuando un conjuro te inflija daño, recuperas 5 Puntos de Mente.",
+    "modificadores": []
+  },
+  {
+    "id": "deflector-reactivo",
+    "nombre": "Deflector reactivo",
+    "nombre_original": "Reactive Deflector",
+    "rareza": "raro",
+    "coste": 1500,
+    "def": 2,
+    "mdef": 2,
+    "init": 0,
+    "marcial": false,
+    "cualidad": "Módulo de escudo para vehículo personal. Mientras pilotes tu vehículo personal y tengas habilitado un módulo de soporte de Contraataque, puedes aplicar sus efectos incluso cuando un personaje a bordo sea alcanzado por un ataque cuerpo a cuerpo (en lugar de solo a distancia).",
+    "modificadores": []
+  },
+  {
+    "id": "escudo-metamorfico",
+    "nombre": "Escudo metamórfico",
+    "nombre_original": "Morphshield",
+    "rareza": "raro",
+    "coste": 1800,
+    "def": 2,
+    "mdef": 2,
+    "init": 0,
+    "marcial": false,
+    "cualidad": "Módulo de escudo para vehículo personal. Al inicio de tu turno en conflicto, puedes deshabilitar este módulo para habilitar otro módulo de arma deshabilitado a tu elección. Al final de tu turno, debes deshabilitar el módulo elegido y volver a habilitar este.",
+    "modificadores": []
+  }
+]

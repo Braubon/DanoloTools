@@ -1,0 +1,239 @@
+[
+  {
+    "id": "esper",
+    "nombre": "Ésper",
+    "nombre_original": "Esper",
+    "descripcion": "Usuario de disciplinas mentales conectado a la Red de Almas para alterar la materia y la conciencia ajena.",
+    "beneficios": {
+      "pv": 0,
+      "pm": 5,
+      "pi": 0,
+      "competencias": [],
+      "rituales": [],
+      "texto": "Aumenta tus Puntos de Mente máximos en +5 de forma permanente."
+    },
+    "habilidades": [
+      {
+        "id": "enfoque-cognitivo",
+        "nombre": "Enfoque cognitivo",
+        "nombre_original": "Cognitive Focus",
+        "sl_max": 5,
+        "tipo": "otra",
+        "activacion": "Inicio de tu turno en conflicto | Gratuito.",
+        "efecto": "Puedes designar como tu foco a un aliado capaz de escucharte o a un enemigo visible que sufra al menos uno de los siguientes estados: confundido, enfurecido o estremecido. Dicha criatura es tu foco hasta el inicio de tu próximo turno. Obtienes un bonificador igual a [SL] a las tiradas para examinar a tu foco, así como a tus pruebas de Precisión y pruebas de Magia ofensivas que lo incluyan entre sus objetivos. Cuando hagas que tu foco recupere PV o PM, recupera [SL × 2] PV o PM adicionales, respectivamente."
+      },
+      {
+        "id": "hipercognicion",
+        "nombre": "Hipercognición",
+        "nombre_original": "Hypercognition",
+        "sl_max": 5,
+        "tipo": "pasiva",
+        "activacion": "Permanente.",
+        "efecto": "El coste total en PM de tus conjuros y versos que incluyan a tu foco entre sus objetivos se reduce en [SL], o en [SL × 2] si tu foco es el único objetivo (hasta un coste mínimo de 0 PM)."
+      },
+      {
+        "id": "navegante",
+        "nombre": "Navegante",
+        "nombre_original": "Navigator",
+        "sl_max": 1,
+        "tipo": "pasiva",
+        "activacion": "Permanente.",
+        "efecto": "Puedes comunicarte telepáticamente con cualquier aliado consciente situado a 1 día de viaje o menos de ti; os escucháis mutuamente a efectos de activación de Habilidades y efectos. Obtienes la capacidad de realizar Rituales de la disciplina Ritualismo. Además, puedes emplear Ritualismo para trasladar entidades dentro y fuera de la Red de Almas, y para rastrear información y entidades dentro de dicha red.",
+        "rituales": [
+          "ritualismo"
+        ]
+      },
+      {
+        "id": "dones-psiquicos",
+        "nombre": "Dones psíquicos",
+        "nombre_original": "Psychic Gifts",
+        "sl_max": 5,
+        "tipo": "otra",
+        "activacion": "Especial (ver reglas de dones).",
+        "efecto": "Cada vez que adquieres esta habilidad, aprendes un don psíquico del catálogo de dones y comienzas un Reloj de Ondas Cerebrales de 4 secciones. Al desencadenarse el evento del don, puedes pagar [secciones llenas × 5] PM (mín. 5 PM) para activar su efecto; tras resolverlo, llenas 1 sección del reloj. Si un don genera recuperación de PV o PM, o causa pérdida de PM, las cantidades aumentan en +10 a nivel 20+, o en +20 a nivel 40+.",
+        "elecciones": [
+          {
+            "clave": "dones",
+            "tipo": "opciones",
+            "grupos": [
+              "don_psiquico"
+            ],
+            "etiqueta": "Dones psíquicos aprendidos",
+            "min": "SL",
+            "max": "SL"
+          }
+        ]
+      },
+      {
+        "id": "psicocinesis",
+        "nombre": "Psicocinesis",
+        "nombre_original": "Psychokinesis",
+        "sl_max": 1,
+        "tipo": "otra",
+        "activacion": "Al realizar una prueba de Precisión | Gratuito.",
+        "efecto": "Puedes reemplazar uno de los dados de atributo de tu prueba de Precisión por Voluntad (por ejemplo, [DES + VOL] con un arco corto). Además, tus ataques cuerpo a cuerpo con armas de las categorías Arcana o Espada pueden alcanzar a criaturas voladoras."
+      }
+    ]
+  },
+  {
+    "id": "mutante",
+    "nombre": "Mutante",
+    "nombre_original": "Mutant",
+    "descripcion": "Individuo cuyo organismo ha sido reconfigurado por radiación magitech, contaminación química o cirugía de quimeras.",
+    "beneficios": {
+      "pv": 5,
+      "pm": 0,
+      "pi": 0,
+      "competencias": [],
+      "rituales": [],
+      "texto": "Aumenta tus Puntos de Vida máximos en +5 de forma permanente."
+    },
+    "habilidades": [
+      {
+        "id": "acromorfosis",
+        "nombre": "Acromorfosis",
+        "nombre_original": "Akromorphosis",
+        "sl_max": 3,
+        "tipo": "pasiva",
+        "activacion": "Permanente / Inicio de turno (Gratuito).",
+        "efecto": "Tus golpes desarmados infligen [6 + (SL × 2)] puntos de daño adicional y obtienes un bonificador igual a [SL] a tus pruebas de Precisión con ellos. Al inicio de tu turno en conflicto, puedes elegir una categoría de arma distinta de Pelea: tus golpes desarmados pasan a pertenecer a esa categoría hasta el inicio de tu próximo turno. Si eliges Arco, Arma de fuego o Arrojadiza, se convierten en armas a distancia en lugar de cuerpo a cuerpo. Si eliges Daga o Espada, no pueden usarse con Corte triple."
+      },
+      {
+        "id": "biofagia",
+        "nombre": "Biofagia",
+        "nombre_original": "Biophagy",
+        "sl_max": 4,
+        "tipo": "reaccion",
+        "activacion": "Tras causar pérdida de PV a enemigos | Gratuito.",
+        "efecto": "Tras hacer que uno o más enemigos pierdan PV mediante un ataque o conjuro ofensivo, si te hallas en Crisis, puedes recuperar [SL × 5] Puntos de Vida."
+      },
+      {
+        "id": "muda",
+        "nombre": "Muda",
+        "nombre_original": "Ecdysis",
+        "sl_max": 1,
+        "tipo": "reaccion",
+        "activacion": "Tras perder PV por daño no físico | 10 PV.",
+        "efecto": "Tras sufrir daño elemental (no físico), puedes gastar 10 PV para obtener Resistencia a ese tipo de daño hasta que vuelvas a utilizar esta habilidad. No puedes activarla si el coste te redujera a 0 PV."
+      },
+      {
+        "id": "genoclepsis",
+        "nombre": "Genoclepsis",
+        "nombre_original": "Genoclepsis",
+        "sl_max": 2,
+        "tipo": "otra",
+        "activacion": "Al dañar a uno o más PNJ | Gratuito.",
+        "efecto": "Conoces la especie del PNJ y el DJ selecciona [SL] terioformas apropiadas para esa criatura: si posees la habilidad Teriomorfosis, puedes pagar inmediatamente su coste en PV para manifestar dichas terioformas (incluso si no las habías aprendido previamente)."
+      },
+      {
+        "id": "teriomorfosis",
+        "nombre": "Teriomorfosis",
+        "nombre_original": "Theriomorphosis",
+        "sl_max": 6,
+        "tipo": "accion",
+        "activacion": "Acción | 1/3 de tus PV actuales (redondeado hacia abajo).",
+        "efecto": "Cada vez que adquieres esta habilidad aprendes una terioforma del catálogo de terioformas. Al activarla en combate, manifiestas los efectos de hasta dos terioformas aprendidas simultáneamente hasta el final de la escena. Finalizan si caes a 0 PV, realizas la acción Guardia o vuelves a usar Teriomorfosis. Al terminar la escena puedes gastar 10 PM para prolongar la mutación a la siguiente escena.",
+        "elecciones": [
+          {
+            "clave": "terioformas",
+            "tipo": "opciones",
+            "grupos": [
+              "terioforma"
+            ],
+            "etiqueta": "Terioformas aprendidas",
+            "min": "SL",
+            "max": "SL"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "piloto",
+    "nombre": "Piloto",
+    "nombre_original": "Pilot",
+    "descripcion": "Especialista en combate mecanizado que maneja armaduras de combate, mechas o monturas artilladas.",
+    "beneficios": {
+      "pv": 5,
+      "pm": 0,
+      "pi": 0,
+      "competencias": [
+        "armas_marciales_cuerpo",
+        "armas_marciales_distancia"
+      ],
+      "rituales": [],
+      "texto": "Aumenta tus Puntos de Vida máximos en +5 de forma permanente. Ganas competencia para equipar todas las armas cuerpo a cuerpo y a distancia marciales."
+    },
+    "habilidades": [
+      {
+        "id": "tecnologia-de-compresion",
+        "nombre": "Tecnología de compresión",
+        "nombre_original": "Compression Tech",
+        "sl_max": 1,
+        "tipo": "accion",
+        "activacion": "Acción de Inventario | 2 Puntos de Inventario.",
+        "efecto": "Mientras no haya nadie a bordo de tu vehículo personal, puedes hacer que se desmaterialice y desaparezca del mundo de forma segura en cualquier momento. Si el vehículo no está presente y te hallas en un espacio suficiente para albergarlo, puedes gastar 2 PI para hacer que se materialice junto a ti y montarte en él inmediatamente de forma gratuita."
+      },
+      {
+        "id": "configuracion-flexible",
+        "nombre": "Configuración flexible",
+        "nombre_original": "Flexible Configuration",
+        "sl_max": 4,
+        "tipo": "otra",
+        "activacion": "Al realizar la acción Equipo o Guardia a los mandos | Gratuito.",
+        "efecto": "Puedes elegir hasta [SL] módulos habilitados de tu vehículo personal y deshabilitarlos. Si lo haces, habilitas una cantidad igual de módulos que estuvieran deshabilitados."
+      },
+      {
+        "id": "corazon-en-el-motor",
+        "nombre": "Corazón en el motor",
+        "nombre_original": "Heart in the Engine",
+        "sl_max": 3,
+        "tipo": "otra",
+        "activacion": "Inicio de tu turno a los mandos en conflicto | 10 PM.",
+        "efecto": "Elige una opción:\n- La próxima vez que infliges daño durante este turno, causas [SL × 2] puntos de daño adicional.\n- La próxima vez que sufras daño antes de tu próximo turno, dicho daño se reduce en [SL × 2] (antes de afinidades).\n- Te curas del estado lento o del estado débil."
+      },
+      {
+        "id": "vehiculo-personal",
+        "nombre": "Vehículo personal",
+        "nombre_original": "Personal Vehicle",
+        "sl_max": 5,
+        "tipo": "pasiva",
+        "activacion": "Permanente.",
+        "efecto": "Obtienes un vehículo personal con el chasis que elijas y tres módulos diferentes a tu elección de las listas de armas, armadura o soporte. Cada vez que vuelves a subir de nivel esta habilidad, obtienes dos módulos adicionales a tu elección. Puedes mantener habilitados simultáneamente hasta [3 + SL] módulos. Los módulos de armadura fijan tu Defensa y Defensa Mágica; los de arma ocupan manos y son no marciales a una mano (salvo Escudo).",
+        "elecciones": [
+          {
+            "clave": "chasis",
+            "tipo": "opciones",
+            "grupos": [
+              "chasis_vehiculo"
+            ],
+            "etiqueta": "Chasis del vehículo",
+            "min": "1",
+            "max": "1"
+          },
+          {
+            "clave": "modulos",
+            "tipo": "opciones",
+            "grupos": [
+              "modulo_armadura",
+              "modulo_arma",
+              "modulo_soporte"
+            ],
+            "etiqueta": "Módulos de vehículo aprendidos",
+            "min": "1 + SL*2",
+            "max": "1 + SL*2"
+          }
+        ]
+      },
+      {
+        "id": "agarre-firme",
+        "nombre": "Agarre firme",
+        "nombre_original": "Strong Grip",
+        "sl_max": 1,
+        "tipo": "otra",
+        "activacion": "Al realizar una prueba de Precisión con módulo de arma | Gratuito.",
+        "efecto": "Puedes sustituir uno de los atributos de la prueba de Precisión por Vigor (por ejemplo, [VIG + VOL] con un módulo arcano)."
+      }
+    ]
+  }
+]

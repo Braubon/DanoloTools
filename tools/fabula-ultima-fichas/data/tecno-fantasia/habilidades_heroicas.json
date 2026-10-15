@@ -1,0 +1,301 @@
+[
+  {
+    "id": "soldado-arcano",
+    "nombre": "Soldado arcano",
+    "nombre_original": "Arcane Soldier",
+    "requisitos": {
+      "texto": "Haber dominado una o más clases entre Elementalista, Francotirador o Maestro de armas, y conocer al menos dos conjuros ofensivos.",
+      "dominar": {
+        "clases": [
+          "elementalista",
+          "tirador",
+          "maestro-de-armas"
+        ]
+      }
+    },
+    "resumen": "Ataque gratuito seguido del lanzamiento inmediato de un conjuro ofensivo de 20 PM o menos contra el mismo objetivo.",
+    "efecto": "Puedes usar una acción para realizar un ataque gratuito con un arma que tengas equipada contra un único enemigo. Si impactas, trata tu Tirada Mayor (TM) como 0 al calcular el daño del ataque. Tras resolver el ataque, si impactó, puedes realizar inmediatamente la acción Conjuro de forma gratuita: el conjuro lanzado debe ser un conjuro ofensivo con un coste total en PM igual o inferior a 20, y solo puede tener como objetivo al enemigo atacado (debes pagar los PM requeridos y realizar la prueba de Magia con normalidad). Trata la Tirada Mayor (TM) de la prueba de Magia como 0 al calcular el daño u otros efectos del conjuro."
+  },
+  {
+    "id": "descarga-de-ondas-cerebrales",
+    "nombre": "Descarga de ondas cerebrales",
+    "nombre_original": "Brainwave Discharge",
+    "requisitos": {
+      "texto": "Haber dominado la clase Ésper.",
+      "dominar": {
+        "clases": [
+          "esper"
+        ]
+      }
+    },
+    "resumen": "Vacía el Reloj de Ondas Cerebrales lleno para infligir daño físico masivo a todos los enemigos o a uno solo.",
+    "efecto": "Mientras tu Reloj de Ondas Cerebrales esté completamente lleno, puedes usar una acción para borrar todas sus secciones. Si lo haces, elige una opción: infliges 20 puntos de daño físico a cada enemigo presente en la escena, o infliges 30 puntos de daño físico a un único enemigo visible. Esta cantidad se incrementa en +10 si eres de nivel 20+, o en +20 si eres de nivel 40+."
+  },
+  {
+    "id": "tiempo-bala",
+    "nombre": "Tiempo bala",
+    "nombre_original": "Bullet Time",
+    "requisitos": {
+      "texto": "Haber dominado una o más clases entre Entropista o Pícaro, y poseer al menos una habilidad entre Esquiva o Tiempo robado.",
+      "dominar": {
+        "clases": [
+          "entropista",
+          "picaro"
+        ]
+      }
+    },
+    "resumen": "Bonificador a Iniciativa, reducción de daño y daño extra según los niveles en Esquiva y Tiempo robado.",
+    "efecto": "Obtienes un bonificador a tu Modificador de Iniciativa igual a [SL en Esquiva + SL en Tiempo robado]. Mientras no tengas escudos ni armaduras marciales equipadas, todo el daño que sufras se reduce en una cantidad igual a tu SL en Esquiva (aplicado antes de afinidades de daño) e infliges daño adicional igual a tu SL en Tiempo robado."
+  },
+  {
+    "id": "cebo-senuelo",
+    "nombre": "Cebo señuelo",
+    "nombre_original": "Decoy Bait",
+    "requisitos": {
+      "texto": "Haber dominado la clase Francotirador y poseer la habilidad Ojo de halcón.",
+      "dominar": {
+        "clases": [
+          "tirador"
+        ]
+      },
+      "habilidades": [
+        "ojo-de-halcon"
+      ]
+    },
+    "resumen": "Despliega un señuelo que intercepta ataques enemigos y permite un contraataque devastador al ser destruido.",
+    "efecto": "Al usar Ojo de halcón y elegir la primera opción, si no hay ningún señuelo en escena, puedes gastar 10 PM para desplegar un cebo señuelo con unos Puntos de Vida iguales a [la mitad de tu nivel + (SL en Ojo de halcón × 5)]. Cuando un enemigo que vea al señuelo inflija daño a una o más criaturas, el señuelo sufre automáticamente el daño en lugar de una de ellas elegida al azar (el señuelo posee afinidad Neutral a todos los tipos de daño). Si un enemigo reduce al señuelo a 0 PV, el señuelo queda destruido y tiras 1d10: si el resultado es igual o inferior a [3 + SL en Ojo de halcón], puedes realizar inmediatamente un ataque gratuito con un arco o arma de fuego equipada contra ese agresor. Dicho ataque solo puede tenerlo a él como blanco, recibe un bonificador igual a tu SL en Ojo de halcón en la prueba de Precisión y su daño ignora Inmunidades y Resistencias. El señuelo no puede recuperar PV y se destruye al finalizar la escena."
+  },
+  {
+    "id": "tajo-de-ensueno",
+    "nombre": "Tajo de ensueño",
+    "nombre_original": "Dreamslice",
+    "requisitos": {
+      "texto": "Haber dominado una o más clases entre Hoja oscura o Ésper.",
+      "dominar": {
+        "clases": [
+          "hoja-oscura",
+          "esper"
+        ]
+      }
+    },
+    "resumen": "Tajo oscuro con espadas drena PM y priva al blanco de una acción en su siguiente turno.",
+    "efecto": "Al impactar a una o más criaturas con un ataque de tu habilidad Tajo oscuro usando un arma de la categoría espada, cada objetivo pierde una cantidad de PM igual al número obtenido en tu dado de Vigor para Tajo oscuro. Si dicho número fue de 8 o superior, puedes elegir a una de las criaturas alcanzadas: si esa criatura es tu foco o tienes un Vínculo hacia ella, ejecutará una acción menos durante su próximo turno (hasta un mínimo de cero acciones)."
+  },
+  {
+    "id": "sincronizacion-dinamica",
+    "nombre": "Sincronización dinámica",
+    "nombre_original": "Dynamic Synchronization",
+    "requisitos": {
+      "texto": "Haber dominado la clase Piloto.",
+      "dominar": {
+        "clases": [
+          "piloto"
+        ]
+      }
+    },
+    "resumen": "Enlace táctico entre dos pilotos o un piloto y su pasajero: comparten atributos, suman la fuerza de sus Vínculos al daño y coordinan turnos.",
+    "efecto": "Al inicio de tu turno en conflicto, si estás a los mandos de tu vehículo personal, puedes sincronizarte con otro personaje jugador que esté en escena a los mandos de su propio vehículo personal o que sea pasajero a bordo del tuyo. Mientras la sincronización permanezca activa, ambos recibís los siguientes beneficios:\n- Al realizar una prueba, puedes usar el tamaño actual de dado de atributo del otro PJ en sustitución del tuyo (para uno o ambos dados).\n- Al infligir daño, causas daño adicional igual a [fuerza de tu Vínculo hacia él + fuerza de su Vínculo hacia ti].\n- Puedes usar una acción para realizar un ataque gratuito con un módulo de arma habilitado o deshabilitado presente en el vehículo del otro PJ.\n- Al terminar tu turno, si el otro PJ aún no ha actuado en esta ronda, puede tomar su turno inmediatamente a continuación del tuyo.\nLa sincronización finaliza al terminar la escena, si alguno cae inconsciente, abandona la escena, se sincroniza con otro individuo o deja de estar a bordo de un vehículo personal."
+  },
+  {
+    "id": "acromorfosis-mayor",
+    "nombre": "Acromorfosis mayor",
+    "nombre_original": "Greater Akromorphosis",
+    "requisitos": {
+      "texto": "Haber dominado la clase Mutante y poseer la habilidad Acromorfosis.",
+      "dominar": {
+        "clases": [
+          "mutante"
+        ]
+      },
+      "habilidades": [
+        "acromorfosis"
+      ]
+    },
+    "resumen": "Beneficios letales para golpes desarmados según la categoría asignada (penetración, daño a grupos, impacto a constructos o vuelo).",
+    "efecto": "Obtienes los siguientes beneficios según la categoría actual de tus golpes desarmados:\n- **Arcana, Pelea, Daga, Arrojadiza:** Tus ataques desarmados consideran la Defensa de cada blanco como igual al tamaño de su dado actual de Perspicacia.\n- **Arco, Espada:** Tus ataques desarmados que tengan como blanco a dos o más criaturas causan 5 puntos de daño adicional.\n- **Arma de fuego, Pesada:** Tus ataques desarmados causan 5 puntos de daño adicional a constructos, y 5 puntos de daño adicional a criaturas no constructo que lleven equipado al menos un escudo o armadura marcial.\n- **Mangual, Lanza:** Obtienes un bonificador de +2 a Defensa y tus ataques desarmados pueden alcanzar a criaturas voladoras.\nSi tus ataques desarmados pertenecen a más de una categoría de forma simultánea, obtienes los beneficios de todas las categorías correspondientes."
+  },
+  {
+    "id": "muda-mayor",
+    "nombre": "Muda mayor",
+    "nombre_original": "Greater Ecdysis",
+    "requisitos": {
+      "texto": "Haber dominado la clase Mutante.",
+      "dominar": {
+        "clases": [
+          "mutante"
+        ]
+      }
+    },
+    "resumen": "Muda elimina todos los estados alterados y cancela conjuros activos de duración Escena.",
+    "efecto": "Al usar la habilidad Muda, puedes elegir además una o ambas ventajas: te curas de todos los estados alterados, y/o si estás afectado por uno o más conjuros con duración «Escena», dejas de estar afectado por dichos conjuros inmediatamente."
+  },
+  {
+    "id": "teriomorfosis-mayor",
+    "nombre": "Teriomorfosis mayor",
+    "nombre_original": "Greater Theriomorphosis",
+    "requisitos": {
+      "texto": "Haber dominado la clase Mutante.",
+      "dominar": {
+        "clases": [
+          "mutante"
+        ]
+      }
+    },
+    "resumen": "Permite manifestar tres terioformas a la vez y otorga una acción adicional inmediata.",
+    "efecto": "Al usar la habilidad Teriomorfosis en tu turno durante un conflicto (sin recurrir a Genoclepsis), puedes manifestar los efectos de hasta tres terioformas aprendidas simultáneamente (en lugar de dos). A continuación, puedes realizar inmediatamente una acción adicional. Dicha acción adicional no puede emplearse para volver a activar Teriomorfosis."
+  },
+  {
+    "id": "tocar-el-nervio",
+    "nombre": "Tocar el nervio",
+    "nombre_original": "Hit the Nerve",
+    "requisitos": {
+      "texto": "Haber dominado una o más clases entre Cantor u Orador, y poseer la habilidad Condena.",
+      "dominar": {
+        "clases": [
+          "cantor",
+          "orador"
+        ]
+      },
+      "habilidades": [
+        "condena"
+      ]
+    },
+    "resumen": "Condena inflige el estado enfurecido y recupera PM; éxitos críticos facilitados contra objetivos enfurecidos.",
+    "efecto": "Al tener éxito al usar la habilidad Condena contra un enemigo de quien conozcas al menos un Rasgo, recuperas una cantidad de PM igual a la mitad de los PM perdidos por el objetivo, y puedes hacer que sufra el estado enfurecido en lugar de los estados habituales. Además, al realizar una prueba Enfrentada contra una criatura enfurecida, o una prueba de Precisión o prueba de Magia ofensiva que incluya a una criatura enfurecida entre sus objetivos, obtienes un éxito crítico si ambos dados muestran el mismo número (siempre que la tirada no sea una pifia)."
+  },
+  {
+    "id": "a-todo-o-nada",
+    "nombre": "A todo o nada",
+    "nombre_original": "Make It or Break It",
+    "requisitos": {
+      "texto": "Haber dominado una o más clases entre Furia u Hoja oscura.",
+      "dominar": {
+        "clases": [
+          "furia",
+          "hoja-oscura"
+        ]
+      }
+    },
+    "resumen": "Duplica la Tirada Mayor de daño a riesgo de forzar la transformación o guardado en mochila del arma empleada.",
+    "efecto": "Al atacar con un arma, puedes declarar «¡a todo o nada!» antes de la prueba de Precisión. Si lo haces, la Tirada Mayor (TM) de la tirada se duplica al calcular el daño, pero aplicas la siguiente penalización si el resultado final de la tirada es un número par:\n- Si el arma es transformable: Cambia inmediatamente de forma y no puede volver a cambiar de forma hasta el final de la escena.\n- Si el arma no es transformable (o no puede cambiar de forma): Queda guardada inmediatamente en tu mochila y no puede volver a equiparse hasta el final de la escena; sin embargo, puedes realizar inmediatamente la acción Equipo de forma gratuita.\nEsta habilidad no es aplicable a ataques desarmados, armas improvisadas, módulos de arma ni Doble escudo."
+  },
+  {
+    "id": "mimeoclepsis",
+    "nombre": "Mimeoclepsis",
+    "nombre_original": "Mimeoclepsis",
+    "requisitos": {
+      "texto": "Haber dominado una o más clases entre Quimerista o Mutante, y poseer tanto Genoclepsis como Mimetismo mágico.",
+      "dominar": {
+        "clases": [
+          "quimerista",
+          "mutante"
+        ]
+      },
+      "habilidades": [
+        "genoclepsis",
+        "mimetismo-magico"
+      ]
+    },
+    "resumen": "Revela todos los conjuros del PNJ dañado por Genoclepsis y permite aprender uno como conjuro quimerista.",
+    "efecto": "Al usar la habilidad Genoclepsis sobre un PNJ cuya especie figure entre las que te permiten aprender conjuros mediante Mimetismo mágico, el DJ debe revelarte todos los conjuros que conozca dicho PNJ. Si conoce uno o más conjuros, puedes aprender inmediatamente uno de ellos como un conjuro quimerista propio."
+  },
+  {
+    "id": "nebulizacion",
+    "nombre": "Nebulización",
+    "nombre_original": "Nebulization",
+    "requisitos": {
+      "texto": "Haber dominado la clase Artífice y poseer el beneficio avanzado Alquimia de la habilidad Artilugios.",
+      "dominar": {
+        "clases": [
+          "artifice"
+        ]
+      },
+      "habilidades": [
+        "tecnologias"
+      ]
+    },
+    "resumen": "Acumula Puntos de Nebulización al fabricar pociones para potenciar consumibles.",
+    "efecto": "Al crear una poción, ganas 1 Punto de Nebulización (o 2 Puntos de Nebulización si se creó mediante el beneficio Alquimia de Artilugios).\n- Las pociones y esquirlas elementales que fabriques infligen daño adicional igual al doble de tus Puntos de Nebulización actuales.\n- Las pociones que elabores que restauren PV o PM recuperan una cantidad adicional de PV o PM igual a [Puntos de Nebulización actuales × 5].\nNunca puedes acumular más de 5 Puntos de Nebulización, y pierdes todos al finalizar cada escena."
+  },
+  {
+    "id": "estallido-de-sobrecarga",
+    "nombre": "Estallido de sobrecarga",
+    "nombre_original": "Overload Burst",
+    "requisitos": {
+      "texto": "Haber dominado la clase Piloto y poseer la habilidad Tecnología de compresión.",
+      "dominar": {
+        "clases": [
+          "piloto"
+        ]
+      },
+      "habilidades": [
+        "tecnologia-de-compresion"
+      ]
+    },
+    "resumen": "Al caer a 0 PV a los mandos, sobrevives a 1 PV, eyectas el vehículo e infliges daño igual a tu valor de Crisis a un enemigo.",
+    "efecto": "Elige un tipo de daño entre rayo, oscuro, fuego, hielo o luz. La primera vez que fueras a quedar reducido a 0 PV en una escena a los mandos de tu vehículo personal, puedes elegir quedar reducido a exactamente 1 PV. Si lo haces, tú y todos los pasajeros sois eyectados del vehículo, el cual se desmaterializa y desaparece del mundo. A continuación, puedes infligir una cantidad de daño igual a tu valor de Crisis a una criatura visible (del tipo de daño elegido). Si el vehículo desaparece de este modo, el próximo uso de tu habilidad Tecnología de compresión tiene un coste adicional de 1 Punto Fabula."
+  },
+  {
+    "id": "campo-psiquico",
+    "nombre": "Campo psíquico",
+    "nombre_original": "Psychic Field",
+    "requisitos": {
+      "texto": "Haber dominado la clase Ésper.",
+      "dominar": {
+        "clases": [
+          "esper"
+        ]
+      }
+    },
+    "resumen": "Permite activar dones psíquicos de daño cuando un aliado daña, y extiende Escudo psíquico a todos los aliados cercanos.",
+    "efecto": "Tus dones psíquicos con evento «Al infligir daño» pueden activarse también «Cuando un aliado capaz de escucharte inflija daño». Además, si posees el don Escudo psíquico, su efecto se transforma en: «Tú y cada aliado capaz de escucharte tratáis vuestra Defensa y Defensa Mágica como iguales a [dado actual de Voluntad + (secciones llenas del reloj × 2)] contra esa tirada (conservando las puntuaciones normales si son superiores)»."
+  },
+  {
+    "id": "magicannon-cuantico",
+    "nombre": "Magicañón cuántico",
+    "nombre_original": "Quantum Magicannon",
+    "requisitos": {
+      "texto": "Haber dominado la clase Artífice y poseer el beneficio avanzado Magitech de la habilidad Artilugios.",
+      "dominar": {
+        "clases": [
+          "artifice"
+        ]
+      },
+      "habilidades": [
+        "tecnologias"
+      ]
+    },
+    "resumen": "+5 de daño con magicañón y opción de autodestrucción con reposición gratis, propiedad multi (3) o combate con dos armas.",
+    "efecto": "Tus ataques con el magicañón causan 5 puntos de daño adicional. Al realizar la acción Atacar con tu magicañón, puedes elegir una opción:\n1. Destruir el magicañón y crear y equipar uno nuevo inmediatamente de forma gratuita (ignorando el coste en PI), usando el nuevo magicañón para el ataque.\n2. El ataque adquiere la propiedad multi (3).\n3. Ejecutas dos ataques separados siguiendo las reglas de combate con dos armas."
+  },
+  {
+    "id": "escaneo-rapido",
+    "nombre": "Escaneo rápido",
+    "nombre_original": "Quick Scan",
+    "requisitos": {
+      "texto": "Haber dominado la clase Erudito.",
+      "dominar": {
+        "clases": [
+          "erudito"
+        ]
+      }
+    },
+    "resumen": "Examina el perfil de todos los enemigos visibles mediante una única prueba Abierta de [PER + PER].",
+    "efecto": "Al realizar la acción Estudiar durante un conflicto, puedes examinar los perfiles de todos los enemigos visibles simultáneamente. Realizas una única prueba Abierta de [PER + PER] y aplicas el resultado por separado a cada enemigo. Si posees la habilidad Intuición fulgurante, esta tirada no puede activarla."
+  },
+  {
+    "id": "bruja-de-acero",
+    "nombre": "Bruja de acero",
+    "nombre_original": "Steel Witch",
+    "requisitos": {
+      "texto": "Haber dominado la clase Piloto.",
+      "dominar": {
+        "clases": [
+          "piloto"
+        ]
+      }
+    },
+    "resumen": "Al lanzar el primer conjuro de la ronda a los mandos, reconfigura módulos, añade +5 de daño a futuros conjuros o +10 de curación.",
+    "efecto": "Tras lanzar el primer conjuro de tu turno durante un conflicto a los mandos de tu vehículo personal, puedes elegir una opción tras resolver el conjuro:\n1. Deshabilitar un módulo habilitado y habilitar un módulo deshabilitado.\n2. El próximo conjuro que lances antes del final de la escena que inflija daño causa 5 puntos de daño adicional.\n3. El próximo conjuro que lances antes del final de la escena que restaure PV a una o más criaturas recupera 10 PV adicionales a cada una de ellas."
+  }
+]

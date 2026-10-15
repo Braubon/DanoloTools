@@ -1,0 +1,369 @@
+[
+  {
+    "id": "banquete-libre",
+    "nombre": "Banquete libre",
+    "nombre_original": "All You Can Eat",
+    "requisitos": {
+      "texto": "Haber dominado la clase Gourmet.",
+      "dominar": {
+        "clases": [
+          "gourmet"
+        ]
+      }
+    },
+    "resumen": "Combina cuatro ingredientes en un único manjar.",
+    "efecto": "Una vez por escena cuando utilizas la habilidad Cocina, puedes combinar cuatro ingredientes en un manjar (ignorando el límite habitual de tres ingredientes). En todo lo demás, el manjar sigue las reglas habituales."
+  },
+  {
+    "id": "refraccion-del-auramante",
+    "nombre": "Refracción del auramante",
+    "nombre_original": "Auramancer’s Refraction",
+    "requisitos": {
+      "texto": "Haber dominado una o más clases entre Arcanista y Espiritista, y haber aprendido el conjuro Aura o Barrera.",
+      "dominar": {
+        "clases": [
+          "arcanista",
+          "espiritista"
+        ]
+      }
+    },
+    "resumen": "Reduce el daño recibido bajo Aura/Barrera y contraataca elementalmente.",
+    "efecto": "Elige un tipo de daño entre aire, rayo, tierra, fuego, hielo y luz.\nCuando un enemigo visible inflija daño a una o más criaturas afectadas por un conjuro de Aura o Barrera lanzado por ti, el daño sufrido por cada una de esas criaturas se reduce en una cantidad igual a [la mitad de tu nivel en la clase Espiritista] o [tu nivel dividido entre 10] (usa el valor mayor; esta reducción se aplica antes de las afinidades de daño). Después, puedes infligir una cantidad de daño del tipo elegido igual a [la mitad de tu nivel] a ese enemigo. Si lo haces, no puedes volver a infligir daño de este modo hasta el inicio de tu siguiente turno."
+  },
+  {
+    "id": "desviar-magia",
+    "nombre": "Desviar magia",
+    "nombre_original": "Bend Magic",
+    "requisitos": {
+      "texto": "Haber dominado una o más clases entre Elementalista, Entropista, Invocador y Simbolista, y haber adquirido la habilidad Invocación.",
+      "dominar": {
+        "clases": [
+          "elementalista",
+          "entropista",
+          "invocador",
+          "simbolista"
+        ]
+      },
+      "habilidades": [
+        "invocacion"
+      ]
+    },
+    "resumen": "Reacciona a conjuros enemigos con invocaciones gratuitas en tirada par.",
+    "efecto": "Después de que un enemigo visible te impacte o falle contra ti con un conjuro ofensivo, si el resultado de su prueba de Magia fue un número par, puedes usar de inmediato la habilidad Invocación de forma gratuita (después de que el conjuro se haya resuelto por completo) para realizar una invocación a la que tengas acceso contra ese enemigo, sin gastar Puntos de Mente. Esta invocación no puede ser un «maleficio», y solo puede tener como objetivo a ese enemigo (no puedes usar la habilidad Invocación vinculada con ella)."
+  },
+  {
+    "id": "corazon-de-zarzas",
+    "nombre": "Corazón de zarzas",
+    "nombre_original": "Brambleheart",
+    "requisitos": {
+      "texto": "Haber dominado una o más clases entre Hoja Oscura y Florista, y haber adquirido la habilidad Cloromancia.",
+      "dominar": {
+        "clases": [
+          "hoja-oscura",
+          "florista"
+        ]
+      },
+      "habilidades": [
+        "cloromancia"
+      ]
+    },
+    "resumen": "Resistencias a luz/veneno, avance de reloj en Crisis y veneno con Tajo oscuro.",
+    "efecto": "Eres Resistente al daño de luz y al daño de veneno.\nDespués de perder Puntos de Vida, si estás en Crisis y hay una magisemilla presente en tu jardín, puedes llenar 1 sección de tu Reloj de Crecimiento.\nAdemás, cuando utilizas la habilidad Tajo oscuro, puedes hacer que tu ataque inflige daño de veneno en lugar de daño oscuro (el tipo de daño sigue sin poder cambiarse). Si lo haces, tu Tajo oscuro inflige daño adicional igual a [el doble del número de secciones llenas en tu Reloj de Crecimiento]."
+  },
+  {
+    "id": "golpe-valeroso",
+    "nombre": "Golpe valeroso",
+    "nombre_original": "Brave Bash",
+    "requisitos": {
+      "texto": "Haber dominado una o más clases entre Comandante, Furia, Guardián, Piloto y Maestro de Armas.",
+      "dominar": {
+        "clases": [
+          "comandante",
+          "furia",
+          "guardian",
+          "piloto",
+          "maestro-de-armas"
+        ]
+      }
+    },
+    "resumen": "Desafía a enemigos con Rompehuesos y escudo, sumando daño extra.",
+    "efecto": "Cuando utilizas la habilidad Rompehuesos, si tu ataque tiene como objetivo a una sola criatura y tienes un escudo equipado, puedes desafiar a esa criatura hasta el final de tu siguiente turno. El desafío también concluye si esa criatura es desafiada por otra persona, o si desafías a otra criatura.\nLa criatura a la que estás desafiando debe incluirte entre los objetivos de sus ataques y conjuros ofensivos, si es capaz; además, una vez por turno (incluyendo los turnos de otras criaturas), cuando inflijas daño a la criatura a la que estás desafiando con un ataque gratuito usando un arma cuerpo a cuerpo de una mano, o con un arma personalizada perteneciente a la categoría daga o espada, puedes infligirle 5 de daño adicional."
+  },
+  {
+    "id": "animo",
+    "nombre": "¡Ánimo!",
+    "nombre_original": "Cheer Up!",
+    "requisitos": {
+      "texto": "Haber dominado una o más clases entre Cantor, Ésper y Orador, y haber adquirido la habilidad Confío en ti.",
+      "dominar": {
+        "clases": [
+          "cantor",
+          "esper",
+          "orador"
+        ]
+      },
+      "habilidades": [
+        "confio-en-ti"
+      ]
+    },
+    "resumen": "Aumenta el dado de un atributo con Confío en ti.",
+    "efecto": "Cuando utilizas Confío en ti sobre otro Personaje Jugador, ese personaje elige Destreza, Perspicacia, Vigor o Voluntad: trata el atributo elegido como si hubiera aumentado en un tamaño de dado (hasta un máximo de d12) hasta el final de la escena o hasta que vuelvas a usar Confío en ti sobre él."
+  },
+  {
+    "id": "alma-quimerica",
+    "nombre": "Alma quimérica",
+    "nombre_original": "Chimeric Soul",
+    "requisitos": {
+      "texto": "Haber dominado una o más clases entre Quimerista y Mutante, y haber adquirido la habilidad Mimetismo mágico.",
+      "dominar": {
+        "clases": [
+          "quimerista",
+          "mutante"
+        ]
+      },
+      "habilidades": [
+        "mimetismo-magico"
+      ]
+    },
+    "resumen": "Otorga resistencia o daño según la especie del conjuro quimérico lanzado.",
+    "efecto": "Cuando lanzas uno de tus conjuros de Quimerista, obtienes un beneficio basado en la especie de la criatura de la que aprendiste originalmente dicho conjuro. Elige una opción: obtienes Resistencia a ambos tipos de daño asociados con esa especie; o cuando inflijas daño de un tipo asociado con esa especie, infliges 5 de daño adicional. El beneficio elegido dura hasta el final de la escena, o hasta que vuelvas a lanzar un conjuro de Quimerista.\nLos tipos de daño asociados a cada especie son:\n- **Bestia:** aire e hielo.\n- **Constructo:** tierra y veneno.\n- **Demonio:** fuego e hielo.\n- **Elemental:** aire y rayo.\n- **Monstruo:** rayo y fuego.\n- **Planta:** tierra y luz.\n- **No muerto:** oscuro y veneno."
+  },
+  {
+    "id": "luz-lunar-purificadora",
+    "nombre": "Luz lunar purificadora",
+    "nombre_original": "Cleansing Moonlight",
+    "requisitos": {
+      "texto": "Haber dominado una o más clases entre Entropista y Espiritista.",
+      "dominar": {
+        "clases": [
+          "entropista",
+          "espiritista"
+        ]
+      }
+    },
+    "resumen": "Disipa conjuros de escena enemigos o cura estados a aliados con arma arcana.",
+    "efecto": "Cuando impactes a una o más criaturas con un conjuro ofensivo, si tienes un arma arcana equipada y la Tirada Mayor (TM) de tu prueba de Magia es 8 o superior, puedes hacer que cada una de esas criaturas deje de estar afectada por todos los conjuros con una duración de «Escena» que la estén afectando actualmente.\nCuando lanzas un conjuro que tiene como objetivo a uno o más aliados, si tienes un arma arcana equipada, puedes elegir un estado alterado entre confundido, enfurecido, envenenado, estremecido, lento y débil: si lo haces, cada objetivo se recupera del estado alterado elegido."
+  },
+  {
+    "id": "tranquilidad-efimera",
+    "nombre": "Tranquilidad efímera",
+    "nombre_original": "Ephemeral Tranquility",
+    "requisitos": {
+      "texto": "Haber dominado una o más clases entre Bailarín, Ésper, Pícaro, Espiritista y Simbolista.",
+      "dominar": {
+        "clases": [
+          "bailarin",
+          "esper",
+          "picaro",
+          "espiritista",
+          "simbolista"
+        ]
+      }
+    },
+    "resumen": "Combina Alucinación y Torpor, y purga estados enemigos infligiendo daño masivo.",
+    "efecto": "Cuando lanzas los conjuros Alucinación o Torpor, puedes aplicar ambos estados alterados a cada objetivo impactado por el conjuro.\nDurante un conflicto, puedes usar una acción y gastar hasta 20 Puntos de Mente. Por cada 10 Puntos de Mente gastados de este modo, puedes elegir un enemigo visible diferente que esté sufriendo dos o más estados alterados. Cada enemigo elegido de este modo se recupera de todos sus estados alterados y pierde una cantidad de Puntos de Vida igual a [la mitad de tu nivel + (el número de estados alterados de los que se ha recuperado ese enemigo mediante este efecto, multiplicado por 10)]. Después, recuperas 20 Puntos de Mente por cada uno de esos enemigos que haya entrado en Crisis o haya quedado reducido a 0 Puntos de Vida mediante este efecto."
+  },
+  {
+    "id": "lanzamiento-fornido",
+    "nombre": "Lanzamiento fornido",
+    "nombre_original": "Fitcast",
+    "requisitos": {
+      "texto": "Haber dominado una o más clases entre Quimerista, Hoja Oscura, Ésper, Furia y Trotamundos.",
+      "dominar": {
+        "clases": [
+          "quimerista",
+          "hoja-oscura",
+          "esper",
+          "furia",
+          "caminante"
+        ]
+      }
+    },
+    "resumen": "Emplea Vigor en pruebas de Magia y trata armas basadas en Vigor como arcanas.",
+    "efecto": "Cuando realizas una prueba de Magia para un conjuro o Ritual, puedes sustituir uno de los atributos por Vigor (como por ejemplo [VIG + VIG] para un Ritual de Quimerismo).\nMientras la fórmula de Precisión de un arma que tengas equipada incluya Vigor, puedes tratar dicha arma como si también perteneciese a la categoría arcana a efectos de habilidades y efectos que lo requieran."
+  },
+  {
+    "id": "por-un-futuro-mejor",
+    "nombre": "Por un futuro mejor",
+    "nombre_original": "For a Better Future",
+    "requisitos": {
+      "texto": "Haber dominado la clase Mercader, y haber adquirido las habilidades El verdadero tesoro y Vientos de comercio.",
+      "dominar": {
+        "clases": [
+          "mercader"
+        ]
+      },
+      "habilidades": [
+        "el-verdadero-tesoro",
+        "vientos-de-comercio"
+      ]
+    },
+    "resumen": "Emplea Puntos de Comercio en lugar de Fábula e invierte en prosperidad comarcal.",
+    "efecto": "Cuando necesites gastar uno o más Puntos Fábula, si no los estás gastando para alterar la historia, puedes gastar en su lugar esa misma cantidad de Puntos de Comercio. ¡Describe qué recuerdos de tus intercambios y viajes te dan fuerzas!\nAdemás, cuando obtengas dos o más Puntos de Comercio mediante las habilidades El verdadero tesoro o Vientos de comercio, puedes elegir obtener exactamente 1 Punto de Comercio en su lugar. Si lo haces, elige un asentamiento situado a 1 día de viaje o menos de tu posición y aumenta su prosperidad en una cantidad igual a [tu SL en Vientos de comercio + tu SL en El verdadero tesoro]; la prosperidad de un asentamiento comienza en 0 y no tiene límite superior.\n- **10 o más:** Cuando tú o un aliado tengáis que pagar un coste en zenit, ese coste se reduce a la mitad.\n- **15 o más:** En esta zona siempre podéis descansar gratis. Las tiradas de viaje nunca usan un dado superior a d8.\n- **20 o más:** Cuando un Villano en esta zona gaste Puntos Ultima, debe gastar el doble."
+  },
+  {
+    "id": "cloromancia-mayor",
+    "nombre": "Cloromancia mayor",
+    "nombre_original": "Greater Chloromancy",
+    "requisitos": {
+      "texto": "Haber dominado la clase Florista.",
+      "dominar": {
+        "clases": [
+          "florista"
+        ]
+      }
+    },
+    "resumen": "Reproduce efectos de magisemillas al retirarlas y controla plantas soldado en rituales.",
+    "efecto": "Una vez por turno cuando una magisemilla abandone tu jardín, si esa magisemilla tiene uno o más efectos de «al final de tu turno», puedes gastar 20 Puntos de Mente. Si lo haces, reproduces uno de esos efectos (también puedes elegir un efecto que no coincida con las secciones actuales de tu Reloj de Crecimiento).\nAdemás, si has adquirido la habilidad Influencia vegetal, tus Rituales ahora también pueden influir y controlar a criaturas de rango soldado pertenecientes a la especie planta (pero sigues sin poder crearlas)."
+  },
+  {
+    "id": "mano-verde",
+    "nombre": "Mano verde",
+    "nombre_original": "Green Thumb",
+    "requisitos": {
+      "texto": "Haber dominado la clase Florista.",
+      "dominar": {
+        "clases": [
+          "florista"
+        ]
+      }
+    },
+    "resumen": "Acelera o frena el Reloj de Crecimiento y el daño de magisemillas ignora Resistencias.",
+    "efecto": "Cuando llenes 1 o más secciones de tu Reloj de Crecimiento, puedes elegir una opción: llenas 1 sección adicional de tu Reloj de Crecimiento; o llenas 1 sección menos de tu Reloj de Crecimiento (hasta un mínimo de 0 secciones llenas). Si lo haces, no puedes volver a usar este efecto hasta después de que tu Reloj de Crecimiento quede completamente vacío.\nAdemás, el daño infligido por tus magisemillas ignora Resistencias."
+  },
+  {
+    "id": "manantial-interior",
+    "nombre": "Manantial interior",
+    "nombre_original": "Inner Wellspring",
+    "requisitos": {
+      "texto": "Haber dominado la clase Invocador.",
+      "dominar": {
+        "clases": [
+          "invocador"
+        ]
+      }
+    },
+    "resumen": "Porta un manantial elemental permanente con resistencia y rituales asociados.",
+    "efecto": "Cuando adquieres esta Habilidad Heroica y siempre que descanses, puedes elegir un manantial: aire, tierra, fuego, rayo o agua. Si lo haces, obtienes los siguientes beneficios hasta tu siguiente descanso:\n- Tratas siempre el manantial elegido como disponible durante cada escena, además de los manantiales que ya estén disponibles de por sí.\n- Puedes realizar Rituales de la disciplina de Elementalismo, pero únicamente si dichos Rituales manipulan el elemento del manantial elegido.\n- Obtienes Resistencia al tipo de daño correspondiente al manantial elegido.\n- Cuando infliges daño, puedes cambiar su tipo al correspondiente al manantial elegido. Si lo haces, ese daño ignora Resistencias."
+  },
+  {
+    "id": "siesta-reparadora",
+    "nombre": "Siesta reparadora",
+    "nombre_original": "Power Nap",
+    "requisitos": {
+      "texto": "Haber dominado una o más clases entre Guardián, Mercader y Trotamundos.",
+      "dominar": {
+        "clases": [
+          "guardian",
+          "mercader",
+          "caminante"
+        ]
+      }
+    },
+    "resumen": "Recupera PV y PM y purga estados a cambio de quedar temporalmente indefenso.",
+    "efecto": "En tu turno durante un conflicto, puedes usar una acción para recuperar una cantidad de Puntos de Vida y Puntos de Mente igual a [20 + la mitad de tu nivel] y recuperarte además de todos los estados alterados. Si lo haces, tu turno termina de inmediato, pierdes la capacidad de oír y ver, y tus valores de Defensa y Defensa Mágica pasan a ser 5 y no pueden modificarse de ninguna forma (¡pero aún puedes usar la habilidad Proteger si la posees!). Estas penalizaciones duran hasta el inicio de tu siguiente turno, hasta después de perder Puntos de Vida, o hasta después de ser impactado por un ataque o conjuro ofensivo."
+  },
+  {
+    "id": "codo-con-codo",
+    "nombre": "Codo con codo",
+    "nombre_original": "Side by Side",
+    "requisitos": {
+      "texto": "Haber dominado la clase Trotamundos, y haber adquirido la habilidad Compañero fiel.",
+      "dominar": {
+        "clases": [
+          "caminante"
+        ]
+      },
+      "habilidades": [
+        "companero-fiel"
+      ]
+    },
+    "resumen": "Potencia el daño, tiradas y sinergia táctica con el Compañero fiel.",
+    "efecto": "Cuando tu compañero inflige daño, inflige 5 de daño adicional.\nCuando tu compañero realiza una prueba, puedes gastar 1 Punto Fábula e invocar uno de los rasgos de tu compañero para permitirle repetir uno o ambos dados.\nDespués de utilizar la habilidad Compañero fiel para hacer que tu compañero realice una acción durante tu turno, puedes elegir una opción: tú y tu compañero recuperáis 10 Puntos de Mente cada uno; o la primera vez que tú o tu compañero realicéis una prueba antes del final de tu siguiente turno, dicha prueba obtiene un bonificador igual a [tu SL en Compañero fiel]."
+  },
+  {
+    "id": "cazador-silencioso",
+    "nombre": "Cazador silencioso",
+    "nombre_original": "Silent Hunter",
+    "requisitos": {
+      "texto": "Haber dominado una o más clases entre Pícaro, Tirador y Maestro de Armas, y haber adquirido la habilidad Alta velocidad.",
+      "dominar": {
+        "clases": [
+          "picaro",
+          "tirador",
+          "maestro-de-armas"
+        ]
+      },
+      "habilidades": [
+        "alta-velocidad"
+      ]
+    },
+    "resumen": "Multiplica el daño con Alta velocidad en arcos/lanzas y veta contraataques enemigos.",
+    "efecto": "Cuando utilizas la habilidad Alta velocidad para realizar un ataque gratuito con un arma perteneciente a la categoría arco, lanza o arrojadiza, el ataque inflige daño adicional igual a [tu SL en la habilidad Alta velocidad × 5].\nAdemás, cuando atacas a una o más criaturas con un arma perteneciente a la categoría arco, lanza o arrojadiza, dichas criaturas no pueden realizar ataques gratuitos hasta el final del turno actual."
+  },
+  {
+    "id": "dosificacion-experta",
+    "nombre": "Dosificación experta",
+    "nombre_original": "Skillful Dosage",
+    "requisitos": {
+      "texto": "Haber dominado una o más clases entre Gourmet, Erudito, Mercader y Artífice.",
+      "dominar": {
+        "clases": [
+          "gourmet",
+          "erudito",
+          "mercader",
+          "artifice"
+        ]
+      }
+    },
+    "resumen": "Permite sobrecurar PV y PM hasta el 150 % del valor máximo.",
+    "efecto": "Las pociones y manjares que creas, así como los conjuros que lanzas, pueden hacer que las criaturas recuperen Puntos de Vida y Puntos de Mente por encima de sus valores máximos de PV y PM. Esto no puede hacer que los PV o PM actuales de una criatura superen el 150 % de sus respectivos valores máximos; al final de cada escena, si los Puntos de Vida o Puntos de Mente actuales de una criatura siguen por encima de sus puntuaciones máximas, vuelven a ser iguales a su puntuación máxima."
+  },
+  {
+    "id": "especialidad-de-la-casa",
+    "nombre": "Especialidad de la casa",
+    "nombre_original": "Specialty of the House",
+    "requisitos": {
+      "texto": "Haber dominado la clase Gourmet.",
+      "dominar": {
+        "clases": [
+          "gourmet"
+        ]
+      }
+    },
+    "resumen": "Diseña un manjar insignia con tres efectos personalizados al usar tres sabores fijados.",
+    "efecto": "Cuando adquieres esta Habilidad Heroica, elige tres sabores distintos entre amargo, salado, ácido, dulce y umami. Después, elige tres efectos distintos de entre los diez detallados en el reglamento de Fantasía Natural (daño de luz/oscuro, cambio de afinidad elemental, purga de conjuros de escena, forzar objetivo, infligir enfurecido o envenenado, curación de PV/PM o curación de estados alterados).\nCuando creas un manjar usando exactamente 3 ingredientes durante un conflicto, si cada ingrediente coincide con un sabor distinto entre los elegidos al adquirir esta Habilidad Heroica, puedes ignorar todos los efectos normales de ese manjar. Si lo haces, puedes aplicar en su lugar uno, dos o los tres efectos que elegiste al adquirir esta Habilidad Heroica."
+  },
+  {
+    "id": "fuerza-de-los-cinco-manantiales",
+    "nombre": "Fuerza de los cinco manantiales",
+    "nombre_original": "Strength of Five Wellsprings",
+    "requisitos": {
+      "texto": "Haber dominado la clase Invocador.",
+      "dominar": {
+        "clases": [
+          "invocador"
+        ]
+      }
+    },
+    "resumen": "Las invocaciones elementales aumentan los atributos del invocador y un aliado.",
+    "efecto": "Tras realizar una invocación durante un conflicto, tú y hasta un aliado que puedas ver aumentáis el tamaño del dado de uno de vuestros atributos en un paso (hasta un máximo de d12). Este aumento dura hasta el final de la escena o hasta que vuelvas a usar esta habilidad, y el atributo beneficiado depende del manantial invocado:\n- **Aire:** Perspicacia.\n- **Tierra:** Un atributo a tu elección.\n- **Fuego:** Destreza.\n- **Rayo:** Vigor.\n- **Agua:** Voluntad."
+  },
+  {
+    "id": "sabio-consejo",
+    "nombre": "Sabio consejo",
+    "nombre_original": "Wise Counsel",
+    "requisitos": {
+      "texto": "Haber dominado una o más clases entre Comandante, Erudito y Orador.",
+      "dominar": {
+        "clases": [
+          "comandante",
+          "erudito",
+          "orador"
+        ]
+      }
+    },
+    "resumen": "Emplea PER o VOL al apoyar y otorga beneficios tácticos mayores al cooperar en combate.",
+    "efecto": "Cuando realizas una prueba de Apoyo, si el líder de la prueba de grupo puede oírte y entenderte, puedes usar [PER + PER], [PER + VOL] o [VOL + VOL] en lugar de los atributos normalmente requeridos por la prueba de Apoyo.\nAdemás, cuando utilizas la opción de trabajo en equipo para apoyar la prueba de otro Personaje Jugador durante su turno en una escena de conflicto, puedes gastar 10 Puntos de Mente. Si lo haces, elige hasta dos de los siguientes beneficios:\n- Ese personaje recupera 20 Puntos de Mente.\n- Ese personaje se cura de confundido, enfurecido y estremecido.\n- Al final del turno de ese personaje, realiza un ataque gratuito con un arma equipada o lanza un conjuro de 20 PM o menos de forma gratuita.\n- Si ese personaje tiene éxito en su prueba y llena o borra secciones de un reloj, puede llenar o borrar 1 sección adicional."
+  }
+]

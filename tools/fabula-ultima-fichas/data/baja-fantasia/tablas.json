@@ -1,0 +1,16 @@
+[
+  {
+    "id": "listas_conjuros",
+    "nombre": "Listas de conjuros",
+    "valores": [
+      { "id": "ilusionista", "nombre": "Ilusionista", "atributos_magia": "PER + VOL" }
+    ]
+  },
+  {
+    "id": "disciplinas_rituales",
+    "nombre": "Disciplinas de rituales",
+    "valores": [
+      { "id": "ilusionismo", "nombre": "Ilusionismo" }
+    ]
+  }
+]

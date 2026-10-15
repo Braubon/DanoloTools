@@ -1,0 +1,900 @@
+[
+  {
+    "id": "don-atmocinesis",
+    "grupo": "don_psiquico",
+    "nombre": "Atmocinesis",
+    "nombre_original": "Atmokinesis",
+    "evento": "Al infligir daño",
+    "efecto": "Ese daño se convierte en aire o rayo, y su fuente causa daño adicional igual a [2 + secciones llenas del reloj]."
+  },
+  {
+    "id": "don-clarividencia",
+    "grupo": "don_psiquico",
+    "nombre": "Clarividencia",
+    "nombre_original": "Clairvoyance",
+    "evento": "Cuando un PNJ pasa a ser tu foco o cuando creas un Vínculo hacia él",
+    "efecto": "Formula una pregunta directa al DJ sobre ese PNJ, que debe responder con veracidad. Describe qué sensación te reveló el dato. Solo utilizable una vez por cada PNJ."
+  },
+  {
+    "id": "don-gravitocinesis",
+    "grupo": "don_psiquico",
+    "nombre": "Gravitocinesis",
+    "nombre_original": "Gravitokinesis",
+    "evento": "Al infligir daño",
+    "efecto": "Ese daño se convierte en tierra o físico, y su fuente causa daño adicional igual a [2 + secciones llenas del reloj]. Si la fuente inflige daño a una o más criaturas voladoras, se ven forzadas a aterrizar de inmediato."
+  },
+  {
+    "id": "don-transferencia-vital",
+    "grupo": "don_psiquico",
+    "nombre": "Transferencia vital",
+    "nombre_original": "Life Transference",
+    "evento": "Al hacer que uno o más enemigos pierdan PV",
+    "efecto": "Elígete a ti mismo o a un aliado que sea tu foco: si la criatura elegida se halla en Crisis, recupera una cantidad de PV igual a [5 + (secciones llenas del reloj × 5)]."
+  },
+  {
+    "id": "don-fotocinesis",
+    "grupo": "don_psiquico",
+    "nombre": "Fotocinesis",
+    "nombre_original": "Photokinesis",
+    "evento": "Al infligir daño",
+    "efecto": "Ese daño se convierte en oscuro o luz, y su fuente causa daño adicional igual a [2 + secciones llenas del reloj]."
+  },
+  {
+    "id": "don-retroceso-psiquico",
+    "grupo": "don_psiquico",
+    "nombre": "Retroceso psíquico",
+    "nombre_original": "Psychic Backlash",
+    "evento": "Tras tener éxito un enemigo en una prueba Enfrentada contra ti o causarte pérdida de PV",
+    "efecto": "Dicho enemigo pierde una cantidad de PM igual a [5 + (secciones llenas del reloj × 5)]. Luego, elige una opción: el enemigo sufre el estado confundido o el estado estremecido."
+  },
+  {
+    "id": "don-escudo-psiquico",
+    "grupo": "don_psiquico",
+    "nombre": "Escudo psíquico",
+    "nombre_original": "Psychic Shield",
+    "evento": "Tras realizar una prueba de Precisión o prueba de Magia un enemigo visible",
+    "efecto": "A efectos de esa tirada enemiga, tratas tu Defensa y Defensa Mágica como iguales a [dado actual de Voluntad + (secciones llenas del reloj × 2)] (puedes conservar tus puntuaciones normales si son superiores)."
+  },
+  {
+    "id": "don-presencia-tranquilizadora",
+    "grupo": "don_psiquico",
+    "nombre": "Presencia tranquilizadora",
+    "nombre_original": "Reassuring Presence",
+    "evento": "Tras cubrir a un aliado con la acción Guardia",
+    "efecto": "Dicho aliado recupera una cantidad de PM igual a [10 + (secciones llenas del reloj × 5)]. Si además es tu foco, se cura de un estado alterado a su elección entre confundido, enfurecido o estremecido."
+  },
+  {
+    "id": "don-termocinesis",
+    "grupo": "don_psiquico",
+    "nombre": "Termocinesis",
+    "nombre_original": "Thermokinesis",
+    "evento": "Al infligir daño",
+    "efecto": "Ese daño se convierte en fuego o hielo, y su fuente causa daño adicional igual a [2 + secciones llenas del reloj]."
+  },
+  {
+    "id": "terioforma-amphibia",
+    "grupo": "terioforma",
+    "nombre": "Amphibia",
+    "nombre_original": "Amphibia",
+    "detalles": [
+      { "etiqueta": "Sugerencias Genoclepsis", "texto": "Ranas, salamandras, monstruos acuáticos o regenerativos." }
+    ],
+    "efecto": "Respiras bajo el agua y ves en la penumbra. Cuando recuperes PV, restauras 5 PV adicionales y te curas de un estado alterado a tu elección."
+  },
+  {
+    "id": "terioforma-arpaktida",
+    "grupo": "terioforma",
+    "nombre": "Arpaktida",
+    "nombre_original": "Arpaktida",
+    "detalles": [
+      { "etiqueta": "Sugerencias Genoclepsis", "texto": "Lobos, rapaces, depredadores con sentidos agudos." }
+    ],
+    "efecto": "Tratas tu Intuición como un tamaño de dado superior (máximo d12). La primera vez que inflijas daño durante tu turno, si al menos un blanco está en Crisis, causas 5 puntos de daño adicional a cada uno de ellos."
+  },
+  {
+    "id": "terioforma-dynamotheria",
+    "grupo": "terioforma",
+    "nombre": "Dynamotheria",
+    "nombre_original": "Dynamotheria",
+    "detalles": [
+      { "etiqueta": "Sugerencias Genoclepsis", "texto": "Osos, dinosaurios, bestias titánicas masivas." }
+    ],
+    "efecto": "Tratas tu Vigor como un tamaño de dado superior (máximo d12). Cuando superes una tirada para avanzar o retrasar un Reloj que incluya Vigor, marcas o borras 1 sección adicional."
+  },
+  {
+    "id": "terioforma-electrophora",
+    "grupo": "terioforma",
+    "nombre": "Electrophora",
+    "nombre_original": "Electrophora",
+    "detalles": [
+      { "etiqueta": "Sugerencias Genoclepsis", "texto": "Anguilas eléctricas, elementales de rayo, robots." }
+    ],
+    "efecto": "Al dañar con un ataque o conjuro, puedes convertir todo el daño en rayo. Mientras tus ataques desarmados inflijan daño de rayo, cualquier enemigo que pierda 20+ PV por un golpe desarmado sufre además el estado lento."
+  },
+  {
+    "id": "terioforma-neurophagoida",
+    "grupo": "terioforma",
+    "nombre": "Neurophagoida",
+    "nombre_original": "Neurophagoida",
+    "detalles": [
+      { "etiqueta": "Sugerencias Genoclepsis", "texto": "Parásitos, no muertos, comedores de almas." }
+    ],
+    "efecto": "Al usar Biofagia, recuperas también una cantidad de PM igual a [4 + SL en Teriomorfosis]."
+  },
+  {
+    "id": "terioforma-placophora",
+    "grupo": "terioforma",
+    "nombre": "Placophora",
+    "nombre_original": "Placophora",
+    "detalles": [
+      { "etiqueta": "Sugerencias Genoclepsis", "texto": "Crustáceos, tortugas, vehículos blindados." }
+    ],
+    "efecto": "Tratas tu Defensa como igual a [13 + (SL en Teriomorfosis ÷ 2)] (puedes conservar tu valor si es superior)."
+  },
+  {
+    "id": "terioforma-pneumophora",
+    "grupo": "terioforma",
+    "nombre": "Pneumophora",
+    "nombre_original": "Pneumophora",
+    "detalles": [
+      { "etiqueta": "Sugerencias Genoclepsis", "texto": "Moluscos de propulsión, grandes bestias aladas." }
+    ],
+    "efecto": "Al dañar con un ataque o conjuro, puedes convertir todo el daño en aire. Mientras tus golpes desarmados inflijan daño de aire, cualquier enemigo que pierda 20+ PV por un golpe desarmado sufre además el estado débil."
+  },
+  {
+    "id": "terioforma-polypoda",
+    "grupo": "terioforma",
+    "nombre": "Polypoda",
+    "nombre_original": "Polypoda",
+    "detalles": [
+      { "etiqueta": "Sugerencias Genoclepsis", "texto": "Pulpos, calamares, enredaderas tentaculares." }
+    ],
+    "efecto": "Tus ataques con golpes desarmados adquieren la propiedad multi (3)."
+  },
+  {
+    "id": "terioforma-pterotheria",
+    "grupo": "terioforma",
+    "nombre": "Pterotheria",
+    "nombre_original": "Pterotheria",
+    "detalles": [
+      { "etiqueta": "Sugerencias Genoclepsis", "texto": "Murciélagos, pájaros, insectos voladores." }
+    ],
+    "efecto": "Capacidad de vuelo: Tus ataques cuerpo a cuerpo pueden alcanzar a voladores y solo puedes ser alcanzado cuerpo a cuerpo por voladores o atacantes con alcance aéreo. Se pierde temporalmente si no hay espacio para volar o tras sufrir daño de aire, rayo o hielo hasta tu próximo turno."
+  },
+  {
+    "id": "terioforma-pyrophora",
+    "grupo": "terioforma",
+    "nombre": "Pyrophora",
+    "nombre_original": "Pyrophora",
+    "detalles": [
+      { "etiqueta": "Sugerencias Genoclepsis", "texto": "Escarabajos bombardero, elementales de fuego." }
+    ],
+    "efecto": "Al dañar con un ataque o conjuro, puedes convertir todo el daño en fuego. Mientras tus golpes desarmados inflijan daño de fuego, cualquier enemigo que pierda 20+ PV por un golpe desarmado sufre además el estado confundido."
+  },
+  {
+    "id": "terioforma-tachytheria",
+    "grupo": "terioforma",
+    "nombre": "Tachytheria",
+    "nombre_original": "Tachytheria",
+    "detalles": [
+      { "etiqueta": "Sugerencias Genoclepsis", "texto": "Felinos, gacelas, criaturas ágiles y veloces." }
+    ],
+    "efecto": "Tratas tu Destreza como un tamaño de dado superior (máximo d12). Cuando superes una tirada para avanzar o retrasar un Reloj que incluya Destreza, marcas o borras 1 sección adicional."
+  },
+  {
+    "id": "terioforma-toxicophora",
+    "grupo": "terioforma",
+    "nombre": "Toxicophora",
+    "nombre_original": "Toxicophora",
+    "detalles": [
+      { "etiqueta": "Sugerencias Genoclepsis", "texto": "Arañas, serpientes, masas tóxicas venenosas." }
+    ],
+    "efecto": "Al dañar con un ataque o conjuro, puedes convertir todo el daño en veneno. Mientras tus golpes desarmados inflijan daño de veneno, cualquier enemigo que pierda 20+ PV por un golpe desarmado sufre además el estado envenenado."
+  },
+  {
+    "id": "chasis-exoesqueleto",
+    "grupo": "chasis_vehiculo",
+    "nombre": "Exoesqueleto",
+    "nombre_original": "Exoskeleton",
+    "pasajeros": "Ninguno",
+    "distancia": "Sin modificador",
+    "efecto": "Hasta 2 módulos de arma, 1 de armadura y cualquier número de soporte habilitados. Si usas Tecnología de compresión, ignora el coste en PI."
+  },
+  {
+    "id": "chasis-mecha",
+    "grupo": "chasis_vehiculo",
+    "nombre": "Mecha",
+    "nombre_original": "Mecha",
+    "pasajeros": "Ninguno",
+    "distancia": "×2",
+    "efecto": "Hasta 2 módulos de arma, 1 de armadura y cualquier número de soporte habilitados."
+  },
+  {
+    "id": "chasis-corcel",
+    "grupo": "chasis_vehiculo",
+    "nombre": "Corcel",
+    "nombre_original": "Steed",
+    "pasajeros": "Hasta 1",
+    "distancia": "×2",
+    "efecto": "Hasta 1 módulo de arma, 1 de armadura y cualquier número de soporte habilitados. Si usas Corazón en el motor, ignora el coste en PM."
+  },
+  {
+    "id": "modulo-blindaje-flexible",
+    "grupo": "modulo_armadura",
+    "nombre": "Blindaje flexible",
+    "nombre_original": "Flexible Plating",
+    "def": "Dado DES + 2",
+    "mdef": "Dado PER + 1",
+    "marcial": false,
+    "efecto": "No marcial. Fija tu Defensa a dado DES + 2 y tu Defensa Mágica a dado PER + 1."
+  },
+  {
+    "id": "modulo-blindaje-estandar",
+    "grupo": "modulo_armadura",
+    "nombre": "Blindaje estándar",
+    "nombre_original": "Standard Plating",
+    "def": "11",
+    "mdef": "10",
+    "marcial": true,
+    "efecto": "Marcial. Fija tu Defensa a 11 y tu Defensa Mágica a 10."
+  },
+  {
+    "id": "modulo-blindaje-pesado",
+    "grupo": "modulo_armadura",
+    "nombre": "Blindaje pesado",
+    "nombre_original": "Heavy Plating",
+    "def": "12",
+    "mdef": "8",
+    "marcial": true,
+    "efecto": "Marcial. Fija tu Defensa a 12 y tu Defensa Mágica a 8."
+  },
+  {
+    "id": "modulo-blindaje-runico",
+    "grupo": "modulo_armadura",
+    "nombre": "Blindaje rúnico",
+    "nombre_original": "Runic Plating",
+    "def": "10",
+    "mdef": "11",
+    "marcial": true,
+    "efecto": "Marcial. Fija tu Defensa a 10 y tu Defensa Mágica a 11."
+  },
+  {
+    "id": "modulo-arcano",
+    "grupo": "modulo_arma",
+    "nombre": "Módulo arcano",
+    "nombre_original": "Arcane Module",
+    "categoria": "arcana",
+    "alcance": "cuerpo",
+    "precision": "[DES + VOL]",
+    "dano": "[HR + 8] físico",
+    "efecto": "Arma a una mano no marcial. Sin cualidades."
+  },
+  {
+    "id": "modulo-hacha",
+    "grupo": "modulo_arma",
+    "nombre": "Módulo hacha",
+    "nombre_original": "Axe Module",
+    "categoria": "pesada",
+    "alcance": "cuerpo",
+    "precision": "[DES + PER]",
+    "dano": "[HR + 12] físico",
+    "efecto": "Arma a una mano no marcial. Sin cualidades."
+  },
+  {
+    "id": "modulo-hoja",
+    "grupo": "modulo_arma",
+    "nombre": "Módulo hoja",
+    "nombre_original": "Blade Module",
+    "categoria": "daga",
+    "alcance": "cuerpo",
+    "precision": "[DES + PER]",
+    "dano": "[HR + 6] físico",
+    "efecto": "Arma a una mano no marcial. Sin cualidades."
+  },
+  {
+    "id": "modulo-arco",
+    "grupo": "modulo_arma",
+    "nombre": "Módulo arco",
+    "nombre_original": "Bow Module",
+    "categoria": "arco",
+    "alcance": "distancia",
+    "precision": "[DES + PER]",
+    "dano": "[HR + 12] físico",
+    "efecto": "Arma a una mano no marcial. No permite tener ningún otro módulo de arma habilitado."
+  },
+  {
+    "id": "modulo-canon",
+    "grupo": "modulo_arma",
+    "nombre": "Módulo cañón",
+    "nombre_original": "Cannon Module",
+    "categoria": "arma_fuego",
+    "alcance": "distancia",
+    "precision": "[DES + PER]",
+    "dano": "[HR + 14] físico",
+    "efecto": "Arma a una mano no marcial. No permite tener ningún otro módulo de arma habilitado."
+  },
+  {
+    "id": "modulo-garra",
+    "grupo": "modulo_arma",
+    "nombre": "Módulo garra",
+    "nombre_original": "Claw Module",
+    "categoria": "pelea",
+    "alcance": "cuerpo",
+    "precision": "[DES + PER] + 1",
+    "dano": "[HR + 8] físico",
+    "efecto": "Arma a una mano no marcial. Puede usarse para manipular objetos como una mano libre normal."
+  },
+  {
+    "id": "modulo-mandoble",
+    "grupo": "modulo_arma",
+    "nombre": "Módulo mandoble",
+    "nombre_original": "Claymore Module",
+    "categoria": "espada",
+    "alcance": "cuerpo",
+    "precision": "[DES + PER] + 1",
+    "dano": "[HR + 14] físico",
+    "efecto": "Arma a una mano no marcial. No permite tener ningún otro módulo de arma habilitado."
+  },
+  {
+    "id": "modulo-esoterico",
+    "grupo": "modulo_arma",
+    "nombre": "Módulo esotérico",
+    "nombre_original": "Esoteric Module",
+    "categoria": "arcana",
+    "alcance": "cuerpo",
+    "precision": "[DES + VOL]",
+    "dano": "[HR + 12] físico",
+    "efecto": "Arma a una mano no marcial. No permite tener ningún otro módulo de arma habilitado."
+  },
+  {
+    "id": "modulo-mangual",
+    "grupo": "modulo_arma",
+    "nombre": "Módulo mangual",
+    "nombre_original": "Flail Module",
+    "categoria": "mangual",
+    "alcance": "cuerpo",
+    "precision": "[DES + PER]",
+    "dano": "[HR + 10] físico",
+    "efecto": "Arma a una mano no marcial. Sin cualidades."
+  },
+  {
+    "id": "modulo-lanzallamas",
+    "grupo": "modulo_arma",
+    "nombre": "Módulo lanzallamas",
+    "nombre_original": "Flamer Module",
+    "categoria": "arma_fuego",
+    "alcance": "cuerpo",
+    "precision": "[DES + PER]",
+    "dano": "[HR + 8] fuego",
+    "efecto": "Arma a una mano no marcial. Sin cualidades."
+  },
+  {
+    "id": "modulo-ametralladora",
+    "grupo": "modulo_arma",
+    "nombre": "Módulo ametralladora",
+    "nombre_original": "Machine Gun Module",
+    "categoria": "arma_fuego",
+    "alcance": "distancia",
+    "precision": "[DES + PER]",
+    "dano": "[HR + 10] físico",
+    "efecto": "Arma a una mano no marcial. No permite tener otros módulos de armas habilitados. Al Atacar, puedes realizar dos ataques separados (combate con dos armas: pierden multi y consideran HR como 0 para el daño)."
+  },
+  {
+    "id": "modulo-fusil",
+    "grupo": "modulo_arma",
+    "nombre": "Módulo fusil",
+    "nombre_original": "Rifle Module",
+    "categoria": "arma_fuego",
+    "alcance": "distancia",
+    "precision": "[DES + PER]",
+    "dano": "[HR + 10] físico",
+    "efecto": "Arma a una mano no marcial. Sin cualidades."
+  },
+  {
+    "id": "modulo-guadana",
+    "grupo": "modulo_arma",
+    "nombre": "Módulo guadaña",
+    "nombre_original": "Scythe Module",
+    "categoria": "pesada",
+    "alcance": "cuerpo",
+    "precision": "[DES + PER]",
+    "dano": "[HR + 16] físico",
+    "efecto": "Arma a una mano no marcial. No permite tener ningún otro módulo de arma habilitado."
+  },
+  {
+    "id": "modulo-escudo",
+    "grupo": "modulo_arma",
+    "nombre": "Módulo escudo",
+    "nombre_original": "Shield Module",
+    "categoria": "escudo",
+    "efecto": "Solo para Exoesqueleto y Mecha. Confiere +2 a Defensa y +2 a Defensa Mágica. Cuenta como escudo equipado. No puede equiparse en la mano principal salvo con Portador de doble escudo."
+  },
+  {
+    "id": "modulo-lanza",
+    "grupo": "modulo_arma",
+    "nombre": "Módulo lanza",
+    "nombre_original": "Spear Module",
+    "categoria": "lanza",
+    "alcance": "cuerpo",
+    "precision": "[DES + PER]",
+    "dano": "[HR + 10] físico",
+    "efecto": "Arma a una mano no marcial. Sin cualidades."
+  },
+  {
+    "id": "modulo-espada",
+    "grupo": "modulo_arma",
+    "nombre": "Módulo espada",
+    "nombre_original": "Sword Module",
+    "categoria": "espada",
+    "alcance": "cuerpo",
+    "precision": "[DES + PER] + 1",
+    "dano": "[HR + 8] físico",
+    "efecto": "Arma a una mano no marcial. Sin cualidades."
+  },
+  {
+    "id": "modulo-tridente",
+    "grupo": "modulo_arma",
+    "nombre": "Módulo tridente",
+    "nombre_original": "Trident Module",
+    "categoria": "lanza",
+    "alcance": "cuerpo",
+    "precision": "[DES + PER] + 1",
+    "dano": "[HR + 14] físico",
+    "efecto": "Arma a una mano no marcial. No permite tener ningún otro módulo de arma habilitado."
+  },
+  {
+    "id": "modulo-aereo",
+    "grupo": "modulo_soporte",
+    "nombre": "Módulo aéreo",
+    "nombre_original": "Aerial Module",
+    "restriccion": "Cuenta como 2 módulos",
+    "efecto": "El vehículo adquiere capacidad de vuelo y su multiplicador de distancia pasa a ser ×3. Tus ataques cuerpo a cuerpo impactan a voladores y nadie a bordo puede ser alcanzado cuerpo a cuerpo por no voladores. Se suspende si estás en Crisis, si el vehículo queda inactivo o tras sufrir daño de aire, rayo o hielo hasta tu próximo turno."
+  },
+  {
+    "id": "modulo-antielemental",
+    "grupo": "modulo_soporte",
+    "nombre": "Antielemental",
+    "nombre_original": "Anti-Element",
+    "restriccion": "Ninguna",
+    "efecto": "Al habilitarlo, elige: aire, rayo, tierra, fuego o hielo. Todos los ocupantes adquieren Resistencia a ese tipo de daño."
+  },
+  {
+    "id": "modulo-punteria-avanzada",
+    "grupo": "modulo_soporte",
+    "nombre": "Puntería avanzada",
+    "nombre_original": "Advanced Targeting",
+    "restriccion": "Ninguna",
+    "efecto": "Bonificador de +2 a tus pruebas de Precisión y pruebas de Magia ofensivas."
+  },
+  {
+    "id": "modulo-contraataque",
+    "grupo": "modulo_soporte",
+    "nombre": "Contraataque",
+    "nombre_original": "Counterstrike",
+    "restriccion": "Ninguna",
+    "efecto": "Tras ser alcanzado un ocupante por un ataque a distancia, puedes gastar 1 PI para que el agresor sufra 10 puntos de daño físico (15 si eres nivel 20+, 20 si eres nivel 40+)."
+  },
+  {
+    "id": "modulo-excavacion",
+    "grupo": "modulo_soporte",
+    "nombre": "Excavación",
+    "nombre_original": "Excavation",
+    "restriccion": "Ninguna",
+    "efecto": "Permite desplazarse bajo tierra e incorpora focos de alta potencia."
+  },
+  {
+    "id": "modulo-blindaje-expandido",
+    "grupo": "modulo_soporte",
+    "nombre": "Blindaje expandido",
+    "nombre_original": "Expanded Plating",
+    "restriccion": "Solo Mecha y Corcel",
+    "efecto": "Extiende los valores de Defensa y Defensa Mágica del módulo de armadura instalado a todos los pasajeros a bordo."
+  },
+  {
+    "id": "modulo-magiestatico",
+    "grupo": "modulo_soporte",
+    "nombre": "Magiestático",
+    "nombre_original": "Magistatic",
+    "restriccion": "Arma arcana",
+    "efecto": "Tras pagar el coste en PM de un Arcano, conjuro o verso a los mandos, recuperas 5 PM (o 10 PM si el coste fue de 30+ PM)."
+  },
+  {
+    "id": "modulo-potencia",
+    "grupo": "modulo_soporte",
+    "nombre": "Potencia",
+    "nombre_original": "Power",
+    "restriccion": "Solo Exoesqueleto y Mecha",
+    "efecto": "Bonificador de +2 a pruebas Enfrentadas basadas en fuerza bruta o resistencia física."
+  },
+  {
+    "id": "modulo-interfaz-rapida",
+    "grupo": "modulo_soporte",
+    "nombre": "Interfaz rápida",
+    "nombre_original": "Rapid Interface",
+    "restriccion": "Ninguna",
+    "efecto": "Al montar en el vehículo en tu turno durante un conflicto, ejecutas inmediatamente una acción adicional."
+  },
+  {
+    "id": "modulo-marino",
+    "grupo": "modulo_soporte",
+    "nombre": "Marino",
+    "nombre_original": "Seafarer",
+    "restriccion": "Ninguna",
+    "efecto": "Permite navegar sobre la superficie del agua y sumergirse bajo ella."
+  },
+  {
+    "id": "modulo-asiento",
+    "grupo": "modulo_soporte",
+    "nombre": "Asiento",
+    "nombre_original": "Seat",
+    "restriccion": "Solo Mecha y Corcel",
+    "efecto": "Permite transportar a un pasajero humanoide adicional."
+  },
+  {
+    "id": "modulo-ofensiva-secundaria",
+    "grupo": "modulo_soporte",
+    "nombre": "Ofensiva secundaria",
+    "nombre_original": "Secondary Offensive",
+    "restriccion": "Solo Exoesqueleto y Mecha",
+    "efecto": "Vincula un módulo de arma deshabilitado: mientras esté deshabilitado, puedes usar una acción para ejecutar un ataque gratuito con él."
+  },
+  {
+    "id": "modulo-sensor",
+    "grupo": "modulo_soporte",
+    "nombre": "Sensor",
+    "nombre_original": "Sensor",
+    "restriccion": "Ninguna",
+    "efecto": "Bonificador de +2 a pruebas Abiertas para examinar criaturas, lugares y objetos cercanos."
+  },
+  {
+    "id": "modulo-turbo",
+    "grupo": "modulo_soporte",
+    "nombre": "Turbo",
+    "nombre_original": "Turbo",
+    "restriccion": "Ninguna",
+    "efecto": "Bonificador de +2 a pruebas Enfrentadas basadas en velocidad y maniobras de aceleración."
+  },
+  {
+    "id": "hoplosfera-agil",
+    "grupo": "hoplosfera",
+    "regla_opcional": "tecnoesferas",
+    "nombre": "Hoplosfera ágil",
+    "nombre_original": "Agile Hoplosphere",
+    "ranuras": 2,
+    "efecto": "Tratas tu Destreza como si fuera un tamaño de dado superior (máximo d12)."
+  },
+  {
+    "id": "hoplosfera-artica",
+    "grupo": "hoplosfera",
+    "regla_opcional": "tecnoesferas",
+    "nombre": "Hoplosfera ártica",
+    "nombre_original": "Arctic Hoplosphere",
+    "ranuras": 1,
+    "efecto": "Resistencia al daño de hielo. Si es un arma, todo su daño se convierte en hielo. Coagulación 2: Inmunidad al daño de hielo. Coagulación 3: El daño de hielo que inflijas ignora Resistencias. Al infligir daño, puedes cambiar su tipo a hielo."
+  },
+  {
+    "id": "hoplosfera-bendita",
+    "grupo": "hoplosfera",
+    "regla_opcional": "tecnoesferas",
+    "nombre": "Hoplosfera bendita",
+    "nombre_original": "Blessed Hoplosphere",
+    "ranuras": 1,
+    "solo_armas": true,
+    "efecto": "Esta arma causa 2 puntos de daño adicional a no muertos. Coagulación 2: +1 a Defensa Mágica."
+  },
+  {
+    "id": "hoplosfera-valerosa",
+    "grupo": "hoplosfera",
+    "regla_opcional": "tecnoesferas",
+    "nombre": "Hoplosfera valerosa",
+    "nombre_original": "Brave Hoplosphere",
+    "ranuras": 2,
+    "efecto": "Tratas tu Voluntad como si fuera un tamaño de dado superior (máximo d12)."
+  },
+  {
+    "id": "hoplosfera-cristalina",
+    "grupo": "hoplosfera",
+    "regla_opcional": "tecnoesferas",
+    "nombre": "Hoplosfera cristalina",
+    "nombre_original": "Crystalline Hoplosphere",
+    "ranuras": 1,
+    "efecto": "Inmunidad al estado confundido. Coagulación 2: Bonificador de +2 a pruebas Abiertas para examinar criaturas, objetos y lugares."
+  },
+  {
+    "id": "hoplosfera-ciclonica",
+    "grupo": "hoplosfera",
+    "regla_opcional": "tecnoesferas",
+    "nombre": "Hoplosfera ciclónica",
+    "nombre_original": "Cyclonic Hoplosphere",
+    "ranuras": 1,
+    "efecto": "Resistencia al daño de viento. Si es un arma, todo su daño se convierte en viento. Coagulación 2: Inmunidad al daño de viento. Coagulación 3: El daño de viento que inflijas ignora Resistencias. Al infligir daño, puedes cambiar su tipo a viento."
+  },
+  {
+    "id": "hoplosfera-oscura",
+    "grupo": "hoplosfera",
+    "regla_opcional": "tecnoesferas",
+    "nombre": "Hoplosfera oscura",
+    "nombre_original": "Dark Hoplosphere",
+    "ranuras": 1,
+    "efecto": "Resistencia al daño oscuro. Si es un arma, todo su daño se convierte en oscuro. Coagulación 2: Inmunidad a daño oscuro. Coagulación 3: Tu daño oscuro ignora Resistencias. Al infligir daño, puedes cambiar su tipo a oscuro."
+  },
+  {
+    "id": "hoplosfera-aturdidora",
+    "grupo": "hoplosfera",
+    "regla_opcional": "tecnoesferas",
+    "nombre": "Hoplosfera aturdidora",
+    "nombre_original": "Dazing Hoplosphere",
+    "ranuras": 2,
+    "solo_armas": true,
+    "efecto": "Cada blanco alcanzado por esta arma sufre el estado alterado confundido."
+  },
+  {
+    "id": "hoplosfera-disruptora",
+    "grupo": "hoplosfera",
+    "regla_opcional": "tecnoesferas",
+    "nombre": "Hoplosfera disruptora",
+    "nombre_original": "Disrupting Hoplosphere",
+    "ranuras": 1,
+    "solo_armas": true,
+    "efecto": "Esta arma causa 2 puntos de daño adicional a constructos. Coagulación 2: +1 a Defensa."
+  },
+  {
+    "id": "hoplosfera-drenadora",
+    "grupo": "hoplosfera",
+    "regla_opcional": "tecnoesferas",
+    "nombre": "Hoplosfera drenadora",
+    "nombre_original": "Draining Hoplosphere",
+    "ranuras": 1,
+    "solo_armas": true,
+    "efecto": "Al alcanzar a una o más criaturas con esta arma, puedes recuperar 3 PV y 3 PM."
+  },
+  {
+    "id": "hoplosfera-energizante",
+    "grupo": "hoplosfera",
+    "regla_opcional": "tecnoesferas",
+    "nombre": "Hoplosfera energizante",
+    "nombre_original": "Energizing Hoplosphere",
+    "ranuras": 1,
+    "efecto": "Inmunidad al estado débil. Coagulación 2: Cuando recuperes PV, recuperas 2 PV adicionales."
+  },
+  {
+    "id": "hoplosfera-expansiva",
+    "grupo": "hoplosfera",
+    "regla_opcional": "tecnoesferas",
+    "nombre": "Hoplosfera expansiva",
+    "nombre_original": "Expansive Hoplosphere",
+    "ranuras": 2,
+    "solo_armas": true,
+    "efecto": "Los ataques con esta arma adquieren la propiedad multi (2)."
+  },
+  {
+    "id": "hoplosfera-fantasmal",
+    "grupo": "hoplosfera",
+    "regla_opcional": "tecnoesferas",
+    "nombre": "Hoplosfera fantasmal",
+    "nombre_original": "Ghastly Hoplosphere",
+    "ranuras": 2,
+    "solo_armas": true,
+    "efecto": "Cada blanco alcanzado por esta arma sufre el estado alterado estremecido."
+  },
+  {
+    "id": "hoplosfera-gladiadora",
+    "grupo": "hoplosfera",
+    "regla_opcional": "tecnoesferas",
+    "nombre": "Hoplosfera gladiadora",
+    "nombre_original": "Gladiator Hoplosphere",
+    "ranuras": 1,
+    "solo_armas": true,
+    "efecto": "Esta arma causa 2 puntos de daño adicional a humanoides. Coagulación 2: +1 a Defensa."
+  },
+  {
+    "id": "hoplosfera-caballeresca",
+    "grupo": "hoplosfera",
+    "regla_opcional": "tecnoesferas",
+    "nombre": "Hoplosfera caballeresca",
+    "nombre_original": "Knightly Hoplosphere",
+    "ranuras": 1,
+    "solo_armas": true,
+    "efecto": "Esta arma causa 2 puntos de daño adicional a monstruos. Coagulación 2: +1 a Defensa Mágica."
+  },
+  {
+    "id": "hoplosfera-medica",
+    "grupo": "hoplosfera",
+    "regla_opcional": "tecnoesferas",
+    "nombre": "Hoplosfera médica",
+    "nombre_original": "Medical Hoplosphere",
+    "ranuras": 1,
+    "efecto": "Cuando hagas recuperar PV o PM con pociones, restauran 2 PV o PM adicionales. Coagulación 2: Restauran 1 PV o PM extra adicional."
+  },
+  {
+    "id": "hoplosfera-poderosa",
+    "grupo": "hoplosfera",
+    "regla_opcional": "tecnoesferas",
+    "nombre": "Hoplosfera poderosa",
+    "nombre_original": "Mighty Hoplosphere",
+    "ranuras": 2,
+    "efecto": "Tratas tu Vigor como si fuera un tamaño de dado superior (máximo d12)."
+  },
+  {
+    "id": "hoplosfera-oculta",
+    "grupo": "hoplosfera",
+    "regla_opcional": "tecnoesferas",
+    "nombre": "Hoplosfera oculta",
+    "nombre_original": "Occult Hoplosphere",
+    "ranuras": 1,
+    "solo_armas": true,
+    "efecto": "Esta arma causa 2 puntos de daño adicional a elementales. Coagulación 2: +1 a Defensa Mágica."
+  },
+  {
+    "id": "hoplosfera-perforante",
+    "grupo": "hoplosfera",
+    "regla_opcional": "tecnoesferas",
+    "nombre": "Hoplosfera perforante",
+    "nombre_original": "Piercing Hoplosphere",
+    "ranuras": 1,
+    "solo_armas": true,
+    "efecto": "El daño infligido por esta arma ignora Resistencias. Coagulación 2: Ignora Resistencias e Inmunidades."
+  },
+  {
+    "id": "hoplosfera-venenosa",
+    "grupo": "hoplosfera",
+    "regla_opcional": "tecnoesferas",
+    "nombre": "Hoplosfera venenosa",
+    "nombre_original": "Poisonous Hoplosphere",
+    "ranuras": 1,
+    "efecto": "Resistencia al daño de veneno. Si es un arma, todo su daño se convierte en veneno. Coagulación 2: Inmunidad a veneno. Coagulación 3: Tu daño de veneno ignora Resistencias. Puedes cambiar el tipo de daño infligido a veneno."
+  },
+  {
+    "id": "hoplosfera-depredadora",
+    "grupo": "hoplosfera",
+    "regla_opcional": "tecnoesferas",
+    "nombre": "Hoplosfera depredadora",
+    "nombre_original": "Predator Hoplosphere",
+    "ranuras": 1,
+    "solo_armas": true,
+    "efecto": "Esta arma causa 2 puntos de daño adicional a bestias. Coagulación 2: +1 a Defensa."
+  },
+  {
+    "id": "hoplosfera-veloz",
+    "grupo": "hoplosfera",
+    "regla_opcional": "tecnoesferas",
+    "nombre": "Hoplosfera veloz",
+    "nombre_original": "Quick Hoplosphere",
+    "ranuras": 1,
+    "efecto": "Inmunidad al estado lento. Coagulación 2: Bonificador de +2 al Modificador de Iniciativa."
+  },
+  {
+    "id": "hoplosfera-radiante",
+    "grupo": "hoplosfera",
+    "regla_opcional": "tecnoesferas",
+    "nombre": "Hoplosfera radiante",
+    "nombre_original": "Radiant Hoplosphere",
+    "ranuras": 1,
+    "efecto": "Resistencia al daño de luz. Si es un arma, todo su daño se convierte en luz. Coagulación 2: Inmunidad a luz. Coagulación 3: Tu daño de luz ignora Resistencias. Puedes cambiar el tipo de daño infligido a luz."
+  },
+  {
+    "id": "hoplosfera-segadora",
+    "grupo": "hoplosfera",
+    "regla_opcional": "tecnoesferas",
+    "nombre": "Hoplosfera segadora",
+    "nombre_original": "Reaping Hoplosphere",
+    "ranuras": 1,
+    "solo_armas": true,
+    "efecto": "Esta arma causa 2 puntos de daño adicional a plantas. Coagulación 2: +1 a Defensa."
+  },
+  {
+    "id": "hoplosfera-reveladora",
+    "grupo": "hoplosfera",
+    "regla_opcional": "tecnoesferas",
+    "nombre": "Hoplosfera reveladora",
+    "nombre_original": "Revealing Hoplosphere",
+    "ranuras": 2,
+    "efecto": "Tratas tu Intuición como si fuera un tamaño de dado superior (máximo d12)."
+  },
+  {
+    "id": "hoplosfera-afiladora",
+    "grupo": "hoplosfera",
+    "regla_opcional": "tecnoesferas",
+    "nombre": "Hoplosfera afiladora",
+    "nombre_original": "Sharpening Hoplosphere",
+    "ranuras": 1,
+    "solo_armas": true,
+    "efecto": "Las pruebas de Precisión con esta arma obtienen un bonificador de +1. Coagulación 2: Inflige 2 puntos de daño adicional."
+  },
+  {
+    "id": "hoplosfera-despectiva",
+    "grupo": "hoplosfera",
+    "regla_opcional": "tecnoesferas",
+    "nombre": "Hoplosfera despectiva",
+    "nombre_original": "Scornful Hoplosphere",
+    "ranuras": 2,
+    "solo_armas": true,
+    "efecto": "Cada blanco alcanzado por esta arma sufre el estado alterado enfurecido."
+  },
+  {
+    "id": "hoplosfera-sismica",
+    "grupo": "hoplosfera",
+    "regla_opcional": "tecnoesferas",
+    "nombre": "Hoplosfera sísmica",
+    "nombre_original": "Seismic Hoplosphere",
+    "ranuras": 1,
+    "efecto": "Resistencia al daño de tierra. Si es un arma, todo su daño se convierte en tierra. Coagulación 2: Inmunidad a tierra. Coagulación 3: Tu daño de tierra ignora Resistencias. Puedes cambiar el tipo de daño infligido a tierra."
+  },
+  {
+    "id": "hoplosfera-esceptica",
+    "grupo": "hoplosfera",
+    "regla_opcional": "tecnoesferas",
+    "nombre": "Hoplosfera escéptica",
+    "nombre_original": "Skeptical Hoplosphere",
+    "ranuras": 1,
+    "solo_armas": true,
+    "efecto": "Esta arma causa 2 puntos de daño adicional a demonios. Coagulación 2: +1 a Defensa Mágica."
+  },
+  {
+    "id": "hoplosfera-ceporrona",
+    "grupo": "hoplosfera",
+    "regla_opcional": "tecnoesferas",
+    "nombre": "Hoplosfera ceporrona",
+    "nombre_original": "Snaring Hoplosphere",
+    "ranuras": 2,
+    "solo_armas": true,
+    "efecto": "Cada blanco alcanzado por esta arma sufre el estado alterado lento."
+  },
+  {
+    "id": "hoplosfera-hechicera",
+    "grupo": "hoplosfera",
+    "regla_opcional": "tecnoesferas",
+    "nombre": "Hoplosfera hechicera",
+    "nombre_original": "Sorcerous Hoplosphere",
+    "ranuras": 1,
+    "solo_armas": true,
+    "efecto": "Los ataques con esta arma tienen como objetivo la Defensa Mágica. Coagulación 2: Tus conjuros causan 2 puntos de daño adicional y tus conjuros de curación restauran 2 PV adicionales."
+  },
+  {
+    "id": "hoplosfera-inquebrantable",
+    "grupo": "hoplosfera",
+    "regla_opcional": "tecnoesferas",
+    "nombre": "Hoplosfera inquebrantable",
+    "nombre_original": "Steadfast Hoplosphere",
+    "ranuras": 1,
+    "efecto": "Inmunidad al estado alterado estremecido. Coagulación 2: Cuando recuperes PM, recuperas 2 PM adicionales."
+  },
+  {
+    "id": "hoplosfera-agotadora",
+    "grupo": "hoplosfera",
+    "regla_opcional": "tecnoesferas",
+    "nombre": "Hoplosfera agotadora",
+    "nombre_original": "Tiring Hoplosphere",
+    "ranuras": 2,
+    "solo_armas": true,
+    "efecto": "Cada blanco alcanzado por esta arma sufre el estado alterado débil."
+  },
+  {
+    "id": "hoplosfera-toxica",
+    "grupo": "hoplosfera",
+    "regla_opcional": "tecnoesferas",
+    "nombre": "Hoplosfera tóxica",
+    "nombre_original": "Toxic Hoplosphere",
+    "ranuras": 2,
+    "solo_armas": true,
+    "efecto": "Cada blanco alcanzado por esta arma sufre el estado alterado envenenado."
+  },
+  {
+    "id": "hoplosfera-volcanica",
+    "grupo": "hoplosfera",
+    "regla_opcional": "tecnoesferas",
+    "nombre": "Hoplosfera volcánica",
+    "nombre_original": "Volcanic Hoplosphere",
+    "ranuras": 1,
+    "efecto": "Resistencia al daño de fuego. Si es un arma, todo su daño se convierte en fuego. Coagulación 2: Inmunidad a fuego. Coagulación 3: Tu daño de fuego ignora Resistencias. Puedes cambiar el tipo de daño infligido a fuego."
+  },
+  {
+    "id": "hoplosfera-voltaica",
+    "grupo": "hoplosfera",
+    "regla_opcional": "tecnoesferas",
+    "nombre": "Hoplosfera voltaica",
+    "nombre_original": "Voltaic Hoplosphere",
+    "ranuras": 1,
+    "efecto": "Resistencia al daño de rayo. Si es un arma, todo su daño se convierte en rayo. Coagulación 2: Inmunidad a rayo. Coagulación 3: Tu daño de rayo ignora Resistencias. Puedes cambiar el tipo de daño infligido a rayo."
+  }
+]

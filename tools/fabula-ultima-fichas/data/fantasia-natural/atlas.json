@@ -1,0 +1,27 @@
+{
+  "id": "fantasia-natural",
+  "nombre": "Atlas de Fantasía Natural",
+  "nombre_original": "Natural Fantasy Atlas",
+  "abreviatura": "Fantasía Natural",
+  "tipo": "atlas",
+  "obligatorio": false,
+  "descripcion": "Florista, Gourmet, Invocador y Mercader; 21 habilidades heroicas, magisemillas, manjares e invocaciones. Incluye cuatro reglas opcionales.",
+  "reglas_opcionales": [
+    { "id": "peculiaridades", "nombre": "Peculiaridades", "nombre_original": "Quirks", "descripcion": "Cada protagonista puede elegir una Peculiaridad (sin repetirse en el grupo)." },
+    { "id": "actividades-campamento", "nombre": "Actividades de campamento", "nombre_original": "Camp Activities", "descripcion": "Actividades que los personajes ejecutan durante las escenas de descanso." },
+    { "id": "armas-personalizadas", "nombre": "Armas personalizadas", "nombre_original": "Custom Weapons", "descripcion": "Arquetipos de armas personalizadas y transformables de fantasía natural." },
+    { "id": "equipo-raro", "nombre": "Equipo raro y artefactos", "nombre_original": "Rare Items & Artifacts", "descripcion": "Armas, armaduras, escudos y accesorios raros del atlas, y sus artefactos." }
+  ],
+  "archivos": [
+    { "coleccion": "tablas", "ruta": "tablas.json" },
+    { "coleccion": "clases", "ruta": "clases.json" },
+    { "coleccion": "opciones", "ruta": "opciones.json" },
+    { "coleccion": "habilidades_heroicas", "ruta": "habilidades_heroicas.json" },
+    { "coleccion": "armas", "ruta": "armas.json", "regla_opcional": "equipo-raro" },
+    { "coleccion": "armaduras", "ruta": "armaduras.json", "regla_opcional": "equipo-raro" },
+    { "coleccion": "escudos", "ruta": "escudos.json", "regla_opcional": "equipo-raro" },
+    { "coleccion": "accesorios", "ruta": "accesorios.json", "regla_opcional": "equipo-raro" },
+    { "coleccion": "artefactos", "ruta": "artefactos.json", "regla_opcional": "equipo-raro" },
+    { "coleccion": "peculiaridades", "ruta": "peculiaridades.json", "regla_opcional": "peculiaridades" }
+  ]
+}

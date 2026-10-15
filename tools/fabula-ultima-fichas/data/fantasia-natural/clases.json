@@ -1,0 +1,270 @@
+[
+  {
+    "id": "florista",
+    "nombre": "Florista",
+    "nombre_original": "Floralist",
+    "descripcion": "Canaliza la energía vital de la tierra mediante el cultivo de magisemillas, floreciendo en efectos marciales o curativos durante el combate.",
+    "beneficios": {
+      "pv": 0,
+      "pm": 0,
+      "pi": 0,
+      "competencias": [],
+      "rituales": [],
+      "eleccion": [
+        { "id": "pv", "etiqueta": "+5 PV máximos", "pv": 5 },
+        { "id": "pm", "etiqueta": "+5 PM máximos", "pm": 5 }
+      ],
+      "texto": "Aumenta permanentemente tus Puntos de Vida o Puntos de Mente máximos en 5 (a tu elección)."
+    },
+    "habilidades": [
+      {
+        "id": "jardineria-de-combate",
+        "nombre": "Jardinería de combate",
+        "nombre_original": "Battle Gardening",
+        "sl_max": 3,
+        "tipo": "reaccion",
+        "activacion": "Reacción (tras plantar una magisemilla con Cloromancia, no con Injerto).",
+        "efecto": "Tras plantar una magisemilla mediante la habilidad Cloromancia, puedes elegir una opción:\n- Realizar un ataque gratuito con un arma equipada.\n- Realizar de forma gratuita la acción de Conjuro, lanzando un conjuro con un coste total en PM igual o inferior a [5 + (SL × 5)] (debes abonar su coste en PM con normalidad).\nConsidera la Tirada Mayor (TM) de tu prueba de Precisión o prueba de Magia como 0 al calcular el daño infligido por este ataque o conjuro."
+      },
+      {
+        "id": "cloromancia",
+        "nombre": "Cloromancia",
+        "nombre_original": "Chloromancy",
+        "sl_max": 10,
+        "tipo": "accion",
+        "activacion": "1 acción, 20 PM.",
+        "efecto": "Cada vez que aumentes el nivel de esta habilidad, descubres un nuevo tipo de magisemilla del catálogo de magisemillas.\nDurante un conflicto, si no hay ninguna magisemilla en tu jardín, puedes usar una acción y gastar 20 Puntos de Mente para plantar una magisemilla que hayas descubierto. Solo puede haber una magisemilla a la vez en tu jardín. Posees un Reloj de Crecimiento de 4 secciones que avanza al final de tu turno si hay una magisemilla plantada; al llenar la cuarta sección, la magisemilla florece y se retira del jardín. Si el efecto de una magisemilla inflige daño, inflige 5 de daño adicional si eres de nivel 30+. Si causa pérdida o recuperación de PV o PM, dicha cantidad aumenta en 10 si eres de nivel 30+.",
+        "elecciones": [
+          {
+            "clave": "magisemillas",
+            "tipo": "opciones",
+            "grupos": [
+              "magisemilla"
+            ],
+            "etiqueta": "Magisemillas descubiertas",
+            "min": "SL",
+            "max": "SL"
+          }
+        ]
+      },
+      {
+        "id": "injerto",
+        "nombre": "Injerto",
+        "nombre_original": "Graft",
+        "sl_max": 1,
+        "tipo": "accion",
+        "activacion": "1 acción.",
+        "efecto": "Mientras haya una magisemilla en tu jardín y 1 o más secciones de tu Reloj de Crecimiento estén rellenas, puedes usar una acción para retirar dicha magisemilla de tu jardín: si lo haces, plantas una magisemilla diferente de entre las que conoces (manteniendo intactas las secciones actualmente rellenas de tu Reloj de Crecimiento)."
+      },
+      {
+        "id": "arbol-de-la-vida",
+        "nombre": "Árbol de la vida",
+        "nombre_original": "Tree of Life",
+        "sl_max": 5,
+        "tipo": "reaccion",
+        "activacion": "Reacción (al retirar una magisemilla del jardín).",
+        "efecto": "Cuando una magisemilla abandona tu jardín, puedes elegir a una criatura visible: si dicha criatura se encuentra en Crisis, recupera [5 + (SL × 5)] Puntos de Vida."
+      },
+      {
+        "id": "influencia-vegetal",
+        "nombre": "Influencia vegetal",
+        "nombre_original": "Verdant Sway",
+        "sl_max": 1,
+        "tipo": "pasiva",
+        "activacion": "Pasiva.",
+        "efecto": "Obtienes la capacidad de realizar rituales de la disciplina Ritualismo. Además, puedes emplear Ritualismo para crear, animar y controlar vegetación, polen, esporas y toxinas naturales (no permite crear ni controlar PNJ de la especie planta).",
+        "rituales": [
+          "ritualismo"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "gourmet",
+    "nombre": "Gourmet",
+    "nombre_original": "Gourmet",
+    "descripcion": "Maestro culinario que recolecta ingredientes silvestres para confeccionar manjares con combinaciones de sabores que curan, fortalecen o dañan a sus objetivos.",
+    "beneficios": {
+      "pv": 0,
+      "pm": 0,
+      "pi": 2,
+      "competencias": [],
+      "rituales": [],
+      "proyectos": true,
+      "texto": "Aumenta permanentemente tus Puntos de Inventario máximos en 2. Puedes iniciar Proyectos para elaborar comidas y bebidas consumibles."
+    },
+    "habilidades": [
+      {
+        "id": "cocina",
+        "nombre": "Cocina",
+        "nombre_original": "Cooking",
+        "sl_max": 5,
+        "tipo": "accion",
+        "activacion": "1 acción (en conflicto).",
+        "efecto": "Al descansar en un asentamiento, obtienes [SL] ingredientes. Puedes portar hasta [10 + (SL × 5)] ingredientes que nunca se echan a perder (si adquieres esta habilidad en la creación, comienzas con diez ingredientes de sabores aleatorios).\nDurante un conflicto, puedes usar una acción y combinar 2 o 3 ingredientes para preparar un manjar y elegir una opción:\n- Aplicar sus efectos sobre ti mismo o sobre un aliado visible.\n- Realizar un ataque gratuito con un arma equipada: este ataque no inflige daño, pero aplica los efectos del manjar a cada enemigo impactado."
+      },
+      {
+        "id": "cuchillo-y-tenedor",
+        "nombre": "Cuchillo y tenedor",
+        "nombre_original": "Knife and Fork",
+        "sl_max": 1,
+        "tipo": "otra",
+        "activacion": "Especial (al atacar con Cocina).",
+        "efecto": "Cuando realizas el ataque gratuito de la habilidad Cocina, si combinaste un máximo de 2 ingredientes, puedes hacer que el ataque inflija daño con normalidad (considerando tu Tirada Mayor como 0)."
+      },
+      {
+        "id": "hecho-con-amor",
+        "nombre": "Hecho con amor",
+        "nombre_original": "Made with Love",
+        "sl_max": 3,
+        "tipo": "otra",
+        "activacion": "Especial (al aplicar manjar a aliados).",
+        "efecto": "Al preparar un manjar para ti o un aliado visible, puedes gastar hasta [SL × 10] PM: por cada 10 PM gastados, aplicas los efectos del manjar a un aliado visible adicional."
+      },
+      {
+        "id": "sal-y-pimienta",
+        "nombre": "Sal y pimienta",
+        "nombre_original": "Salt and Pepper",
+        "sl_max": 1,
+        "tipo": "otra",
+        "activacion": "Especial (al preparar un manjar), 2 PI.",
+        "efecto": "Al preparar un manjar, puedes gastar 2 Puntos de Inventario para cambiar el sabor de uno de los ingredientes por cualquier otro sabor a tu elección."
+      },
+      {
+        "id": "cocinero-itinerante",
+        "nombre": "Cocinero itinerante",
+        "nombre_original": "Traveling Cook",
+        "sl_max": 3,
+        "tipo": "pasiva",
+        "activacion": "Pasiva.",
+        "efecto": "Tras cada tirada de viaje del grupo, si posees la habilidad Cocina, obtienes [SL × 2] ingredientes."
+      }
+    ]
+  },
+  {
+    "id": "invocador",
+    "nombre": "Invocador",
+    "nombre_original": "Invoker",
+    "descripcion": "Canalizador espiritual que absorbe la energía de los manantiales elementales del entorno para desatar ráfagas, maleficios y bendiciones.",
+    "beneficios": {
+      "pv": 0,
+      "pm": 0,
+      "pi": 0,
+      "competencias": [],
+      "rituales": [],
+      "eleccion": [
+        { "id": "pv", "etiqueta": "+5 PV máximos", "pv": 5 },
+        { "id": "pm", "etiqueta": "+5 PM máximos", "pm": 5 }
+      ],
+      "texto": "Aumenta permanentemente tus Puntos de Vida o Puntos de Mente máximos en 5 (a tu elección)."
+    },
+    "habilidades": [
+      {
+        "id": "armonia-elemental",
+        "nombre": "Armonía elemental",
+        "nombre_original": "Elemental Harmony",
+        "sl_max": 2,
+        "tipo": "pasiva",
+        "activacion": "Pasiva.",
+        "efecto": "Puedes comunicarte verbalmente con criaturas de la especie elemental. Cuando restaures los PV de una criatura con una invocación o conjuro, si hay un elemental presente en la escena, la cantidad curada aumenta en [SL × 5]."
+      },
+      {
+        "id": "invocacion",
+        "nombre": "Invocación",
+        "nombre_original": "Invocation",
+        "sl_max": 3,
+        "tipo": "accion",
+        "activacion": "1 acción, 5 PM.",
+        "efecto": "Puedes usar una acción y gastar 5 PM para ejecutar una invocación canalizando la energía de uno de los dos manantiales presentes en la escena. Tu SL en esta habilidad determina a qué invocaciones tienes acceso:\n- **SL 1:** Acceso a invocaciones de tipo ráfaga.\n- **SL 2:** Acceso a invocaciones de tipo ráfaga y maleficio.\n- **SL 3:** Acceso a todas las invocaciones del manantial.\nLas invocaciones que causan daño infligen 5 de daño adicional a nivel 20+ (o 10 a nivel 40+). Las que curan PV o drenan PM aumentan su efecto en 10 a nivel 20+ (o 20 a nivel 40+)."
+      },
+      {
+        "id": "invocacion-vinculada",
+        "nombre": "Invocación vinculada",
+        "nombre_original": "Linked Invocation",
+        "sl_max": 3,
+        "tipo": "otra",
+        "activacion": "Especial (al invocar).",
+        "efecto": "Al realizar una invocación, puedes gastar hasta [SL × 10] PM adicionales: por cada 10 PM adicionales gastados, la invocación puede tener como objetivo a una criatura visible adicional."
+      },
+      {
+        "id": "ondulaciones",
+        "nombre": "Ondulaciones",
+        "nombre_original": "Ripples",
+        "sl_max": 5,
+        "tipo": "reaccion",
+        "activacion": "Reacción.",
+        "efecto": "Cuando un enemigo visible pierde PV por daño infligido por un aliado y dicho daño fue aumentado por una o más de tus invocaciones de tipo maleficio, puedes realizar un ataque gratuito con un arma equipada contra ese enemigo. Obtienes una bonificación de +[SL] a la prueba de Precisión; si impacta, todo el daño se convierte en el mismo tipo que causó tu aliado, y todos los maleficios sobre el objetivo terminan inmediatamente tras resolverse el ataque. Si dos o más enemigos lo activan a la vez, realizas un ataque gratuito contra cada uno en el orden deseado."
+      },
+      {
+        "id": "expansion-de-manantial",
+        "nombre": "Expansión de manantial",
+        "nombre_original": "Wellspring Expansion",
+        "sl_max": 5,
+        "tipo": "pasiva",
+        "activacion": "Pasiva.",
+        "efecto": "Mientras tengas equipada un arma de las categorías arcana, arco, pelea, flagelo, espada o arrojadiza, tus invocaciones de tipo ráfaga infligen [SL] de daño adicional, y el daño extra otorgado por tus invocaciones de tipo maleficio aumenta en [SL]."
+      }
+    ]
+  },
+  {
+    "id": "mercader",
+    "nombre": "Mercader",
+    "nombre_original": "Merchant",
+    "descripcion": "Experto en tasación, regateo y logística que utiliza la riqueza y los Puntos de Comercio para abastecer al grupo y explotar recursos en combate.",
+    "beneficios": {
+      "pv": 0,
+      "pm": 0,
+      "pi": 2,
+      "competencias": [],
+      "rituales": [],
+      "texto": "Aumenta permanentemente tus Puntos de Inventario máximos en 2."
+    },
+    "habilidades": [
+      {
+        "id": "fecha-de-caducidad",
+        "nombre": "Fecha de caducidad",
+        "nombre_original": "Expiration Date",
+        "sl_max": 3,
+        "tipo": "otra",
+        "activacion": "Especial (al curar con manjares o pociones).",
+        "efecto": "Cuando una poción o manjar elaborado por ti que no cause daño vaya a hacer recuperar PV a una o más criaturas, puedes hacer que inflija daño de veneno igual a [la mitad de tu nivel + (SL × 10)] a cada una de esas criaturas. El tipo de este daño no puede ser alterado y se reduce a la mitad si afecta a dos o más criaturas."
+      },
+      {
+        "id": "he-oido-hablar-de-ello",
+        "nombre": "¡He oído hablar de ello!",
+        "nombre_original": "I’ve Heard of It!",
+        "sl_max": 3,
+        "tipo": "otra",
+        "activacion": "Especial (al examinar), 1 Punto de Comercio.",
+        "efecto": "Cuando tú o un aliado que pueda oírte y entenderte realicéis una prueba para examinar a una criatura, objeto o lugar, puedes gastar 1 Punto de Comercio para otorgar una bonificación de [SL × 2] al resultado de dicha prueba."
+      },
+      {
+        "id": "reserva-privada",
+        "nombre": "Reserva privada",
+        "nombre_original": "Private Stock",
+        "sl_max": 3,
+        "tipo": "otra",
+        "activacion": "Especial (al gastar PI), 1 Punto de Comercio.",
+        "efecto": "Cuando tú u otro Personaje Jugador vayáis a gastar [SL + 2] o menos Puntos de Inventario, puedes gastar 1 Punto de Comercio para ignorar por completo dicho coste de PI."
+      },
+      {
+        "id": "el-verdadero-tesoro",
+        "nombre": "El verdadero tesoro",
+        "nombre_original": "Real Treasure",
+        "sl_max": 3,
+        "tipo": "pasiva",
+        "activacion": "Pasiva (1 vez por sesión).",
+        "efecto": "Una vez por sesión, cuando ayudes a un PNJ o comunidad a vencer la avaricia y la corrupción, mejores su calidad de vida o fomentes la coexistencia pacífica con otras criaturas, si posees la habilidad Vientos de comercio, obtienes [SL + 1] Puntos de Comercio."
+      },
+      {
+        "id": "vientos-de-comercio",
+        "nombre": "Vientos de comercio",
+        "nombre_original": "Winds of Trade",
+        "sl_max": 3,
+        "tipo": "otra",
+        "activacion": "Especial (al descansar en zona comercial o en escena sin conflicto).",
+        "efecto": "Tras descansar en un asentamiento o zona con comercio activo, obtienes [SL + 1] Puntos de Comercio. Nunca puedes acumular más de [SL + 3] Puntos de Comercio (si adquieres esta habilidad en la creación de personajes, comienzas con 2 Puntos de Comercio).\nDurante una escena fuera de conflicto, puedes gastar 2 Puntos de Comercio para elegir una opción:\n- Creas un material o un objeto raro aprobado por el DJ cuyo valor en zenit sea igual o inferior a [tu nivel de personaje × 30].\n- Creas un PNJ habitante de la zona, describiendo su oficio y cómo lo conociste; el DJ determina qué exige a cambio de sus servicios."
+      }
+    ]
+  }
+]

@@ -1,0 +1,74 @@
+[
+  {
+    "id": "regadera",
+    "nombre": "Regadera",
+    "nombre_original": "Watering Can",
+    "rareza": "raro",
+    "coste": 500,
+    "cualidad": "Al ejecutar una invocación de agua, puedes rellenar 1 sección del Reloj de Crecimiento de un PJ visible.",
+    "modificadores": []
+  },
+  {
+    "id": "polvo-picante",
+    "nombre": "Polvo picante",
+    "nombre_original": "Spicy Powder",
+    "rareza": "raro",
+    "coste": 600,
+    "cualidad": "Al causar daño con un manjar o poción, puedes cambiar su tipo a fuego (puede modificar el daño de Fecha de caducidad).",
+    "modificadores": []
+  },
+  {
+    "id": "obi-de-diente-de-leon",
+    "nombre": "Obi de diente de león",
+    "nombre_original": "Dandelion Obi",
+    "rareza": "raro",
+    "coste": 700,
+    "cualidad": "Al realizar una invocación de aire, puedes curarte de un estado alterado a tu elección.",
+    "modificadores": []
+  },
+  {
+    "id": "corazon-de-relojeria",
+    "nombre": "Corazón de relojería",
+    "nombre_original": "Clockwork Heart",
+    "rareza": "raro",
+    "coste": 800,
+    "cualidad": "Obtienes Resistencia al daño de rayo y de fuego. Si entras en Crisis, este efecto cesa hasta tu próximo descanso.",
+    "modificadores": []
+  },
+  {
+    "id": "manto-de-rana-saeta",
+    "nombre": "Manto de rana saeta",
+    "nombre_original": "Needlefrog Mantle",
+    "rareza": "raro",
+    "coste": 900,
+    "cualidad": "Al causar daño de veneno en conflicto, los objetivos que pierdan PV no pueden recuperar PV hasta el inicio de tu siguiente turno.",
+    "modificadores": []
+  },
+  {
+    "id": "bufanda-artesanal",
+    "nombre": "Bufanda artesanal",
+    "nombre_original": "Handmade Scarf",
+    "rareza": "raro",
+    "coste": 1000,
+    "cualidad": "Al ganar uno o más Puntos de Comercio mediante El verdadero tesoro, ganas también 1 Punto Fábula.",
+    "modificadores": []
+  },
+  {
+    "id": "amuleto-de-hoja-caida",
+    "nombre": "Amuleto de hoja caída",
+    "nombre_original": "Fallen Leaf Amulet",
+    "rareza": "raro",
+    "coste": 1500,
+    "cualidad": "Al usar Árbol de la vida en Crisis eligiendo a un aliado en Crisis, ambos os beneficiáis de la curación de PV.",
+    "modificadores": []
+  },
+  {
+    "id": "libro-de-cocina-del-excentrico",
+    "nombre": "Libro de cocina del excéntrico",
+    "nombre_original": "Eccentric’s Cookbook",
+    "rareza": "raro",
+    "coste": 1600,
+    "cualidad": "Una vez por descanso, elige una combinación descubierta de dos sabores: vuelve a tirar su efecto sustituyendo el anterior.",
+    "modificadores": []
+  }
+]

@@ -1,0 +1,210 @@
+[
+  {
+    "id": "arma-ancestral",
+    "nombre": "Arma ancestral",
+    "nombre_original": "Ancient Weapon",
+    "descripcion": "Diseña un arma personalizada rara por un valor de 1200 zenit o menos junto a tu grupo.",
+    "efecto": "Diseña un arma personalizada rara por un valor de 1200 zenit o menos junto a tu grupo (suele ser un arma de fuego u objeto tecnológico inusual). Una vez por sesión, el DJ puede otorgarte 1 Punto Fábula para introducir una complicación surgida de su naturaleza única (máquinas que reaccionan o monstruos atraídos por su energía). El arma no puede ser dañada, destruida, perdida ni robada sin tu permiso explícito."
+  },
+  {
+    "id": "arboreo",
+    "reemplaza": true,
+    "nombre": "Arbóreo",
+    "nombre_original": "Arboreal",
+    "descripcion": "Eres una criatura vegetal consciente dotada de inteligencia.",
+    "efecto": "Elige un estado: confundido, enfurecido o estremecido; eres inmune al estado elegido. No obstante, te vuelves Vulnerable a un tipo de daño entre: aire, rayo, tierra, fuego o hielo. Aprendes un conjuro de PNJ (de la lista de PNJ del manual básico, salvo Devastación; su tirada de Magia usa [PER + VOL]). Cuando lanzas este conjuro bajo la luz directa del sol, su coste en PM se reduce en 5 (mínimo 0 PM).",
+    "elecciones": [
+      {
+        "clave": "inmunidad",
+        "tipo": "seleccion",
+        "valores": ["Confundido", "Enfurecido", "Estremecido"],
+        "etiqueta": "Inmune a",
+        "cantidad": 1
+      },
+      {
+        "clave": "vulnerabilidad",
+        "tipo": "seleccion",
+        "valores": ["Aire", "Rayo", "Tierra", "Fuego", "Hielo"],
+        "etiqueta": "Vulnerable a",
+        "cantidad": 1
+      },
+      {
+        "clave": "conjuro",
+        "tipo": "conjuros",
+        "filtro": {
+          "lista": ["pnj"],
+          "excluir": ["pnj-devastacion"]
+        },
+        "etiqueta": "Conjuro de PNJ",
+        "min": "1",
+        "max": "1"
+      }
+    ]
+  },
+  {
+    "id": "hermano-mayor",
+    "nombre": "Hermano mayor",
+    "nombre_original": "Big Bro",
+    "descripcion": "Protector nato del grupo que domina múltiples labores en el campamento.",
+    "efecto": "Obtienes acceso a tres Actividades de Campamento en lugar de dos. Cuando realizas actividades durante un descanso, puedes elegir una opción: ejecutar dos actividades de campamento diferentes (sus efectos no pueden aplicarse a la misma criatura) o ejecutar la misma actividad de campamento dos veces (aplicando sus efectos a dos criaturas distintas)."
+  },
+  {
+    "id": "maldito",
+    "reemplaza": true,
+    "nombre": "Maldito",
+    "nombre_original": "Cursed",
+    "descripcion": "Sufres una extraña maldición vinculada a una amenaza de tu mundo.",
+    "efecto": "Cuando vayas a realizar una tirada, puedes describir cómo tu maldición se interpone y obtener una pifia automática (ambos dados muestran un 1). Si lo haces, recibes 2 Puntos Fábula en lugar de 1 y generas una oportunidad normalmente. Al romper la maldición (tras vencer a la amenaza asociada), obtienes inmediatamente una Habilidad Heroica a tu elección ignorando sus requisitos.",
+    "elecciones": [
+      {
+        "clave": "maldicion",
+        "tipo": "texto_largo",
+        "etiqueta": "Maldición y amenaza vinculada"
+      }
+    ]
+  },
+  {
+    "id": "alma-elemental",
+    "reemplaza": true,
+    "nombre": "Alma elemental",
+    "nombre_original": "Elemental Soul",
+    "descripcion": "Tu esencia vital se encuentra sintonizada con un elemento primordial.",
+    "efecto": "Elige un tipo de daño: aire, rayo, tierra, fuego o hielo. Obtienes Resistencia al tipo elegido y puedes cambiar el daño de cualquier ataque que inflijas para que coincida con tu elemento. Sin embargo, te vuelves Vulnerable a otro tipo de daño de entre esos cinco. Obtienes la capacidad de realizar rituales de Elementalismo centrados en tu elemento.",
+    "rituales": ["elementalismo"],
+    "elecciones": [
+      {
+        "clave": "resistencia",
+        "tipo": "seleccion",
+        "valores": ["Aire", "Rayo", "Tierra", "Fuego", "Hielo"],
+        "etiqueta": "Resistencia elemental",
+        "cantidad": 1
+      },
+      {
+        "clave": "vulnerabilidad",
+        "tipo": "seleccion",
+        "valores": ["Aire", "Rayo", "Tierra", "Fuego", "Hielo"],
+        "etiqueta": "Vulnerabilidad elemental",
+        "cantidad": 1
+      }
+    ]
+  },
+  {
+    "id": "vuelo",
+    "reemplaza": true,
+    "nombre": "Vuelo",
+    "nombre_original": "Flight",
+    "descripcion": "Posees alas o capacidad de levitación mística.",
+    "efecto": "Puedes volar: tus ataques cuerpo a cuerpo pueden alcanzar a criaturas voladoras y no puedes ser blanco de ataques cuerpo a cuerpo salvo por criaturas voladoras o armas con alcance adecuado. Mientras estés en Crisis, en espacios angostos o sufras daño de aire, rayo o hielo en conflicto, pierdes los beneficios de esta peculiaridad hasta el inicio de tu siguiente turno."
+  },
+  {
+    "id": "grimorio-misterioso",
+    "nombre": "Grimorio misterioso",
+    "nombre_original": "Mysterious Grimoire",
+    "descripcion": "Portas un tomo mágico indestructible repleto de respuestas.",
+    "efecto": "Tras una tirada de viaje que revele un peligro o descubrimiento, puedes formular una pregunta al DJ sobre dicho hallazgo; la respuesta aparece en las páginas. Cuando haya respondido a 10 preguntas, el tomo comparte su secreto final y eliges:\n- Conciencia despierta: Pierdes la peculiaridad y el grimorio se convierte en un PNJ que conoce dos conjuros de Elementalista, Entropista o Espiritista; una vez por conflicto, al final de la ronda, lanza uno de ellos gratis (prueba de Magia con 2d10).\n- Magia oculta: Pierdes la peculiaridad y adquieres una Habilidad Heroica ignorando requisitos."
+  },
+  {
+    "id": "hada-marginada",
+    "nombre": "Hada marginada",
+    "nombre_original": "Outcast Fairy",
+    "descripcion": "Criatura feérica desterrada al mundo de los mortales.",
+    "efecto": "Puedes comunicarte verbalmente con bestias, elementales y plantas. Aprendes un conjuro de Elementalista, Entropista o Espiritista, y realizas rituales de Ritualismo para transportar criaturas dentro y fuera del Reino de las Hadas. Posees una debilidad feérica singular: una vez por sesión, el DJ puede entregarte 1 PF para hacerte fallar automáticamente una tirada o introducir una complicación derivada de tu debilidad.",
+    "rituales": ["ritualismo"],
+    "elecciones": [
+      {
+        "clave": "conjuro",
+        "tipo": "conjuros",
+        "filtro": {
+          "lista": ["elementalista", "entropista", "espiritista"]
+        },
+        "etiqueta": "Conjuro feérico aprendido",
+        "min": "1",
+        "max": "1"
+      }
+    ]
+  },
+  {
+    "id": "robot",
+    "reemplaza": true,
+    "nombre": "Robot",
+    "nombre_original": "Robot",
+    "descripcion": "Cuerpo artificial creado en una era pretérita.",
+    "efecto": "Cuerpo artificial inmune a veneno y con Resistencia a tierra; inmune al estado envenenado. No necesitas respirar, comer ni beber, pero descansas normalmente y te curas de PV y estados con normalidad. Obtienes un bonificador de +2 a todas las pruebas realizadas para examinar o interactuar con máquinas, tecnología y constructos (salvo pruebas de Precisión y Magia)."
+  },
+  {
+    "id": "vastago-obstinado",
+    "nombre": "Vástago obstinado",
+    "nombre_original": "Stubborn Scion",
+    "descripcion": "Perteneces a una dinastía acaudalada y viajas escoltado por guardias leales.",
+    "efecto": "Aumenta tus ahorros iniciales en 1000 zenit. Te acompañan dos guardaespaldas leales (no actúan en combate ni hacen tiradas, pero tienen una reserva de Fatiga compartida de hasta 10 puntos):\n- ¡Cuidado!: Al recibir daño, puedes reducirlo a la mitad.\n- Aquí está la información: Durante un descanso, formula una pregunta al DJ que será respondida con veracidad.\n- ¡Quédese atrás!: Al crear una esquirla elemental, inflige daño adicional igual a [5 + la mitad de tu nivel].\nCada uso causa 1d6 puntos de Fatiga. Si acumulan 10 o más puntos, no puedes usarlos hasta que descansen. Al final de cada sesión, recuperan 1d6 puntos de Fatiga."
+  },
+  {
+    "id": "superviviente",
+    "nombre": "Superviviente",
+    "nombre_original": "Survivor",
+    "descripcion": "Has sobrevivido a inclemencias o tragedias extremas.",
+    "efecto": "Aumenta permanentemente tus PV y PM máximos en 5. Elige una opción: competencia con armas marciales (cuerpo a cuerpo y a distancia), armaduras marciales y escudos marciales; aprender un conjuro de Elementalista o Espiritista; o aumentar permanentemente tus PI máximos en 2.",
+    "modificadores": [
+      { "stat": "pv_max", "valor": "5" },
+      { "stat": "pm_max", "valor": "5" }
+    ],
+    "elecciones": [
+      {
+        "clave": "beneficio",
+        "tipo": "seleccion",
+        "valores": [
+          "Competencias marciales completas",
+          "Conjuro adicional (Elementalista/Espiritista)",
+          "+2 Puntos de Inventario máximos"
+        ],
+        "etiqueta": "Ventaja de supervivencia",
+        "cantidad": 1
+      }
+    ]
+  },
+  {
+    "id": "bestia-que-hablaba",
+    "nombre": "La bestia que hablaba",
+    "nombre_original": "The Beast Who Spoke",
+    "descripcion": "Perteneces a un linaje de bestias mágicas parlantes.",
+    "efecto": "No puedes equipar objetos (salvo accesorios y módulos). Mientras tu ranura de armadura esté vacía, obtienes un bonificador de +2 a Defensa y +2 a Defensa Mágica. Además, eliges dos de las siguientes ventajas:\n- Puedes equipar armas personalizadas.\n- Aprendes un conjuro de PNJ (salvo Devastación; tirada de Magia con [VIG + VOL]).\n- Tus ataques sin armas infligen 6 de daño adicional (+10 de daño adicional a nivel 30+).",
+    "elecciones": [
+      {
+        "clave": "ventajas",
+        "tipo": "seleccion",
+        "valores": [
+          "Equipar armas personalizadas",
+          "Conjuro de PNJ [VIG + VOL]",
+          "+6 al daño desarmado (+10 a Nv. 30+)"
+        ],
+        "etiqueta": "Ventajas ancestrales",
+        "cantidad": 2
+      }
+    ]
+  },
+  {
+    "id": "largo-sueno",
+    "nombre": "El largo sueño",
+    "nombre_original": "The Long Dream",
+    "descripcion": "Espíritu natural encarnado temporalmente en cuerpo humano.",
+    "efecto": "Al final de cada sesión, tira 2d20: si obtienes un resultado igual o inferior a tu nivel de personaje, el último adiós se aproxima. Cuando debas pagar costes de PV, PM o PF, puedes ignorar el coste; al hacerlo, el adiós se aproxima. Al acumular 10 aproximaciones y finalizar una escena donde ignoraste costes (o si te Sacrificas), abandonas la forma humana para siempre y te conviertes en un elemento natural inanimado. El personaje muere, pero todos los PJ de la campaña (incluyendo tu nuevo personaje) reciben 1 Punto Fábula adicional al inicio de cada sesión."
+  },
+  {
+    "id": "taller-ambulante",
+    "nombre": "Taller ambulante",
+    "nombre_original": "Traveling Workshop",
+    "requisitos": {
+      "texto": "Poseer al menos un nivel en Gourmet o Artífice.",
+      "habilidades": []
+    },
+    "descripcion": "Posees un vehículo terrestre adaptado como laboratorio y vivienda itinerante.",
+    "efecto": "Posees un vehículo terrestre adaptado como laboratorio y vivienda para ti, tus aliados y 2-3 invitados (no apto para combate). Si un proyecto requiere un material o ingrediente especial, puedes gastar 1 Punto Fábula para encontrar un sustituto en tu taller; si lo haces, la invención debe presentar un defecto terrible."
+  },
+  {
+    "id": "nino-subterraneo",
+    "nombre": "Niño subterráneo",
+    "nombre_original": "Underchild",
+    "descripcion": "Despertaste en las profundidades de ruinas ancestrales tras un letargo de siglos.",
+    "efecto": "Una vez por descanso, durante un conflicto, cuando debas pagar 100 o menos PV, PM o PI, puedes ignorar dicho coste por completo. Además, al encontrar tecnología antigua o constructos, puedes preguntar al DJ su propósito, cómo activarlo o cómo desactivarlo (con un breve recuerdo que lo explica). Tras recibir respuesta por sexta vez, recuerdas el motivo por el que fuiste puesto en letargo y el DJ te entrega una pista clave sobre una amenaza mundial. Mantienes todas las capacidades de la peculiaridad tras la revelación."
+  }
+]

@@ -1,0 +1,67 @@
+[
+  {
+    "id": "coraza-lanuda",
+    "nombre": "Coraza lanuda",
+    "nombre_original": "Woolly Cuirass",
+    "rareza": "raro",
+    "coste": 800,
+    "def": { "fijo": 11 },
+    "mdef": { "dado": "PER", "bonus": 0 },
+    "init": -3,
+    "marcial": true,
+    "cualidad": "Mientras no estés en Crisis, posees Resistencia a hielo e inmunidad al estado débil.",
+    "modificadores": []
+  },
+  {
+    "id": "chaqueta-de-ingeniero",
+    "nombre": "Chaqueta de ingeniero",
+    "nombre_original": "Engineer Jacket",
+    "rareza": "raro",
+    "coste": 1000,
+    "def": { "dado": "DES", "bonus": 1 },
+    "mdef": { "dado": "PER", "bonus": 1 },
+    "init": -1,
+    "marcial": false,
+    "cualidad": "Al usar una esquirla elemental, puedes infligir su daño a hasta tres criaturas visibles; además, infliges +5 de daño con esquirlas elementales.",
+    "modificadores": []
+  },
+  {
+    "id": "vestido-noble",
+    "nombre": "Vestido noble",
+    "nombre_original": "Noble Dress",
+    "rareza": "raro",
+    "coste": 1600,
+    "def": { "dado": "DES", "bonus": 1 },
+    "mdef": { "dado": "PER", "bonus": 1 },
+    "init": 0,
+    "marcial": false,
+    "cualidad": "Cuando un aliado visible te hace recuperar PV mientras estás en Crisis, dicho aliado recupera 5 PM.",
+    "modificadores": []
+  },
+  {
+    "id": "tunica-de-boticario",
+    "nombre": "Túnica de boticario",
+    "nombre_original": "Apothecary Robes",
+    "rareza": "raro",
+    "coste": 1800,
+    "def": { "dado": "DES", "bonus": 1 },
+    "mdef": { "dado": "PER", "bonus": 2 },
+    "init": -2,
+    "marcial": false,
+    "cualidad": "Al usar Lluvia de pociones, el efecto restaurador no se divide a la mitad.",
+    "modificadores": []
+  },
+  {
+    "id": "tunica-feerica",
+    "nombre": "Túnica feérica",
+    "nombre_original": "Fairy Tunic",
+    "rareza": "raro",
+    "coste": 2000,
+    "def": { "dado": "DES", "bonus": 1 },
+    "mdef": { "dado": "PER", "bonus": 2 },
+    "init": -2,
+    "marcial": false,
+    "cualidad": "Mientras estés afectado por uno o más conjuros con duración «Escena», obtienes +2 a Defensa Mágica.",
+    "modificadores": []
+  }
+]

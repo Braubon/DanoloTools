@@ -1,0 +1,41 @@
+[
+  {
+    "id": "manica-de-placas",
+    "nombre": "Manica de placas",
+    "nombre_original": "Plate Manica",
+    "rareza": "raro",
+    "coste": 800,
+    "def": 2,
+    "mdef": 0,
+    "init": 0,
+    "marcial": false,
+    "cualidad": "Mientras no vistas armadura marcial ni otro escudo, puedes aplicar los efectos de la habilidad Esquiva.",
+    "modificadores": []
+  },
+  {
+    "id": "escudo-tapadera",
+    "nombre": "Escudo tapadera",
+    "nombre_original": "Lid Shield",
+    "rareza": "raro",
+    "coste": 1500,
+    "def": 2,
+    "mdef": 2,
+    "init": 0,
+    "marcial": true,
+    "cualidad": "Cuando infliges daño con un manjar, infliges 5 de daño adicional.",
+    "modificadores": []
+  },
+  {
+    "id": "avambrazos-del-lirio",
+    "nombre": "Avambrazos del lirio",
+    "nombre_original": "Lily Vambrace",
+    "rareza": "raro",
+    "coste": 2000,
+    "def": 2,
+    "mdef": 2,
+    "init": 0,
+    "marcial": true,
+    "cualidad": "Si posees Jardinería de combate, puedes activarla al plantar una magisemilla con Injerto.",
+    "modificadores": []
+  }
+]

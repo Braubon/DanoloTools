@@ -3,6 +3,9 @@
   "descripcion": "Registro de libros cargados por las webs. El orden importa: el manual básico va siempre primero.",
   "atlas": [
     { "id": "basico", "ruta": "basico/atlas.json" },
-    { "id": "alta-fantasia", "ruta": "alta-fantasia/atlas.json" }
+    { "id": "alta-fantasia", "ruta": "alta-fantasia/atlas.json" },
+    { "id": "baja-fantasia", "ruta": "baja-fantasia/atlas.json" },
+    { "id": "fantasia-natural", "ruta": "fantasia-natural/atlas.json" },
+    { "id": "tecno-fantasia", "ruta": "tecno-fantasia/atlas.json" }
   ]
 }

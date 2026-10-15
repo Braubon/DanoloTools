@@ -1,0 +1,74 @@
+[
+  {
+    "id": "cargador",
+    "nombre": "Cargador de repuesto",
+    "nombre_original": "Spare Magazine",
+    "rareza": "raro",
+    "coste": 600,
+    "cualidad": "Una vez por escena, tras realizar una prueba de Precisión con un arma de fuego, puedes volver a lanzar uno de los dados de la tirada.",
+    "modificadores": []
+  },
+  {
+    "id": "granadas-cegadoras",
+    "nombre": "Granadas cegadoras",
+    "nombre_original": "Flashbang Grenades",
+    "rareza": "raro",
+    "coste": 800,
+    "cualidad": "Cuando inflijas daño a una criatura usando una esquirla elemental, esa criatura sufre además el estado alterado confundido.",
+    "modificadores": []
+  },
+  {
+    "id": "mascara-de-gas",
+    "nombre": "Máscara de gas",
+    "nombre_original": "Gas Mask",
+    "rareza": "raro",
+    "coste": 900,
+    "cualidad": "Posees Resistencia al daño de veneno y eres inmune al estado alterado envenenado.",
+    "modificadores": []
+  },
+  {
+    "id": "casco-inconformista",
+    "nombre": "Casco de inconformista",
+    "nombre_original": "Maverick Helmet",
+    "rareza": "raro",
+    "coste": 1000,
+    "cualidad": "Al inicio de tu turno en un conflicto, si estás en Crisis y pilotas tu vehículo personal, puedes curarte de un estado alterado a tu elección.",
+    "modificadores": []
+  },
+  {
+    "id": "mascara-del-ego",
+    "nombre": "Máscara del ego",
+    "nombre_original": "Ego Mask",
+    "rareza": "raro",
+    "coste": 1500,
+    "cualidad": "Tras invocar un Arcano en tu turno durante un conflicto, puedes realizar un ataque gratuito con un arma que tengas equipada. Si lo haces, considera tu Tirada Mayor (TM) como 0 al calcular el daño y no puedes dispersar voluntariamente tu Arcano durante este turno.",
+    "modificadores": []
+  },
+  {
+    "id": "botiquin-medico",
+    "nombre": "Botiquín médico",
+    "nombre_original": "Medikit",
+    "rareza": "raro",
+    "coste": 1500,
+    "cualidad": "Cuando hagas que una o más criaturas recuperen PV mediante una poción o conjuro, si al menos una de ellas se halla en Crisis, cada una recupera 5 PV adicionales.",
+    "modificadores": []
+  },
+  {
+    "id": "ensamblador-portatil",
+    "nombre": "Ensamblador portátil",
+    "nombre_original": "Portable Assembler",
+    "rareza": "raro",
+    "coste": 1500,
+    "cualidad": "Una vez por escena, cuando debas pagar un coste en Puntos de Inventario, puedes reducir ese coste a la mitad.",
+    "modificadores": []
+  },
+  {
+    "id": "omnidex",
+    "nombre": "Omnidex",
+    "nombre_original": "Omnidex",
+    "rareza": "raro",
+    "coste": 2000,
+    "cualidad": "Al realizar una tirada para examinar el perfil de un PNJ, cualquier resultado de 12 o inferior se trata como si fuera 13, salvo que sea una pifia.",
+    "modificadores": []
+  }
+]

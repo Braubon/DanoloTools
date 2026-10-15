@@ -1,0 +1,17 @@
+{
+  "id": "baja-fantasia",
+  "nombre": "Atlas de Baja Fantasía",
+  "nombre_original": "Low Fantasy Atlas",
+  "abreviatura": "Baja Fantasía",
+  "tipo": "atlas",
+  "obligatorio": false,
+  "descripcion": "Cazador, Ilusionista y Monje; 8 habilidades heroicas, 15 trampas y 12 conjuros de ilusionista.",
+  "reglas_opcionales": [],
+  "archivos": [
+    { "coleccion": "tablas", "ruta": "tablas.json" },
+    { "coleccion": "clases", "ruta": "clases.json" },
+    { "coleccion": "opciones", "ruta": "opciones.json" },
+    { "coleccion": "conjuros", "ruta": "conjuros.json" },
+    { "coleccion": "habilidades_heroicas", "ruta": "habilidades_heroicas.json" }
+  ]
+}

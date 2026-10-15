@@ -1,0 +1,54 @@
+[
+  {
+    "id": "desviador",
+    "nombre": "Desviador",
+    "nombre_original": "Misdirector",
+    "rareza": "raro",
+    "coste": 1000,
+    "def": { "dado": "DES", "bonus": 1 },
+    "mdef": { "dado": "PER", "bonus": 1 },
+    "init": -1,
+    "marcial": false,
+    "cualidad": "Mientras no tengas ningún escudo equipado, eres Resistente al daño físico.",
+    "modificadores": []
+  },
+  {
+    "id": "bata-de-laboratorio",
+    "nombre": "Bata de laboratorio",
+    "nombre_original": "Lab Coat",
+    "rareza": "raro",
+    "coste": 1500,
+    "def": { "dado": "DES", "bonus": 1 },
+    "mdef": { "dado": "PER", "bonus": 2 },
+    "init": -2,
+    "marcial": false,
+    "cualidad": "Si posees la habilidad Fórmula secreta, considera su SL incrementado en 2 (hasta un máximo de SL 7).",
+    "modificadores": []
+  },
+  {
+    "id": "biocapa",
+    "nombre": "Biocapa",
+    "nombre_original": "Biocloak",
+    "rareza": "raro",
+    "coste": 1800,
+    "def": { "dado": "DES", "bonus": 1 },
+    "mdef": { "dado": "PER", "bonus": 1 },
+    "init": 0,
+    "marcial": false,
+    "cualidad": "Al usar una Habilidad que requiera gastar Puntos de Vida, como Muda o Vismagus, reduces ese coste a la mitad.",
+    "modificadores": []
+  },
+  {
+    "id": "psicoesqueleto",
+    "nombre": "Psicoesqueleto",
+    "nombre_original": "Psyskeleton",
+    "rareza": "raro",
+    "coste": 2000,
+    "def": { "fijo": 11 },
+    "mdef": { "dado": "PER", "bonus": 1 },
+    "init": -3,
+    "marcial": true,
+    "cualidad": "Marcial. Tras realizar la acción Guardia, si tu Reloj de Ondas Cerebrales está lleno, puedes vaciarlo por completo.",
+    "modificadores": []
+  }
+]

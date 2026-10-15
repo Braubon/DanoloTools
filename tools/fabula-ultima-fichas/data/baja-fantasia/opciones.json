@@ -1,0 +1,137 @@
+[
+  {
+    "id": "trampa-cable-de-tropiezo",
+    "grupo": "trampa",
+    "nombre": "Cable de tropiezo",
+    "nombre_original": "Tripwire",
+    "nivel": 1,
+    "duracion": "SL 1",
+    "efecto": "Fuera de conflicto alerta a los aliados de enemigos aproximándose. En combate inflige [TM + 10] de daño físico."
+  },
+  {
+    "id": "trampa-sirena",
+    "grupo": "trampa",
+    "nombre": "Sirena",
+    "nombre_original": "Siren",
+    "nivel": 1,
+    "duracion": "SL 1",
+    "efecto": "Fuera de combate atrae a las criaturas hacia la fuente del ruido tras un temporizador. En combate las criaturas afectadas sufren confundido."
+  },
+  {
+    "id": "trampa-bomba-de-humo",
+    "grupo": "trampa",
+    "nombre": "Bomba de humo",
+    "nombre_original": "Smoke Bomb",
+    "nivel": 1,
+    "duracion": "SL 1",
+    "efecto": "Libera humo denso. Los objetivos afectados sufren una penalización de -2 a todas sus pruebas de Precisión durante una ronda completa."
+  },
+  {
+    "id": "trampa-red-de-lazo",
+    "grupo": "trampa",
+    "nombre": "Red de lazo",
+    "nombre_original": "Snare Net",
+    "nivel": 2,
+    "duracion": "SL 2",
+    "efecto": "Los objetivos deben gastar una acción para liberarse. Si la criatura vuela, cae al suelo durante una ronda sufriendo [TM + 10] de daño físico."
+  },
+  {
+    "id": "trampa-polvo-cegador",
+    "grupo": "trampa",
+    "nombre": "Polvo cegador",
+    "nombre_original": "Blinding Powder",
+    "nivel": 2,
+    "duracion": "SL 2",
+    "efecto": "Cada criatura afectada sufre confundido y lento."
+  },
+  {
+    "id": "trampa-de-burla",
+    "grupo": "trampa",
+    "nombre": "Trampa de burla",
+    "nombre_original": "Mocking Trap",
+    "nivel": 2,
+    "duracion": "SL 2",
+    "efecto": "Contrahechizo que provoca a los objetivos, haciéndoles sufrir enfurecido."
+  },
+  {
+    "id": "trampa-dardo-venenoso",
+    "grupo": "trampa",
+    "nombre": "Dardo venenoso",
+    "nombre_original": "Poison Dart",
+    "nivel": 3,
+    "duracion": "SL 3",
+    "efecto": "Dispara un dardo oculto que inflige [TM + 10] de daño de veneno y el estado envenenado."
+  },
+  {
+    "id": "trampa-descarga-electrica",
+    "grupo": "trampa",
+    "nombre": "Descarga eléctrica",
+    "nombre_original": "Snap Out",
+    "nivel": 3,
+    "duracion": "SL 3",
+    "efecto": "Inflige [TM + 10] de daño de rayo y una penalización de -2 a las pruebas de Precisión durante una ronda completa."
+  },
+  {
+    "id": "trampa-pua-punzante",
+    "grupo": "trampa",
+    "nombre": "Púa punzante",
+    "nombre_original": "Sting Thing",
+    "nivel": 3,
+    "duracion": "SL 3",
+    "efecto": "Puntas ocultas perforantes. Elige un tipo de daño entre físico, rayo o veneno: el objetivo sufre [TM + 15] de daño del tipo elegido."
+  },
+  {
+    "id": "trampa-cepo-de-oso",
+    "grupo": "trampa",
+    "nombre": "Cepo de oso",
+    "nombre_original": "Bear Trap",
+    "nivel": 4,
+    "duracion": "SL 4",
+    "efecto": "Mordaza de acero con dientes que apresa las extremidades. Inflige [TM + 20] de daño físico y el estado lento."
+  },
+  {
+    "id": "trampa-de-polilla",
+    "grupo": "trampa",
+    "nombre": "Trampa de polilla",
+    "nombre_original": "Moth Trap",
+    "nivel": 4,
+    "duracion": "SL 4",
+    "efecto": "Destello de radiancia cegadora que inflige [TM + 15] de daño de luz y una penalización igual a [-SL] a todas sus pruebas de Precisión durante una ronda completa."
+  },
+  {
+    "id": "trampa-papel-matamoscas",
+    "grupo": "trampa",
+    "nombre": "Papel matamoscas",
+    "nombre_original": "Fly Trap",
+    "nivel": 4,
+    "duracion": "SL 4",
+    "efecto": "Sustancia viscosa que inmoviliza. Las criaturas pierden una acción para liberarse y sufren lento; si vuelan, caen al suelo dos rondas sufriendo [TM + 10] de daño físico y lento."
+  },
+  {
+    "id": "trampa-explosiva",
+    "grupo": "trampa",
+    "nombre": "Trampa explosiva",
+    "nombre_original": "Explosive Trap",
+    "nivel": 5,
+    "duracion": "SL 5",
+    "efecto": "Detonación concusiva que inflige [TM + 25] de daño de fuego a los objetivos atrapados en la explosión."
+  },
+  {
+    "id": "trampa-nube-venenosa",
+    "grupo": "trampa",
+    "nombre": "Nube venenosa",
+    "nombre_original": "Venomous Cloud",
+    "nivel": 5,
+    "duracion": "SL 5",
+    "efecto": "Niebla corrosiva que penetra en la piel e inflige [TM + 20] de daño de veneno y el estado envenenado."
+  },
+  {
+    "id": "trampa-espejo-del-alma",
+    "grupo": "trampa",
+    "nombre": "Espejo del alma",
+    "nombre_original": "Soul Mirror",
+    "nivel": 5,
+    "duracion": "SL 5",
+    "efecto": "Dispositivo rúnico reflectante. El siguiente conjuro ofensivo que lance la criatura afectada se redirige automáticamente contra ella misma."
+  }
+]

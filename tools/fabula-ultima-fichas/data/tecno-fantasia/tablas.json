@@ -1,0 +1,12 @@
+[
+  {
+    "id": "temas",
+    "nombre": "Temas",
+    "valores": [
+      "Duda",
+      "Culpa",
+      "Ira",
+      "Venganza"
+    ]
+  }
+]

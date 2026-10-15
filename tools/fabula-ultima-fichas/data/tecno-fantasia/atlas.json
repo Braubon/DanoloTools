@@ -1,0 +1,27 @@
+{
+  "id": "tecno-fantasia",
+  "nombre": "Atlas de Tecnofantasía",
+  "nombre_original": "Techno Fantasy Atlas",
+  "abreviatura": "Tecnofantasía",
+  "tipo": "atlas",
+  "obligatorio": false,
+  "descripcion": "Ésper, Mutante y Piloto; 18 habilidades heroicas, dones psíquicos, terioformas, módulos vehiculares y tecnoesferas. Incluye cuatro reglas opcionales.",
+  "reglas_opcionales": [
+    { "id": "peculiaridades", "nombre": "Peculiaridades", "nombre_original": "Quirks", "descripcion": "Cada protagonista puede elegir una Peculiaridad (sin repetirse en el grupo)." },
+    { "id": "tecnoesferas", "nombre": "Tecnoesferas", "nombre_original": "Technospheres", "descripcion": "Sistema de ranuras de equipo con hoplosferas y mnemosferas." },
+    { "id": "armas-personalizadas", "nombre": "Armas personalizadas", "nombre_original": "Custom Weapons", "descripcion": "Arquetipos de armas personalizadas y transformables de tecnofantasía." },
+    { "id": "equipo-raro", "nombre": "Equipo raro y artefactos", "nombre_original": "Rare Items & Artifacts", "descripcion": "Armas, armaduras, escudos, accesorios y módulos raros del atlas, y sus artefactos." }
+  ],
+  "archivos": [
+    { "coleccion": "tablas", "ruta": "tablas.json" },
+    { "coleccion": "clases", "ruta": "clases.json" },
+    { "coleccion": "opciones", "ruta": "opciones.json" },
+    { "coleccion": "habilidades_heroicas", "ruta": "habilidades_heroicas.json" },
+    { "coleccion": "armas", "ruta": "armas.json", "regla_opcional": "equipo-raro" },
+    { "coleccion": "armaduras", "ruta": "armaduras.json", "regla_opcional": "equipo-raro" },
+    { "coleccion": "escudos", "ruta": "escudos.json", "regla_opcional": "equipo-raro" },
+    { "coleccion": "accesorios", "ruta": "accesorios.json", "regla_opcional": "equipo-raro" },
+    { "coleccion": "artefactos", "ruta": "artefactos.json", "regla_opcional": "equipo-raro" },
+    { "coleccion": "peculiaridades", "ruta": "peculiaridades.json", "regla_opcional": "peculiaridades" }
+  ]
+}

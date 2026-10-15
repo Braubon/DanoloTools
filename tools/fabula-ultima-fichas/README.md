@@ -11,6 +11,9 @@ Generador y visor de personajes de *Fabula Ultima*. Web estática: HTML, CSS y J
 
 - **Manual básico**: 15 clases, 54 conjuros (incluidos supremos y de PNJ), 31 habilidades heroicas, equipo básico y raro, cualidades y artefactos.
 - **Atlas de Alta Fantasía**: Cantor, Comandante, Bailarín y Simbolista con sus claves, tonos, danzas y símbolos; 24 habilidades heroicas; dos Arcanos nuevos. Reglas opcionales: peculiaridades, poderes cero, armas personalizadas y equipo raro/artefactos del atlas.
+- **Atlas de Baja Fantasía**: Cazador, Ilusionista y Monje; 12 conjuros de ilusionista, 8 habilidades heroicas y 15 trampas.
+- **Atlas de Fantasía Natural**: Florista, Gourmet, Invocador y Mercader; 21 habilidades heroicas, magisemillas, manjares, invocaciones y 15 actividades de campamento. Reglas opcionales: peculiaridades, actividades de campamento, armas personalizadas y equipo raro/artefactos.
+- **Atlas de Tecnofantasía**: Ésper, Mutante y Piloto; 18 habilidades heroicas, dones psíquicos, terioformas, módulos vehiculares (chasis, armadura, armas y soporte) y tecnoesferas (36 hoplosferas). Reglas opcionales: peculiaridades, tecnoesferas, armas personalizadas y equipo raro/artefactos.
 
 En la pestaña **Contenido** del generador se activan los atlas y, dentro de cada uno, sus reglas opcionales (todas desactivadas por defecto). Lo desactivado desaparece de clases, equipo, heroicas y opciones.
 

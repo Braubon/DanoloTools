@@ -1,0 +1,173 @@
+[
+  {
+    "id": "agitador",
+    "nombre": "Agitador",
+    "nombre_original": "Agitator",
+    "descripcion": "Llevas años incitando a las masas a sublevarse contra los tiranos corporativos o militares.",
+    "efecto": "Al descansar dentro o en las proximidades de un asentamiento, elige una opción: descubres cuál es la principal causa de cólera o temor entre la población local, o estableces un contacto nativo operativo (el DJ determina qué pago o favor solicita a cambio)."
+  },
+  {
+    "id": "fantasma-cognitivo",
+    "nombre": "Fantasma cognitivo",
+    "nombre_original": "Cognitive Ghost",
+    "descripcion": "Eres una entidad nacida en las profundidades de la Red de Almas, a medio camino entre el ser humano y el demonio digital.",
+    "efecto": "Elige dos tipos de daño entre aire, rayo, oscuro, tierra, fuego, hielo y luz: obtienes Resistencia a ambos tipos. Elige un tercer tipo de esa misma lista: sufres Vulnerabilidad a ese tipo de daño. Adquieres la capacidad de ejecutar Rituales de la disciplina Ritualismo para trasladar entidades dentro y fuera de la Red de Almas, así como para rastrear información en su interior.",
+    "elecciones": [
+      {
+        "clave": "resistencias",
+        "tipo": "seleccion",
+        "valores": ["Aire", "Rayo", "Oscuro", "Tierra", "Fuego", "Hielo", "Luz"],
+        "etiqueta": "Resistente a",
+        "cantidad": 2
+      },
+      {
+        "clave": "vulnerabilidad",
+        "tipo": "seleccion",
+        "valores": ["Aire", "Rayo", "Oscuro", "Tierra", "Fuego", "Hielo", "Luz"],
+        "etiqueta": "Vulnerable a",
+        "cantidad": 1
+      }
+    ]
+  },
+  {
+    "id": "diabolista",
+    "nombre": "Diabolista",
+    "nombre_original": "Diabolist",
+    "descripcion": "Canalizas las energías de la Red de Almas a través de un familiar demoníaco.",
+    "efecto": "Creas conjuntamente con el grupo un familiar: un PNJ de nivel 5 de la especie demonio sin puntuación de Iniciativa. No sube de nivel, tiene un máximo de dos ataques básicos, bonificador de +3 a pruebas de Precisión y pruebas de Magia, y sus PV máximos equivalen a [5 × dado base de Vigor del familiar + mitad del nivel del PJ]. Al nivel 20 adquiere una Habilidad de PNJ adicional, y al nivel 40 otra más. Cuando un demonio PNJ visible caiga a 0 PV, puedes gastar 20 PM para ver su perfil y sustituir una Habilidad de tu familiar por una de las habilidades de ese demonio (a criterio del DJ). Incompatible con la habilidad Compañero fiel del Trotamundos. En conflicto actúa gastando una de tus acciones (una vez por turno). Si cae a 0 PV se desvanece y regresa al inicio de la siguiente escena con PV iguales a su valor de Crisis."
+  },
+  {
+    "id": "reliquia-enigmatica",
+    "nombre": "Reliquia enigmática",
+    "nombre_original": "Enigmatic Relic",
+    "descripcion": "Portas un arma arcaica capaz de distorsionar la trama de la realidad.",
+    "efecto": "Obtienes una reliquia: un arma personalizada rara valorada en 1200 zenit o menos. Es un artefacto indestructible salvo por Sacrificio de un PJ, y solo puede perderse tras Rendirse. Mientras esté equipada, el portador puede realizar la acción Habilidad para activar uno de sus poderes:\n1. (Solo PJ) Formular una pregunta directa al DJ, quien responde con veracidad describiendo visiones.\n2. Elegir una disciplina entre Quimerismo, Elementalismo, Entropismo, Ritualismo o Espiritismo: hasta el final de la escena, cualquier personaje que empuñe la reliquia puede realizar Rituales de esa disciplina con su coste en PM reducido a la mitad (acumulativo si se activa varias veces).\n3. Hasta el final de la escena, todos los ataques con la reliquia causan 5 puntos de daño adicional, ignoran Absorciones, Inmunidades y Resistencias, y ejecutan un ataque gratuito inmediato con ella.\nPuntos de Paradoja: Cada activación por parte de un PJ genera 1d6 Puntos de Paradoja. Si alcanzan 10 o más, se pierden todos y se tira 1d6: 1–4: La reliquia queda inerte hasta cumplir una condición específica dictada por el DJ; 5–6: Desata una catástrofe dimensional, alteración temporal o nueva amenaza apocalíptica. Los villanos no generan Paradoja al emplearla."
+  },
+  {
+    "id": "mundo-distante",
+    "reemplaza": true,
+    "nombre": "De un mundo distante",
+    "nombre_original": "From a Distant World",
+    "descripcion": "Procedente de otro planeta o línea temporal ajena al universo conocido.",
+    "efecto": "Obtienes automáticamente 1 Punto Fabula al unirte a cualquier escena de conflicto. Puedes invocar un Rasgo para repetir dados de una tirada incluso si has obtenido una pifia (en cuyo caso no recibes el Punto Fabula por la pifia)."
+  },
+  {
+    "id": "experimento-fugitivo",
+    "nombre": "Experimento fugitivo",
+    "nombre_original": "Fugitive Experiment",
+    "descripcion": "Sujeto genético fugado de un laboratorio de alto secreto.",
+    "efecto": "Cuando una regla o habilidad te exija gastar 100 o menos PV, PM o Puntos de Inventario, puedes acumular 1d8 Puntos de Inestabilidad para ignorar dicho coste por completo. Al final de cada sesión pierdes 1d6 Puntos de Inestabilidad (mínimo 0). Si tus Puntos de Inestabilidad alcanzan 10 o más, caes inmediatamente a 0 PV y debes Rendirte perdiendo el control de tus facultades biológicas. Tras la Rendición, pierdes todos los Puntos de Inestabilidad."
+  },
+  {
+    "id": "cien-caras",
+    "nombre": "Cien caras",
+    "nombre_original": "Hundred Faces",
+    "descripcion": "Maestro del camuflaje físico mediante microproyecciones holográficas o bioadaptación.",
+    "efecto": "Fuera de miradas directas, puedes realizar la acción Habilidad y gastar 1 Punto Fabula para disfrazarte de cualquier humanoide. Si lo has estudiado previamente, mimetizas su voz y ademanes. Engaña infaliblemente a tropas de rango soldado. Los rangos élite o campeón pueden percibir la farsa ante fallos o tiradas con oportunidad. Un villano en escena puede gastar 1 Punto Ultima para desenmascararte por intuición deductiva."
+  },
+  {
+    "id": "prodigio-inventor",
+    "nombre": "Prodigio inventor",
+    "nombre_original": "Inventor Prodigy",
+    "descripcion": "Mente técnica brillante perseguida por consorcios que codician sus patentes.",
+    "efecto": "Una vez por conflicto, cuando debas gastar Puntos de Inventario, puedes ignorar el coste íntegramente. Puedes iniciar Proyectos. Si un Proyecto exige un ingrediente exótico, puedes gastar 1 Punto Fabula para declarar que lo tienes; de hacerlo, el artefacto resultante tendrá un defecto terrible."
+  },
+  {
+    "id": "neohumano",
+    "nombre": "Neohumano",
+    "nombre_original": "Neo-Human",
+    "descripcion": "El siguiente peldaño en la escala evolutiva psíquica o genética.",
+    "efecto": "Al adquirir esta peculiaridad, elige un atributo entre Destreza, Perspicacia, Vigor o Voluntad. Al entrar en conflicto, puedes aumentar ese atributo en un tamaño de dado (máximo d12) o, si su base es d12, tratarlo como d20 en todas las tiradas de la escena. El DJ obtiene inmediatamente una oportunidad para reflejar secuelas colaterales de tu sobreesfuerzo evolutivo.",
+    "elecciones": [
+      {
+        "clave": "atributo",
+        "tipo": "seleccion",
+        "valores": ["Destreza", "Perspicacia", "Vigor", "Voluntad"],
+        "etiqueta": "Atributo potenciado",
+        "cantidad": 1
+      }
+    ]
+  },
+  {
+    "id": "oraculo-planeta",
+    "nombre": "Oráculo del planeta",
+    "nombre_original": "Planet Oracle",
+    "descripcion": "El flujo anímico del planeta resuena directamente a través de tu voz y tu cuerpo.",
+    "efecto": "Cuando hagas que uno o más aliados recuperen PV o PM, cada uno recupera 5 PV o PM adicionales (o 10 adicionales si eres de nivel 30+) y curas un estado alterado a tu elección entre confundido, débil, enfurecido, envenenado, lento o estremecido a cada uno de ellos. Adquieres la capacidad de ejecutar Rituales de la disciplina Espiritismo."
+  },
+  {
+    "id": "agente-de-la-ley-arrepentido",
+    "nombre": "Agente de la ley arrepentido",
+    "nombre_original": "Repentant Enforcer",
+    "descripcion": "Exmiembro de una unidad represiva, policial o paramilitar con las manos manchadas de sangre inocente.",
+    "efecto": "Requisito: Tema obligatorio Duda o Culpa, inalterable mientras mantengas la peculiaridad. Defines la corporación o fuerza militar para la que servías, su villano al mando y sus tres estrategias maestras. Comienzas con un objeto raro robado valorado en 1000 zenit o menos. Al final de cada sesión, si has saboteado las estrategias de la organización o mitigado el daño causado a la población, ganas 1 Punto de Subversión. Puedes gastar 1 Punto de Subversión en lugar de Puntos Fabula (con independencia de la cantidad de Puntos Fabula requerida). Al vencer al villano líder (Rendición), pierdes esta peculiaridad, aumentas tus PV y PM máximos en +10 de forma permanente y cambias tu Tema a Pertenencia, Deber o Justicia."
+  },
+  {
+    "id": "robot",
+    "reemplaza": true,
+    "nombre": "Robot",
+    "nombre_original": "Robot",
+    "descripcion": "Ser humanoide sintético o totalmente mecanizado dotado de personalidad propia.",
+    "efecto": "No cuentas como criatura viva. Obtienes Inmunidad a daño de veneno, Resistencia a daño de tierra e inmunidad al estado envenenado. No necesitas respirar, comer ni beber, pero sigues las reglas estándar de descanso y recuperación de PV y estados. Obtienes un bonificador de +2 a todas las tiradas para examinar o interactuar con tecnología, máquinas y constructos (salvo pruebas de Precisión o pruebas de Magia)."
+  },
+  {
+    "id": "transporte-robado",
+    "nombre": "Transporte robado",
+    "nombre_original": "Stolen Transport",
+    "descripcion": "Nave estelar o transporte militar sustraído a una corporación o ejército.",
+    "efecto": "Obtienes un vehículo de tamaño mediano o grande (terrestre, aéreo, barco o astronave espacial) con capacidad para el grupo y una docena de pasajeros, armado para combate de vehículos. Una vez por sesión, el DJ puede concederte 2 Puntos Fabula para introducir una complicación narrativa vinculada a los propietarios originales. El transporte nunca puede ser destruido sin tu consentimiento explícito."
+  },
+  {
+    "id": "superviviente",
+    "reemplaza": true,
+    "nombre": "Superviviente",
+    "nombre_original": "Survivor",
+    "descripcion": "Único superviviente de un genocidio, bombardeo orbital o purga corporativa.",
+    "efecto": "Aumentas de forma permanente tus PV máximos en +5 y tus PM máximos en +5. Elige una ventaja adicional: capacidad para equipar todas las armas cuerpo a cuerpo y a distancia marciales, armaduras marciales y escudos marciales; o aprender un conjuro de la lista del Elementalista o Espiritista; o incrementar tus Puntos de Inventario máximos en +2 de forma permanente.",
+    "modificadores": [
+      { "stat": "pv_max", "valor": 5 },
+      { "stat": "pm_max", "valor": 5 }
+    ],
+    "elecciones": [
+      {
+        "clave": "ventaja",
+        "tipo": "seleccion",
+        "valores": [
+          "Equipo marcial (armas, armaduras y escudos)",
+          "Conjuro de Elementalista o Espiritista",
+          "+2 a Puntos de Inventario máximos"
+        ],
+        "etiqueta": "Ventaja de supervivencia",
+        "cantidad": 1
+      }
+    ]
+  },
+  {
+    "id": "bestia-que-hablaba",
+    "reemplaza": true,
+    "nombre": "La bestia que habló",
+    "nombre_original": "The Beast Who Spoke",
+    "descripcion": "Último vástago de una especie de bestias ancestrales inteligentes cazadas por la civilización.",
+    "efecto": "No puedes equipar objetos en los espacios de armas, armaduras o escudos (solo puedes equipar accesorios y módulos de piloto). Mientras tu espacio de armadura esté vacío, obtienes +2 a Defensa y +2 a Defensa Mágica. Eliges dos beneficios de los siguientes:\n1. Capacidad para equipar armas personalizadas.\n2. Aprender un conjuro de PNJ (salvo Devastación; si requiere prueba de Magia utiliza [VIG + VOL]).\n3. Tus ataques desarmados infligen 6 puntos de daño adicional (o 10 adicionales a nivel 30+).",
+    "elecciones": [
+      {
+        "clave": "ventajas",
+        "tipo": "seleccion",
+        "valores": [
+          "Equipar armas personalizadas",
+          "Conjuro de PNJ [VIG + VOL]",
+          "+6 al daño desarmado (+10 a Nv. 30+)"
+        ],
+        "etiqueta": "Ventajas ancestrales",
+        "cantidad": 2
+      }
+    ]
+  },
+  {
+    "id": "xifosimbiosis",
+    "nombre": "Xifosimbiosis",
+    "nombre_original": "Xiphosymbiosis",
+    "descripcion": "Entidad biológica o espiritual cuya existencia material depende de un arma portada por otro individuo.",
+    "efecto": "Eliges a otro personaje jugador como tu portador. Ambos creáis inmediatamente un Vínculo mutuo con 1 emoción a elegir entre admiración, inferioridad, lealtad o desconfianza. Diseñas tu núcleo: un arma personalizada rara valorada en 1200 zenit o menos. Es indestructible salvo por tu propio Sacrificio. No es marcial y cualquiera puede equiparla. El portador puede realizar la acción Habilidad para cambiar los atributos de su prueba de Precisión a cualquier combinación de dos atributos distintos. Solo tu portador puede equipar el núcleo mientras tengas esta peculiaridad. Vínculo vital: Tus PV actuales nunca pueden descender de 1; cualquier exceso de daño que debieras sufrir lo absorbe tu portador, con independencia de la distancia. Rendición del portador: Si tu portador se Rinde, te desvaneces en el interior del núcleo en letargo hasta que recupere el conocimiento. Sacrificio del portador: Elige una opción: Despertar (Solo si la fuerza total de tus Vínculos es 8+; pierdes esta peculiaridad, el núcleo aparece en tus manos y lo equipas); Legado (Transfieres el núcleo a otro PJ voluntario); o Quebrantamiento (Te Sacrificas en lugar de tu portador, quien recupera PV iguales a su valor de Crisis sin Rendirse ni Sacrificarse). Al subir de nivel, si la fuerza de tus Vínculos suma 10+, puedes activar el Despertar sin Sacrificio."
+  }
+]

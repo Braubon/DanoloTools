@@ -1,0 +1,107 @@
+[
+  {
+    "id": "kylix-cardinal",
+    "nombre": "Kýlix cardinal",
+    "nombre_original": "Cardinal Kylix",
+    "descripcion": "Cáliz metálico ancho y poco profundo, gélido al tacto.",
+    "efecto": "Otorga la capacidad de apaciguar cualquier cólera o descontrol elemental en un radio comarcal (reduce o borra secciones de relojes de cataclismo ambiental con una prueba de Intuición + Voluntad ND 10). No obstante, su uso continuado marchita la empatía de sus portadores, obligándoles a superar una prueba abierta de Voluntad tras cada activación para no sufrir permanentemente el estado confundido."
+  },
+  {
+    "id": "huevo-de-illuyanka",
+    "nombre": "Huevo de Illuyanka",
+    "nombre_original": "Egg of Illuyanka",
+    "descripcion": "Huevo pesado y voluminoso de cáscara estriada extremadamente dura.",
+    "efecto": "Último vestigio de los dragones primigenios de los bosques. Quien lo porte en su mochila obtiene Resistencia a daño de tierra. Si se expone al calor de un fuego sagrado durante tres descansos, eclosiona en una cría de dragón Illuyanka que actúa como compañero fiel (puede convocarse como un aliado soldado en escenas de conflicto)."
+  },
+  {
+    "id": "cuerno-de-gamuza-de-la-serenidad",
+    "nombre": "Cuerno de gamuza de la serenidad",
+    "nombre_original": "Gemshorn of Tranquility",
+    "descripcion": "Flauta tallada en el cuerno desprendido de una cabra de los riscos anciana.",
+    "efecto": "Al tocarla con intenciones pacíficas, calma el miedo y la furia de bestias, monstruos y plantas (efecto equivalente a un ritual de Quimerismo o Espiritismo sin coste en PM ni prueba de Magia; en conflicto requiere rellenar un reloj de 4 secciones con acciones de Habilidad)."
+  },
+  {
+    "id": "campana-del-refugio",
+    "nombre": "Campana del refugio",
+    "nombre_original": "Havenbell",
+    "descripcion": "Campanilla de latón adornada con una cinta escarlata.",
+    "efecto": "Al hacerla repicar en la espesura, hace aparecer una cabaña acogedora y protegida por un hada silkie de cabellos de zafiro. El grupo descansa con total seguridad. Al concluir el descanso, tira 1d6: con un resultado de 1 o 2, la silkie exige una petición extravagante; si el grupo se niega a cumplirla, el artefacto se desvanece en rocío y hojas."
+  },
+  {
+    "id": "llaves-del-armonista",
+    "nombre": "Llaves del armonista",
+    "nombre_original": "Keys of the Harmonist",
+    "descripcion": "Gran aro de plata con nueve llaves de metal oscuro y apagado.",
+    "efecto": "Reliquia de los peregrinos de las estepas heladas. Si el grupo completa una peregrinación consagrada a los espíritus animales, las llaves despiertan, permitiendo que cualquier miembro del grupo convoque a los Arcanos como si poseyese la clase Arcanista (nunca más de un Arcano convocado simultáneamente por el grupo)."
+  },
+  {
+    "id": "espejo-lunar",
+    "nombre": "Espejo lunar",
+    "nombre_original": "Moon Mirror",
+    "descripcion": "Espejo circular de metal oxidado que refleja la luz nocturna.",
+    "efecto": "De noche, al orientarlo hacia la vegetación, permite ejecutar un ritual equivalente a la habilidad Influencia vegetal sin gastar Puntos de Mente. Su reflejo puede provocar sacudidas electromagnéticas en constructos y autómatas cercanos."
+  },
+  {
+    "id": "diario-de-reidy",
+    "nombre": "Diario de Reidy",
+    "nombre_original": "Reidy’s Journal",
+    "descripcion": "Diario voluminoso repleto de anotaciones marginales, pliegos botánicos y bocetos folclóricos.",
+    "efecto": "Una vez por descanso, el grupo puede iniciar o proseguir una investigación sobre enigmas del mundo antiguo. El DJ asigna un reloj de 4 a 10 secciones y los PJ realizan una prueba de grupo con ND 10. Al completarse el reloj, el DJ proporciona una respuesta fidedigna, exacta y reveladora al enigma investigado."
+  },
+  {
+    "id": "lagrima-de-resina",
+    "nombre": "Lágrima de resina",
+    "nombre_original": "Resin Tear",
+    "descripcion": "Espada curva tallada en ámbar milenario que centellea con dolor atrapado.",
+    "efecto": "Permite invocar el poder del relámpago a voluntad como un ritual de Elementalismo sin coste en PM. Los espíritus y bestias del cielo y la tierra consideran a su portador un enemigo jurado a causa de la maldición de la tala del Bosque del Trueno."
+  },
+  {
+    "id": "sello-del-segundo-sol",
+    "nombre": "Sello del segundo sol",
+    "nombre_original": "Seal of the Second Sun",
+    "descripcion": "Delicado cilindro grabado en lapislázuli de la era imperial.",
+    "efecto": "En manos de una soberana o heroína invernal, al rodar el cilindro sobre arena o ceniza, revela la senda astronómica hacia el Sol Renacido, otorgando una bonificación de +2 a todas las pruebas de viaje y orientación hacia santuarios solares y templos de fuego extintos."
+  },
+  {
+    "id": "craneo-de-la-diosa-salamandra",
+    "nombre": "Cráneo de la diosa salamandra",
+    "nombre_original": "Skull of the Salamander-Goddess",
+    "descripcion": "Fósil colosal de salamandra con dientes de topacio que irradia calor constante.",
+    "efecto": "Mantiene calientes a todas las criaturas en un radio de 50 metros e intensifica las fuentes de fuego (+5 de daño a ataques de fuego). Si no es devuelto al cráter de los Tres Volcanes antes del solsticio de verano, la diosa telúrica despertará decapitada recorriendo el mundo con furia sísmica."
+  },
+  {
+    "id": "aceite-celestial",
+    "nombre": "Aceite celestial",
+    "nombre_original": "Sky Oil",
+    "descripcion": "Líquido denso y viscoso de tonalidad esmeralda que precipita de nubes rojas.",
+    "efecto": "Conductor elemental supremo. Al derramarse sobre un objeto o criatura viva, comprime milenios de evolución en pocas horas: muta afinidades (otorga Inmunidad a un elemento a cambio de Vulnerabilidad a otro) o transforma semillas corrientes en plantas carnívoras de combate, causando gran agonía durante el proceso."
+  },
+  {
+    "id": "cuerda-de-tres-nudos",
+    "nombre": "Cuerda de tres nudos",
+    "nombre_original": "Three-Knot Rope",
+    "descripcion": "Cuerda gruesa de jarcia con tres nudos marineros apretados.",
+    "efecto": "Al desatar el primer nudo, lanza el conjuro Ventus sin coste en PM. Al desatar el segundo nudo, ejecuta un ritual de Elementalismo para manipular tempestades y corrientes aéreas sin coste en PM. Al desatar el tercer nudo, convoca una audiencia inmediata con la Princesa del Viento en persona. Cada nudo desatado no puede volver a anudarse."
+  },
+  {
+    "id": "tomo-del-meteorito",
+    "nombre": "Tomo del meteorito",
+    "nombre_original": "Tome of the Meteor",
+    "descripcion": "Volumen ciclópeo encuadernado en madera con un reloj astronómico de punteros cometarios.",
+    "efecto": "Describe máquinas y plegarias a astros desconocidos. Consulta de datos astronómicos y presagios concede un éxito automático en una prueba de Estudio o Conocimiento por sesión. Sus manecillas avanzan inexorablemente hacia una alineación celeste temida por los eruditos."
+  },
+  {
+    "id": "deshorno",
+    "nombre": "Deshorno",
+    "nombre_original": "Undoven",
+    "descripcion": "Artilugio portátil de fundición pesada con portezuela térmica frontal.",
+    "efecto": "Una vez por descanso, permite introducir una pieza de equipo compleja (arma, armadura, escudo o accesorio) para descomponerla mediante calor alquímico en dos materiales distintos cuyo valor combinado en zenit sea exactamente igual al del objeto destruido."
+  },
+  {
+    "id": "fragmento-de-la-mascara-blanca",
+    "nombre": "Fragmento de la máscara blanca",
+    "nombre_original": "White Mask Fragment",
+    "descripcion": "Mitad derecha de una máscara de madera con cornamenta tallada por la escultora Acaunissa.",
+    "efecto": "Mientras se vista este fragmento sobre el rostro, ninguna criatura de la especie no muerto (salvo Villanos) puede dañarte ni seleccionarte como objetivo de sus ataques o conjuros ofensivos."
+  }
+]

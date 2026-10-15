@@ -1,0 +1,107 @@
+[
+  {
+    "id": "aion",
+    "nombre": "Aion",
+    "nombre_original": "Aion",
+    "descripcion": "Un mecha colosal de metal blanco con incrustaciones doradas y argénteas.",
+    "efecto": "Rescatado del vacío profundo y amarrado junto a la Estación Solar Babilonia. Requiere una tripulación completa para pilotarse (reglas de vehículo de grupo de tamaño grande). Permanece inerte a la espera de un piloto con la resonancia o llave neural precisa."
+  },
+  {
+    "id": "cordon-umbilical-alienigena",
+    "nombre": "Cordón umbilical alienígena",
+    "nombre_original": "Alien Umbilical Cord",
+    "descripcion": "Los restos inquietantes de un órgano tentacular segmentado colosal de una entidad extradimensional.",
+    "efecto": "Permite cosechar material genético para inyecciones celulares que incrementan atributos corporales de forma permanente. Los receptores sufren mutaciones físicas y de conducta irreversibles: quedan absortos mirando al vacío o ladean la cabeza escuchando susurros inaudibles para otros."
+  },
+  {
+    "id": "arca-de-la-esperanza",
+    "nombre": "Arca de la esperanza",
+    "nombre_original": "Ark of Hope",
+    "descripcion": "Los restos de una nave alienígena ancestral a la deriva en un cinturón de asteroides.",
+    "efecto": "Solo puede ser pilotada por individuos portadores de una secuencia genética alienígena específica. Su núcleo sellado alberga una conciencia durmiente cuyo código fuente rige los sistemas estelares de la civilización creadora."
+  },
+  {
+    "id": "engranaje-negro",
+    "nombre": "El engranaje negro",
+    "nombre_original": "The Black Gear",
+    "descripcion": "Un disco dentado que absorbe la luz a su alrededor, manipulable de forma segura solo por organismos biológicos.",
+    "efecto": "Si entra en contacto con cualquier constructo o máquina, el engranaje se desliza en su chasis y somete la estructura por completo a la voluntad de su amo. Transmite su influencia infecciosa a máquinas dañadas adyacentes: los autómatas sin conciencia se convierten en herramientas dóciles y los androides sintéticos en soldados fanáticos."
+  },
+  {
+    "id": "tanque-de-clonacion",
+    "nombre": "Tanque de clonación",
+    "nombre_original": "Cloning Vat",
+    "descripcion": "Una cuba cilíndrica con líquido verde fluorescente donde se agita una silueta en estasis.",
+    "efecto": "Permite clonar a cualquier ser vivo; la réplica es idéntica al original pero se disuelve instantáneamente en un charco mucoso si sus PV o PM caen a 0. Cada clonación fragmenta el alma de la criatura matriz para animar a la copia; su uso reiterado destruye la identidad del individuo original de manera permanente."
+  },
+  {
+    "id": "descargador-de-demonios",
+    "nombre": "Descargador de demonios",
+    "nombre_original": "Demon Downloader",
+    "descripcion": "Un brazalete táctil con pantalla digital que contiene una copia del software Lemegeton.apk.",
+    "efecto": "Funciona como un Ritual de Ritualismo de potencia media o mayor. El usuario debe negociar un pacto con la entidad convocada desde la Red de Almas. Si el demonio coopera, el portador accede a un conjuro específico o disciplina ritual seleccionada por el DJ mientras se cumplan las cláusulas del pacto. Puede solicitar al demonio anular el coste total en PM de un conjuro o Ritual, lo cual rescinde el contrato de inmediato. Cada entidad solo puede contratarse una vez."
+  },
+  {
+    "id": "carpeta-de-euscal-inc",
+    "nombre": "Carpeta de Euscal Inc.",
+    "nombre_original": "Euscal Inc. Folder",
+    "descripcion": "Una abultada carpeta repleta de documentos clasificados con pruebas de los crímenes de la corporación Euscal Inc.",
+    "efecto": "Contiene registros de cohecho de altos cargos, chantajes a inspectores y sindicalistas, y despliegue de comandos paramilitares en suburbios para la instalación ilegal de vertederos químicos. Revelar su contenido entrega las fórmulas industriales de Euscal a corporaciones rivales, atrayendo la persecución de múltiples villanos."
+  },
+  {
+    "id": "modelo-m-diada",
+    "nombre": "Modelo M-Díada",
+    "nombre_original": "M-Dyad Model",
+    "descripcion": "La empuñadura de una espada hallada en un laboratorio confidencial que proyecta una hoja de plasma donde convergen luz y sombra.",
+    "efecto": "Somete a prueba al portador: si resulta indigno, drena su energía vital reduciéndolo inmediatamente a 0 PV. Si es digno, actúa como un arma personalizada rara transformable de la categoría Espada: una forma inflige daño de luz y la otra daño oscuro. Puede emplearse para absorber y quebrar magia activa, funcionando como un Ritual de Entropismo sin coste en PM y con una Dificultad acorde al poder mágico a disipar."
+  },
+  {
+    "id": "planos-del-sistema-nefele",
+    "nombre": "Planos del sistema Nefele",
+    "nombre_original": "Nephele System Plans",
+    "descripcion": "Un disco de datos del tamaño de una palma con esquemas técnicos de la estación orbital de Olympia Defense Systems.",
+    "efecto": "Contiene el registro de las escasas debilidades estructurales y frecuencias de desconexión del sistema orbital automatizado desplegado para asfixiar atmósferas con miasmas letales que bloquean la radiación solar."
+  },
+  {
+    "id": "morfomodulo-pulsar",
+    "nombre": "Morfomódulo Púlsar",
+    "nombre_original": "Pulsar Morphmodule",
+    "descripcion": "Un inyector ergonómico que alberga un enjambre de nanorobots relucientes.",
+    "efecto": "Dispositivo capaz de fusionarse con cualquier montura o medio de transporte, dotándolo de un exoesqueleto aerodinámico blindado. Elimina todas las Vulnerabilidades elementales del transporte y otorga un bonificador de +2 a todas las pruebas Abiertas y Enfrentadas en las que participe el vehículo. Confiere potencia para propulsarse a la velocidad de la luz durante exactamente un segundo, tras lo cual se desactiva hasta ser sometido a una fuente de calor extremo."
+  },
+  {
+    "id": "llave-escarlata",
+    "nombre": "Llave Escarlata",
+    "nombre_original": "Scarlet Key",
+    "descripcion": "Una tarjeta de acceso roja laminada grabada con circuitos arcanos formando el sello de Mercurio.",
+    "efecto": "Al insertarse en un terminal conectado a la Red de Almas con lector de tarjetas, sumerge al usuario y a sus aliados en una burbuja de ciberespacio donde el software y hardware del dispositivo se materializan como una mazmorra virtual operable desde dentro. El reverso de la tarjeta permite regresar al plano físico, pudiendo emerger desde un terminal remoto conectado a la misma red."
+  },
+  {
+    "id": "protocolo-de-reconstruccion-espiritual",
+    "nombre": "Protocolo de reconstrucción espiritual",
+    "nombre_original": "Spiritual Reconstruction Protocol",
+    "descripcion": "Una tableta enigmática cubierta de micrografías lumínicas.",
+    "efecto": "Manipula el entramado de la Red de Almas para reescribir recuerdos y mapas neuronales utilizando memorias de épocas pasadas o futuras del flujo anímico temporal. Es incapaz de forjar almas reales; genera una carcasa fría sin empatía y desaparece a través del continuo espaciotemporal."
+  },
+  {
+    "id": "codigo-fuente-universal",
+    "nombre": "Código fuente universal",
+    "nombre_original": "Universal Source Code",
+    "descripcion": "Una esfera ingrávida de luz iridiscente palpitante custodiada en las capas abisales de la Red de Almas.",
+    "efecto": "Define la estructura espiritual del mundo material. Reescribir sus cadenas permite alterar la realidad, el espacio y el tiempo. Con cada modificación, el artefacto se vuelve más pesado y denso, albergando una masa viva desconocida que se gesta en su núcleo."
+  },
+  {
+    "id": "motor-de-hendidura-espacial",
+    "nombre": "Motor de hendidura espacial",
+    "nombre_original": "Warpslice Engine",
+    "descripcion": "Un descomunal reactor acoplable semejante a un cañón de riel triple para naves de guerra.",
+    "efecto": "Fija tres vértices en el espacio material y un cuarto imaginario en una dimensión paralela, colapsando el volumen contenido en el tetraedro para rasgar una fisura interdimensional. Requiere una precisión de cálculo absoluta: cualquier error de sincronización abre el paso a entidades del vacío con consecuencias catastróficas."
+  },
+  {
+    "id": "lagrima-del-mundo",
+    "nombre": "Lágrima del mundo",
+    "nombre_original": "World Tear",
+    "descripcion": "Una piedra de alabastro surcada por una hendidura oscura que canaliza la agonía y alegría del planeta.",
+    "efecto": "Permite a quien la sostenga ejecutar Rituales de Espiritismo para comunicarse directamente con el flujo de almas y desatar poderes elementales ancestrales."
+  }
+]

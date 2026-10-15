@@ -1,0 +1,222 @@
+[
+  {
+    "id": "cazador",
+    "nombre": "Cazador",
+    "nombre_original": "Hunter",
+    "descripcion": "Rastreador nato y especialista en emboscadas que conoce las flaquezas de su presa y domina el terreno mediante ingenios y trampas.",
+    "beneficios": {
+      "pv": 0,
+      "pm": 0,
+      "pi": 2,
+      "competencias": [
+        "armas_marciales_cuerpo",
+        "armas_marciales_distancia"
+      ],
+      "rituales": [],
+      "texto": "Aumenta permanentemente tus Puntos de Inventario (PI) máximos en 2. Puedes equipar armas marciales cuerpo a cuerpo y armas marciales a distancia."
+    },
+    "habilidades": [
+      {
+        "id": "fijar-blanco",
+        "nombre": "Fijar blanco",
+        "nombre_original": "Lock-on",
+        "sl_max": 1,
+        "tipo": "accion",
+        "activacion": "Acción | 10 PM.",
+        "efecto": "Puedes fijar a un objetivo visible. Durante su siguiente turno, cualquier acción realizada por un aliado contra este objetivo obtiene un bonificador de +2 a las pruebas asociadas. Si todas las pruebas realizadas contra el objetivo durante este periodo tienen éxito, el objetivo sufre además el estado débil. Si el objetivo queda reducido a 0 PV mientras está bajo el efecto de esta habilidad, puedes marcar de inmediato a otro objetivo sin coste adicional de PM."
+      },
+      {
+        "id": "colocar-trampa",
+        "nombre": "Colocar trampa",
+        "nombre_original": "Set Trap",
+        "sl_max": 5,
+        "tipo": "otra",
+        "activacion": "Inicio de una escena de conflicto (o emboscada) | Ver reglas de Trampas.",
+        "efecto": "Dominas la creación y despliegue de trampas tácticas. Cada vez que adquieres esta habilidad, aprendes dos trampas del nivel de habilidad (SL) correspondiente (ver catálogo de trampas).",
+        "elecciones": [
+          {
+            "clave": "trampas",
+            "tipo": "opciones",
+            "grupos": [
+              "trampa"
+            ],
+            "etiqueta": "Trampas aprendidas",
+            "min": "SL*2",
+            "max": "SL*2"
+          }
+        ]
+      },
+      {
+        "id": "rastrear",
+        "nombre": "Rastrear",
+        "nombre_original": "Track",
+        "sl_max": 5,
+        "tipo": "otra",
+        "activacion": "Escena de no conflicto | 10 PM.",
+        "efecto": "Puedes rastrear a una presa que no se encuentre actualmente en la escena y cuyos rastros puedan seguirse mediante métodos convencionales. La presa debe realizar una prueba enfrentada de [PER + VOL] contra tu [PER + VOL] + SL.\nSi tienes éxito en el rastreo, llegas a la ubicación de la presa. Si se inicia un conflicto, tu primera prueba de Precisión contra la presa obtiene un bonificador de +SL y, si impacta, inflige [TM + 15] de daño adicional. Esta habilidad concluye si caes a 0 PV, atacas a la presa, cambias de objetivo o por dictamen del DJ."
+      },
+      {
+        "id": "golpe-vital",
+        "nombre": "Golpe vital",
+        "nombre_original": "Vital Strike",
+        "sl_max": 1,
+        "tipo": "otra",
+        "activacion": "Tras acertar una prueba de Precisión | 10 PM.",
+        "efecto": "La criatura objetivo sufre daño adicional igual al tamaño de dado de tu Destreza. Si la criatura ya se encuentra en Crisis, o entraría en Crisis a causa de tu ataque, sufre además 5 de daño adicional."
+      },
+      {
+        "id": "reflejos-salvajes",
+        "nombre": "Reflejos salvajes",
+        "nombre_original": "Wild Reflexes",
+        "sl_max": 5,
+        "tipo": "otra",
+        "activacion": "Al ejecutar la acción de Guardia.",
+        "efecto": "Cuando ejecutas la acción de Guardia, si eliges no cubrir a otra criatura, obtienes un bonificador a tu Defensa igual a +SL hasta el inicio de tu siguiente turno. Además, si un enemigo falla un ataque contra ti durante este periodo, puedes realizar un ataque gratuito contra él (considera tu Tirada Mayor como 0 al calcular el daño de este contraataque)."
+      }
+    ]
+  },
+  {
+    "id": "ilusionista",
+    "nombre": "Ilusionista",
+    "nombre_original": "Illusionist",
+    "descripcion": "Manipulador de percepciones y realidades aparentes capaz de proyectar dobles etéreos que absorben castigo y desconciertan las líneas enemigas.",
+    "beneficios": {
+      "pv": 0,
+      "pm": 5,
+      "pi": 0,
+      "competencias": [],
+      "rituales": [
+        "ritualismo"
+      ],
+      "texto": "Aumenta permanentemente tus Puntos de Mente (PM) máximos en 5. Puedes realizar Rituales de la disciplina de Ritualismo."
+    },
+    "habilidades": [
+      {
+        "id": "magia-ilusionista",
+        "nombre": "Magia ilusionista",
+        "nombre_original": "Illusionist Magic",
+        "sl_max": 10,
+        "tipo": "otra",
+        "activacion": "Especial | Ver conjuros de Ilusionista.",
+        "efecto": "Cada vez que adquieres esta habilidad, aprendes un conjuro de la lista de Ilusionista. Los conjuros ofensivos y las acciones de los fantasmas emplean [PER + VOL] para sus pruebas de Magia.",
+        "elecciones": [
+          {
+            "clave": "conjuros",
+            "tipo": "conjuros",
+            "filtro": {
+              "lista": [
+                "ilusionista"
+              ]
+            },
+            "etiqueta": "Conjuros de Ilusionista",
+            "min": "SL",
+            "max": "SL"
+          }
+        ]
+      },
+      {
+        "id": "eco-fantasmal",
+        "nombre": "Eco fantasmal",
+        "nombre_original": "Phantasmal Echo",
+        "sl_max": 5,
+        "tipo": "otra",
+        "activacion": "Automático al destruirse un fantasma.",
+        "efecto": "Cada vez que uno de tus fantasmas se destruye, recuperas [SL + 2] Puntos de Mente."
+      },
+      {
+        "id": "recuperacion-fantasmal",
+        "nombre": "Recuperación fantasmal",
+        "nombre_original": "Phantasmal Recovery",
+        "sl_max": 5,
+        "tipo": "otra",
+        "activacion": "Acción gratuita en tu turno.",
+        "efecto": "Destruyes a uno de tus fantasmas activos para recuperar [SL × 5] Puntos de Vida. Destruir un fantasma mediante esta habilidad no activa Eco fantasmal."
+      },
+      {
+        "id": "reciclaje-fantasmal",
+        "nombre": "Reciclaje fantasmal",
+        "nombre_original": "Phantasmal Recycling",
+        "sl_max": 1,
+        "tipo": "otra",
+        "activacion": "Al lanzar un conjuro sin PM suficientes.",
+        "efecto": "Cuando lanzas un conjuro, si no posees los PM necesarios para pagar su coste total, puedes destruir a uno de tus fantasmas activos para pagar el conjuro por completo. Destruir un fantasma de este modo no activa Eco fantasmal. Esta habilidad no puede usarse para pagar la creación de un nuevo fantasma."
+      },
+      {
+        "id": "ilusionismo-ritual",
+        "nombre": "Ilusionismo ritual",
+        "nombre_original": "Ritual Illusionism",
+        "sl_max": 1,
+        "tipo": "otra",
+        "activacion": "Ritual | Ver reglas de Rituales.",
+        "efecto": "Puedes ejecutar Rituales cuyos efectos pertenezcan a la disciplina del Ilusionismo (engaños sensoriales a gran escala, camuflaje óptico, distorsión auditiva). Los Rituales de Ilusionismo emplean [PER + VOL] para su prueba de Magia.",
+        "rituales": [
+          "ilusionismo"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "monje",
+    "nombre": "Monje",
+    "nombre_original": "Monk",
+    "descripcion": "Asceta marcial que alcanza la armonía física y espiritual canalizando cuentas de alma para repeler daño, potenciar golpes y depurar aflicciones.",
+    "beneficios": {
+      "pv": 0,
+      "pm": 5,
+      "pi": 0,
+      "competencias": [
+        "armas_marciales_cuerpo",
+        "armas_marciales_distancia"
+      ],
+      "rituales": [],
+      "texto": "Aumenta permanentemente tus Puntos de Mente (PM) máximos en 5. Puedes equipar armas marciales cuerpo a cuerpo y armas marciales a distancia."
+    },
+    "habilidades": [
+      {
+        "id": "claridad",
+        "nombre": "Claridad",
+        "nombre_original": "Clarity",
+        "sl_max": 3,
+        "tipo": "pasiva",
+        "activacion": "Pasivo con Cuentas de Determinación activas.",
+        "efecto": "Por cada pareja (2) de Cuentas de Determinación activas que poseas, eliges uno de los siguientes beneficios acumulativos (puedes mantener activos tantos beneficios simultáneos como tu SL):\n- Inmunidad a un estado alterado elegido.\n- Tus ataques o conjuros de un tipo de daño elegido ignoran Resistencias.\n- Obtienes Resistencia a un tipo de daño elegido.\nNo puedes seleccionar el mismo beneficio dos veces a la vez."
+      },
+      {
+        "id": "claridad-resonante",
+        "nombre": "Claridad resonante",
+        "nombre_original": "Resonant Clarity",
+        "sl_max": 3,
+        "tipo": "pasiva",
+        "activacion": "Pasivo.",
+        "efecto": "Por cada nivel de habilidad (SL), puedes compartir uno de tus beneficios activos de Claridad con hasta tres aliados visibles."
+      },
+      {
+        "id": "renovacion-del-alma",
+        "nombre": "Renovación del alma",
+        "nombre_original": "Soul Renewal",
+        "sl_max": 1,
+        "tipo": "accion",
+        "activacion": "Acción | 2 PM por cuenta liberada.",
+        "efecto": "Elige hasta tres criaturas. Liberas tus cuentas del alma hacia ellas gastando 2 PM por cuenta. Cada cuenta entregada restaura 10 PV o PM (a tu elección). A nivel 20 la regeneración aumenta a 12 PV/PM por cuenta, y a nivel 40 a 15 PV/PM por cuenta. Cada cuenta liberada se destruye."
+      },
+      {
+        "id": "disparo-espiritual",
+        "nombre": "Disparo espiritual",
+        "nombre_original": "Spirit Shot",
+        "sl_max": 2,
+        "tipo": "accion",
+        "activacion": "Acción | 2 PM por cuenta disparada.",
+        "efecto": "Eliges cualquier número de cuentas del alma y realizas una prueba de [DES + VOL] a distancia contra uno o más enemigos. Si impactas, cada objetivo pierde [SL × 4] PV o PM por cuenta disparada (a tu elección). Este daño ignora Resistencias. Si atacas a PV impactas contra Defensa; si atacas a PM impactas contra Defensa Mágica. Las cuentas se destruyen tras el ataque, acierte o falle."
+      },
+      {
+        "id": "fortaleza-espiritual",
+        "nombre": "Fortaleza espiritual",
+        "nombre_original": "Spiritual Fortress",
+        "sl_max": 3,
+        "tipo": "reaccion",
+        "activacion": "Reacción al recibir daño | 2 PM por cuenta destruida.",
+        "efecto": "Liberas cualquier número de cuentas del alma para reducir el daño entrante sufrido por ti o por hasta tres criaturas aliadas en [SL × 2] por cada cuenta destruida (esta reducción se aplica antes de las afinidades de daño)."
+      }
+    ]
+  }
+]
