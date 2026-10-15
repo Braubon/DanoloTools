@@ -1,11 +1,11 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
-  "trailingSlash": false,
+  "trailingSlash": true,
   "redirects": [
     {
       "source": "/aspect-ratio",
-      "destination": "/tools/aspect-ratio",
+      "destination": "/tools/aspect-ratio/",
       "permanent": true
     }
   ],
@@ -24,6 +24,15 @@
         {
           "key": "X-XSS-Protection",
           "value": "1; mode=block"
+        }
+      ]
+    },
+    {
+      "source": "/tools/fabula-ultima-fichas/(data|personajes)/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache"
         }
       ]
     }

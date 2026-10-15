@@ -5,7 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Visor · Fabula Ultima</title>
   <meta name="description" content="Consulta las fichas del grupo de Fabula Ultima.">
-  <script>try { var t = localStorage.getItem('fu-tema'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}</script>
+  <script>
+    if (!location.pathname.endsWith('/') && !location.pathname.endsWith('.html')) {
+      location.replace(location.pathname + '/' + location.search + location.hash);
+    }
+    try { var t = localStorage.getItem('fu-tema'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -19,7 +24,7 @@
     <div class="marca"><h1 class="display">Fabula Ultima</h1><span>Visor de fichas</span></div>
     <div class="acciones">
       <label class="btn" title="Cargar uno o varios personajes en JSON">Cargar fichas<input type="file" accept=".json,application/json" id="cargar" multiple class="sr"></label>
-      <a class="btn fantasma" href="../generador/">Generador</a>
+      <a class="btn fantasma" href="../generador/index.html">Generador</a>
       <button class="btn icono fantasma" data-tema-toggle aria-label="Cambiar tema"></button>
     </div>
   </header>
