@@ -257,6 +257,10 @@ function panelClases() {
       const filtradas = tagActivo === 'todas'
         ? disp
         : disp.filter((c) => (c.etiquetas || []).includes(tagActivo));
+      if (!filtradas.some((c) => c.id === ui.clasePrevia)) {
+        ui.clasePrevia = filtradas.length ? filtradas[0].id : '';
+      }
+      const cPrev = filtradas.find((c) => c.id === ui.clasePrevia) || filtradas[0] || null;
       h += `<div class="tarjeta" style="margin-top:12px">
         <div class="fila entre" style="margin-bottom:8px">
           <strong>Añadir clase</strong>
@@ -269,13 +273,21 @@ function panelClases() {
           ).join('')}</div>
         </div>
         <div class="fila" style="flex-wrap:nowrap;gap:8px">
-          <select id="nueva-clase" aria-label="Clase" style="flex:1" ${!puedeAnadir && !libre() ? 'disabled' : ''}>
+          <select id="nueva-clase" data-act="previsualizar-clase" aria-label="Clase" style="flex:1" ${!puedeAnadir && !libre() ? 'disabled' : ''}>
             ${filtradas.length ? filtradas.map((c) =>
-              `<option value="${c.id}">${esc(c.nombre)}${(c.etiquetas || []).length ? ' [' + c.etiquetas.join(', ') + ']' : ''}${c._atlas !== 'basico' ? ' · ' + esc(nombreAtlas(dbTodo, c._atlas)) : ''}</option>`
+              `<option value="${c.id}" ${cPrev && c.id === cPrev.id ? 'selected' : ''}>${esc(c.nombre)}${(c.etiquetas || []).length ? ' [' + c.etiquetas.join(', ') + ']' : ''}${c._atlas !== 'basico' ? ' · ' + esc(nombreAtlas(dbTodo, c._atlas)) : ''}</option>`
             ).join('') : '<option value="">Sin clases con esta etiqueta</option>'}
           </select>
           <button class="btn primario" data-act="anadir-clase" ${filtradas.length && (puedeAnadir || libre()) ? '' : 'disabled'}>Añadir clase</button>
         </div>
+        ${cPrev ? `<div style="margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)">
+          <div class="fila" style="gap:6px;margin-bottom:4px">
+            <strong>${esc(cPrev.nombre)}</strong>${F.etiquetasClase(cPrev)}${tagAtlas(cPrev)}
+          </div>
+          <p class="small" style="margin:0 0 6px">${esc(cPrev.descripcion || '')}</p>
+          ${cPrev.beneficios && cPrev.beneficios.texto ? `<p class="small muted" style="margin:0 0 4px"><strong>Beneficios gratuitos:</strong> ${esc(cPrev.beneficios.texto)}</p>` : ''}
+          ${(cPrev.habilidades || []).length ? `<p class="small faint" style="margin:0"><strong>Habilidades:</strong> ${(cPrev.habilidades || []).map((hb) => esc(hb.nombre)).join(' · ')}</p>` : ''}
+        </div>` : ''}
         ${!puedeAnadir && !libre() ? '<p class="small faint" style="margin-top:6px">Debes dominar al menos una de tus 3 clases actuales (nivel 10) para añadir una cuarta.</p>' : ''}
       </div>`;
     }
@@ -309,7 +321,8 @@ function tarjetaClase(c, editable, asign) {
   return `<div class="tarjeta">
     <div class="fila entre"><div class="fila"><h2 style="font-size:17px">${esc(def.nombre)}</h2><span class="muted">Nivel ${nv}</span>${nv >= 10 ? '<span class="chip acento">Dominada</span>' : ''}${F.etiquetasClase(def)}${tagAtlas(def)}</div>
       ${editable ? `<button class="btn peq fantasma peligro" data-act="quitar-clase" data-id="${c.id}">Quitar</button>` : ''}</div>
-    <p class="muted small" style="margin:4px 0">${esc(b.texto || '')}</p>
+    ${def.descripcion ? `<p class="small" style="margin:4px 0 2px">${esc(def.descripcion)}</p>` : ''}
+    <p class="muted small" style="margin:2px 0 4px">${esc(b.texto || '')}</p>
     ${comp.length ? `<div class="fila">${comp.map((x) => `<span class="chip">${esc(x)}</span>`).join('')}</div>` : ''}
     ${eleccion}
     ${nv === 0 ? '<p class="small faint" style="margin:6px 0 0">Asigna tu primer nivel a esta clase para activar sus beneficios de PV, PM y competencias.</p>' : ''}
@@ -927,12 +940,17 @@ function panelSubida() {
     const c = pj.clases.find((x) => x.id === n.clase);
     const nv = c ? R.nivelClase(c) : 0;
     domina = nv + 1 === 10;
+    if (defC.descripcion) {
+      h += `<p class="small muted" style="margin:10px 0 0">${esc(defC.descripcion)}</p>`;
+    }
+    if (!c && defC.beneficios && defC.beneficios.texto) {
+      h += `<p class="small muted" style="margin:4px 0 0"><strong>Beneficio gratuito:</strong> ${esc(defC.beneficios.texto)}</p>`;
+    }
     h += `<div class="small muted" style="margin:14px 0 6px">2 · Habilidad</div><div class="lista">${defC.habilidades.map((hd) => {
       const sl = c ? (c.habilidades[hd.id] || 0) : 0;
       const lleno = sl >= hd.sl_max;
       return F.htmlHabilidad(dbTodo, hd, sl, { derecha: `<button class="chip" data-act="nv-hab" data-id="${hd.id}" aria-pressed="${n.habilidad === hd.id}" ${lleno ? 'disabled' : ''}>${lleno ? 'Máximo' : (sl ? `SL ${sl} → ${sl + 1}` : 'Nueva')}</button>` });
     }).join('')}</div>`;
-    if (!c && defC.beneficios) h += `<p class="small muted" style="margin-top:6px"><strong>Beneficio gratuito:</strong> ${esc(defC.beneficios.texto || '')}</p>`;
 
     if (n.habilidad) {
       const hdSel = defC.habilidades.find((x) => x.id === n.habilidad);
@@ -1086,6 +1104,10 @@ function accion(act, ds, el, ev) {
     case 'azar-tema': pj.identidad.tema = azar(tabla(db, 'temas')); cambio(); return;
 
     // clases
+    case 'previsualizar-clase': {
+      ui.clasePrevia = el.value;
+      renderPanel(); return;
+    }
     case 'anadir-clase': {
       const id = document.getElementById('nueva-clase').value;
       if (id && !pj.clases.some((c) => c.id === id)) pj.clases.push({ id, habilidades: {}, beneficio: null });
