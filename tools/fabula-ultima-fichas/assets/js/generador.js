@@ -30,6 +30,10 @@ function guardar() {
   tGuardar = setTimeout(() => escribirLS(LS_PJ, JSON.stringify(pj)), 250);
 }
 
+// Partida en la nube (solo DJ): sesion = { usuario, dj } de /api/auth/
+const nube = { dj: false, pendiente: false };
+const API = { yo: '/api/auth/?accion=yo', uno: (id) => `/api/datos/?accion=uno&id=${encodeURIComponent(id)}`, guardar: '/api/datos/?accion=guardar' };
+
 const libre = () => !!pj.modo_libre;
 const creando = () => !pj.creacion_completa;
 const panel = () => document.getElementById('panel');
@@ -40,6 +44,7 @@ function reconstruirDb() { db = construirDb(raw, pj.contenido); }
 function cambio({ panel: rp = true } = {}) {
   pj.modificado = new Date().toISOString();
   guardar();
+  if (pj.rev) { nube.pendiente = true; pintarNube(); }
   if (rp) renderPanel();
   renderResumen();
   renderPestanas();
@@ -59,8 +64,68 @@ async function iniciar() {
   if (dbTodo.avisos.length) console.warn(dbTodo.avisos.join('\n'));
   const guardado = leerLS(LS_PJ);
   pj = guardado ? R.normalizarPersonaje(JSON.parse(guardado)) : R.nuevoPersonaje();
+  await iniciarNube();
   reconstruirDb();
   render();
+  pintarNube();
+}
+
+// =========================================================== partida en la nube
+async function iniciarNube() {
+  try {
+    const r = await fetch(API.yo, { cache: 'no-store' });
+    if (r.ok && (r.headers.get('content-type') || '').includes('json')) nube.dj = !!(await r.json()).dj;
+  } catch (e) { nube.dj = false; }
+  const id = new URLSearchParams(location.search).get('nube');
+  if (!id) return;
+  history.replaceState(null, '', location.pathname);
+  if (!nube.dj) { toast('Inicia sesión como DJ en el panel para editar personajes de la partida.', 'err'); return; }
+  if (id === 'nuevo') {
+    const cont = pj.contenido; pj = R.nuevoPersonaje(); pj.contenido = cont; tab = 'identidad';
+    escribirLS(LS_PJ, JSON.stringify(pj));
+    return;
+  }
+  try {
+    const r = await fetch(API.uno(id), { cache: 'no-store' });
+    const j = await r.json();
+    if (!r.ok) throw new Error(j.error || 'No se pudo cargar el personaje.');
+    pj = R.normalizarPersonaje(j.personaje);
+    tab = 'ficha';
+    escribirLS(LS_PJ, JSON.stringify(pj));
+    nube.pendiente = false;
+    toast(`${pj.identidad.nombre || 'Personaje'} cargado desde la partida.`);
+  } catch (e) { toast(e.message, 'err'); }
+}
+
+function pintarNube() {
+  const b = document.getElementById('nube-guardar');
+  if (!b) return;
+  b.classList.toggle('oculto', !nube.dj);
+  b.textContent = !pj || !pj.rev ? 'Guardar en la partida' : (nube.pendiente ? 'Guardar cambios en la partida' : 'Guardado en la partida');
+  b.classList.toggle('primario', !pj || !pj.rev || nube.pendiente);
+}
+
+async function guardarNube(forzar = false) {
+  const b = document.getElementById('nube-guardar');
+  b.disabled = true;
+  try {
+    const r = await fetch(API.guardar, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ personaje: pj, rev: pj.rev ?? null, forzar })
+    });
+    const j = await r.json();
+    if (r.status === 409) {
+      const nombre = (j.actual && j.actual.identidad && j.actual.identidad.nombre) || 'este personaje';
+      if (confirm(`${j.error}\n\n¿Sobrescribir ${nombre} en la partida con esta versión? Se perderán los cambios hechos desde Discord (PV, PM, PF…).`)) return guardarNube(true);
+      return;
+    }
+    if (!r.ok) throw new Error(j.error || 'No se pudo guardar.');
+    pj.rev = j.personaje.rev;
+    pj.discord = j.personaje.discord;
+    escribirLS(LS_PJ, JSON.stringify(pj));
+    nube.pendiente = false;
+    toast(`${pj.identidad.nombre || 'Personaje'} guardado en la partida.`);
+  } catch (e) { toast(e.message, 'err'); } finally { b.disabled = false; pintarNube(); }
 }
 
 function render() { renderPestanas(); renderPanel(); renderResumen(); }
@@ -1074,8 +1139,9 @@ function accion(act, ds, el, ev) {
     case 'tab': tab = ds.id; escribirLS(LS_TAB, tab); render(); window.scrollTo({ top: 0 }); return;
     case 'nuevo':
       if (!confirm('¿Empezar un personaje nuevo? Se perderán los cambios no descargados.')) return;
-      { const cont = pj.contenido; pj = R.nuevoPersonaje(); pj.contenido = cont; }
+      { const cont = pj.contenido; pj = R.nuevoPersonaje(); pj.contenido = cont; nube.pendiente = false; }
       reconstruirDb(); tab = 'identidad'; ui.nivel = {}; cambio(); return;
+    case 'nube-guardar': guardarNube(); return;
     case 'descargar': {
       const out = R.exportar(pj, dbTodo);
       descargarJson(out, slugArchivo(pj.identidad.nombre) + '.json');

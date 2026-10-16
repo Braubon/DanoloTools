@@ -1,6 +1,7 @@
 // ---------------------------------------------------------------------------
 // Visor de fichas de Fabula Ultima (solo lectura)
-// Carga por defecto los personajes listados en /personajes/index.json
+// Carga los personajes guardados en la nube (/api/datos/). Si la API no está
+// disponible (por ejemplo en local), usa los listados en /personajes/index.json
 // ---------------------------------------------------------------------------
 import { cargarRaw, construirDb, get, hab, tabla } from './db.js';
 import * as R from './rules.js';
@@ -11,7 +12,8 @@ const CARPETA = '../personajes/';
 const LS_LOCALES = 'fu-visor-locales';
 
 let raw, db;
-const pjs = [];           // { key, pj, origen: 'carpeta'|'local' }
+const pjs = [];           // { key, pj, origen: 'nube'|'carpeta'|'local' }
+const API_PUBLICO = '/api/datos/?accion=publico';
 let actual = 'grupo';     // 'grupo' | key
 let pestana = 'resumen';
 const filtro = { q: '', hab: 'todas', clase: '', magia: 'todos', equipo: 'todo' };
@@ -28,11 +30,22 @@ async function iniciar() {
     return;
   }
   db = construirDb(raw, null);
-  await cargarCarpeta();
+  if (!(await cargarNube())) await cargarCarpeta();
   cargarLocales();
   const hash = decodeURIComponent(location.hash.slice(1));
   if (hash && pjs.some((p) => p.key === hash)) actual = hash;
   render();
+}
+
+async function cargarNube() {
+  try {
+    const r = await fetch(API_PUBLICO, { cache: 'no-store' });
+    if (!r.ok || !(r.headers.get('content-type') || '').includes('json')) return false;
+    const j = await r.json();
+    if (!Array.isArray(j.personajes)) return false;
+    j.personajes.forEach((d) => { try { anadir(d, 'nube'); } catch (e) { console.warn(e); } });
+    return true;
+  } catch (e) { return false; }
 }
 
 async function cargarCarpeta() {
@@ -157,7 +170,7 @@ function vistaPersonaje(p) {
         <div class="meta">${esc([i.identidad, i.tema, i.origen].filter(Boolean).join(' · '))}</div>
         <div class="meta2">${esc([`Nivel ${pj.nivel}`, F.resumenClases(pj, db), i.especie, i.pronombres, i.jugador ? 'Jugador/a: ' + i.jugador : ''].filter(Boolean).join(' · '))}</div></div>
       <div class="chips"><span class="chip acento">PF ${pj.pf}</span><span class="chip">PX ${pj.px}</span><span class="chip">${pj.zenit} z</span>
-        ${p.origen === 'carpeta' ? '<span class="chip" title="Cargado desde la carpeta personajes/">Carpeta</span>' : '<span class="chip" title="Cargado desde tu equipo">Local</span>'}</div>
+        ${p.origen === 'nube' ? '<span class="chip" title="Guardado en la partida">Partida</span>' : p.origen === 'carpeta' ? '<span class="chip" title="Cargado desde la carpeta personajes/">Carpeta</span>' : '<span class="chip" title="Cargado desde tu equipo">Local</span>'}</div>
     </div>
     <div class="recursos">
       ${recurso('Puntos de Vida', 'pv', e.pv, c.pv_max, pv <= c.crisis ? '<span class="crisis">En Crisis</span>' : `<span class="faint small">Crisis ${c.crisis}</span>`)}

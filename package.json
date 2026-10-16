@@ -1,0 +1,6 @@
+{
+  "name": "danolotools",
+  "private": true,
+  "type": "module",
+  "description": "DanoloTools: herramientas est\u00e1ticas y funciones de Vercel (bot de Fabula Ultima)."
+}

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Comandos del bot · Fabula Ultima</title>
+  <meta name="description" content="Lista de comandos del bot de Discord de la partida de Fabula Ultima.">
+  <script>
+    if (!location.pathname.endsWith('/') && !location.pathname.endsWith('.html')) {
+      location.replace(location.pathname + '/' + location.search + location.hash);
+    }
+    try { var t = localStorage.getItem('fu-tema'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3l11 7v12l-11 7-11-7V10z' fill='%23d4b072'/%3E%3C/svg%3E">
+  <style>
+    .contenedor { max-width: 920px; }
+    .filtros-cmd { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 18px; }
+    .filtros-cmd .buscador { flex: 1; min-width: 200px; }
+    .indice { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
+    .cmd { padding: 14px 16px; }
+    .cmd .uso { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; font-size: 14px; font-weight: 600; color: var(--text); word-break: break-word; }
+    .cmd .uso .opc { color: var(--muted); font-weight: 400; }
+    .cmd .uso .req { color: var(--accent); font-weight: 500; }
+    .cmd p { margin: 6px 0 0; color: var(--muted); }
+    .cmd table { border-collapse: collapse; width: 100%; margin-top: 10px; font-size: 13px; }
+    .cmd td { padding: 4px 8px 4px 0; vertical-align: top; border-top: 1px solid var(--line); }
+    .cmd td:first-child { font-family: ui-monospace, Menlo, Consolas, monospace; white-space: nowrap; color: var(--text); width: 1%; }
+    .cmd .ej { margin-top: 10px; display: flex; flex-direction: column; gap: 4px; }
+    .cmd .ej code { background: var(--surface-2); border: 1px solid var(--line); border-radius: 6px; padding: 4px 8px; font-size: 12px; width: fit-content; max-width: 100%; overflow-x: auto; white-space: nowrap; }
+    .notas { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-bottom: 24px; }
+    .notas .tarjeta { margin-top: 0; }
+    .notas .tarjeta p { margin: 0; color: var(--muted); font-size: 13px; }
+    .notas .tarjeta strong { display: block; margin-bottom: 4px; }
+    h2.cat { font-size: 16px; margin: 24px 0 10px; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a href="../../../index.html" class="btn fantasma" style="text-decoration:none;margin-right:8px;font-size:13px;" title="Volver a DanoloTools">← Hub</a>
+    <div class="marca"><h1 class="display">Fabula Ultima</h1><span>Comandos del bot</span></div>
+    <div class="acciones">
+      <a class="btn fantasma" href="../visor/index.html">Visor</a>
+      <a class="btn fantasma" href="../generador/index.html">Generador</a>
+      <button class="btn icono fantasma" data-tema-toggle aria-label="Cambiar tema"></button>
+    </div>
+  </header>
+
+  <div class="contenedor">
+    <main id="vista"><p class="muted">Cargando…</p></main>
+  </div>
+  <script type="module" src="../assets/js/ayuda.js"></script>
+</body>
+</html>

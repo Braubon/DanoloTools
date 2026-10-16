@@ -1,6 +1,8 @@
-# Carpeta de personajes del visor
+# Carpeta de personajes de ejemplo
 
-El visor carga automáticamente las fichas listadas en `index.json`.
+Con la partida en la nube configurada (ver `../docs/bot-discord.md`), el visor muestra los personajes guardados en el panel del DJ y **no usa esta carpeta**. Solo se usa como alternativa cuando no hay API (por ejemplo, sirviendo la web en local con un servidor estático).
+
+En ese caso, el visor carga las fichas listadas en `index.json`.
 
 1. Exporta el personaje desde el generador con **Descargar JSON**.
 2. Copia el archivo a esta carpeta.

@@ -6,6 +6,10 @@ Generador y visor de personajes de *Fabula Ultima*. Web estática: HTML, CSS y J
 | --- | --- | --- |
 | Generador | `/generador/` | Crear personajes paso a paso, subirlos de nivel, cargar y descargar JSON. |
 | Visor | `/visor/` | Ver varias fichas, navegar entre ellas con pestañas y filtros, y ver el grupo con sus relaciones. |
+| Panel del DJ | `/panel/` | Personajes de la partida en la nube: importar, exportar, asignar a jugadores, editar y eliminar. Configuración del bot. |
+| Comandos | `/comandos/` | Consulta de todos los comandos del bot de Discord, para jugadores y DJ. |
+
+El bot de Discord y la partida en la nube funcionan con funciones de Vercel (`/api/`) y Upstash Redis. Configuración paso a paso: **`docs/bot-discord.md`**.
 
 ## Contenido incluido
 
@@ -27,7 +31,7 @@ En la pestaña **Contenido** del generador se activan los atlas y, dentro de cad
 
 ## Visor
 
-- Carga por defecto las fichas de `personajes/` (lista en `personajes/index.json`) y las que subas con **Cargar fichas** (se recuerdan en el navegador).
+- Carga los personajes de la partida guardados en la nube. Si la API no está disponible (en local sin `vercel dev`), usa las fichas de `personajes/` (lista en `personajes/index.json`). También puedes subir otras con **Cargar fichas** (se recuerdan en el navegador).
 - Por personaje: Resumen, Habilidades, Magia, Equipo, Vínculos y Notas, con buscador y filtros por tipo.
 - **Grupo**: PV, PM, PI, defensas, estados, orden de iniciativa y matriz de relaciones entre los personajes.
 
@@ -49,9 +53,19 @@ Abre `http://localhost:3000/` (o el puerto que indique).
 2. En Vercel: *Add New → Project*, importa el repositorio. *Framework Preset*: **Other**. Sin comando de build ni directorio de salida.
 3. Cada vez que cambies `personajes/` o `data/`, haz commit y Vercel vuelve a desplegar.
 
-## Personajes del visor
+## Partida en la nube y bot de Discord
 
-Ver `personajes/LEEME.md`. Copia los JSON exportados a `personajes/` y añádelos a `personajes/index.json`. Los tres incluidos son de ejemplo.
+- **Panel del DJ** (`/panel/`): entra con Discord; solo quien tenga el rol `DJ` en el servidor puede gestionar personajes.
+- **Generador**: si has entrado como DJ, aparece **Guardar en la partida**. Desde el panel, **Editar** abre un personaje de la partida en el generador.
+- **Bot**: tiradas, ataques, conjuros, PV/PM/PI/PF, estados, relojes, iniciativa, combate y gestión. Lista completa en `/comandos/`.
+- Código del servidor en `servidor/` (sin dependencias); funciones de entrada en `/api/` de la raíz del repositorio.
+- Guía de configuración: `docs/bot-discord.md`.
+
+Para probar las funciones en local hace falta la CLI de Vercel (`vercel dev`) con las variables de entorno.
+
+## Personajes de ejemplo
+
+`personajes/` contiene tres fichas de ejemplo que el visor solo usa si no hay API (ver `personajes/LEEME.md`). Puedes importarlas en el panel para probar el bot.
 
 ## Añadir más atlas
 

@@ -4,7 +4,11 @@ Dos webs estáticas para el juego de rol *Fabula Ultima*, en español:
 - `generador/` crea personajes, los sube de nivel y los exporta/importa en JSON.
 - `visor/` muestra varias fichas en solo lectura, con pestañas, filtros y una vista de grupo.
 
-Ambas comparten la base de datos `data/` y el código de `assets/`.
+- `panel/` es el panel del DJ (personajes de la partida en la nube, configuración del bot).
+- `comandos/` es la página de consulta de los comandos del bot.
+- `servidor/` es el código del bot de Discord y de la API (Node, sin dependencias); lo ejecutan las funciones de `/api/` en la raíz del repositorio.
+
+Todas comparten la base de datos `data/` y el código de `assets/`.
 
 ## Estructura
 
@@ -13,7 +17,14 @@ data/                      Base de datos (un directorio por libro). Ver docs/esq
   manifest.json            Lista y orden de los libros
   basico/                  Manual básico (siempre activo)
   alta-fantasia/           Atlas de Alta Fantasía
-personajes/                Fichas que el visor carga por defecto (+ index.json)
+personajes/                Fichas de ejemplo (el visor las usa si no hay API)
+servidor/comandos.js       Definición de los comandos del bot (la usan Discord y comandos/)
+servidor/bot.js            Manejadores de cada comando, botones y autocompletado
+servidor/web.js            Funciones HTTP: /api/discord/, /api/auth/, /api/datos/
+servidor/personajes.js     Almacén en Redis (personajes, relojes, combate)
+servidor/kv.js · discord.js · motor.js   Redis REST, API de Discord, dados y reglas
+assets/js/panel.js         Panel del DJ · assets/js/ayuda.js  Página de comandos
+docs/bot-discord.md        Configuración del bot y de la base de datos
 assets/js/db.js            Carga y filtrado de la base de datos (sin DOM)
 assets/js/rules.js         Motor de reglas: cálculo, validación, subida de nivel (sin DOM)
 assets/js/ficha.js         Piezas de HTML compartidas por las dos webs
@@ -59,3 +70,11 @@ Abrir los HTML con doble clic no funciona: los navegadores bloquean `fetch` en `
 ## Personajes por defecto del visor
 
 Copia los `.json` exportados por el generador a `personajes/` y añade sus nombres de archivo a `personajes/index.json`. El visor los carga al abrirse; además el usuario puede cargar otros desde su equipo.
+
+## Bot de Discord
+
+- Para añadir un comando: defínelo en `servidor/comandos.js`, escribe su función en `MANEJADORES` de `servidor/bot.js`, despliega y pulsa «Actualizar comandos de Discord» en el panel. La página `comandos/` se genera sola.
+- Toda lógica de reglas reutiliza `assets/js/rules.js`; no la dupliques en el servidor.
+- `servidor/` no puede usar dependencias de npm ni APIs del navegador; `servidor/comandos.js` tampoco puede usar APIs de Node (lo importa el navegador).
+- Los personajes guardados tienen `rev` (versión) y `discord` (jugador asignado). La web envía `rev` al guardar para detectar cambios hechos desde Discord.
+- Nunca escribas secretos en el código: van en variables de entorno de Vercel (`.env.example` en la raíz).

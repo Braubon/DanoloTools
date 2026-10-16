@@ -24,3 +24,12 @@
   - Cero ruido: Ir directo a la herramienta y su funcionalidad.
   - Toda la tarjeta o botón debe ser directamente interactivo y accionable.
   - Visualizadores limpios y en tiempo real.
+
+---
+
+## 3. Funciones de servidor (Vercel)
+
+- La raíz tiene `package.json` (`"type": "module"`, sin dependencias) y la carpeta `api/` con funciones de Vercel. Hoy solo las usa **Fabula Ultima** (bot de Discord y partida en la nube): `api/discord.js`, `api/auth.js` y `api/datos.js` importan su lógica de `tools/fabula-ultima-fichas/servidor/`.
+- Mantén pocas funciones en `api/`: agrupa rutas en un mismo archivo antes de crear otro. El resto de herramientas siguen siendo estáticas y no deben depender de `api/`.
+- `vercel.json` incluye reescrituras para `/api/<función>/` (por `trailingSlash: true`) y `includeFiles` para que las funciones lean los datos de los libros.
+- Secretos solo en variables de entorno de Vercel (plantilla en `.env.example`).

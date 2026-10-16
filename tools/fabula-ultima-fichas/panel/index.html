@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Panel del DJ · Fabula Ultima</title>
+  <meta name="description" content="Gestión de los personajes de la partida y del bot de Discord.">
+  <meta name="robots" content="noindex">
+  <script>
+    if (!location.pathname.endsWith('/') && !location.pathname.endsWith('.html')) {
+      location.replace(location.pathname + '/' + location.search + location.hash);
+    }
+    try { var t = localStorage.getItem('fu-tema'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3l11 7v12l-11 7-11-7V10z' fill='%23d4b072'/%3E%3C/svg%3E">
+  <style>
+    .contenedor { max-width: 1000px; }
+    .pj-fila { display: grid; grid-template-columns: minmax(0, 1fr) 220px auto; gap: 12px; align-items: center; }
+    .pj-fila select { width: 100%; }
+    .pj-fila .botones { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; }
+    @media (max-width: 760px) { .pj-fila { grid-template-columns: 1fr; } .pj-fila .botones { justify-content: flex-start; } }
+    .check { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 8px; padding: 6px 0; align-items: start; }
+    .check i { width: 10px; height: 10px; border-radius: 50%; margin-top: 5px; background: var(--err); }
+    .check.ok i { background: var(--ok); }
+    .copiar { display: flex; gap: 6px; align-items: center; margin-top: 6px; }
+    .copiar code { flex: 1; min-width: 0; overflow-x: auto; white-space: nowrap; background: var(--surface-2); border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; font-size: 12px; }
+    .usuario { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
+    .usuario img { width: 24px; height: 24px; border-radius: 50%; }
+    .entrar { text-align: center; padding: 48px 16px; }
+    .entrar p { margin-bottom: 18px; }
+    .entrar .btn { font-size: 15px; padding: 10px 18px; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a href="../../../index.html" class="btn fantasma" style="text-decoration:none;margin-right:8px;font-size:13px;" title="Volver a DanoloTools">← Hub</a>
+    <div class="marca"><h1 class="display">Fabula Ultima</h1><span>Panel del DJ</span></div>
+    <div class="acciones">
+      <span id="usuario"></span>
+      <a class="btn fantasma" href="../generador/index.html">Generador</a>
+      <a class="btn fantasma" href="../visor/index.html">Visor</a>
+      <a class="btn fantasma" href="../comandos/index.html">Comandos</a>
+      <button class="btn icono fantasma" data-tema-toggle aria-label="Cambiar tema"></button>
+    </div>
+  </header>
+
+  <div class="contenedor">
+    <main id="vista" aria-live="polite"><p class="muted">Cargando…</p></main>
+  </div>
+  <input type="file" id="importar" accept=".json,application/json" multiple class="sr">
+  <script type="module" src="../assets/js/panel.js"></script>
+</body>
+</html>
