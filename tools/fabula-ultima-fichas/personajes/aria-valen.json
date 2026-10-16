@@ -3,7 +3,7 @@
   "version": 1,
   "id": "3pe35wy5cseu",
   "creado": "2026-10-15T11:25:28.657Z",
-  "modificado": "2026-10-15T11:25:28.668Z",
+  "modificado": "2026-10-16T11:46:58.995Z",
   "contenido": {
     "atlas": [
       "basico",
@@ -153,31 +153,5 @@
       "px_gastados": 10,
       "fecha": "2026-10-15T11:25:28.666Z"
     }
-  ],
-  "calculado": {
-    "nota": "Valores derivados en el momento de exportar. El visor los recalcula a partir de la base de datos.",
-    "pv_max": 76,
-    "pm_max": 47,
-    "pi_max": 6,
-    "crisis": 38,
-    "def": 12,
-    "mdef": 8,
-    "init": -2,
-    "atributos": {
-      "DES": 8,
-      "PER": 6,
-      "VIG": 10,
-      "VOL": 8
-    },
-    "clases": [
-      {
-        "id": "guardian",
-        "nivel": 4
-      },
-      {
-        "id": "comandante",
-        "nivel": 3
-      }
-    ]
-  }
+  ]
 }

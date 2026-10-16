@@ -1,5 +1,5 @@
 {
-  "descripcion": "Personajes que el visor carga por defecto. Añade aquí el nombre de cada archivo .json de esta carpeta.",
+  "descripcion": "Personajes que el visor carga cuando no hay partida en la nube. Mismo formato que «Exportar» del panel. Ver LEEME.md.",
   "personajes": [
     "aria-valen.json",
     "lio-arden.json",

@@ -3,7 +3,7 @@
   "version": 1,
   "id": "svcah06ecsey",
   "creado": "2026-10-15T11:25:28.666Z",
-  "modificado": "2026-10-15T11:25:28.676Z",
+  "modificado": "2026-10-16T11:46:59.001Z",
   "contenido": {
     "atlas": [
       "basico",
@@ -135,31 +135,5 @@
     "estados": []
   },
   "notas": "",
-  "historial": [],
-  "calculado": {
-    "nota": "Valores derivados en el momento de exportar. El visor los recalcula a partir de la base de datos.",
-    "pv_max": 40,
-    "pm_max": 45,
-    "pi_max": 8,
-    "crisis": 20,
-    "def": 12,
-    "mdef": 9,
-    "init": -1,
-    "atributos": {
-      "DES": 10,
-      "PER": 8,
-      "VIG": 6,
-      "VOL": 8
-    },
-    "clases": [
-      {
-        "id": "bailarin",
-        "nivel": 3
-      },
-      {
-        "id": "picaro",
-        "nivel": 2
-      }
-    ]
-  }
+  "historial": []
 }
