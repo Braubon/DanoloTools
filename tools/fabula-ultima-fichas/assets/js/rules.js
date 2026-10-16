@@ -75,10 +75,12 @@ export function normalizarPersonaje(pj) {
   return out;
 }
 
-// --------------------------------------------------------------- clases
 export const nivelClase = (c) => Object.values(c.habilidades || {}).reduce((a, b) => a + (b || 0), 0);
 export const clasesDominadas = (pj) => pj.clases.filter((c) => nivelClase(c) >= 10).map((c) => c.id);
-export const clasesNoDominadas = (pj) => pj.clases.filter((c) => nivelClase(c) < 10);
+export const clasesNoDominadas = (pj) => pj.clases.filter((c) => {
+  const nv = nivelClase(c);
+  return nv > 0 && nv < 10;
+});
 export const nivelesAsignados = (pj) => pj.clases.reduce((a, c) => a + nivelClase(c), 0);
 
 /** Habilidades que posee el personaje: [{ def, sl, claseId }] */
@@ -243,6 +245,7 @@ export function calcular(pj, db) {
   const rituales = new Set();
   let proyectos = false;
   for (const c of pj.clases) {
+    if (nivelClase(c) <= 0) continue;
     const def = get(db, 'clases', c.id);
     if (!def) continue;
     const b = def.beneficios || {};
@@ -383,13 +386,16 @@ export function validar(pj, db, dbTodo = db) {
 
   // Clases
   const asignados = nivelesAsignados(pj);
-  if (creando && pj.nivel !== nivelIni) err('clases', `Un personaje nuevo empieza en nivel ${nivelIni}.`);
+  if (pj.nivel < nivelIni) err('clases', `El nivel mínimo de un personaje es ${nivelIni}.`);
+  if (pj.nivel > param(db, 'nivel_max', 50)) err('clases', `El nivel máximo es ${param(db, 'nivel_max', 50)}.`);
   if (asignados !== pj.nivel) err('clases', `Niveles de clase asignados: ${asignados} de ${pj.nivel}.`);
-  if (creando) {
-    const min = param(db, 'clases_iniciales_min', 2), max = param(db, 'clases_iniciales_max', 3);
-    if (pj.clases.length < min || pj.clases.length > max) err('clases', `Al crear el personaje debes repartir los niveles entre ${min} y ${max} clases.`);
+  const clasesConNivel = pj.clases.filter((c) => nivelClase(c) > 0);
+  if (clasesConNivel.length < param(db, 'clases_iniciales_min', 2)) {
+    err('clases', `Debes repartir tus niveles en al menos ${param(db, 'clases_iniciales_min', 2)} clases distintas.`);
   }
-  if (clasesNoDominadas(pj).length > param(db, 'clases_no_dominadas_max', 3)) err('clases', 'No puedes tener más de tres clases sin dominar.');
+  if (clasesNoDominadas(pj).length > param(db, 'clases_no_dominadas_max', 3)) {
+    err('clases', 'No puedes tener más de tres clases sin dominar simultáneamente.');
+  }
   for (const c of pj.clases) {
     const def = get(dbTodo, 'clases', c.id);
     if (!def) { err('clases', `Clase desconocida: ${c.id}.`); continue; }
@@ -397,7 +403,7 @@ export function validar(pj, db, dbTodo = db) {
     const nv = nivelClase(c);
     if (nv > 10) err('clases', `${def.nombre} supera el nivel 10.`);
     if (nv === 0) aviso('clases', `${def.nombre} no tiene niveles asignados.`);
-    if (def.beneficios && def.beneficios.eleccion && !c.beneficio) err('clases', `${def.nombre}: elige su beneficio gratuito.`);
+    if (nv > 0 && def.beneficios && def.beneficios.eleccion && !c.beneficio) err('clases', `${def.nombre}: elige su beneficio gratuito.`);
     for (const [hid, sl] of Object.entries(c.habilidades || {})) {
       const h = (def.habilidades || []).find((x) => x.id === hid);
       if (!h) { err('clases', `${def.nombre}: habilidad desconocida ${hid}.`); continue; }

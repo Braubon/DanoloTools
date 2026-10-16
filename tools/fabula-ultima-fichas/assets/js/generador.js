@@ -190,21 +190,61 @@ function panelIdentidad() {
     </div>`;
 }
 
+function htmlMejorasAtributos(pj, editable = true) {
+  const umbrales = [20, 40].filter((u) => pj.nivel >= u);
+  if (!umbrales.length && !(pj.atributos.mejoras || []).length) return '';
+
+  return `<div class="tarjeta" style="border-color:var(--accent);margin-top:14px">
+    <div class="fila entre" style="margin-bottom:8px">
+      <strong style="color:var(--accent)">Mejoras de atributo por nivel (niveles 20 y 40)</strong>
+      <span class="chip acento">+1 paso de dado (máx. d12)</span>
+    </div>
+    <p class="small muted" style="margin-bottom:10px">Al alcanzar los niveles 20 y 40 eliges un atributo para aumentar permanentemente su tamaño de dado base.</p>
+    <div class="pila">${umbrales.map((u, i) => {
+      const m = (pj.atributos.mejoras || [])[i];
+      return `<div class="fila" style="gap:10px;align-items:center;margin-bottom:6px">
+        <span class="muted small" style="width:75px"><strong>Nivel ${u}:</strong></span>
+        <div class="segmento">${R.ATR.map((a) => {
+          let dadoPrev = pj.atributos.base[a] || 8;
+          for (let k = 0; k < i; k++) {
+            const prevM = (pj.atributos.mejoras || [])[k];
+            if (prevM && prevM.atributo === a) dadoPrev = R.subirDado(dadoPrev);
+          }
+          const elegido = m && m.atributo === a;
+          const maximo = !elegido && dadoPrev >= 12;
+          const label = elegido
+            ? `${a} d${dadoPrev} → d${R.subirDado(dadoPrev)} ✓`
+            : (maximo ? `${a} d12 (máx)` : `${a} d${dadoPrev} → d${R.subirDado(dadoPrev)}`);
+          return `<button data-act="mejora" data-i="${i}" data-nivel="${u}" data-atr="${a}" aria-pressed="${elegido}" ${maximo || !editable ? 'disabled' : ''}>${label}</button>`;
+        }).join('')}</div>
+        ${!m ? '<span class="chip err">Pendiente</span>' : ''}
+      </div>`;
+    }).join('')}</div>
+  </div>`;
+}
+
 // =========================================================== CLASES
 function panelClases() {
-  const editable = creando() || libre();
+  const editable = true;
   const asign = R.nivelesAsignados(pj);
   let h = `<div class="seccion fila entre"><div><h2>Clases</h2>
-      <p class="muted small">${creando() ? `Reparte ${pj.nivel} niveles entre 2 y 3 clases. Cada nivel es una habilidad nueva o +1 SL.` : (libre() ? 'Modo libre: puedes editar niveles directamente.' : 'Para subir de nivel usa la pestaña Progreso.')}</p></div>
-    <span class="chip ${asign === pj.nivel ? 'ok' : 'err'}">Niveles ${asign} / ${pj.nivel}</span></div>`;
+      <p class="muted small">Reparte niveles en habilidades de clase (máx. 10 por clase, hasta 3 clases sin dominar).</p></div>
+    <div class="fila" style="gap:10px;align-items:center">
+      <label class="fila small" style="gap:6px">
+        <span class="muted">Nivel total:</span>
+        <input type="number" min="5" max="50" data-act-input="fijar-nivel" value="${pj.nivel}" style="width:70px">
+      </label>
+      <span class="chip ${asign === pj.nivel ? 'ok' : 'err'}">Niveles asignados: ${asign} / ${pj.nivel}</span>
+    </div></div>`;
 
   if (!pj.clases.length) h += '<div class="vacio">Todavía no has elegido clases.</div>';
   for (const c of pj.clases) h += tarjetaClase(c, editable, asign);
 
   if (editable) {
     const disp = db.col.clases.filter((c) => !pj.clases.some((x) => x.id === c.id));
-    const max = creando() && !libre() ? param(db, 'clases_iniciales_max', 3) : 99;
-    if (pj.clases.length < max && disp.length) {
+    const noDom = R.clasesNoDominadas(pj).length;
+    const puedeAnadir = noDom < param(db, 'clases_no_dominadas_max', 3) || libre();
+    if (disp.length) {
       const tagActivo = ui.filtroClaseTag || 'todas';
       const tags = ['todas', 'melé', 'distancia', 'apoyo', 'tanque', 'magia'];
       const filtradas = tagActivo === 'todas'
@@ -213,7 +253,7 @@ function panelClases() {
       h += `<div class="tarjeta" style="margin-top:12px">
         <div class="fila entre" style="margin-bottom:8px">
           <strong>Añadir clase</strong>
-          <span class="muted small">${filtradas.length} disponible${filtradas.length === 1 ? '' : 's'}</span>
+          <span class="muted small">${puedeAnadir ? `${filtradas.length} disponible${filtradas.length === 1 ? '' : 's'}` : 'Máximo 3 clases sin dominar'}</span>
         </div>
         <div class="fila" style="gap:6px;margin-bottom:10px;align-items:center">
           <span class="muted small">Filtrar:</span>
@@ -222,16 +262,19 @@ function panelClases() {
           ).join('')}</div>
         </div>
         <div class="fila" style="flex-wrap:nowrap;gap:8px">
-          <select id="nueva-clase" aria-label="Clase" style="flex:1">
+          <select id="nueva-clase" aria-label="Clase" style="flex:1" ${!puedeAnadir && !libre() ? 'disabled' : ''}>
             ${filtradas.length ? filtradas.map((c) =>
               `<option value="${c.id}">${esc(c.nombre)}${(c.etiquetas || []).length ? ' [' + c.etiquetas.join(', ') + ']' : ''}${c._atlas !== 'basico' ? ' · ' + esc(nombreAtlas(dbTodo, c._atlas)) : ''}</option>`
             ).join('') : '<option value="">Sin clases con esta etiqueta</option>'}
           </select>
-          <button class="btn primario" data-act="anadir-clase" ${filtradas.length ? '' : 'disabled'}>Añadir clase</button>
+          <button class="btn primario" data-act="anadir-clase" ${filtradas.length && (puedeAnadir || libre()) ? '' : 'disabled'}>Añadir clase</button>
         </div>
+        ${!puedeAnadir && !libre() ? '<p class="small faint" style="margin-top:6px">Debes dominar al menos una de tus 3 clases actuales (nivel 10) para añadir una cuarta.</p>' : ''}
       </div>`;
     }
   }
+
+  h += htmlMejorasAtributos(pj, editable);
   h += seccionHeroicas();
   return h;
 }
@@ -244,11 +287,13 @@ function tarjetaClase(c, editable, asign) {
   const comp = (b.competencias || []).map((x) => (tabla(dbTodo, 'competencias').find((y) => y.id === x) || { nombre: x }).nombre);
   const eleccion = b.eleccion ? `<div class="fila small" style="margin-top:6px"><span class="muted">Beneficio:</span><div class="segmento">${b.eleccion.map((e) =>
     `<button data-act="beneficio" data-clase="${c.id}" data-id="${e.id}" aria-pressed="${c.beneficio === e.id}">${esc(e.etiqueta)}</button>`).join('')}</div></div>` : '';
-  const total = pj.nivel;
+  const noDom = R.clasesNoDominadas(pj).length;
+  const puedeIniciarClase = nv > 0 || noDom < param(db, 'clases_no_dominadas_max', 3) || libre();
+
   const habs = (def.habilidades || []).map((hd) => {
     const sl = (c.habilidades || {})[hd.id] || 0;
-    const puedeSubir = libre() || (editable && sl < hd.sl_max && asign < total && nv < 10);
-    const stepper = editable ? `<span class="contador"><button data-act="sl" data-clase="${c.id}" data-id="${hd.id}" data-d="-1" ${sl <= 0 ? 'disabled' : ''} aria-label="Quitar nivel">−</button><b>${sl}</b><button data-act="sl" data-clase="${c.id}" data-id="${hd.id}" data-d="1" ${puedeSubir && sl < hd.sl_max ? '' : 'disabled'} aria-label="Añadir nivel">+</button></span>`
+    const puedeSubir = libre() || (editable && sl < hd.sl_max && nv < 10 && asign < 50 && puedeIniciarClase);
+    const stepper = editable ? `<span class="contador"><button data-act="sl" data-clase="${c.id}" data-id="${hd.id}" data-d="-1" ${sl <= 0 ? 'disabled' : ''} aria-label="Quitar nivel">−</button><b>${sl}</b><button data-act="sl" data-clase="${c.id}" data-id="${hd.id}" data-d="1" ${puedeSubir ? '' : 'disabled'} aria-label="Añadir nivel">+</button></span>`
       : (sl ? `<span class="chip acento">SL ${sl}</span>` : '');
     const f = { tipo: 'hab', id: hd.id };
     const extra = sl > 0 && hd.elecciones ? eleccionesHtml(f, hd, sl) : '';
@@ -260,6 +305,7 @@ function tarjetaClase(c, editable, asign) {
     <p class="muted small" style="margin:4px 0">${esc(b.texto || '')}</p>
     ${comp.length ? `<div class="fila">${comp.map((x) => `<span class="chip">${esc(x)}</span>`).join('')}</div>` : ''}
     ${eleccion}
+    ${nv === 0 ? '<p class="small faint" style="margin:6px 0 0">Asigna tu primer nivel a esta clase para activar sus beneficios de PV, PM y competencias.</p>' : ''}
     <div class="lista" style="margin-top:12px">${habs}</div>
   </div>`;
 }
@@ -389,19 +435,13 @@ function panelAtributos() {
         <option value="">—</option>${opciones.map((d) => `<option value="${d}" ${pj.atributos.base[a] === d ? 'selected' : ''}>d${d}</option>`).join('')}</select></label>`).join('')}</div>
       <p class="faint small" style="margin-top:8px">Al elegir un dado ya asignado, se intercambia con el otro atributo.</p></div>`;
   }
-  const umbrales = param(db, 'niveles_mejora_atributo', [20, 40]);
-  if (pj.nivel >= umbrales[0] || pj.atributos.mejoras.length) {
-    h += `<div class="tarjeta"><h3>Mejoras por nivel</h3>${umbrales.filter((u) => pj.nivel >= u).map((u, i) => {
-      const m = pj.atributos.mejoras[i];
-      return `<div class="fila" style="margin-bottom:6px"><span class="muted" style="width:70px">Nivel ${u}</span>
-        <div class="segmento">${R.ATR.map((a) => `<button data-act="mejora" data-i="${i}" data-nivel="${u}" data-atr="${a}" aria-pressed="${m && m.atributo === a}">${a}</button>`).join('')}</div></div>`;
-    }).join('')}</div>`;
-  }
+  h += htmlMejorasAtributos(pj, editable);
   // Desglose
   const otros = (stat) => c.mods.filter((m) => m.stat === stat);
   const linea = (etq, stat, total, formula) => `<div class="item"><div class="fila entre"><strong>${etq}</strong><span class="mono" style="font-size:18px">${total}</span></div>
     <div class="sub">${formula}${otros(stat).map((m) => ` + ${m.valor} (${esc(m.origen)})`).join('')}</div></div>`;
   const ben = (k) => pj.clases.reduce((a, cl) => {
+    if (R.nivelClase(cl) <= 0) return a;
     const d = get(dbTodo, 'clases', cl.id); if (!d) return a;
     const e = (d.beneficios.eleccion || []).find((x) => x.id === cl.beneficio);
     return a + (d.beneficios[k] || 0) + (e ? e[k] || 0 : 0);
@@ -1048,8 +1088,26 @@ function accion(act, ds, el, ev) {
     }
     case 'sl': {
       const c = pj.clases.find((x) => x.id === ds.clase);
-      const v = Math.max(0, ((c.habilidades || {})[ds.id] || 0) + Number(ds.d));
+      if (!c) return;
+      const delta = Number(ds.d);
+      const prevAsign = R.nivelesAsignados(pj);
+      const slAct = (c.habilidades || {})[ds.id] || 0;
+      const v = Math.max(0, slAct + delta);
       if (v) c.habilidades[ds.id] = v; else { delete c.habilidades[ds.id]; delete pj.elecciones[R.claveHab(ds.id)]; }
+
+      const totalAsign = R.nivelesAsignados(pj);
+      if (pj.nivel === prevAsign || totalAsign > pj.nivel) {
+        pj.nivel = Math.max(5, Math.min(50, totalAsign));
+      }
+      pj.atributos.mejoras = (pj.atributos.mejoras || []).filter((m) => m && m.nivel <= pj.nivel);
+      cambio(); return;
+    }
+    case 'fijar-nivel': {
+      const n = Math.max(5, Math.min(50, Number(el.value) || 5));
+      const totalAsign = R.nivelesAsignados(pj);
+      pj.nivel = Math.max(n, totalAsign);
+      el.value = pj.nivel;
+      pj.atributos.mejoras = (pj.atributos.mejoras || []).filter((m) => m && m.nivel <= pj.nivel);
       cambio(); return;
     }
     case 'beneficio': { const c = pj.clases.find((x) => x.id === ds.clase); c.beneficio = ds.id; cambio(); return; }

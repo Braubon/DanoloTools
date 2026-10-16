@@ -12,8 +12,9 @@ export const nombreEmocion = (db, id) => (tabla(db, 'emociones').find((x) => x.i
 export const nombreEstado = (db, id) => (tabla(db, 'estados').find((x) => x.id === id) || { nombre: id }).nombre;
 
 export function resumenClases(pj, db) {
-  if (!pj.clases.length) return 'Sin clases';
-  return pj.clases.map((c) => `${(get(db, 'clases', c.id) || { nombre: c.id }).nombre} ${nivelClase(c)}`).join(' · ');
+  const activas = pj.clases.filter((c) => nivelClase(c) > 0);
+  if (!activas.length) return 'Sin clases';
+  return activas.map((c) => `${(get(db, 'clases', c.id) || { nombre: c.id }).nombre} ${nivelClase(c)}`).join(' · ');
 }
 
 export const atlasTag = (db, rec, mostrar = true) => (mostrar && rec && rec._atlas && rec._atlas !== 'basico'
