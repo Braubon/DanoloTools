@@ -1,12 +1,15 @@
 // Paso 2: generación procedural (Voronoi relajado → manzanas → parcelas / granjas)
 import { Delaunay } from 'd3-delaunay';
-import { state, WORLD, DENS_RES, GW, GH, densityAt, mulberry32, districtAt } from './state.js';
+import { state, WORLD, DENS_RES, GW, GH, densityAt, mulberry32 } from './state.js';
 import {
   union, difference, intersection, offset, bufferLine, polygons, outerRings, ringArea, shapeArea,
   centroid, pointInShape, pointInRing, collapseShortEdges, orientedRect, mainAxis, extents, splitByLine,
   distPointPolyline, dist, bbox, bboxOverlap, unionAll, polylineCrossings, pointAt, polylineLength, regularPoly,
 } from './geom.js';
-import { waterShape, forestShape, cliffShape, roadShape, wallShape, citadelShape, citadelRing, portShape, sandShape, marshShape, cropShape, snapToShore } from './layers.js';
+import {
+  waterShape, forestShape, cliffShape, roadShape, wallShape, wallPaths, wallBarrierShape,
+  citadelShape, citadelPaths, citadelBarrierShape, citadelRing, portShape, sandShape, marshShape, cropShape, snapToShore, districtAtGrid,
+} from './layers.js';
 
 // Tamaño del mundo en metros reales (el dibujo × escala del mapa)
 let BW = WORLD.w, BH = WORLD.h;
@@ -260,6 +263,8 @@ function generateMeters(p, S) {
   const rng = mulberry32(p.seed);
   const water = scRings(waterShape(), S), forest = scRings(forestShape(), S), cliffs = scRings(cliffShape(), S);
   const roads = scRings(roadShape(), S), walls = scRings(wallShape(), S), citadels = scRings(citadelShape(), S);
+  const wallBarriers = scRings(wallBarrierShape(state.layers, 4.5 / S), S);
+  const citBarriers = scRings(citadelBarrierShape(state.layers, 8 / S), S);
   const ports = scRings(portShape(state.layers, 1 / S), S);
   const sand = scRings(sandShape(), S), marsh = scRings(marshShape(), S);
   const Z0 = buildZones(wallShape(), water, cropShape());
@@ -275,10 +280,13 @@ function generateMeters(p, S) {
   // orientación: camino principal más cercano al centro urbano
   const uc = Z.center;
   let theta = rng() * Math.PI, bestD = Infinity;
-  for (const r of state.layers.roads) for (let i = 0; i < r.pts.length - 1; i++) {
-    const a = [r.pts[i][0] * S, r.pts[i][1] * S], b = [r.pts[i + 1][0] * S, r.pts[i + 1][1] * S];
-    const d = distPointPolyline(uc, [a, b]);
-    if (d < bestD) { bestD = d; theta = Math.atan2(b[1] - a[1], b[0] - a[0]); }
+  for (const r of state.layers.roads) {
+    if (!r.pts || r.pts.length < 2) continue;
+    for (let i = 0; i < r.pts.length - 1; i++) {
+      const a = [r.pts[i][0] * S, r.pts[i][1] * S], b = [r.pts[i + 1][0] * S, r.pts[i + 1][1] * S];
+      const d = distPointPolyline(uc, [a, b]);
+      if (d < bestD) { bestD = d; theta = Math.atan2(b[1] - a[1], b[0] - a[0]); }
+    }
   }
   let pts = seeds(Z, p, rng, theta, uc);
   if (pts.length < 4) return emptyGen();
@@ -287,8 +295,8 @@ function generateMeters(p, S) {
   // obstáculos
   // borde del risco + cantil (10 m hacia la parte baja): no se edifica
   const cliffEdges = cliffs.length ? difference(offset(cliffs, 12, 'round'), offset(cliffs, -3)) : [];
-  const obstUrban = unionAll([offset(water, 1.5), offset(roads, 1), forest, cliffEdges, offset(citadels, 10), offset(ports, 4), sand, marsh]);
-  const obstFarm = unionAll([offset(water, 3), offset(roads, 3), forest, cliffEdges, offset(citadels, 8), offset(ports, 6), sand, marsh]);
+  const obstUrban = unionAll([offset(water, 1.5), offset(roads, 1), forest, cliffEdges, offset(citadels, 10), citBarriers, wallBarriers, offset(ports, 4), sand, marsh]);
+  const obstFarm = unionAll([offset(water, 3), offset(roads, 3), forest, cliffEdges, offset(citadels, 8), citBarriers, wallBarriers, offset(ports, 6), sand, marsh]);
   const obsU = polygons(obstUrban).map(pg => ({ rings: [pg.outer, ...pg.holes], bb: bbox([pg.outer]) }));
   const obsF = polygons(obstFarm).map(pg => ({ rings: [pg.outer, ...pg.holes], bb: bbox([pg.outer]) }));
   const cut = (shape, obs) => {
@@ -296,8 +304,9 @@ function generateMeters(p, S) {
     const rel = obs.filter(o => bboxOverlap(o.bb, bb, 1)).flatMap(o => o.rings);
     return rel.length ? difference(shape, rel) : shape;
   };
-  const wallIn = Z.hasWalls ? offset(walls, -4.5) : null;
-  const wallOut = Z.hasWalls ? offset(walls, 6) : null;
+  const wallIn = Z.hasWalls ? difference(offset(walls, -4.5), wallBarriers) : null;
+  const wallOut = Z.hasWalls ? union(offset(walls, 6), wallBarriers) : null;
+  const wbAll = wallBarriers.length ? bbox(wallBarriers) : (Z.hasWalls ? bbox(walls) : null);
 
   const urbanPieces = []; // {shape, d}
   const farmPieces = [];
@@ -307,12 +316,15 @@ function generateMeters(p, S) {
     const ring = collapseShortEdges(c, p.blockSize * 0.2);
     const [sx, sy] = pts[i];
     const zone = zoneOf(Z, sx, sy, p);
-    if (Z.hasWalls) {
-      const cb = bbox([ring]), wb = bbox(walls);
-      const touchesWall = bboxOverlap(cb, wb, 10);
+    if (Z.hasWalls && wbAll) {
+      const cb = bbox([ring]);
+      const touchesWall = bboxOverlap(cb, wbAll, 10);
       if (touchesWall) {
         const inPart = intersection([ring], wallIn);
-        if (inPart.length) urbanPieces.push({ shape: inPart, d: Z.dens(...centroid(outerRings(inPart)[0] || ring)) });
+        for (const pg of polygons(inPart)) {
+          const sh = [pg.outer, ...pg.holes];
+          urbanPieces.push({ shape: sh, d: Z.dens(...centroid(pg.outer)) });
+        }
         const outPart = difference([ring], wallOut);
         if (outPart.length && zone !== 'none') {
           const cc = centroid(outerRings(outPart)[0] || ring);
@@ -341,7 +353,7 @@ function generateMeters(p, S) {
       const A = Math.abs(ringArea(pg.outer));
       if (A < p.lotSize * 0.7) continue;
       const c = centroid(pg.outer);
-      blocks.push({ rings: [pg.outer, ...pg.holes], d: up.d, area: A, c, district: districtAt(c[0] / S, c[1] / S) });
+      blocks.push({ rings: [pg.outer, ...pg.holes], d: up.d, area: A, c, district: districtAtGrid(c[0] / S, c[1] / S) });
     }
   }
   urbanArea = unionAll(urbanArea.map(s => offset(s, 0.3)));
@@ -461,18 +473,26 @@ function generateMeters(p, S) {
   }
 
   // ciudadelas: torre del homenaje
-  for (const c0 of state.layers.citadels) {
-    const c = { x: c0.x * S, y: c0.y * S, r: c0.r * S };
-    const ang = Math.atan2(cy - c.y, cx - c.x);
-    lots.push({ id: nextId++, ring: orientedRect(c.x, c.y, c.r * 0.75, c.r * 0.55, ang), kind: 'keep', d: 1, area: c.r * c.r * 0.41 });
+  for (const cp of citadelPaths()) {
+    if (cp.open) continue;
+    const ringM = scRings([cp.pts], S)[0];
+    if (!ringM || ringM.length < 3) continue;
+    const [kx, ky] = centroid(ringM);
+    const kr = Math.sqrt(Math.abs(ringArea(ringM)) / Math.PI);
+    if (kr < 8) continue;
+    const ang = Math.atan2(cy - ky, cx - kx);
+    const keepRect = orientedRect(kx, ky, Math.min(kr * 0.75, 42), Math.min(kr * 0.55, 30), ang);
+    const inner4 = offset([ringM], -4);
+    const keepRing = outerRings(inner4.length ? intersection([keepRect], inner4) : [keepRect])[0] || keepRect;
+    lots.push({ id: nextId++, ring: keepRing, kind: 'keep', d: 1, area: Math.abs(ringArea(keepRing)) });
     // pequeñas dependencias interiores
-    const inner = offset(scRings([citadelRing(c0)], S), -6);
+    const inner = offset([ringM], -6);
     const ir = outerRings(inner)[0];
     if (ir && rng() < 0.9) {
       const a2 = ang + Math.PI * (0.7 + rng() * 0.6);
-      const px = c.x + Math.cos(a2) * c.r * 0.62, py = c.y + Math.sin(a2) * c.r * 0.62;
-      const rr = orientedRect(px, py, c.r * 0.45, 7, a2 + Math.PI / 2);
-      const keepZone = offset([lots[lots.length - 1].ring], 3);
+      const px = kx + Math.cos(a2) * kr * 0.62, py = ky + Math.sin(a2) * kr * 0.62;
+      const rr = orientedRect(px, py, Math.min(kr * 0.45, 24), 7, a2 + Math.PI / 2);
+      const keepZone = offset([keepRing], 3);
       const clip = outerRings(difference(intersection([rr], [ir]), keepZone)).sort((x, y) => Math.abs(ringArea(y)) - Math.abs(ringArea(x)))[0];
       if (clip && Math.abs(ringArea(clip)) > 20) lots.push({ id: nextId++, ring: clip, kind: 'house', d: 1, area: Math.abs(ringArea(clip)) });
     }
@@ -773,9 +793,16 @@ function placeSpecials({ p, rng, blocks, lots, plazas, cx, cy, S, water, walls, 
   // --- cuarteles: junto a una puerta de la muralla o a la ciudadela ---
   if (sp.barracks !== false) {
     let refs = [];
-    if (walls.length) {
-      for (const r of state.layers.roads) refs.push(...polylineCrossings(r.pts.map(q => [q[0] * S, q[1] * S]), walls).map(c => c.p));
-      if (!refs.length) refs = walls[0].filter((_, i) => i % 3 === 0);
+    const wPaths = wallPaths();
+    if (wPaths.length) {
+      for (const r of state.layers.roads) {
+        if (!r.pts || r.pts.length < 2 || r.kind === 'poly' || r.kind === 'paint') continue;
+        const rPts = r.pts.map(q => [q[0] * S, q[1] * S]);
+        for (const w of wPaths) {
+          refs.push(...polylineCrossings(rPts, [w.pts.map(q => [q[0] * S, q[1] * S])], !w.open).map(c => c.p));
+        }
+      }
+      if (!refs.length) refs = wPaths[0].pts.map(q => [q[0] * S, q[1] * S]).filter((_, i) => i % 3 === 0);
     } else if (citadels.length) refs = [centroid(citadels[0])];
     if (refs.length) {
       const cand = free.filter(b => !b.used && b.area > 450)
@@ -796,6 +823,8 @@ function placeSpecials({ p, rng, blocks, lots, plazas, cx, cy, S, water, walls, 
   // --- molinos: de agua en los ríos y de viento en el campo ---
   if (sp.mills !== false) {
     for (const rv of state.layers.rivers) {
+      if (!rv.pts || rv.pts.length < 2 || rv.kind === 'poly' || rv.kind === 'paint') continue;
+      const rw = rv.width || 22;
       const pts = rv.pts.map(q => [q[0] * S, q[1] * S]);
       const len = polylineLength(pts);
       let placed = 0, last = -1e9;
@@ -805,7 +834,7 @@ function placeSpecials({ p, rng, blocks, lots, plazas, cx, cy, S, water, walls, 
         const du = Z.distUrban(q[0], q[1]);
         if (du < 30 || du > p.farmRing + 160 || s0 - last < 220 || rng() > 0.25) continue;
         const side = rng() < 0.5 ? 1 : -1;
-        const probe = [q[0] - dir[1] * side * (rv.width * S / 2 + 6), q[1] + dir[0] * side * (rv.width * S / 2 + 6)];
+        const probe = [q[0] - dir[1] * side * (rw * S / 2 + 6), q[1] + dir[0] * side * (rw * S / 2 + 6)];
         if (pointInShape(probe, water)) continue;
         const sn = snapToShore(probe, water, 40);
         if (!sn) continue;
@@ -822,5 +851,6 @@ function placeSpecials({ p, rng, blocks, lots, plazas, cx, cy, S, water, walls, 
       }
     }
   }
+  void citadelRing;
   return mills;
 }

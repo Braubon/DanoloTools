@@ -1,8 +1,26 @@
 // Estado global de la aplicación + historial (deshacer / rehacer)
 export const WORLD = { w: 1600, h: 1200 };
+export const MAX_W = 2000, MAX_H = 2000;
 export const DENS_RES = 5; // metros por celda de la rejilla de densidad
-export const GW = Math.ceil(WORLD.w / DENS_RES);
-export const GH = Math.ceil(WORLD.h / DENS_RES);
+export const GW = Math.ceil(MAX_W / DENS_RES);
+export const GH = Math.ceil(MAX_H / DENS_RES);
+
+export const ASPECTS = [
+  { id: '4:3', name: '4:3 apaisado', w: 1600, h: 1200 },
+  { id: '3:2', name: '3:2 apaisado', w: 1700, h: 1130 },
+  { id: 'A4h', name: 'A4 / A3 apaisado', w: 1650, h: 1170 },
+  { id: '16:9', name: '16:9 panorámico', w: 1840, h: 1040 },
+  { id: '2:1', name: '2:1 panorámico', w: 1960, h: 980 },
+  { id: '1:1', name: '1:1 cuadrado', w: 1390, h: 1390 },
+  { id: '3:4', name: '3:4 vertical', w: 1200, h: 1600 },
+  { id: '2:3', name: '2:3 vertical', w: 1130, h: 1700 },
+  { id: 'A4v', name: 'A4 / A3 vertical', w: 1170, h: 1650 },
+  { id: '9:16', name: '9:16 vertical', w: 1040, h: 1840 },
+];
+export function syncAspect() {
+  const a = ASPECTS.find(x => x.id === state.params.aspect) || ASPECTS[0];
+  WORLD.w = a.w; WORLD.h = a.h;
+}
 
 export function emptyLayers() {
   return {
@@ -17,12 +35,13 @@ export function emptyLayers() {
     sand: [],     // playas y arenales {pts, r, mode}
     marsh: [],    // pantanos {pts, r, mode}
     crops: [],    // cultivos pintados a mano {pts, r, mode}
+    districts: [], // barrios {pts, kind, r, width, type, mode}
   };
 }
 
 export const state = {
   step: 1,
-  tool: 'road',
+  tool: 'poly',
   layers: emptyLayers(),
   density: new Uint8Array(GW * GH),
   districts: new Uint8Array(GW * GH), // 0 ninguno · 1 rico · 2 pobre · 3 mercantil · 4 religioso
@@ -37,13 +56,21 @@ export const state = {
     buildingGap: 0,    // separación entre casas (m)
     roofVar: 0.5,      // variación de color de los tejados
     mapScale: 1,       // metros reales por unidad de dibujo
+    aspect: '4:3',
     specials: { temple: true, market: true, hall: true, barracks: true, mills: true },
     lanes: true,       // caminos secundarios automáticos (granjas y puertos)
     scaleBar: true,    // escala gráfica
   },
   opts: {
+    element: 'wall',   // 'water' | 'road' | 'cliff' | 'wall' | 'forest' | 'citadel' | 'soil' | 'district'
+    polyMode: 'free',  // 'rect' | 'circle' | 'free'
+    selectTransform: false,
+    drawErase: false,
     roadWidth: 9,
     riverWidth: 22,
+    cliffWidth: 28,
+    wallWidth: 3.6,
+    towerR: 2.8,
     brushR: 30,
     densStrength: 0.5,
     densErase: false,
@@ -87,6 +114,7 @@ function restore(s) {
   if (s.districts) state.districts = s.districts;
   state.params = s.params;
   state.edits = s.edits;
+  syncAspect();
 }
 
 export function pushHistory() {
@@ -178,3 +206,29 @@ export const DISTRICTS = [
   { id: 3, name: 'Mercantil', color: [60, 120, 170] },
   { id: 4, name: 'Religioso', color: [150, 80, 160] },
 ];
+
+export function shiftWorld(dx, dy) {
+  const s = (p) => [p[0] + dx, p[1] + dy];
+  for (const arr of Object.values(state.layers)) {
+    for (const u of arr) {
+      if (u.pts) u.pts = u.pts.map(s);
+      if (typeof u.x === 'number') { u.x += dx; u.y += dy; }
+    }
+  }
+  for (const r of state.edits.roads) r.pts = r.pts.map(s);
+  const gx = Math.round(dx / DENS_RES), gy = Math.round(dy / DENS_RES);
+  const shiftGrid = (src) => {
+    const out = new Uint8Array(GW * GH);
+    for (let y = 0; y < GH; y++) {
+      const sy = y - gy;
+      if (sy < 0 || sy >= GH) continue;
+      for (let x = 0; x < GW; x++) {
+        const sx = x - gx;
+        if (sx >= 0 && sx < GW) out[y * GW + x] = src[sy * GW + sx];
+      }
+    }
+    return out;
+  };
+  state.density = shiftGrid(state.density);
+  state.districts = shiftGrid(state.districts);
+}

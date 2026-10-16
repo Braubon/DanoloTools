@@ -4,7 +4,7 @@ import {
   ringsToPath, lineToPath, polylineCrossings, pointAt, polylineLength, pointInShape, dist, bbox,
   orientedRect, offset, outerRings, centroid, intersection, difference, union, bufferLine, polygons, ringArea,
 } from './geom.js';
-import { waterShape, forestShape, cliffShape, roadShape, wallShape, citadelShape, portParts, sandShape, marshShape, cropShape } from './layers.js';
+import { waterShape, forestShape, cliffShape, roadShape, wallShape, wallPaths, citadelShape, citadelPaths, portParts, sandShape, marshShape, cropShape } from './layers.js';
 
 export const PAL = {
   paper: '#E8E1CF',
@@ -160,12 +160,13 @@ function subPath(pts, s0, s1, step = 2) {
   return out;
 }
 function allRoads() {
-  return [...state.layers.roads, ...state.edits.roads];
+  return [...state.layers.roads, ...state.edits.roads].filter(r => r && r.kind !== 'poly' && r.kind !== 'paint' && r.pts && r.pts.length >= 2);
 }
 function bridgesSvg(water) {
   if (!water.length) return '';
   let s = '';
   for (const r of allRoads()) {
+    const rw = r.width || 9;
     const cr = polylineCrossings(r.pts, water);
     const total = polylineLength(r.pts);
     const marks = [0, ...cr.map(c => c.s), total];
@@ -177,7 +178,7 @@ function bridgesSvg(water) {
       if (b - a > 180) continue;
       const s0 = Math.max(0, a - 3), s1 = Math.min(total, b + 3);
       const d = lineToPath(subPath(r.pts, s0, s1));
-      const w = Math.max(r.width * 0.75, 3.5);
+      const w = Math.max(rw * 0.75, 3.5);
       s += `<path d="${d}" fill="none" stroke="${PAL.ink}" stroke-width="${n1(w + 1.6)}" stroke-linecap="butt" stroke-linejoin="round"/>`;
       s += `<path d="${d}" fill="none" stroke="${PAL.street}" stroke-width="${n1(w)}" stroke-linecap="butt" stroke-linejoin="round"/>`;
     }
@@ -188,8 +189,9 @@ function stairsSvg(cliffs) {
   if (!cliffs.length) return '';
   let s = '';
   for (const r of allRoads()) {
+    const rw = r.width || 9;
     for (const c0 of polylineCrossings(r.pts, cliffs)) {
-      const w = r.width * 0.9;
+      const w = rw * 0.9;
       let d = '';
       const F = cliffFace();
       // la escalera ocupa el cantil (fuera de la meseta)
@@ -230,56 +232,99 @@ export function portsSvg(ports, water) {
 }
 
 // ---------- murallas, puertas y torres ----------
-function wallSvg(rings, opts) {
-  if (!rings.length) return '';
-  let { width = 3.6, towerR = 2.8, roads, everyVertex = false, center, water = [] } = opts;
-  width = kk(width, 1.2); towerR = kk(towerR, 1);
-  let s;
+function wallSvg(items, opts) {
+  const paths = (items || [])
+    .map(it => (Array.isArray(it) ? { pts: it, open: false } : it))
+    .filter(w => w && w.pts && w.pts.length >= (w.open ? 2 : 3));
+  if (!paths.length) return '';
+  const { width: defWidth = 3.6, towerR: defTowerR = 2.8, roads = [], everyVertex = false, center, water = [] } = opts;
+  const getW = (w) => w.width !== undefined ? Math.max(0.8, w.width) : kk(defWidth, 1.2);
+  const getTR = (w) => w.towerR !== undefined ? Math.max(0, w.towerR) : kk(defTowerR, 1);
+  let s = '';
   const wet = (p) => water.length && pointInShape(p, water);
   if (water.length) {
     // la muralla se interrumpe en el agua; torre en cada punto donde entra o sale
     let body = [];
-    for (const r of rings) body = union(body, bufferLine(r, width / 2, true));
+    for (const w of paths) body = union(body, bufferLine(w.pts, getW(w) / 2, !w.open));
     body = difference(body, water);
-    s = `<path d="${ringsToPath(body)}" fill="${PAL.ink}" fill-rule="nonzero"/>`;
-    for (const r of rings) for (const c of polylineCrossings([...r, r[0]], water))
-      s += `<circle cx="${n1(c.p[0])}" cy="${n1(c.p[1])}" r="${n2(towerR * 1.15)}" fill="${PAL.ink}"/>`;
+    s = `<path d="${ringsToPath(body)}" fill="${PAL.ink}" fill-rule="evenodd"/>`;
+    for (const w of paths) {
+      const tr = getTR(w);
+      if (tr <= 0) continue;
+      const line = w.open ? w.pts : [...w.pts, w.pts[0]];
+      for (const c of polylineCrossings(line, water, true)) {
+        s += `<circle cx="${n1(c.p[0])}" cy="${n1(c.p[1])}" r="${n2(tr * 1.15)}" fill="${PAL.ink}"/>`;
+      }
+    }
   } else {
-    s = `<path d="${ringsToPath(rings)}" fill="none" stroke="${PAL.ink}" stroke-width="${width}" stroke-linejoin="round"/>`;
+    for (const w of paths) {
+      s += `<path d="${lineToPath(w.pts, !w.open)}" fill="none" stroke="${PAL.ink}" stroke-width="${n2(getW(w))}" stroke-linecap="round" stroke-linejoin="round"/>`;
+    }
   }
   const gates = [];
-  for (const r of roads) for (const c of polylineCrossings(r.pts, rings)) gates.push({ ...c, w: r.width });
+  for (const r of roads) {
+    const rw = r.width || 9;
+    for (const w of paths) {
+      const ww = getW(w), tr = getTR(w);
+      for (const c of polylineCrossings(r.pts, [w.pts], !w.open)) gates.push({ ...c, w: rw, ww, tr });
+    }
+  }
   if (everyVertex && !gates.length && center) {
     // ciudadela sin camino: puerta hacia el centro urbano
-    const ring = rings[0];
-    const c0 = centroid(ring);
-    let best = null, bd = Infinity;
-    for (let i = 0; i < ring.length; i++) {
-      const a = ring[i], b = ring[(i + 1) % ring.length];
-      const m = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
-      const d = dist(m, center);
-      if (d < bd) { bd = d; best = { p: m, edge: [b[0] - a[0], b[1] - a[1]] }; }
+    const closed = paths.find(w => !w.open);
+    if (closed) {
+      const ring = closed.pts;
+      let best = null, bd = Infinity;
+      for (let i = 0; i < ring.length; i++) {
+        const a = ring[i], b = ring[(i + 1) % ring.length];
+        const m = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
+        const d = dist(m, center);
+        if (d < bd) { bd = d; best = { p: m, edge: [b[0] - a[0], b[1] - a[1]] }; }
+      }
+      if (best) gates.push({ ...best, w: 4, ww: getW(closed), tr: getTR(closed) });
     }
-    if (best) gates.push({ ...best, w: 4 });
-    void c0;
   }
-  // torres
+  // torres (en vértices y tramos rectos largos)
   const towers = [];
-  for (const ring of rings) {
-    const n = ring.length;
+  for (const w of paths) {
+    const tr = getTR(w);
+    if (tr <= 0) continue;
+    const stepTower = Math.max(12, kk(42, 12) * Math.max(0.75, tr / 2.8));
+    const ring = w.pts, n = ring.length;
     let since = 999;
+    const edgeCount = w.open ? n - 1 : n;
     for (let i = 0; i < n; i++) {
-      const p0 = ring[(i - 1 + n) % n], p = ring[i], p1 = ring[(i + 1) % n];
-      const a0 = Math.atan2(p[1] - p0[1], p[0] - p0[0]), a1 = Math.atan2(p1[1] - p[1], p1[0] - p[0]);
-      let da = Math.abs(a1 - a0); if (da > Math.PI) da = 2 * Math.PI - da;
-      since += dist(p0, p);
-      if (everyVertex || da > 0.45 || since > kk(42, 12)) { towers.push(p); since = 0; }
+      const p = ring[i];
+      if (w.open && (i === 0 || i === n - 1)) {
+        towers.push({ p, r: tr });
+        since = 0;
+      } else {
+        const p0 = ring[(i - 1 + n) % n], p1 = ring[(i + 1) % n];
+        const a0 = Math.atan2(p[1] - p0[1], p[0] - p0[0]), a1 = Math.atan2(p1[1] - p[1], p1[0] - p[0]);
+        let da = Math.abs(a1 - a0); if (da > Math.PI) da = 2 * Math.PI - da;
+        if (everyVertex || da > 0.45 || since >= stepTower) { towers.push({ p, r: tr }); since = 0; }
+      }
+      if (i < edgeCount) {
+        const p1 = ring[(i + 1) % n];
+        const segL = dist(p, p1);
+        if (since + segL > stepTower * 1.25) {
+          const rem = segL - (stepTower - since);
+          const count = Math.max(1, Math.floor(rem / stepTower) + 1);
+          for (let k = 1; k <= count; k++) {
+            const t = (k * segL) / (count + 1);
+            towers.push({ p: [p[0] + ((p1[0] - p[0]) * t) / segL, p[1] + ((p1[1] - p[1]) * t) / segL], r: tr });
+          }
+          since = segL / (count + 1);
+        } else {
+          since += segL;
+        }
+      }
     }
   }
   for (const t of towers) {
-    if (gates.some(g => dist(g.p, t) < g.w / 2 + kk(9, 3))) continue;
-    if (wet(t)) continue;
-    s += `<circle cx="${n1(t[0])}" cy="${n1(t[1])}" r="${towerR}" fill="${PAL.ink}"/>`;
+    if (gates.some(g => dist(g.p, t.p) < g.w / 2 + Math.max(kk(9, 3), t.r * 2))) continue;
+    if (wet(t.p)) continue;
+    s += `<circle cx="${n1(t.p[0])}" cy="${n1(t.p[1])}" r="${n2(t.r)}" fill="${PAL.ink}"/>`;
   }
   for (const g of gates) {
     if (wet(g.p)) continue;
@@ -287,11 +332,15 @@ function wallSvg(rings, opts) {
     const ed = [g.edge[0] / el, g.edge[1] / el];
     const ang = Math.atan2(ed[1], ed[0]);
     const gw = Math.max(g.w, 4) + 1.5;
-    s += `<path d="${ringsToPath([orientedRect(g.p[0], g.p[1], gw, width + kk(3, 1), ang)])}" fill="${PAL.street}"/>`;
-    for (const sg of [-1, 1]) {
-      const tw = kk(5.2, 1.6), th = kk(6.4, 2);
-      const tx = g.p[0] + ed[0] * sg * (gw / 2 + tw / 2), ty = g.p[1] + ed[1] * sg * (gw / 2 + tw / 2);
-      s += `<path d="${ringsToPath([orientedRect(tx, ty, tw, th, ang)])}" fill="${PAL.ink}"/>`;
+    const ww = g.ww ?? kk(defWidth, 1.2);
+    const tr = g.tr ?? kk(defTowerR, 1);
+    s += `<path d="${ringsToPath([orientedRect(g.p[0], g.p[1], gw, ww + kk(3, 1), ang)])}" fill="${PAL.street}"/>`;
+    if (tr > 0) {
+      const tw = Math.max(1.6, tr * 1.85), th = Math.max(2, Math.max(ww + 1.6, tr * 2.25));
+      for (const sg of [-1, 1]) {
+        const tx = g.p[0] + ed[0] * sg * (gw / 2 + tw / 2), ty = g.p[1] + ed[1] * sg * (gw / 2 + tw / 2);
+        s += `<path d="${ringsToPath([orientedRect(tx, ty, tw, th, ang)])}" fill="${PAL.ink}"/>`;
+      }
     }
   }
   return s;
@@ -407,7 +456,7 @@ const layer = (id, label, content) => (content ? `<g id="${id}" inkscape:groupmo
 export function renderMap({ gen, buildings, showGen }) {
   K = 1 / (state.params.mapScale || 1);
   const water = waterShape(), forest = forestShape(), cliffs = cliffShape();
-  const walls = wallShape(), cit = citadelShape();
+  const walls = wallPaths(), cit = citadelShape(), citList = citadelPaths();
   const sand = sandShape(), marsh = marshShape();
   const G = showGen && gen;
   let roads = roadShape();
@@ -449,9 +498,9 @@ export function renderMap({ gen, buildings, showGen }) {
   }
   const allR = allRoads();
   s += layer('murallas', 'Murallas', wallSvg(walls, { roads: allR, water }) +
-    wallSvg(cit, { roads: allR, width: 3, towerR: 2.6, everyVertex: true, water, center: gen?.center || [WORLD.w / 2, WORLD.h / 2] }));
+    wallSvg(citList, { roads: allR, width: 3, towerR: 2.6, everyVertex: true, water, center: gen?.center || [WORLD.w / 2, WORLD.h / 2] }));
   s += layer('bosques', 'Bosques', treesSvg(forestTrees(forest)));
   if (state.params.scaleBar !== false) s += layer('escala', 'Escala gráfica', scaleBarSvg());
   return s;
 }
-void outerRings; void offset;
+void outerRings; void offset; void wallShape;

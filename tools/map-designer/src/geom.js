@@ -157,20 +157,23 @@ export function segIntersect(a, b, c, d) {
   return { t, u, p: [a[0] + t * r0, a[1] + t * r1] };
 }
 
-// Cruces de una polilínea con los bordes de una forma
-export function polylineCrossings(pts, rings) {
+// Cruces de una polilínea con los bordes de una forma (cerrada o abierta)
+export function polylineCrossings(pts, rings, closed = true) {
   const out = [];
   let acc = 0;
   for (let i = 0; i < pts.length - 1; i++) {
     const a = pts[i], b = pts[i + 1];
     const segLen = dist(a, b);
-    for (const r of rings) for (let j = 0; j < r.length; j++) {
-      const c = r[j], d = r[(j + 1) % r.length];
-      const hit = segIntersect(a, b, c, d);
-      if (hit) {
-        const dir = [(b[0] - a[0]) / (segLen || 1), (b[1] - a[1]) / (segLen || 1)];
-        const edge = [d[0] - c[0], d[1] - c[1]];
-        out.push({ p: hit.p, s: acc + hit.t * segLen, dir, edge, seg: i });
+    for (const r of rings) {
+      const m = closed ? r.length : Math.max(0, r.length - 1);
+      for (let j = 0; j < m; j++) {
+        const c = r[j], d = r[(j + 1) % r.length];
+        const hit = segIntersect(a, b, c, d);
+        if (hit) {
+          const dir = [(b[0] - a[0]) / (segLen || 1), (b[1] - a[1]) / (segLen || 1)];
+          const edge = [d[0] - c[0], d[1] - c[1]];
+          out.push({ p: hit.p, s: acc + hit.t * segLen, dir, edge, seg: i });
+        }
       }
     }
     acc += segLen;

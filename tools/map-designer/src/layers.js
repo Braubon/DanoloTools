@@ -1,6 +1,6 @@
 // Convierte los trazos del usuario de cada capa en una única geometría fusionada.
-import { state, hash2, mulberry32 } from './state.js';
-import { bufferLine, union, difference, normalize, regularPoly, offset } from './geom.js';
+import { state, hash2, mulberry32, GW, GH, DENS_RES } from './state.js';
+import { bufferLine, union, difference, normalize, regularPoly, offset, bbox, pointInShape } from './geom.js';
 
 const cache = new Map();
 function memo(key, deps, fn) {
@@ -12,10 +12,29 @@ function memo(key, deps, fn) {
   return v;
 }
 
-function brushLayer(strokes) {
+export function citadelRing(c) {
+  const rng = mulberry32(hash2(c.x, c.y, 7));
+  const n = 7 + Math.floor(rng() * 3);
+  return regularPoly(c.x, c.y, c.r, n, rng() * Math.PI, 0.18, rng);
+}
+
+export function itemShape(it, defaultClosed = false) {
+  if (!it) return [];
+  if (it.x !== undefined && it.r !== undefined && !it.pts) return [citadelRing(it)];
+  if (!it.pts || !it.pts.length) return [];
+  if (it.kind === 'poly') return it.pts.length >= 3 ? normalize([it.pts]) : [];
+  if (it.kind === 'stroke') return bufferLine(it.pts, (it.width || (it.r ? it.r * 2 : 8)) / 2, false);
+  if (it.kind === 'paint' || it.r !== undefined) return bufferLine(it.pts, it.r || 15, false);
+  if (it.width !== undefined) return bufferLine(it.pts, it.width / 2, false);
+  if (defaultClosed && it.pts.length >= 3) return normalize([it.pts]);
+  return [];
+}
+
+function layerShape(items, defaultClosed = false) {
   let acc = [];
-  for (const s of strokes) {
-    const g = bufferLine(s.pts, s.r, false);
+  for (const s of items || []) {
+    const g = itemShape(s, defaultClosed);
+    if (!g.length) continue;
     acc = s.mode === 'sub' ? difference(acc, g) : union(acc, g);
   }
   return acc;
@@ -23,10 +42,10 @@ function brushLayer(strokes) {
 
 export function waterShape(L = state.layers) {
   return memo('water', [L.rivers, L.lakes], () => {
-    let acc = [];
-    for (const r of L.rivers) acc = union(acc, bufferLine(r.pts, r.width / 2));
-    for (const s of L.lakes) {
-      const g = bufferLine(s.pts, s.r);
+    let acc = layerShape(L.rivers, false);
+    for (const s of L.lakes || []) {
+      const g = itemShape(s, true);
+      if (!g.length) continue;
       acc = s.mode === 'sub' ? difference(acc, g) : union(acc, g);
     }
     // suaviza ligeramente esquinas
@@ -34,47 +53,107 @@ export function waterShape(L = state.layers) {
   });
 }
 export function forestShape(L = state.layers) {
-  return memo('forest', [L.forest], () => brushLayer(L.forest));
+  return memo('forest', [L.forest], () => layerShape(L.forest, false));
 }
 export function sandShape(L = state.layers) {
-  return memo('sand', [L.sand || []], () => brushLayer(L.sand || []));
+  return memo('sand', [L.sand || []], () => layerShape(L.sand || [], false));
 }
 export function marshShape(L = state.layers) {
-  return memo('marsh', [L.marsh || []], () => brushLayer(L.marsh || []));
+  return memo('marsh', [L.marsh || []], () => layerShape(L.marsh || [], false));
 }
 export function cropShape(L = state.layers) {
-  return memo('crops', [L.crops || []], () => brushLayer(L.crops || []));
+  return memo('crops', [L.crops || []], () => layerShape(L.crops || [], false));
+}
+let distCache = { key: null, grid: null };
+export function districtGrid(L = state.layers) {
+  const items = L.districts || [];
+  let h = 0;
+  for (let i = 0; i < state.districts.length; i += 4) h = Math.imul(h ^ state.districts[i], 16777619);
+  const key = JSON.stringify(items) + ':' + h;
+  if (distCache.key === key && distCache.grid) return distCache.grid;
+  const grid = state.districts.slice();
+  for (const it of items) {
+    const sh = itemShape(it, it.kind === 'poly');
+    if (!sh.length) continue;
+    const bb = bbox(sh);
+    const gx0 = Math.max(0, Math.floor(bb.x0 / DENS_RES)), gx1 = Math.min(GW - 1, Math.ceil(bb.x1 / DENS_RES));
+    const gy0 = Math.max(0, Math.floor(bb.y0 / DENS_RES)), gy1 = Math.min(GH - 1, Math.ceil(bb.y1 / DENS_RES));
+    const val = it.mode === 'sub' ? 0 : (it.type || 1);
+    for (let gy = gy0; gy <= gy1; gy++) for (let gx = gx0; gx <= gx1; gx++) {
+      if (pointInShape([(gx + 0.5) * DENS_RES, (gy + 0.5) * DENS_RES], sh)) grid[gy * GW + gx] = val;
+    }
+  }
+  distCache = { key, grid };
+  return grid;
+}
+export function districtAtGrid(x, y) {
+  const g = districtGrid();
+  const gx = Math.max(0, Math.min(GW - 1, Math.floor(x / DENS_RES)));
+  const gy = Math.max(0, Math.min(GH - 1, Math.floor(y / DENS_RES)));
+  return g[gy * GW + gx];
 }
 export function cliffShape(L = state.layers) {
-  return memo('cliffs', [L.cliffs], () => {
-    let acc = [];
-    for (const c of L.cliffs) acc = union(acc, normalize([c.pts]));
-    return acc;
-  });
+  return memo('cliffs', [L.cliffs], () => layerShape(L.cliffs, true));
 }
 export function roadShape(L = state.layers) {
-  return memo('roads', [L.roads], () => {
-    let acc = [];
-    for (const r of L.roads) acc = union(acc, bufferLine(r.pts, r.width / 2));
-    return acc;
-  });
+  return memo('roads', [L.roads], () => layerShape(L.roads, false));
 }
+
+// Trazos individuales de muralla (cerrados o abiertos, permite murallas anidadas unas dentro de otras)
+export function wallPaths(L = state.layers) {
+  return (L.walls || [])
+    .filter((w) => w && w.pts && w.pts.length >= (w.open ? 2 : 3))
+    .map((w) => ({ pts: w.pts, open: !!w.open, width: w.width, towerR: w.towerR }));
+}
+// Superficie interior amurallada (unión de recintos cerrados)
 export function wallShape(L = state.layers) {
   return memo('walls', [L.walls], () => {
     let acc = [];
-    for (const w of L.walls) acc = union(acc, normalize([w.pts]));
+    for (const w of L.walls || []) {
+      if (w.open || !w.pts || w.pts.length < 3) continue;
+      acc = union(acc, normalize([w.pts]));
+    }
     return acc;
   });
 }
-export function citadelRing(c) {
-  const rng = mulberry32(hash2(c.x, c.y, 7));
-  const n = 7 + Math.floor(rng() * 3);
-  return regularPoly(c.x, c.y, c.r, n, rng() * Math.PI, 0.18, rng);
+// Barrera física de todas las murallas (exteriores, interiores anidadas y tramos abiertos)
+export function wallBarrierShape(L = state.layers, half = 4.5) {
+  return memo('wallBarrier:' + half, [L.walls], () => {
+    let acc = [];
+    for (const w of L.walls || []) {
+      if (!w.pts || w.pts.length < (w.open ? 2 : 3)) continue;
+      const wh = Math.max(half, (w.width ?? 3.6) / 2 + 1.5, (w.towerR ?? 2.8) * 0.9);
+      acc = union(acc, bufferLine(w.pts, wh, !w.open));
+    }
+    return acc;
+  });
+}
+
+export function citadelPaths(L = state.layers) {
+  return (L.citadels || [])
+    .map((c) => {
+      const pts = c.pts ? c.pts : (c.x !== undefined && c.r !== undefined ? citadelRing(c) : []);
+      return { pts, open: !!c.open, width: c.width, towerR: c.towerR, raw: c };
+    })
+    .filter((c) => c.pts.length >= (c.open ? 2 : 3));
 }
 export function citadelShape(L = state.layers) {
   return memo('citadels', [L.citadels], () => {
     let acc = [];
-    for (const c of L.citadels) acc = union(acc, [citadelRing(c)]);
+    for (const c of citadelPaths(L)) {
+      if (c.open) continue;
+      acc = union(acc, normalize([c.pts]));
+    }
+    return acc;
+  });
+}
+export function citadelBarrierShape(L = state.layers, half = 6) {
+  return memo('citadelBarrier:' + half, [L.citadels], () => {
+    let acc = [];
+    for (const c of citadelPaths(L)) {
+      const ch = Math.max(half, (c.width ?? 3) / 2 + 2.5, (c.towerR ?? 2.6) * 0.95);
+      acc = union(acc, bufferLine(c.pts, ch, !c.open));
+    }
     return acc;
   });
 }
