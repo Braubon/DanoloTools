@@ -153,7 +153,7 @@
               "supremo": false
             },
             "etiqueta": "Magisferas (solo con Magitech superior)",
-            "min": "0",
+            "min": "NIVEL>=40?7:(NIVEL>=20?5:3)",
             "max": "NIVEL>=40?7:(NIVEL>=20?5:3)",
             "requiere_opcion": "magitech-superior"
           }

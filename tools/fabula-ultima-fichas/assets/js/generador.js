@@ -92,11 +92,18 @@ function renderPestanas() {
 }
 
 function renderPanel() {
+  const p = panel();
+  const abiertos = new Set(
+    Array.from(p.querySelectorAll('details[open][data-det]')).map((d) => d.dataset.det)
+  );
   const fn = {
     contenido: panelContenido, identidad: panelIdentidad, clases: panelClases, atributos: panelAtributos,
     equipo: panelEquipo, vinculos: panelVinculos, extras: panelExtras, progreso: panelProgreso, ficha: panelFicha
   }[tab] || panelContenido;
-  panel().innerHTML = fn();
+  p.innerHTML = fn();
+  for (const d of p.querySelectorAll('details[data-det]')) {
+    if (abiertos.has(d.dataset.det)) d.open = true;
+  }
 }
 
 // =========================================================== resumen lateral
@@ -320,14 +327,14 @@ function seccionHeroicas() {
   h += '<div class="lista">' + pj.heroicas.map((hh, i) => {
     const d = get(dbTodo, 'habilidades_heroicas', hh.id);
     if (!d) return `<div class="item">${esc(hh.id)} <span class="chip err">No encontrada</span></div>`;
-    const quitar = (libre() || creando()) ? `<button class="btn peq fantasma peligro" data-act="quitar-heroica" data-i="${i}">Quitar</button>` : '';
+    const quitar = `<button class="btn peq fantasma peligro" data-act="quitar-heroica" data-i="${i}">Quitar</button>`;
     const f = { tipo: 'heroica', id: d.id, indice: i };
     const extra = d.elecciones ? eleccionesHtml(f, d, 1) : '';
     return heroicaHtml(d, { derecha: quitar, extra, abierto: !!d.elecciones && pendiente(f, d, 1) });
   }).join('') + '</div>';
   if (pendientes > 0 || libre()) {
     const eleg = R.heroicasElegibles(pj, db);
-    h += `<details class="tarjeta" style="margin-top:12px" ${pendientes > 0 ? 'open' : ''}><summary class="fila entre" style="cursor:pointer"><strong>${pendientes > 0 ? `Elige ${pendientes} habilidad${pendientes > 1 ? 'es' : ''} heroica${pendientes > 1 ? 's' : ''}` : 'Añadir habilidad heroica (modo libre)'}</strong></summary>
+    h += `<details class="tarjeta" data-det="sec-heroicas" style="margin-top:12px" ${pendientes > 0 ? 'open' : ''}><summary class="fila entre" style="cursor:pointer"><strong>${pendientes > 0 ? `Elige ${pendientes} habilidad${pendientes > 1 ? 'es' : ''} heroica${pendientes > 1 ? 's' : ''}` : 'Añadir habilidad heroica (modo libre)'}</strong></summary>
       <div class="lista" style="margin-top:10px">${eleg.map((e) => heroicaHtml(e.def, {
         derecha: `<button class="btn peq ${e.ok ? 'primario' : ''}" data-act="anadir-heroica" data-id="${e.def.id}" ${e.ok || libre() ? '' : 'disabled'}>Elegir</button>`,
         nota: e.ok ? '' : e.motivos.join(' · ')
@@ -337,7 +344,7 @@ function seccionHeroicas() {
 }
 
 function heroicaHtml(d, { derecha = '', extra = '', nota = '', abierto = false } = {}) {
-  return `<details class="item ${nota ? 'apagada' : ''}" ${abierto ? 'open' : ''} data-busqueda="${esc((d.nombre + ' ' + d.resumen).toLowerCase())}"><summary><span><span class="titulo">${esc(d.nombre)}</span><br><span class="sub">${esc(d.resumen || '')}${nota ? ` · <span style="color:var(--err)">${esc(nota)}</span>` : ''}</span></span>
+  return `<details class="item ${nota ? 'apagada' : ''}" ${abierto ? 'open' : ''} data-det="heroica:${esc(d.id)}" data-busqueda="${esc((d.nombre + ' ' + d.resumen).toLowerCase())}"><summary><span><span class="titulo">${esc(d.nombre)}</span><br><span class="sub">${esc(d.resumen || '')}${nota ? ` · <span style="color:var(--err)">${esc(nota)}</span>` : ''}</span></span>
     <span class="der">${tagAtlas(d)}${derecha}</span></summary>
     <div class="cuerpo"><p class="small muted"><strong>Requisitos:</strong> ${esc((d.requisitos || {}).texto || 'Ninguno.')}</p><div class="texto">${md(d.efecto)}</div>${extra}</div></details>`;
 }
@@ -362,7 +369,8 @@ function pendiente(f, def, sl) {
     const v = vals[e.clave];
     if (e.tipo === 'texto' || e.tipo === 'texto_largo') return !v;
     const n = Array.isArray(v) ? v.filter(Boolean).length : (v ? 1 : 0);
-    return n < R.rangoEleccion(e, pj, sl)[0];
+    const [min, max] = R.rangoEleccion(e, pj, sl);
+    return n < min || n > max;
   });
 }
 
@@ -376,7 +384,7 @@ function eleccionesHtml(f, def, sl) {
 function editorEleccion(f, e, v, sl) {
   const [min, max] = R.rangoEleccion(e, pj, sl);
   const fid = codFuente(f);
-  const base = `data-f="${fid}" data-clave="${e.clave}"`;
+  const base = `data-f="${fid}" data-clave="${e.clave}" data-max="${max}"`;
   const arr = Array.isArray(v) ? v : (v ? [v] : []);
   const n = arr.filter(Boolean).length;
   const ok = n >= min && n <= max;
@@ -387,17 +395,19 @@ function editorEleccion(f, e, v, sl) {
   if (e.tipo === 'conjuros' || e.tipo === 'opciones') {
     const cand = R.valoresEleccion(e, db);
     const elegidos = arr.map((id) => get(dbTodo, e.tipo === 'conjuros' ? 'conjuros' : 'opciones', id)).filter(Boolean);
-    const lleno = n >= max && !libre();
+    const lleno = n >= max && max > 1 && !libre();
     const boton = (o, sel) => {
       const reqOk = !o.requiere || o.requiere.every((r) => arr.includes(r));
       const dis = !sel && (lleno || (!reqOk && !libre()));
-      return `<button class="chip" data-act="elec-toggle" ${base} data-valor="${o.id}" aria-pressed="${sel}" ${dis ? 'disabled' : ''} title="${!reqOk ? 'Requiere: ' + esc(o.requiere.join(', ')) : ''}">${sel ? 'Elegido' : 'Elegir'}</button>`;
+      const reqNombres = (o.requiere || []).map((r) => (get(dbTodo, 'opciones', r) || { nombre: r }).nombre).join(', ');
+      const ttl = sel ? 'Pulsa para quitar esta elección' : (!reqOk ? 'Requiere: ' + reqNombres : (lleno ? `Máximo alcanzado (${max}). Pulsa en "Elegido ✕" arriba para cambiar una opción.` : ''));
+      return `<button class="chip" data-act="elec-toggle" ${base} data-valor="${o.id}" aria-pressed="${sel}" ${dis ? 'disabled' : ''} title="${esc(ttl)}">${sel ? 'Elegido ✕' : 'Elegir'}</button>`;
     };
     const pinta = (o, sel) => (e.tipo === 'conjuros' ? F.htmlConjuro(dbTodo, o, { derecha: boton(o, sel) }) : F.htmlOpcion(dbTodo, o, { derecha: boton(o, sel) }));
     if (elegidos.length) h += `<div class="lista">${elegidos.map((o) => pinta(o, true)).join('')}</div>`;
     const resto = cand.filter((o) => !arr.includes(o.id));
     if (resto.length) {
-      h += `<details ${n < min ? 'open' : ''} style="margin-top:6px"><summary class="small muted" style="cursor:pointer">${n < min ? 'Opciones disponibles' : 'Ver otras opciones'} (${resto.length})</summary>
+      h += `<details ${n < min ? 'open' : ''} data-det="elec:${esc(fid)}:${esc(e.clave)}" style="margin-top:6px"><summary class="small muted" style="cursor:pointer">${n < min ? 'Opciones disponibles' : 'Ver otras opciones'} (${resto.length})</summary>
         <div class="lista" style="margin-top:6px">${resto.map((o) => pinta(o, false)).join('')}</div></details>`;
     }
   } else if (e.tipo === 'seleccion') {
@@ -435,7 +445,7 @@ function panelAtributos() {
         <option value="">—</option>${opciones.map((d) => `<option value="${d}" ${pj.atributos.base[a] === d ? 'selected' : ''}>d${d}</option>`).join('')}</select></label>`).join('')}</div>
       <p class="faint small" style="margin-top:8px">Al elegir un dado ya asignado, se intercambia con el otro atributo.</p></div>`;
   }
-  h += htmlMejorasAtributos(pj, editable);
+  h += htmlMejorasAtributos(pj, true);
   // Desglose
   const otros = (stat) => c.mods.filter((m) => m.stat === stat);
   const linea = (etq, stat, total, formula) => `<div class="item"><div class="fila entre"><strong>${etq}</strong><span class="mono" style="font-size:18px">${total}</span></div>
@@ -1117,8 +1127,26 @@ function accion(act, ds, el, ev) {
     // elecciones
     case 'elec-toggle': {
       const s = storeDe(decFuente(ds.f));
-      const arr = Array.isArray(s[ds.clave]) ? s[ds.clave] : [];
-      s[ds.clave] = arr.includes(ds.valor) ? arr.filter((x) => x !== ds.valor) : [...arr, ds.valor];
+      let arr = Array.isArray(s[ds.clave]) ? [...s[ds.clave]] : [];
+      if (arr.includes(ds.valor)) {
+        arr = arr.filter((x) => x !== ds.valor);
+        let changed = true;
+        while (changed) {
+          changed = false;
+          for (const id of [...arr]) {
+            const op = get(dbTodo, 'opciones', id);
+            if (op && op.requiere && !op.requiere.every((r) => arr.includes(r))) {
+              arr = arr.filter((x) => x !== id);
+              changed = true;
+            }
+          }
+        }
+      } else {
+        const mx = Number(ds.max) || 99;
+        arr.push(ds.valor);
+        if (mx === 1 && arr.length > 1 && !libre()) arr = arr.slice(-1);
+      }
+      s[ds.clave] = arr;
       cambio(); return;
     }
     case 'elec-sel': {

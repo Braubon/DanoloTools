@@ -32,7 +32,7 @@ export function evalExpr(expr, ctx = {}) {
 
 // --------------------------------------------------------------- utilidades
 export const uid = () => Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4);
-const subirDado = (d, pasos = 1) => Math.min(12, (d || 0) + 2 * pasos);
+export const subirDado = (d, pasos = 1) => Math.min(12, (d || 0) + 2 * pasos);
 
 export function nuevoPersonaje() {
   const ahora = new Date().toISOString();

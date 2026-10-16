@@ -74,7 +74,7 @@ export function htmlDetalles(def) {
 
 export function htmlHabilidad(db, def, sl, { extra = '', abierto = false, derecha = '', clase = '' } = {}) {
   if (!def) return '';
-  return `<details class="item ${clase}" ${abierto ? 'open' : ''} data-busqueda="${esc((def.nombre + ' ' + (def.efecto || '')).toLowerCase())}">
+  return `<details class="item ${clase}" ${abierto ? 'open' : ''} data-det="hab:${esc(def.id)}" data-busqueda="${esc((def.nombre + ' ' + (def.efecto || '')).toLowerCase())}">
     <summary><span class="titulo">${esc(def.nombre)}</span>
       ${def.sl_max > 1 ? `<span class="muted small">SL ${sl}/${def.sl_max}</span>` : ''}
       <span class="der">${derecha}<span class="chip">${nombreTipoHab(def.tipo)}</span></span></summary>
@@ -88,14 +88,14 @@ export function metaConjuro(cj) {
   return [cj.pm ? cj.pm + ' PM' : '', cj.objetivo, cj.duracion, cj.ofensivo ? 'Ofensivo' : ''].filter(Boolean).join(' · ');
 }
 export function htmlConjuro(db, cj, { derecha = '' } = {}) {
-  return `<details class="item" data-tipo="${cj.ofensivo ? 'ofensivo' : 'apoyo'}" data-busqueda="${esc((cj.nombre + ' ' + (cj.efecto || '')).toLowerCase())}"><summary><span class="titulo">${esc(cj.nombre)}</span>
+  return `<details class="item" data-det="cj:${esc(cj.id)}" data-tipo="${cj.ofensivo ? 'ofensivo' : 'apoyo'}" data-busqueda="${esc((cj.nombre + ' ' + (cj.efecto || '')).toLowerCase())}"><summary><span class="titulo">${esc(cj.nombre)}</span>
     <span class="muted small">${esc(metaConjuro(cj))}</span><span class="der">${derecha}${atlasTag(db, cj)}</span></summary>
     <div class="cuerpo texto">${md(cj.efecto)}${cj.oportunidad ? `<p><strong>Oportunidad:</strong> ${esc(cj.oportunidad)}</p>` : ''}</div></details>`;
 }
 
 export function htmlOpcion(db, op, { derecha = '' } = {}) {
   const meta = op.duracion ? `<span class="muted small">${esc(op.duracion)}</span>` : '';
-  return `<details class="item" data-busqueda="${esc((op.nombre + ' ' + (op.efecto || '') + ' ' + (op.detalles || []).map((d) => d.texto).join(' ')).toLowerCase())}"><summary><span class="titulo">${esc(op.nombre)}</span>${meta}
+  return `<details class="item" data-det="op:${esc(op.id)}" data-busqueda="${esc((op.nombre + ' ' + (op.efecto || '') + ' ' + (op.detalles || []).map((d) => d.texto).join(' ')).toLowerCase())}"><summary><span class="titulo">${esc(op.nombre)}</span>${meta}
     <span class="der">${derecha}${atlasTag(db, op)}</span></summary><div class="cuerpo">${htmlDetalles(op)}</div></details>`;
 }
 
