@@ -19,6 +19,11 @@ export function resumenClases(pj, db) {
 export const atlasTag = (db, rec, mostrar = true) => (mostrar && rec && rec._atlas && rec._atlas !== 'basico'
   ? `<span class="etiqueta-atlas">${esc(nombreAtlas(db, rec._atlas))}</span>` : '');
 
+export function etiquetasClase(def) {
+  if (!def || !Array.isArray(def.etiquetas) || !def.etiquetas.length) return '';
+  return def.etiquetas.map((t) => `<span class="etiqueta-rol">${esc(t)}</span>`).join('');
+}
+
 export function slDots(sl, max) {
   if (max <= 1) return '';
   const n = Math.min(max, 10);

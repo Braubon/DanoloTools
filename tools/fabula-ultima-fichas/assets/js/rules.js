@@ -541,8 +541,15 @@ export function subirNivel(pj, paso, db) {
   if (domina && !paso.heroica && !libre) errores.push('Al dominar la clase eliges una habilidad heroica.');
   const umbrales = param(db, 'niveles_mejora_atributo', [20, 40]);
   if (umbrales.includes(nuevo) && !paso.atributo && !libre) errores.push(`Al llegar a nivel ${nuevo} mejoras un atributo.`);
-  if (paso.atributo && (pj.atributos.base[paso.atributo] || 0) >= 12 && !(pj.atributos.mejoras || []).length) {
-    // la mejora no puede superar d12
+  if (paso.atributo) {
+    if (!ATR.includes(paso.atributo)) errores.push(`Atributo no válido: ${paso.atributo}.`);
+    else {
+      let val = pj.atributos.base[paso.atributo] || 0;
+      for (const m of pj.atributos.mejoras || []) {
+        if (m && m.atributo === paso.atributo) val = subirDado(val);
+      }
+      if (val >= 12) errores.push(`${ATR_NOMBRE[paso.atributo] || paso.atributo} ya está en d12 (máximo).`);
+    }
   }
   if (errores.length) return { ok: false, errores };
 
@@ -554,16 +561,27 @@ export function subirNivel(pj, paso, db) {
   let heroicaIndice = null;
   if (paso.heroica) { pj.heroicas.push({ id: paso.heroica, elecciones: {} }); heroicaIndice = pj.heroicas.length - 1; }
   if (paso.atributo) pj.atributos.mejoras.push({ nivel: nuevo, atributo: paso.atributo });
-  pj.historial.push({ nivel: nuevo, clase: paso.clase, habilidad: paso.habilidad, nueva_clase: nvClase === 0,
-    heroica: paso.heroica || null, atributo: paso.atributo || null, px_gastados: pxGastados, fecha: new Date().toISOString() });
-  // Estado actual: subir el máximo también sube el actual en la misma cantidad
-  if (pj.estado.pv !== null) pj.estado.pv += 1;
-  if (pj.estado.pm !== null) pj.estado.pm += 1;
+
+  const hist = {
+    nivel: nuevo, clase: paso.clase, habilidad: paso.habilidad, nueva_clase: nvClase === 0,
+    heroica: paso.heroica || null, atributo: paso.atributo || null, px_gastados: pxGastados, fecha: new Date().toISOString()
+  };
+  if (paso.identidad && paso.identidad.trim() && paso.identidad.trim() !== pj.identidad.identidad) {
+    hist.identidad_anterior = pj.identidad.identidad;
+    pj.identidad.identidad = paso.identidad.trim();
+  }
+  if (paso.tema && paso.tema.trim() && paso.tema.trim() !== pj.identidad.tema) {
+    hist.tema_anterior = pj.identidad.tema;
+    pj.identidad.tema = paso.tema.trim();
+  }
+  pj.historial.push(hist);
+
+  // Salud y mente: regla oficial del manual: "este incremento no altera los PV ni los PM actuales del personaje."
   return { ok: true, errores: [], heroicaIndice };
 }
 
 /** Deshace la última subida de nivel registrada en el historial. */
-export function deshacerNivel(pj) {
+export function deshacerNivel(pj, db) {
   const ult = pj.historial.pop();
   if (!ult) return false;
   const c = pj.clases.find((x) => x.id === ult.clase);
@@ -580,10 +598,15 @@ export function deshacerNivel(pj) {
     const i = pj.atributos.mejoras.findIndex((m) => m.nivel === ult.nivel);
     if (i >= 0) pj.atributos.mejoras.splice(i, 1);
   }
+  if (ult.identidad_anterior !== undefined) pj.identidad.identidad = ult.identidad_anterior;
+  if (ult.tema_anterior !== undefined) pj.identidad.tema = ult.tema_anterior;
   pj.nivel -= 1;
   pj.px += ult.px_gastados || 0;
-  if (pj.estado.pv !== null) pj.estado.pv -= 1;
-  if (pj.estado.pm !== null) pj.estado.pm -= 1;
+  if (db) {
+    const calc = calcular(pj, db);
+    if (pj.estado.pv !== null && pj.estado.pv > calc.pv_max) pj.estado.pv = calc.pv_max;
+    if (pj.estado.pm !== null && pj.estado.pm > calc.pm_max) pj.estado.pm = calc.pm_max;
+  }
   return true;
 }
 

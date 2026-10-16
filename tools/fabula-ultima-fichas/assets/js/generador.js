@@ -13,7 +13,9 @@ let raw, dbTodo, db, pj;
 let tab = leerLS(LS_TAB) || 'contenido';
 const ui = {
   tienda: { col: 'armas', rareza: 'basico', q: '', atlas: '' },
-  nivel: { clase: '', habilidad: '', heroica: '', atributo: '' },
+  nivel: { clase: '', habilidad: '', heroica: '', atributo: '', identidad: '', tema: '' },
+  filtroClaseTag: 'todas',
+  filtroSubidaTag: 'todas',
   ap: null, // arma personalizada en edición
   rm: null, // objeto raro a medida en edición
   ol: null  // objeto libre
@@ -203,9 +205,31 @@ function panelClases() {
     const disp = db.col.clases.filter((c) => !pj.clases.some((x) => x.id === c.id));
     const max = creando() && !libre() ? param(db, 'clases_iniciales_max', 3) : 99;
     if (pj.clases.length < max && disp.length) {
-      h += `<div class="tarjeta fila" style="margin-top:12px;flex-wrap:nowrap"><select id="nueva-clase" aria-label="Clase" style="flex:1">
-        ${disp.map((c) => `<option value="${c.id}">${esc(c.nombre)}${c._atlas !== 'basico' ? ' · ' + esc(nombreAtlas(dbTodo, c._atlas)) : ''}</option>`).join('')}</select>
-        <button class="btn primario" data-act="anadir-clase">Añadir clase</button></div>`;
+      const tagActivo = ui.filtroClaseTag || 'todas';
+      const tags = ['todas', 'melé', 'distancia', 'apoyo', 'tanque', 'magia'];
+      const filtradas = tagActivo === 'todas'
+        ? disp
+        : disp.filter((c) => (c.etiquetas || []).includes(tagActivo));
+      h += `<div class="tarjeta" style="margin-top:12px">
+        <div class="fila entre" style="margin-bottom:8px">
+          <strong>Añadir clase</strong>
+          <span class="muted small">${filtradas.length} disponible${filtradas.length === 1 ? '' : 's'}</span>
+        </div>
+        <div class="fila" style="gap:6px;margin-bottom:10px;align-items:center">
+          <span class="muted small">Filtrar:</span>
+          <div class="segmento">${tags.map((t) =>
+            `<button data-act="filtro-clase-tag" data-tag="${t}" aria-pressed="${tagActivo === t}">${t.charAt(0).toUpperCase() + t.slice(1)}</button>`
+          ).join('')}</div>
+        </div>
+        <div class="fila" style="flex-wrap:nowrap;gap:8px">
+          <select id="nueva-clase" aria-label="Clase" style="flex:1">
+            ${filtradas.length ? filtradas.map((c) =>
+              `<option value="${c.id}">${esc(c.nombre)}${(c.etiquetas || []).length ? ' [' + c.etiquetas.join(', ') + ']' : ''}${c._atlas !== 'basico' ? ' · ' + esc(nombreAtlas(dbTodo, c._atlas)) : ''}</option>`
+            ).join('') : '<option value="">Sin clases con esta etiqueta</option>'}
+          </select>
+          <button class="btn primario" data-act="anadir-clase" ${filtradas.length ? '' : 'disabled'}>Añadir clase</button>
+        </div>
+      </div>`;
     }
   }
   h += seccionHeroicas();
@@ -231,7 +255,7 @@ function tarjetaClase(c, editable, asign) {
     return F.htmlHabilidad(dbTodo, hd, sl, { derecha: stepper, extra, clase: sl ? '' : 'apagada', abierto: sl > 0 && pendiente(f, hd, sl) });
   }).join('');
   return `<div class="tarjeta">
-    <div class="fila entre"><div class="fila"><h2 style="font-size:17px">${esc(def.nombre)}</h2><span class="muted">Nivel ${nv}</span>${nv >= 10 ? '<span class="chip acento">Dominada</span>' : ''}${tagAtlas(def)}</div>
+    <div class="fila entre"><div class="fila"><h2 style="font-size:17px">${esc(def.nombre)}</h2><span class="muted">Nivel ${nv}</span>${nv >= 10 ? '<span class="chip acento">Dominada</span>' : ''}${F.etiquetasClase(def)}${tagAtlas(def)}</div>
       ${editable ? `<button class="btn peq fantasma peligro" data-act="quitar-clase" data-id="${c.id}">Quitar</button>` : ''}</div>
     <p class="muted small" style="margin:4px 0">${esc(b.texto || '')}</p>
     ${comp.length ? `<div class="fila">${comp.map((x) => `<span class="chip">${esc(x)}</span>`).join('')}</div>` : ''}
@@ -802,25 +826,49 @@ function panelSubida() {
   const nuevo = pj.nivel + 1;
   const pxNivel = param(db, 'px_por_nivel', 10);
   const umbrales = param(db, 'niveles_mejora_atributo', [20, 40]);
-  let h = `<div class="seccion fila entre"><div><h2>Progreso</h2><p class="muted small">Al acumular ${pxNivel} PX gastas 10 para subir un nivel: +1 PV y +1 PM máximos y un nivel de clase.</p></div>
+  let h = `<div class="seccion fila entre"><div><h2>Progreso</h2><p class="muted small">Al acumular ${pxNivel} PX gastas 10 para subir un nivel: +1 PV y +1 PM máximos (sin alterar actuales) y un nivel de clase.</p></div>
     <div class="fila"><label class="fila small">PX <input type="number" data-bind="px" data-num="1" value="${pj.px}"></label>
     <label class="fila small">PF <input type="number" data-bind="pf" data-num="1" value="${pj.pf}"></label>
     ${libre() ? `<label class="fila small">Nivel <input type="number" data-bind="nivel" data-num="1" value="${pj.nivel}"></label>` : ''}</div></div>`;
 
-  if (pj.nivel >= param(db, 'nivel_max', 50)) return h + '<div class="vacio">Nivel máximo alcanzado.</div>' + historialHtml();
+  if (pj.nivel >= param(db, 'nivel_max', 50)) return h + '<div class="vacio">Nivel máximo alcanzado (50).</div>' + historialHtml();
 
-  // Paso 1: clase
-  const actuales = pj.clases.filter((c) => R.nivelClase(c) < 10);
+  // Paso 1: clase (con filtro por etiquetas)
+  const tagSubida = ui.filtroSubidaTag || 'todas';
+  const coincideTag = (cDef) => tagSubida === 'todas' || (cDef && (cDef.etiquetas || []).includes(tagSubida));
+  const actuales = pj.clases.filter((c) => {
+    if (R.nivelClase(c) >= 10) return false;
+    const d = get(dbTodo, 'clases', c.id);
+    return coincideTag(d);
+  });
   const puedeNueva = R.clasesNoDominadas(pj).length < param(db, 'clases_no_dominadas_max', 3) || libre();
-  const nuevas = db.col.clases.filter((c) => !pj.clases.some((x) => x.id === c.id));
+  const todasNuevas = db.col.clases.filter((c) => !pj.clases.some((x) => x.id === c.id));
+  const nuevas = todasNuevas.filter(coincideTag);
+  const tags = ['todas', 'melé', 'distancia', 'apoyo', 'tanque', 'magia'];
+
   h += `<div class="tarjeta"><h3>Subir a nivel ${nuevo}</h3>
-    <div class="small muted" style="margin-bottom:6px">1 · Clase</div>
+    <div class="fila entre" style="margin-bottom:8px">
+      <div class="small muted">1 · Clase</div>
+      <div class="fila" style="gap:4px;align-items:center">
+        <span class="muted small">Filtrar:</span>
+        <div class="segmento">${tags.map((t) =>
+          `<button data-act="filtro-subida-tag" data-tag="${t}" aria-pressed="${tagSubida === t}">${t.charAt(0).toUpperCase() + t.slice(1)}</button>`
+        ).join('')}</div>
+      </div>
+    </div>
     <div class="fila">${actuales.map((c) => {
       const d = get(dbTodo, 'clases', c.id);
-      return `<button class="chip" data-act="nv-clase" data-id="${c.id}" aria-pressed="${n.clase === c.id}">${esc(d ? d.nombre : c.id)} ${R.nivelClase(c)} → ${R.nivelClase(c) + 1}</button>`;
+      const nv = R.nivelClase(c);
+      return `<button class="chip" data-act="nv-clase" data-id="${c.id}" aria-pressed="${n.clase === c.id}">
+        ${esc(d ? d.nombre : c.id)} ${nv} → ${nv + 1}
+        ${d && d.etiquetas ? `<small class="faint">· ${d.etiquetas.join(', ')}</small>` : ''}
+      </button>`;
     }).join('')}
-    ${puedeNueva && nuevas.length ? `<select data-act="nv-clase-nueva" style="width:auto"><option value="">Nueva clase…</option>${nuevas.map((c) => `<option value="${c.id}" ${n.clase === c.id ? 'selected' : ''}>${esc(c.nombre)}</option>`).join('')}</select>`
-      : (!puedeNueva ? '<span class="muted small">Domina una clase para empezar otra.</span>' : '')}</div>`;
+    ${puedeNueva && nuevas.length ? `<select data-act="nv-clase-nueva" style="width:auto">
+      <option value="">Nueva clase… (${nuevas.length})</option>
+      ${nuevas.map((c) => `<option value="${c.id}" ${n.clase === c.id ? 'selected' : ''}>${esc(c.nombre)} [${(c.etiquetas || []).join(', ')}]</option>`).join('')}
+    </select>` : (!puedeNueva ? '<span class="muted small">Domina una clase para empezar otra (máx. 3 sin dominar).</span>' : (todasNuevas.length && !nuevas.length ? '<span class="muted small">Sin nuevas clases con este filtro.</span>' : ''))}
+    </div>`;
 
   // Paso 2: habilidad
   const defC = n.clase ? get(dbTodo, 'clases', n.clase) : null;
@@ -835,6 +883,21 @@ function panelSubida() {
       return F.htmlHabilidad(dbTodo, hd, sl, { derecha: `<button class="chip" data-act="nv-hab" data-id="${hd.id}" aria-pressed="${n.habilidad === hd.id}" ${lleno ? 'disabled' : ''}>${lleno ? 'Máximo' : (sl ? `SL ${sl} → ${sl + 1}` : 'Nueva')}</button>` });
     }).join('')}</div>`;
     if (!c && defC.beneficios) h += `<p class="small muted" style="margin-top:6px"><strong>Beneficio gratuito:</strong> ${esc(defC.beneficios.texto || '')}</p>`;
+
+    if (n.habilidad) {
+      const hdSel = defC.habilidades.find((x) => x.id === n.habilidad);
+      if (hdSel && hdSel.elecciones && hdSel.elecciones.length) {
+        const slNuevo = (c ? (c.habilidades[hdSel.id] || 0) : 0) + 1;
+        const f = { tipo: 'hab', id: hdSel.id };
+        h += `<div class="tarjeta" style="margin-top:10px;border-color:var(--accent)">
+          <div class="fila entre" style="margin-bottom:8px">
+            <strong>Elecciones de ${esc(hdSel.nombre)}</strong>
+            <span class="muted small">SL ${slNuevo}</span>
+          </div>
+          ${eleccionesHtml(f, hdSel, slNuevo)}
+        </div>`;
+      }
+    }
   }
 
   // Paso 3: heroica
@@ -854,9 +917,36 @@ function panelSubida() {
 
   // Paso 4: atributo
   if (umbrales.includes(nuevo)) {
+    const getBaseAtr = (a) => {
+      let v = pj.atributos.base[a] || 8;
+      for (const m of pj.atributos.mejoras || []) {
+        if (m && m.atributo === a) v = R.subirDado(v);
+      }
+      return v;
+    };
     h += `<div class="small muted" style="margin:14px 0 6px">${domina ? 4 : 3} · Mejora de atributo (nivel ${nuevo})</div>
-      <div class="segmento">${R.ATR.map((a) => `<button data-act="nv-atr" data-id="${a}" aria-pressed="${n.atributo === a}" ${(R.calcular(pj, dbTodo).base[a] >= 12) ? 'disabled' : ''}>${a} d${R.calcular(pj, dbTodo).base[a]}</button>`).join('')}</div>`;
+      <div class="segmento">${R.ATR.map((a) => {
+        const dAct = getBaseAtr(a);
+        const maximo = dAct >= 12;
+        return `<button data-act="nv-atr" data-id="${a}" aria-pressed="${n.atributo === a}" ${maximo ? 'disabled' : ''}>${a} d${dAct}${maximo ? ' (máx)' : ` → d${dAct + 2}`}</button>`;
+      }).join('')}</div>`;
   }
+
+  // Evolución narrativa opcional
+  h += `<details class="tarjeta" style="margin-top:14px" ${n.identidad || n.tema ? 'open' : ''}>
+    <summary class="small muted" style="cursor:pointer"><strong>Evolución narrativa (opcional)</strong> · Modificar Identidad o Tema</summary>
+    <div class="pila" style="margin-top:10px">
+      <label class="campo"><span>Nueva Identidad (dejar en blanco para conservar la actual)</span>
+        <input type="text" data-nv-identidad value="${esc(n.identidad || '')}" placeholder="${esc(pj.identidad.identidad || 'Identidad actual')}">
+      </label>
+      <label class="campo"><span>Nuevo Tema</span>
+        <select data-nv-tema>
+          <option value="">Conservar actual (${esc(pj.identidad.tema || 'sin tema')})</option>
+          ${tabla(db, 'temas').map((t) => `<option value="${esc(t)}" ${n.tema === t ? 'selected' : ''}>${esc(t)}</option>`).join('')}
+        </select>
+      </label>
+    </div>
+  </details>`;
 
   const listo = n.clase && n.habilidad && (!domina || n.heroica || libre()) && (!umbrales.includes(nuevo) || n.atributo || libre());
   const faltaPx = pj.px < pxNivel && !libre();
@@ -872,7 +962,12 @@ function historialHtml() {
       const c = get(dbTodo, 'clases', h.clase);
       const hd = hab(dbTodo, h.habilidad);
       const hh = h.heroica ? get(dbTodo, 'habilidades_heroicas', h.heroica) : null;
-      return `<div class="item fila"><strong style="width:72px">Nivel ${h.nivel}</strong><span>${esc(c ? c.nombre : h.clase)} · ${esc(hd ? hd.nombre : h.habilidad)}${hh ? ` · <span class="chip acento">${esc(hh.nombre)}</span>` : ''}${h.atributo ? ` · <span class="chip">+${h.atributo}</span>` : ''}</span></div>`;
+      const extra = [];
+      if (hh) extra.push(`<span class="chip acento">${esc(hh.nombre)}</span>`);
+      if (h.atributo) extra.push(`<span class="chip">+${h.atributo}</span>`);
+      if (h.identidad_anterior) extra.push(`<span class="chip">Identidad cambiada</span>`);
+      if (h.tema_anterior) extra.push(`<span class="chip">Tema cambiado</span>`);
+      return `<div class="item fila"><strong style="width:72px">Nivel ${h.nivel}</strong><span>${esc(c ? c.nombre : h.clase)} · ${esc(hd ? hd.nombre : h.habilidad)}${extra.length ? ' · ' + extra.join(' ') : ''}</span></div>`;
     }).join('')}</div></div>`;
 }
 
@@ -1060,8 +1155,10 @@ function accion(act, ds, el, ev) {
       toast('Personaje creado. Ya puedes descargarlo o subirlo de nivel.');
       ui.nivel = {}; cambio(); return;
     }
-    case 'nv-clase': ui.nivel = { clase: ds.id }; renderPanel(); return;
-    case 'nv-clase-nueva': ui.nivel = { clase: el.value }; renderPanel(); return;
+    case 'filtro-clase-tag': ui.filtroClaseTag = ds.tag; renderPanel(); return;
+    case 'filtro-subida-tag': ui.filtroSubidaTag = ds.tag; renderPanel(); return;
+    case 'nv-clase': ui.nivel = { ...ui.nivel, clase: ds.id, habilidad: '', heroica: '' }; renderPanel(); return;
+    case 'nv-clase-nueva': ui.nivel = { ...ui.nivel, clase: el.value, habilidad: '', heroica: '' }; renderPanel(); return;
     case 'nv-hab': ui.nivel = { ...ui.nivel, habilidad: ds.id, heroica: '' }; renderPanel(); return;
     case 'nv-heroica': ui.nivel.heroica = ds.id; renderPanel(); return;
     case 'nv-atr': ui.nivel.atributo = ds.id; renderPanel(); return;
@@ -1069,10 +1166,11 @@ function accion(act, ds, el, ev) {
       const r = R.subirNivel(pj, ui.nivel, db);
       if (!r.ok) { toast(r.errores[0], 'err'); return; }
       const hd = hab(dbTodo, ui.nivel.habilidad);
-      toast(`¡Nivel ${pj.nivel}!${hd && hd.elecciones ? ' Completa las elecciones de ' + hd.nombre + ' en Clases.' : ''}`);
-      ui.nivel = {}; cambio(); return;
+      toast(`¡Nivel ${pj.nivel}!${hd && hd.elecciones ? ' Elecciones guardadas o completables en Clases.' : ''}`);
+      ui.nivel = { clase: '', habilidad: '', heroica: '', atributo: '', identidad: '', tema: '' };
+      cambio(); return;
     }
-    case 'deshacer-nivel': if (confirm('¿Deshacer la última subida de nivel?')) { R.deshacerNivel(pj); cambio(); } return;
+    case 'deshacer-nivel': if (confirm('¿Deshacer la última subida de nivel?')) { R.deshacerNivel(pj, dbTodo); cambio(); } return;
 
     // ficha
     case 'estado': {
@@ -1100,6 +1198,7 @@ document.addEventListener('click', (e) => {
 document.addEventListener('change', (e) => {
   const t = e.target;
   if (t.dataset.act) { accion(t.dataset.act, t.dataset, t, e); return; }
+  if (t.dataset.nvTema !== undefined) { ui.nivel.tema = t.value; return; }
   if (t.dataset.ap !== undefined || t.dataset.apPers !== undefined) { editarAP(t); return; }
   if (t.dataset.rm) { ui.rm[t.dataset.rm] = t.value; renderDialogoRM(); return; }
   if (t.dataset.bind && t.dataset.num) { bind(t); cambio({ panel: false }); }
@@ -1108,6 +1207,7 @@ document.addEventListener('change', (e) => {
 document.addEventListener('input', (e) => {
   const t = e.target;
   if (t.dataset.actInput) { accion(t.dataset.actInput, t.dataset, t, e); return; }
+  if (t.dataset.nvIdentidad !== undefined) { ui.nivel.identidad = t.value; return; }
   if (t.dataset.bind) { bind(t); cambio({ panel: false }); return; }
   if (t.dataset.elecTexto) { storeDe(decFuente(t.dataset.f))[t.dataset.clave] = t.value; cambio({ panel: false }); return; }
   if (t.dataset.elecLista !== undefined) { const s = storeDe(decFuente(t.dataset.f)); s[t.dataset.clave][Number(t.dataset.elecLista)] = t.value; cambio({ panel: false }); return; }

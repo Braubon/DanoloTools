@@ -243,9 +243,9 @@ dialog .pie { display: flex; justify-content: flex-end; gap: 8px; padding: 12px 
 .toast.err { border-color: var(--err); }
 .toast.fuera { opacity: 0; }
 
-/* ------------------------------------------------------------------ varios */
 .vacio { text-align: center; color: var(--muted); padding: 40px 16px; border: 1px dashed var(--line-2); border-radius: 10px; }
 .etiqueta-atlas { font-size: 11px; color: var(--faint); border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; white-space: nowrap; }
+.etiqueta-rol { font-size: 11px; color: var(--accent); background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent); border-radius: 4px; padding: 1px 6px; text-transform: capitalize; white-space: nowrap; }
 .sl { display: inline-flex; align-items: center; gap: 2px; }
 .sl i { width: 7px; height: 7px; border-radius: 50%; border: 1px solid var(--line-2); display: inline-block; }
 .sl i.on { background: var(--accent); border-color: var(--accent); }

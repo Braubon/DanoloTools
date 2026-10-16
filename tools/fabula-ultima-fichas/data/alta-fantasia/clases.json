@@ -1,306 +1,322 @@
 [
- {
-  "id": "cantor",
-  "nombre": "Cantor",
-  "nombre_original": "Chanter",
-  "descripcion": "Canaliza la fuerza del alma a través de la música y el canto mágico, tejiendo estrofas que apoyan a sus aliados o alteran el campo de batalla.",
-  "beneficios": {
-   "pv": 0,
-   "pm": 5,
-   "pi": 0,
-   "competencias": [],
-   "rituales": [],
-   "texto": "Aumenta permanentemente tus Puntos de Mente máximos en 5."
-  },
-  "habilidades": [
-   {
-    "id": "canto-magico",
-    "nombre": "Canto mágico",
-    "nombre_original": "Magichant",
-    "sl_max": 10,
-    "tipo": "accion",
-    "activacion": "1 acción, PM variables.",
-    "efecto": "En tu turno durante una escena de conflicto, puedes usar una acción y gastar una cantidad variable de PM para tejer voz y música en un efecto mágico denominado **estrofa** (*verse*). Solo puedes cantar una estrofa por turno, incluso si dispones de múltiples acciones.\nAl adquirir esta habilidad por primera vez, aprendes los tres volúmenes (*volumes*), además de una clave (*key*) y un tono (*tone*). Cada vez que aumentes el nivel de esta habilidad, aprendes una clave adicional o un tono adicional (a tu elección).\n\n**Volúmenes** (todos conocidos):\n\n| Volumen | PM | Objetivos |\n| :--- | :---: | :--- |\n| Bajo | 10 | Tú mismo u otra criatura visible que pueda oírte. |\n| Medio | 20 | Cada aliado que pueda oírte. |\n| Alto | 30 | Cada enemigo que pueda oírte. |\n\nAl cantar una estrofa combinas un volumen, una clave y un tono que hayas aprendido. El volumen determina el coste y los objetivos; la clave, el tipo de daño, estado, atributo y recuperación; el tono, el efecto.",
-    "elecciones": [
-     {
-      "clave": "claves_tonos",
-      "tipo": "opciones",
-      "grupos": [
-       "clave_cantor",
-       "tono_cantor"
-      ],
-      "min_por_grupo": 1,
-      "etiqueta": "Claves y tonos aprendidos",
-      "min": "SL+1",
-      "max": "SL+1",
-      "nota": "Al adquirir la habilidad: los tres volúmenes, una clave y un tono. Cada nivel adicional: una clave o un tono."
-     }
-    ]
-   },
-   {
-    "id": "resonancia",
-    "nombre": "Resonancia",
-    "nombre_original": "Resonance",
-    "sl_max": 3,
-    "tipo": "reaccion",
-    "activacion": "Reacción (tras afectar a enemigos con una estrofa).",
-    "efecto": "Tras afectar a uno o más enemigos con una estrofa, si tienes un arma arcana equipada, puedes elegir una opción:\n- Hasta el inicio de tu siguiente turno, tus aliados infligen [SL] de daño adicional a dichos enemigos.\n- Hasta el inicio de tu siguiente turno, recuperas [SL] Puntos de Mente cada vez que uno de dichos enemigos sufre daño. Si una misma fuente inflige daño a dos o más de esos enemigos simultáneamente, recuperas [SL] PM por cada enemigo dañado."
-   },
-   {
-    "id": "canto-de-sirena",
-    "nombre": "Canto de sirena",
-    "nombre_original": "Siren’s Song",
-    "sl_max": 1,
-    "tipo": "pasiva",
-    "activacion": "Pasiva.",
-    "efecto": "Obtienes la capacidad de realizar rituales de la disciplina Ritualismo. Además, puedes emplear Ritualismo para crear ilusiones auditivas basadas en el sonido.",
-    "rituales": [
-     "ritualismo"
-    ]
-   },
-   {
-    "id": "barrera-de-sonido",
-    "nombre": "Barrera de sonido",
-    "nombre_original": "Sound Barrier",
-    "sl_max": 5,
-    "tipo": "reaccion",
-    "activacion": "Reacción (tras cantar a volumen medio o alto).",
-    "efecto": "Tras cantar una estrofa a volumen medio o alto, todo el daño físico que sufras hasta el inicio de tu siguiente turno se reduce en [SL] (esta reducción se aplica antes de las afinidades)."
-   },
-   {
-    "id": "vibrato",
-    "nombre": "Vibrato",
-    "nombre_original": "Vibrato",
-    "sl_max": 1,
-    "tipo": "reaccion",
-    "activacion": "Reacción (tras cantar a volumen bajo o medio).",
-    "efecto": "Tras cantar una estrofa a volumen bajo o medio, puedes realizar un ataque gratuito con un arma que tengas equipada; considera tu Tirada Mayor (TM) como 0 al calcular el daño infligido por este ataque."
-   }
-  ]
- },
- {
-  "id": "comandante",
-  "nombre": "Comandante",
-  "nombre_original": "Commander",
-  "descripcion": "Líder marcial y táctico inspirador que dirige el curso del conflicto, sincroniza los turnos de sus aliados y explota las aperturas del combate.",
-  "beneficios": {
-   "pv": 5,
-   "pm": 0,
-   "pi": 0,
-   "competencias": [
-    "armas_marciales_cuerpo",
-    "armas_marciales_distancia"
-   ],
-   "rituales": [],
-   "texto": "Aumenta permanentemente tus Puntos de Vida máximos en 5. Obtienes la capacidad de equipar armas cuerpo a cuerpo marciales y armas a distancia marciales."
-  },
-  "habilidades": [
-   {
-    "id": "edicto-del-alfil",
-    "nombre": "Edicto del alfil",
-    "nombre_original": "Bishop’s Edict",
-    "sl_max": 5,
-    "tipo": "accion",
-    "activacion": "1 acción, 10 PM.",
-    "efecto": "Durante un conflicto, puedes gastar 10 PM para elegir una opción:\n- Todos los costes de PM se duplican.\n- Todas las fuentes de daño infligen [SL × 3] de daño adicional.\nEl efecto elegido dura hasta el inicio de tu siguiente turno."
-   },
-   {
-    "id": "caballeria-a-la-carga",
-    "nombre": "Caballería a la carga",
-    "nombre_original": "Charging Cavalry",
-    "sl_max": 5,
-    "tipo": "accion",
-    "activacion": "1 acción, 10 PM.",
-    "efecto": "Durante un conflicto, puedes gastar 10 PM para elegir a un aliado que pueda oírte. Dicho aliado puede realizar de inmediato un ataque gratuito con un arma que tenga equipada (o un ataque básico si es un PNJ). Obtiene una bonificación de [SL × 3] a su prueba de Precisión, pero considera su Tirada Mayor (TM) como 0 al calcular el daño infligido."
-   },
-   {
-    "id": "cuadriga-arrolladora",
-    "nombre": "Cuadriga arrolladora",
-    "nombre_original": "Crushing Chariot",
-    "sl_max": 1,
-    "tipo": "reaccion",
-    "activacion": "Reacción (tras usar Edicto del alfil, Caballería a la carga o Enroque del rey).",
-    "efecto": "Tras usar Edicto del alfil, Caballería a la carga o Enroque del rey, puedes elegir a otro Personaje Jugador que pueda oírte y que aún no haya actuado en la ronda en curso. Dicho personaje puede tomar su turno inmediatamente después del tuyo en esta misma ronda."
-   },
-   {
-    "id": "enroque-del-rey",
-    "nombre": "Enroque del rey",
-    "nombre_original": "King’s Castle",
-    "sl_max": 4,
-    "tipo": "accion",
-    "activacion": "1 acción, 10 PM.",
-    "efecto": "Durante un conflicto, puedes gastar 10 PM para elegir una opción:\n- Ninguna criatura puede recuperar Puntos de Vida ni Puntos de Mente.\n- Todos los efectos que recuperan Puntos de Mente restauran [SL × 5] PM adicionales.\nEl efecto elegido dura hasta el inicio de tu siguiente turno."
-   },
-   {
-    "id": "gambito-de-dama",
-    "nombre": "Gambito de dama",
-    "nombre_original": "Queen’s Gambit",
-    "sl_max": 6,
-    "tipo": "accion",
-    "activacion": "1 acción.",
-    "efecto": "Durante un conflicto, puedes usar una acción para realizar un ataque gratuito con un arma equipada, considerando tu Tirada Mayor (TM) como 0 al calcular el daño. Tras resolver el ataque, elige una opción:\n- Un aliado que pueda oírte recupera [5 + (SL × 5)] Puntos de Vida.\n- Utilizas de inmediato una habilidad que poseas entre Edicto del alfil, Caballería a la carga o Enroque del rey de forma gratuita (gastando los PM correspondientes de la habilidad activada)."
-   }
-  ]
- },
- {
-  "id": "bailarin",
-  "nombre": "Bailarín",
-  "nombre_original": "Dancer",
-  "descripcion": "Combatiente ágil y expresivo que canaliza la corriente espiritual mediante coreografías marciales, alterando afinidades elementales y apoyando a su grupo.",
-  "beneficios": {
-   "pv": 0,
-   "pm": 0,
-   "pi": 0,
-   "competencias": [],
-   "rituales": [],
-   "eleccion": [
-    {
-     "id": "pv",
-     "etiqueta": "+5 PV máximos",
-     "pv": 5
+  {
+    "id": "cantor",
+    "nombre": "Cantor",
+    "nombre_original": "Chanter",
+    "descripcion": "Canaliza la fuerza del alma a través de la música y el canto mágico, tejiendo estrofas que apoyan a sus aliados o alteran el campo de batalla.",
+    "beneficios": {
+      "pv": 0,
+      "pm": 5,
+      "pi": 0,
+      "competencias": [],
+      "rituales": [],
+      "texto": "Aumenta permanentemente tus Puntos de Mente máximos en 5."
     },
-    {
-     "id": "pm",
-     "etiqueta": "+5 PM máximos",
-     "pm": 5
-    }
-   ],
-   "texto": "Aumenta permanentemente tus Puntos de Vida o tus Puntos de Mente máximos en 5 (a tu elección)."
+    "habilidades": [
+      {
+        "id": "canto-magico",
+        "nombre": "Canto mágico",
+        "nombre_original": "Magichant",
+        "sl_max": 10,
+        "tipo": "accion",
+        "activacion": "1 acción, PM variables.",
+        "efecto": "En tu turno durante una escena de conflicto, puedes usar una acción y gastar una cantidad variable de PM para tejer voz y música en un efecto mágico denominado **estrofa** (*verse*). Solo puedes cantar una estrofa por turno, incluso si dispones de múltiples acciones.\nAl adquirir esta habilidad por primera vez, aprendes los tres volúmenes (*volumes*), además de una clave (*key*) y un tono (*tone*). Cada vez que aumentes el nivel de esta habilidad, aprendes una clave adicional o un tono adicional (a tu elección).\n\n**Volúmenes** (todos conocidos):\n\n| Volumen | PM | Objetivos |\n| :--- | :---: | :--- |\n| Bajo | 10 | Tú mismo u otra criatura visible que pueda oírte. |\n| Medio | 20 | Cada aliado que pueda oírte. |\n| Alto | 30 | Cada enemigo que pueda oírte. |\n\nAl cantar una estrofa combinas un volumen, una clave y un tono que hayas aprendido. El volumen determina el coste y los objetivos; la clave, el tipo de daño, estado, atributo y recuperación; el tono, el efecto.",
+        "elecciones": [
+          {
+            "clave": "claves_tonos",
+            "tipo": "opciones",
+            "grupos": [
+              "clave_cantor",
+              "tono_cantor"
+            ],
+            "min_por_grupo": 1,
+            "etiqueta": "Claves y tonos aprendidos",
+            "min": "SL+1",
+            "max": "SL+1",
+            "nota": "Al adquirir la habilidad: los tres volúmenes, una clave y un tono. Cada nivel adicional: una clave o un tono."
+          }
+        ]
+      },
+      {
+        "id": "resonancia",
+        "nombre": "Resonancia",
+        "nombre_original": "Resonance",
+        "sl_max": 3,
+        "tipo": "reaccion",
+        "activacion": "Reacción (tras afectar a enemigos con una estrofa).",
+        "efecto": "Tras afectar a uno o más enemigos con una estrofa, si tienes un arma arcana equipada, puedes elegir una opción:\n- Hasta el inicio de tu siguiente turno, tus aliados infligen [SL] de daño adicional a dichos enemigos.\n- Hasta el inicio de tu siguiente turno, recuperas [SL] Puntos de Mente cada vez que uno de dichos enemigos sufre daño. Si una misma fuente inflige daño a dos o más de esos enemigos simultáneamente, recuperas [SL] PM por cada enemigo dañado."
+      },
+      {
+        "id": "canto-de-sirena",
+        "nombre": "Canto de sirena",
+        "nombre_original": "Siren’s Song",
+        "sl_max": 1,
+        "tipo": "pasiva",
+        "activacion": "Pasiva.",
+        "efecto": "Obtienes la capacidad de realizar rituales de la disciplina Ritualismo. Además, puedes emplear Ritualismo para crear ilusiones auditivas basadas en el sonido.",
+        "rituales": [
+          "ritualismo"
+        ]
+      },
+      {
+        "id": "barrera-de-sonido",
+        "nombre": "Barrera de sonido",
+        "nombre_original": "Sound Barrier",
+        "sl_max": 5,
+        "tipo": "reaccion",
+        "activacion": "Reacción (tras cantar a volumen medio o alto).",
+        "efecto": "Tras cantar una estrofa a volumen medio o alto, todo el daño físico que sufras hasta el inicio de tu siguiente turno se reduce en [SL] (esta reducción se aplica antes de las afinidades)."
+      },
+      {
+        "id": "vibrato",
+        "nombre": "Vibrato",
+        "nombre_original": "Vibrato",
+        "sl_max": 1,
+        "tipo": "reaccion",
+        "activacion": "Reacción (tras cantar a volumen bajo o medio).",
+        "efecto": "Tras cantar una estrofa a volumen bajo o medio, puedes realizar un ataque gratuito con un arma que tengas equipada; considera tu Tirada Mayor (TM) como 0 al calcular el daño infligido por este ataque."
+      }
+    ],
+    "etiquetas": [
+      "magia",
+      "apoyo"
+    ]
   },
-  "habilidades": [
-   {
-    "id": "danza",
-    "nombre": "Danza",
-    "nombre_original": "Dance",
-    "sl_max": 10,
-    "tipo": "otra",
-    "activacion": "Sin acción (antes o después de una acción), 10 PM (o 5 PM si danzaste en tu turno anterior).",
-    "efecto": "Cada vez que aumentes el nivel de esta habilidad, aprendes una danza del Catálogo de Danzas.\nEn tu turno durante una escena de conflicto, si no tienes ninguna armadura marcial equipada, puedes gastar 10 Puntos de Mente para ejecutar una danza aprendida. No requiere acción, pero solo puede ejecutarse inmediatamente antes o después de una acción, y únicamente una vez por turno. Si ya ejecutaste una danza diferente en tu turno anterior dentro de esta escena, el coste de la nueva danza se reduce a 5 Puntos de Mente.\nAlgunas danzas son instantáneas, mientras que otras duran hasta el inicio de tu siguiente turno.",
-    "elecciones": [
-     {
-      "clave": "danzas",
-      "tipo": "opciones",
-      "grupos": [
-       "danza"
+  {
+    "id": "comandante",
+    "nombre": "Comandante",
+    "nombre_original": "Commander",
+    "descripcion": "Líder marcial y táctico inspirador que dirige el curso del conflicto, sincroniza los turnos de sus aliados y explota las aperturas del combate.",
+    "beneficios": {
+      "pv": 5,
+      "pm": 0,
+      "pi": 0,
+      "competencias": [
+        "armas_marciales_cuerpo",
+        "armas_marciales_distancia"
       ],
-      "etiqueta": "Danzas aprendidas",
-      "min": "SL",
-      "max": "SL"
-     }
+      "rituales": [],
+      "texto": "Aumenta permanentemente tus Puntos de Vida máximos en 5. Obtienes la capacidad de equipar armas cuerpo a cuerpo marciales y armas a distancia marciales."
+    },
+    "habilidades": [
+      {
+        "id": "edicto-del-alfil",
+        "nombre": "Edicto del alfil",
+        "nombre_original": "Bishop’s Edict",
+        "sl_max": 5,
+        "tipo": "accion",
+        "activacion": "1 acción, 10 PM.",
+        "efecto": "Durante un conflicto, puedes gastar 10 PM para elegir una opción:\n- Todos los costes de PM se duplican.\n- Todas las fuentes de daño infligen [SL × 3] de daño adicional.\nEl efecto elegido dura hasta el inicio de tu siguiente turno."
+      },
+      {
+        "id": "caballeria-a-la-carga",
+        "nombre": "Caballería a la carga",
+        "nombre_original": "Charging Cavalry",
+        "sl_max": 5,
+        "tipo": "accion",
+        "activacion": "1 acción, 10 PM.",
+        "efecto": "Durante un conflicto, puedes gastar 10 PM para elegir a un aliado que pueda oírte. Dicho aliado puede realizar de inmediato un ataque gratuito con un arma que tenga equipada (o un ataque básico si es un PNJ). Obtiene una bonificación de [SL × 3] a su prueba de Precisión, pero considera su Tirada Mayor (TM) como 0 al calcular el daño infligido."
+      },
+      {
+        "id": "cuadriga-arrolladora",
+        "nombre": "Cuadriga arrolladora",
+        "nombre_original": "Crushing Chariot",
+        "sl_max": 1,
+        "tipo": "reaccion",
+        "activacion": "Reacción (tras usar Edicto del alfil, Caballería a la carga o Enroque del rey).",
+        "efecto": "Tras usar Edicto del alfil, Caballería a la carga o Enroque del rey, puedes elegir a otro Personaje Jugador que pueda oírte y que aún no haya actuado en la ronda en curso. Dicho personaje puede tomar su turno inmediatamente después del tuyo en esta misma ronda."
+      },
+      {
+        "id": "enroque-del-rey",
+        "nombre": "Enroque del rey",
+        "nombre_original": "King’s Castle",
+        "sl_max": 4,
+        "tipo": "accion",
+        "activacion": "1 acción, 10 PM.",
+        "efecto": "Durante un conflicto, puedes gastar 10 PM para elegir una opción:\n- Ninguna criatura puede recuperar Puntos de Vida ni Puntos de Mente.\n- Todos los efectos que recuperan Puntos de Mente restauran [SL × 5] PM adicionales.\nEl efecto elegido dura hasta el inicio de tu siguiente turno."
+      },
+      {
+        "id": "gambito-de-dama",
+        "nombre": "Gambito de dama",
+        "nombre_original": "Queen’s Gambit",
+        "sl_max": 6,
+        "tipo": "accion",
+        "activacion": "1 acción.",
+        "efecto": "Durante un conflicto, puedes usar una acción para realizar un ataque gratuito con un arma equipada, considerando tu Tirada Mayor (TM) como 0 al calcular el daño. Tras resolver el ataque, elige una opción:\n- Un aliado que pueda oírte recupera [5 + (SL × 5)] Puntos de Vida.\n- Utilizas de inmediato una habilidad que poseas entre Edicto del alfil, Caballería a la carga o Enroque del rey de forma gratuita (gastando los PM correspondientes de la habilidad activada)."
+      }
+    ],
+    "etiquetas": [
+      "apoyo",
+      "tanque"
     ]
-   },
-   {
-    "id": "sigue-mis-pasos",
-    "nombre": "Sigue mis pasos",
-    "nombre_original": "Follow My Lead",
-    "sl_max": 1,
-    "tipo": "otra",
-    "activacion": "Especial (+10 PM al ejecutar una danza).",
-    "efecto": "Cuando ejecutas una danza con duración «Hasta el inicio de tu siguiente turno», puedes gastar 10 PM adicionales. Si lo haces, elige a un aliado visible hacia el cual tengas un Vínculo de afecto: dicho aliado obtiene también todos los beneficios de la danza (dichos beneficios perduran hasta el inicio de tu siguiente turno)."
-   },
-   {
-    "id": "juego-de-pies-frenetico",
-    "nombre": "Juego de pies frenético",
-    "nombre_original": "Frenetic Footwork",
-    "sl_max": 2,
-    "tipo": "reaccion",
-    "activacion": "Pasiva / Reacción.",
-    "efecto": "Tras ejecutar una danza con duración «Hasta el inicio de tu siguiente turno», obtienes una bonificación de [SL × 2] a todas las pruebas enfrentadas que dependan de acrobacias, coordinación o velocidad hasta el inicio de tu siguiente turno."
-   },
-   {
-    "id": "cambio-rapido",
-    "nombre": "Cambio rápido",
-    "nombre_original": "Quick-Change",
-    "sl_max": 1,
-    "tipo": "reaccion",
-    "activacion": "Reacción (tras ejecutar una danza).",
-    "efecto": "Tras ejecutar una danza, puedes realizar la acción de Equipo de forma gratuita."
-   },
-   {
-    "id": "danzante-de-guerra",
-    "nombre": "Danzante de guerra",
-    "nombre_original": "Wardancer",
-    "sl_max": 5,
-    "tipo": "pasiva",
-    "activacion": "Pasiva.",
-    "efecto": "Tras ejecutar una danza, tus ataques con armas de pelea (*brawling*), dagas (*dagger*), flagelos (*flail*) y arrojadizas (*thrown*) infligen [SL] de daño adicional hasta el inicio de tu siguiente turno. Si tienes un arma arcana equipada, los conjuros ofensivos que lances también infligen [SL] de daño adicional hasta el inicio de tu siguiente turno."
-   }
-  ]
- },
- {
-  "id": "simbolista",
-  "nombre": "Simbolista",
-  "nombre_original": "Symbolist",
-  "descripcion": "Erudito de las formas y marcas de poder que inscribe runas mágicas sobre criaturas y objetos para alterar leyes de combate, estados y afinidades.",
-  "beneficios": {
-   "pv": 0,
-   "pm": 0,
-   "pi": 2,
-   "competencias": [],
-   "rituales": [],
-   "texto": "Aumenta permanentemente tus Puntos de Inventario máximos en 2."
   },
-  "habilidades": [
-   {
-    "id": "simbolos-magicos",
-    "nombre": "Símbolos mágicos",
-    "nombre_original": "Magic Symbols",
-    "sl_max": 3,
-    "tipo": "accion",
-    "activacion": "1 acción (por un aliado portador).",
-    "efecto": "Si un aliado porta uno de tus símbolos, dicho aliado puede realizar la acción de Conjuro y destruir dicho símbolo para lanzar un único conjuro de entre los que tú conoces, siempre que dicho conjuro tenga un coste total en PM igual o inferior a [SL × 10] (el aliado debe abonar el coste en PM del conjuro)."
-   },
-   {
-    "id": "espejismo",
-    "nombre": "Espejismo",
-    "nombre_original": "Mirage",
-    "sl_max": 1,
-    "tipo": "pasiva",
-    "activacion": "Pasiva.",
-    "efecto": "Obtienes la capacidad de realizar rituales de la disciplina Ritualismo. Además, puedes emplear Ritualismo para crear ilusiones visuales.",
-    "rituales": [
-     "ritualismo"
-    ]
-   },
-   {
-    "id": "toque-personal",
-    "nombre": "Toque personal",
-    "nombre_original": "Personal Touch",
-    "sl_max": 5,
-    "tipo": "reaccion",
-    "activacion": "Reacción.",
-    "efecto": "Cuando una criatura visible que porte uno de tus símbolos sufra daño o recupere Puntos de Vida y/o Puntos de Mente, puedes hacer que dicha criatura sufra [SL] de daño adicional o recupere [SL] PV y/o PM adicionales, respectivamente."
-   },
-   {
-    "id": "conexion-simbolica",
-    "nombre": "Conexión simbólica",
-    "nombre_original": "Symbolic Connection",
-    "sl_max": 1,
-    "tipo": "pasiva",
-    "activacion": "Pasiva.",
-    "efecto": "Conoces en todo momento la dirección exacta en la que se encuentra cualquier criatura que porte uno de tus símbolos, siempre que dicha criatura se encuentre a una distancia de 2 días de viaje o menos de tu posición."
-   },
-   {
-    "id": "simbolismo",
-    "nombre": "Simbolismo",
-    "nombre_original": "Symbolism",
-    "sl_max": 5,
-    "tipo": "accion",
-    "activacion": "1 acción de Inventario, 2 PI.",
-    "efecto": "Cada vez que aumentes el nivel de esta habilidad, aprendes dos símbolos del Catálogo de Símbolos.\nPuedes tener activos hasta un máximo de [SL + 1] símbolos simultáneamente. Si creas un símbolo nuevo habiendo alcanzado el límite, debes elegir y destruir uno de tus símbolos previos.\nPuedes realizar la acción de Inventario y gastar 2 Puntos de Inventario para crear un símbolo aprendido y elegir una de las siguientes opciones:\n- Aplicar el símbolo sobre ti mismo.\n- Aplicar el símbolo sobre un aliado visible.\n- Realizar un ataque gratuito con un arma equipada. Este ataque no inflige daño, pero aplica una copia del símbolo elegido a cada enemigo impactado por el ataque (cada copia cuenta individualmente para tu límite de [SL + 1] símbolos activos).",
-    "elecciones": [
-     {
-      "clave": "simbolos",
-      "tipo": "opciones",
-      "grupos": [
-       "simbolo"
+  {
+    "id": "bailarin",
+    "nombre": "Bailarín",
+    "nombre_original": "Dancer",
+    "descripcion": "Combatiente ágil y expresivo que canaliza la corriente espiritual mediante coreografías marciales, alterando afinidades elementales y apoyando a su grupo.",
+    "beneficios": {
+      "pv": 0,
+      "pm": 0,
+      "pi": 0,
+      "competencias": [],
+      "rituales": [],
+      "eleccion": [
+        {
+          "id": "pv",
+          "etiqueta": "+5 PV máximos",
+          "pv": 5
+        },
+        {
+          "id": "pm",
+          "etiqueta": "+5 PM máximos",
+          "pm": 5
+        }
       ],
-      "etiqueta": "Símbolos aprendidos",
-      "min": "SL*2",
-      "max": "SL*2"
-     }
+      "texto": "Aumenta permanentemente tus Puntos de Vida o tus Puntos de Mente máximos en 5 (a tu elección)."
+    },
+    "habilidades": [
+      {
+        "id": "danza",
+        "nombre": "Danza",
+        "nombre_original": "Dance",
+        "sl_max": 10,
+        "tipo": "otra",
+        "activacion": "Sin acción (antes o después de una acción), 10 PM (o 5 PM si danzaste en tu turno anterior).",
+        "efecto": "Cada vez que aumentes el nivel de esta habilidad, aprendes una danza del Catálogo de Danzas.\nEn tu turno durante una escena de conflicto, si no tienes ninguna armadura marcial equipada, puedes gastar 10 Puntos de Mente para ejecutar una danza aprendida. No requiere acción, pero solo puede ejecutarse inmediatamente antes o después de una acción, y únicamente una vez por turno. Si ya ejecutaste una danza diferente en tu turno anterior dentro de esta escena, el coste de la nueva danza se reduce a 5 Puntos de Mente.\nAlgunas danzas son instantáneas, mientras que otras duran hasta el inicio de tu siguiente turno.",
+        "elecciones": [
+          {
+            "clave": "danzas",
+            "tipo": "opciones",
+            "grupos": [
+              "danza"
+            ],
+            "etiqueta": "Danzas aprendidas",
+            "min": "SL",
+            "max": "SL"
+          }
+        ]
+      },
+      {
+        "id": "sigue-mis-pasos",
+        "nombre": "Sigue mis pasos",
+        "nombre_original": "Follow My Lead",
+        "sl_max": 1,
+        "tipo": "otra",
+        "activacion": "Especial (+10 PM al ejecutar una danza).",
+        "efecto": "Cuando ejecutas una danza con duración «Hasta el inicio de tu siguiente turno», puedes gastar 10 PM adicionales. Si lo haces, elige a un aliado visible hacia el cual tengas un Vínculo de afecto: dicho aliado obtiene también todos los beneficios de la danza (dichos beneficios perduran hasta el inicio de tu siguiente turno)."
+      },
+      {
+        "id": "juego-de-pies-frenetico",
+        "nombre": "Juego de pies frenético",
+        "nombre_original": "Frenetic Footwork",
+        "sl_max": 2,
+        "tipo": "reaccion",
+        "activacion": "Pasiva / Reacción.",
+        "efecto": "Tras ejecutar una danza con duración «Hasta el inicio de tu siguiente turno», obtienes una bonificación de [SL × 2] a todas las pruebas enfrentadas que dependan de acrobacias, coordinación o velocidad hasta el inicio de tu siguiente turno."
+      },
+      {
+        "id": "cambio-rapido",
+        "nombre": "Cambio rápido",
+        "nombre_original": "Quick-Change",
+        "sl_max": 1,
+        "tipo": "reaccion",
+        "activacion": "Reacción (tras ejecutar una danza).",
+        "efecto": "Tras ejecutar una danza, puedes realizar la acción de Equipo de forma gratuita."
+      },
+      {
+        "id": "danzante-de-guerra",
+        "nombre": "Danzante de guerra",
+        "nombre_original": "Wardancer",
+        "sl_max": 5,
+        "tipo": "pasiva",
+        "activacion": "Pasiva.",
+        "efecto": "Tras ejecutar una danza, tus ataques con armas de pelea (*brawling*), dagas (*dagger*), flagelos (*flail*) y arrojadizas (*thrown*) infligen [SL] de daño adicional hasta el inicio de tu siguiente turno. Si tienes un arma arcana equipada, los conjuros ofensivos que lances también infligen [SL] de daño adicional hasta el inicio de tu siguiente turno."
+      }
+    ],
+    "etiquetas": [
+      "melé",
+      "apoyo"
     ]
-   }
-  ]
- }
+  },
+  {
+    "id": "simbolista",
+    "nombre": "Simbolista",
+    "nombre_original": "Symbolist",
+    "descripcion": "Erudito de las formas y marcas de poder que inscribe runas mágicas sobre criaturas y objetos para alterar leyes de combate, estados y afinidades.",
+    "beneficios": {
+      "pv": 0,
+      "pm": 0,
+      "pi": 2,
+      "competencias": [],
+      "rituales": [],
+      "texto": "Aumenta permanentemente tus Puntos de Inventario máximos en 2."
+    },
+    "habilidades": [
+      {
+        "id": "simbolos-magicos",
+        "nombre": "Símbolos mágicos",
+        "nombre_original": "Magic Symbols",
+        "sl_max": 3,
+        "tipo": "accion",
+        "activacion": "1 acción (por un aliado portador).",
+        "efecto": "Si un aliado porta uno de tus símbolos, dicho aliado puede realizar la acción de Conjuro y destruir dicho símbolo para lanzar un único conjuro de entre los que tú conoces, siempre que dicho conjuro tenga un coste total en PM igual o inferior a [SL × 10] (el aliado debe abonar el coste en PM del conjuro)."
+      },
+      {
+        "id": "espejismo",
+        "nombre": "Espejismo",
+        "nombre_original": "Mirage",
+        "sl_max": 1,
+        "tipo": "pasiva",
+        "activacion": "Pasiva.",
+        "efecto": "Obtienes la capacidad de realizar rituales de la disciplina Ritualismo. Además, puedes emplear Ritualismo para crear ilusiones visuales.",
+        "rituales": [
+          "ritualismo"
+        ]
+      },
+      {
+        "id": "toque-personal",
+        "nombre": "Toque personal",
+        "nombre_original": "Personal Touch",
+        "sl_max": 5,
+        "tipo": "reaccion",
+        "activacion": "Reacción.",
+        "efecto": "Cuando una criatura visible que porte uno de tus símbolos sufra daño o recupere Puntos de Vida y/o Puntos de Mente, puedes hacer que dicha criatura sufra [SL] de daño adicional o recupere [SL] PV y/o PM adicionales, respectivamente."
+      },
+      {
+        "id": "conexion-simbolica",
+        "nombre": "Conexión simbólica",
+        "nombre_original": "Symbolic Connection",
+        "sl_max": 1,
+        "tipo": "pasiva",
+        "activacion": "Pasiva.",
+        "efecto": "Conoces en todo momento la dirección exacta en la que se encuentra cualquier criatura que porte uno de tus símbolos, siempre que dicha criatura se encuentre a una distancia de 2 días de viaje o menos de tu posición."
+      },
+      {
+        "id": "simbolismo",
+        "nombre": "Simbolismo",
+        "nombre_original": "Symbolism",
+        "sl_max": 5,
+        "tipo": "accion",
+        "activacion": "1 acción de Inventario, 2 PI.",
+        "efecto": "Cada vez que aumentes el nivel de esta habilidad, aprendes dos símbolos del Catálogo de Símbolos.\nPuedes tener activos hasta un máximo de [SL + 1] símbolos simultáneamente. Si creas un símbolo nuevo habiendo alcanzado el límite, debes elegir y destruir uno de tus símbolos previos.\nPuedes realizar la acción de Inventario y gastar 2 Puntos de Inventario para crear un símbolo aprendido y elegir una de las siguientes opciones:\n- Aplicar el símbolo sobre ti mismo.\n- Aplicar el símbolo sobre un aliado visible.\n- Realizar un ataque gratuito con un arma equipada. Este ataque no inflige daño, pero aplica una copia del símbolo elegido a cada enemigo impactado por el ataque (cada copia cuenta individualmente para tu límite de [SL + 1] símbolos activos).",
+        "elecciones": [
+          {
+            "clave": "simbolos",
+            "tipo": "opciones",
+            "grupos": [
+              "simbolo"
+            ],
+            "etiqueta": "Símbolos aprendidos",
+            "min": "SL*2",
+            "max": "SL*2"
+          }
+        ]
+      }
+    ],
+    "etiquetas": [
+      "magia",
+      "apoyo"
+    ]
+  }
 ]

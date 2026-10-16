@@ -73,6 +73,10 @@
         "activacion": "Al realizar una prueba de Precisión | Gratuito.",
         "efecto": "Puedes reemplazar uno de los dados de atributo de tu prueba de Precisión por Voluntad (por ejemplo, [DES + VOL] con un arco corto). Además, tus ataques cuerpo a cuerpo con armas de las categorías Arcana o Espada pueden alcanzar a criaturas voladoras."
       }
+    ],
+    "etiquetas": [
+      "magia",
+      "apoyo"
     ]
   },
   {
@@ -146,6 +150,10 @@
           }
         ]
       }
+    ],
+    "etiquetas": [
+      "melé",
+      "tanque"
     ]
   },
   {
@@ -234,6 +242,11 @@
         "activacion": "Al realizar una prueba de Precisión con módulo de arma | Gratuito.",
         "efecto": "Puedes sustituir uno de los atributos de la prueba de Precisión por Vigor (por ejemplo, [VIG + VOL] con un módulo arcano)."
       }
+    ],
+    "etiquetas": [
+      "tanque",
+      "melé",
+      "distancia"
     ]
   }
 ]

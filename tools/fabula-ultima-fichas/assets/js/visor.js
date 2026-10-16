@@ -227,7 +227,7 @@ function tabHabilidades(pj) {
     const nv = R.nivelClase(cl);
     const habs = (def.habilidades || []).filter((x) => (cl.habilidades || {})[x.id]);
     const ben = def.beneficios && def.beneficios.eleccion && cl.beneficio ? (def.beneficios.eleccion.find((x) => x.id === cl.beneficio) || {}).etiqueta : '';
-    h += `<div class="grupo-clase" data-clase="${cl.id}"><div class="fila"><h3>${esc(def.nombre)}</h3><span class="muted">Nivel ${nv}</span>${nv >= 10 ? '<span class="chip acento">Dominada</span>' : ''}${F.atlasTag(db, def)}</div>
+    h += `<div class="grupo-clase" data-clase="${cl.id}"><div class="fila"><h3>${esc(def.nombre)}</h3><span class="muted">Nivel ${nv}</span>${nv >= 10 ? '<span class="chip acento">Dominada</span>' : ''}${F.etiquetasClase(def)}${F.atlasTag(db, def)}</div>
       <p class="small muted">${esc(def.beneficios ? def.beneficios.texto : '')}${ben ? ` <b>(${esc(ben)})</b>` : ''}</p>
       <div class="lista">${habs.map((x) => {
         const sl = cl.habilidades[x.id];

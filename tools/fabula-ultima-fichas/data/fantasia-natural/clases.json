@@ -11,8 +11,16 @@
       "competencias": [],
       "rituales": [],
       "eleccion": [
-        { "id": "pv", "etiqueta": "+5 PV máximos", "pv": 5 },
-        { "id": "pm", "etiqueta": "+5 PM máximos", "pm": 5 }
+        {
+          "id": "pv",
+          "etiqueta": "+5 PV máximos",
+          "pv": 5
+        },
+        {
+          "id": "pm",
+          "etiqueta": "+5 PM máximos",
+          "pm": 5
+        }
       ],
       "texto": "Aumenta permanentemente tus Puntos de Vida o Puntos de Mente máximos en 5 (a tu elección)."
     },
@@ -77,6 +85,9 @@
           "ritualismo"
         ]
       }
+    ],
+    "etiquetas": [
+      "apoyo"
     ]
   },
   {
@@ -139,6 +150,9 @@
         "activacion": "Pasiva.",
         "efecto": "Tras cada tirada de viaje del grupo, si posees la habilidad Cocina, obtienes [SL × 2] ingredientes."
       }
+    ],
+    "etiquetas": [
+      "apoyo"
     ]
   },
   {
@@ -153,8 +167,16 @@
       "competencias": [],
       "rituales": [],
       "eleccion": [
-        { "id": "pv", "etiqueta": "+5 PV máximos", "pv": 5 },
-        { "id": "pm", "etiqueta": "+5 PM máximos", "pm": 5 }
+        {
+          "id": "pv",
+          "etiqueta": "+5 PV máximos",
+          "pv": 5
+        },
+        {
+          "id": "pm",
+          "etiqueta": "+5 PM máximos",
+          "pm": 5
+        }
       ],
       "texto": "Aumenta permanentemente tus Puntos de Vida o Puntos de Mente máximos en 5 (a tu elección)."
     },
@@ -204,6 +226,10 @@
         "activacion": "Pasiva.",
         "efecto": "Mientras tengas equipada un arma de las categorías arcana, arco, pelea, flagelo, espada o arrojadiza, tus invocaciones de tipo ráfaga infligen [SL] de daño adicional, y el daño extra otorgado por tus invocaciones de tipo maleficio aumenta en [SL]."
       }
+    ],
+    "etiquetas": [
+      "magia",
+      "distancia"
     ]
   },
   {
@@ -265,6 +291,9 @@
         "activacion": "Especial (al descansar en zona comercial o en escena sin conflicto).",
         "efecto": "Tras descansar en un asentamiento o zona con comercio activo, obtienes [SL + 1] Puntos de Comercio. Nunca puedes acumular más de [SL + 3] Puntos de Comercio (si adquieres esta habilidad en la creación de personajes, comienzas con 2 Puntos de Comercio).\nDurante una escena fuera de conflicto, puedes gastar 2 Puntos de Comercio para elegir una opción:\n- Creas un material o un objeto raro aprobado por el DJ cuyo valor en zenit sea igual o inferior a [tu nivel de personaje × 30].\n- Creas un PNJ habitante de la zona, describiendo su oficio y cómo lo conociste; el DJ determina qué exige a cambio de sus servicios."
       }
+    ],
+    "etiquetas": [
+      "apoyo"
     ]
   }
 ]

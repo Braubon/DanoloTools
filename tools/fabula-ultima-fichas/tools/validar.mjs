@@ -71,8 +71,11 @@ const comprobarElecciones = (donde, elec) => (elec || []).forEach((e) => {
   if (e.requiere_opcion && !db.idx.opciones.has(e.requiere_opcion)) err(`${donde}: requiere_opcion "${e.requiere_opcion}" no existe`);
 });
 
+const ETIQUETAS_CLASE = new Set(['melé', 'distancia', 'apoyo', 'tanque', 'magia']);
 const idsHab = new Map();
 for (const c of db.col.clases) {
+  if (!Array.isArray(c.etiquetas) || !c.etiquetas.length) err(`clase ${c.id}: faltan etiquetas`);
+  else for (const e of c.etiquetas) if (!ETIQUETAS_CLASE.has(e)) err(`clase ${c.id}: etiqueta no válida "${e}"`);
   if (!c.beneficios) err(`clase ${c.id}: faltan beneficios`);
   for (const k of (c.beneficios || {}).competencias || []) if (!db.tablas.competencias.valores.some((x) => x.id === k)) err(`clase ${c.id}: competencia desconocida "${k}"`);
   if (!(c.habilidades || []).length) err(`clase ${c.id}: sin habilidades`);
