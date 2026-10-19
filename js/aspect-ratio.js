@@ -1,5 +1,5 @@
 /**
- * DanoloTools - Aspect Ratio Calculator
+ * DanoloTools - Aspect Ratio Calculator & Image Analyzer
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -26,6 +26,41 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnCopyDimensions = document.getElementById('btnCopyDimensions');
   const btnCopyCSS = document.getElementById('btnCopyCSS');
 
+  // Image Upload & Analyzer Elements
+  const imageDropzone = document.getElementById('imageDropzone');
+  const imageInput = document.getElementById('imageInput');
+  const dropzonePrompt = document.getElementById('dropzonePrompt');
+  const dropzonePreview = document.getElementById('dropzonePreview');
+  const previewImg = document.getElementById('previewImg');
+  const previewFileName = document.getElementById('previewFileName');
+  const previewBadgeRatio = document.getElementById('previewBadgeRatio');
+  const previewDim = document.getElementById('previewDim');
+  const btnRemoveImage = document.getElementById('btnRemoveImage');
+
+  // Active object URL for loaded image
+  let currentImageObjectUrl = null;
+
+  // Standard aspect ratio presets for smart detection
+  const STANDARD_PRESETS = [
+    { w: 1, h: 1, label: '1:1' },
+    { w: 16, h: 9, label: '16:9' },
+    { w: 9, h: 16, label: '9:16' },
+    { w: 4, h: 5, label: '4:5' },
+    { w: 5, h: 4, label: '5:4' },
+    { w: 4, h: 3, label: '4:3' },
+    { w: 3, h: 4, label: '3:4' },
+    { w: 3, h: 2, label: '3:2' },
+    { w: 2, h: 3, label: '2:3' },
+    { w: 21, h: 9, label: '21:9' },
+    { w: 9, h: 21, label: '9:21' },
+    { w: 16, h: 10, label: '16:10' },
+    { w: 10, h: 16, label: '10:16' },
+    { w: 5, h: 3, label: '5:3' },
+    { w: 3, h: 5, label: '3:5' },
+    { w: 18, h: 9, label: '18:9' },
+    { w: 9, h: 18, label: '9:18' }
+  ];
+
   // GCD helper for simplifying ratios
   function getGcd(a, b) {
     a = Math.abs(Math.round(a));
@@ -36,6 +71,81 @@ document.addEventListener('DOMContentLoaded', () => {
       a = temp;
     }
     return a;
+  }
+
+  // Fraction approximation for ratios without clean whole-number GCDs
+  function approximateFraction(w, h, maxDenom = 64) {
+    const target = w / h;
+    let bestW = Math.round(target);
+    let bestH = 1;
+    let bestErr = Math.abs(target - bestW / bestH);
+
+    for (let denom = 1; denom <= maxDenom; denom++) {
+      const numer = Math.round(target * denom);
+      const err = Math.abs(target - numer / denom);
+      if (err < bestErr) {
+        bestErr = err;
+        bestW = numer;
+        bestH = denom;
+        if (err < 0.0001) break;
+      }
+    }
+    const g = getGcd(bestW, bestH);
+    return { w: bestW / g, h: bestH / g };
+  }
+
+  // Intelligent Aspect Ratio Analysis
+  function analyzeAspectRatio(w, h) {
+    const gcd = getGcd(w, h);
+    const simpW = w / gcd;
+    const simpH = h / gcd;
+    const factor = w / h;
+
+    // Check closest standard preset
+    let closestPreset = null;
+    let minDiff = Infinity;
+
+    for (const preset of STANDARD_PRESETS) {
+      const presetFactor = preset.w / preset.h;
+      const diff = Math.abs(factor - presetFactor) / factor;
+      if (diff < minDiff) {
+        minDiff = diff;
+        closestPreset = preset;
+      }
+    }
+
+    const isClose = closestPreset && (minDiff < 0.008); // < 0.8% variance
+    let displayW = simpW;
+    let displayH = simpH;
+    let matchLabel = `${simpW}:${simpH}`;
+
+    if (simpW <= 64 && simpH <= 64) {
+      displayW = simpW;
+      displayH = simpH;
+      matchLabel = `${simpW}:${simpH}`;
+    } else if (isClose) {
+      displayW = closestPreset.w;
+      displayH = closestPreset.h;
+      matchLabel = closestPreset.label;
+    } else {
+      const approx = approximateFraction(w, h, 64);
+      displayW = approx.w;
+      displayH = approx.h;
+      matchLabel = `${approx.w}:${approx.h}`;
+    }
+
+    return {
+      w,
+      h,
+      gcd,
+      simpW,
+      simpH,
+      displayRatioW: displayW,
+      displayRatioH: displayH,
+      matchLabel,
+      closestPreset: closestPreset ? closestPreset.label : null,
+      factor
+    };
   }
 
   // Calculate and update everything
@@ -122,7 +232,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Decimal ratio: (w/h : 1)
     const decimal = (rW / rH).toFixed(2);
-    // Matching exact format from screenshot: "9:16 (0.56:1)"
     shapeRatioText.textContent = `${rW}:${rH} (${decimal}:1)`;
 
     // Pixel dimensions readout
@@ -153,6 +262,169 @@ document.addEventListener('DOMContentLoaded', () => {
       metricMegapixels.textContent = `${mp} MP`;
     }
   }
+
+  // Process and analyze an image file
+  function processImageFile(file) {
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      showToast('Selecciona un archivo de imagen válido');
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(file);
+    const img = new Image();
+
+    img.onload = () => {
+      const width = img.naturalWidth;
+      const height = img.naturalHeight;
+
+      if (!width || !height) {
+        showToast('No se pudieron leer las dimensiones de la imagen');
+        URL.revokeObjectURL(objectUrl);
+        return;
+      }
+
+      // Cleanup prior URL if exists
+      if (currentImageObjectUrl) {
+        URL.revokeObjectURL(currentImageObjectUrl);
+      }
+      currentImageObjectUrl = objectUrl;
+
+      // Analyze aspect ratio
+      const analysis = analyzeAspectRatio(width, height);
+
+      // Populate input values
+      pixelWidthInput.value = width;
+      pixelHeightInput.value = height;
+      ratioWidthInput.value = analysis.displayRatioW;
+      ratioHeightInput.value = analysis.displayRatioH;
+
+      // Update dropzone UI
+      if (previewImg) previewImg.src = objectUrl;
+      if (previewFileName) previewFileName.textContent = file.name || 'imagen_analizada.png';
+      if (previewBadgeRatio) previewBadgeRatio.textContent = analysis.matchLabel;
+      if (previewDim) previewDim.textContent = `${width} × ${height} px`;
+
+      if (dropzonePrompt) dropzonePrompt.style.display = 'none';
+      if (dropzonePreview) dropzonePreview.style.display = 'flex';
+
+      // Update Shape Visualizer with uploaded image background
+      shapeBox.classList.add('has-image');
+      shapeBox.style.backgroundImage = `url("${objectUrl}")`;
+
+      // Recalculate
+      updateCalculator('image');
+
+      showToast(`Imagen analizada: ${width}×${height} (${analysis.matchLabel})`);
+    };
+
+    img.onerror = () => {
+      showToast('Error al cargar la imagen');
+      URL.revokeObjectURL(objectUrl);
+    };
+
+    img.src = objectUrl;
+  }
+
+  // Clear loaded image and reset state
+  function clearImage() {
+    if (currentImageObjectUrl) {
+      URL.revokeObjectURL(currentImageObjectUrl);
+      currentImageObjectUrl = null;
+    }
+
+    if (imageInput) imageInput.value = '';
+    if (previewImg) previewImg.src = '';
+    if (dropzonePrompt) dropzonePrompt.style.display = 'flex';
+    if (dropzonePreview) dropzonePreview.style.display = 'none';
+
+    if (shapeBox) {
+      shapeBox.classList.remove('has-image');
+      shapeBox.style.backgroundImage = '';
+    }
+
+    showToast('Imagen quitada');
+  }
+
+  // Dropzone Click & Keyboard handling
+  if (imageDropzone && imageInput) {
+    imageDropzone.addEventListener('click', (e) => {
+      // Prevent opening file picker if clicking remove button
+      if (e.target.closest('#btnRemoveImage')) return;
+      imageInput.click();
+    });
+
+    imageDropzone.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        imageInput.click();
+      }
+    });
+
+    imageInput.addEventListener('change', () => {
+      if (imageInput.files && imageInput.files[0]) {
+        processImageFile(imageInput.files[0]);
+      }
+    });
+  }
+
+  // Remove image button
+  if (btnRemoveImage) {
+    btnRemoveImage.addEventListener('click', (e) => {
+      e.stopPropagation();
+      clearImage();
+    });
+  }
+
+  // Drag and drop setup for Dropzone and Visualizer Stage
+  const dragTargets = [imageDropzone, visualizerStage].filter(Boolean);
+
+  dragTargets.forEach((target) => {
+    ['dragenter', 'dragover'].forEach((eventName) => {
+      target.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        target.classList.add('drag-over');
+      });
+    });
+
+    ['dragleave', 'drop'].forEach((eventName) => {
+      target.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        target.classList.remove('drag-over');
+      });
+    });
+
+    target.addEventListener('drop', (e) => {
+      const dt = e.dataTransfer;
+      if (dt && dt.files && dt.files.length > 0) {
+        processImageFile(dt.files[0]);
+      }
+    });
+  });
+
+  // Global Paste (Ctrl+V / Cmd+V) to analyze copied images immediately
+  document.addEventListener('paste', (e) => {
+    // Avoid intercepting paste inside input fields
+    if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+      return;
+    }
+
+    if (e.clipboardData && e.clipboardData.items) {
+      for (let i = 0; i < e.clipboardData.items.length; i++) {
+        const item = e.clipboardData.items[i];
+        if (item.type.indexOf('image') !== -1) {
+          const file = item.getAsFile();
+          if (file) {
+            processImageFile(file);
+            break;
+          }
+        }
+      }
+    }
+  });
 
   // Event Listeners: Preset change
   presetSelect.addEventListener('change', () => {

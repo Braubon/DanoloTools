@@ -433,6 +433,183 @@
   justify-content: space-between;
 }
 
+/* Image Upload & Analyzer Dropzone */
+.image-upload-wrapper {
+  margin-bottom: 1.25rem;
+}
+
+.upload-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.4rem;
+}
+
+.upload-hint {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.image-dropzone {
+  border: 1.5px dashed var(--border-mid);
+  background: var(--bg-surface);
+  border-radius: var(--radius-md);
+  padding: 0.85rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  user-select: none;
+}
+
+.image-dropzone:hover,
+.image-dropzone.drag-over {
+  border-color: var(--cyan);
+  background: rgba(0, 240, 255, 0.04);
+  box-shadow: 0 0 16px rgba(0, 240, 255, 0.12);
+}
+
+.image-dropzone:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+}
+
+.dropzone-prompt {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.dropzone-icon-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-sm);
+  background: rgba(0, 240, 255, 0.08);
+  border: 1px solid rgba(0, 240, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cyan);
+  flex-shrink: 0;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.image-dropzone:hover .dropzone-icon-circle {
+  transform: scale(1.05);
+  background: rgba(0, 240, 255, 0.15);
+}
+
+.dropzone-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.dropzone-main-text {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-main);
+}
+
+.dropzone-main-text .cyan-text {
+  color: var(--cyan);
+  font-weight: 600;
+}
+
+.dropzone-sub-text {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}
+
+/* Loaded Image State inside Dropzone */
+.dropzone-preview {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.preview-thumb-container {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border-mid);
+  flex-shrink: 0;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preview-thumb-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.preview-meta {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.preview-filename {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.preview-stats {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+}
+
+.preview-badge-ratio {
+  background: rgba(0, 240, 255, 0.15);
+  color: var(--cyan);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+.preview-dim {
+  color: var(--text-secondary);
+}
+
+.btn-remove-image {
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+}
+
+.btn-remove-image:hover {
+  background: rgba(255, 0, 122, 0.15);
+  border-color: var(--magenta);
+  color: var(--magenta);
+}
+
 /* Presets Dropdown */
 .form-group {
   margin-bottom: 1.25rem;
@@ -603,6 +780,12 @@
   padding: 1.5rem;
   background-image: 
     repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.015) 0, rgba(255, 255, 255, 0.015) 12px, transparent 12px, transparent 24px);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.visualizer-stage.drag-over {
+  border-color: var(--cyan);
+  box-shadow: 0 0 25px rgba(0, 240, 255, 0.25);
 }
 
 /* The Live Dynamic Shape */
@@ -622,6 +805,34 @@
   max-width: 100%;
   max-height: 100%;
   user-select: none;
+}
+
+.shape-box.has-image {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: 0 0 30px rgba(0, 240, 255, 0.35), inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+}
+
+.shape-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  transition: all 0.2s ease;
+  max-width: 100%;
+}
+
+.shape-box.has-image .shape-content {
+  background: rgba(6, 7, 10, 0.82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
 }
 
 .shape-ratio-text {
