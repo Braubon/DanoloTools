@@ -1,0 +1,16 @@
+# __art/camera/lens__
+85mm portrait lens
+50mm lens
+35mm lens
+24mm wide-angle lens
+14mm ultra wide lens
+200mm telephoto lens
+macro lens
+fisheye lens
+tilt-shift lens
+anamorphic lens flares
+shallow depth of field
+deep focus
+creamy bokeh background
+f/1.4 aperture
+motion blur

@@ -1,0 +1,13 @@
+# __character/age__ : adult ages only
+young adult
+adult
+in their twenties
+in their thirties
+in their forties
+middle-aged
+weathered middle-aged
+grizzled veteran
+elderly
+very old
+ancient
+ageless

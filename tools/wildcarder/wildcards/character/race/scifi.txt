@@ -1,0 +1,32 @@
+# __character/race/scifi__ : sci-fi species and bodies
+human colonist
+augmented human
+genetically engineered human
+clone
+cyborg
+android
+synthetic humanoid
+robot
+humanoid AI construct
+digital consciousness hologram
+low-gravity spacer with elongated limbs
+void-born spacer
+mutant wastelander
+uplifted ape
+uplifted octopus
+insectoid alien
+reptilian alien
+amphibian alien
+avian alien
+feline alien
+cephalopod alien
+grey alien
+crystalline alien
+silicon-based lifeform
+plant-based alien
+aquatic alien
+four-armed alien
+bioluminescent deep-space alien
+energy being in a containment suit
+hive-mind drone
+nanite-swarm entity

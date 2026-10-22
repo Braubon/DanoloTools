@@ -1,0 +1,39 @@
+# __character/class/magic__
+wizard
+archmage
+sorcerer
+sorceress
+witch
+hedge witch
+sea witch
+warlock
+necromancer
+druid
+shaman
+oracle
+seer
+mystic
+sage
+star sage
+astrologer
+enchanter
+illusionist
+elementalist
+pyromancer
+cryomancer
+stormcaller
+geomancer
+hydromancer
+chronomancer
+blood mage
+rune mage
+battle mage
+spellblade
+summoner
+conjurer
+artificer
+alchemist
+dream weaver
+hex caster
+cultist
+high priestess

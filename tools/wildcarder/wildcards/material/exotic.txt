@@ -1,0 +1,31 @@
+# __material/exotic__ : fantasy and sci-fi materials
+orichalcum
+adamantine
+starsteel
+moonsilver
+sunforged gold
+abyssal iron
+demon iron
+runic steel
+celestial bronze
+dragonbone
+dragonscale
+phoenix feather
+fae silk
+ghost silk
+void crystal
+living crystal
+singing crystal
+aether crystal
+soulstone
+frozen starlight
+solidified shadow
+enchanted glass
+petrified lightning
+molten glass
+heartwood of an ancient tree
+dark matter alloy
+quantum glass
+nanite swarm
+bioluminescent chitin
+plasma-etched alloy

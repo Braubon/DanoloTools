@@ -1,0 +1,26 @@
+# __creature/beast__ : giant and fantastic animals
+dire wolf
+frost wolf
+giant bear
+cave bear
+sabertooth tiger
+shadow panther
+war boar
+horned stag
+crystal-antlered elk
+mammoth
+war elephant
+armored rhino beast
+giant eagle
+roc
+giant owl
+giant spider
+giant scorpion
+giant beetle
+giant moth
+giant crab
+giant serpent
+giant toad
+cave lizard
+fire salamander
+war tortoise

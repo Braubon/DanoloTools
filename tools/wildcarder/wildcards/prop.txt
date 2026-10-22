@@ -1,0 +1,19 @@
+# __prop__ : any prop / item (often with condition, material and details)
+__prop/condition__ __prop/weapon__
+__prop/weapon__ with __prop/detail__
+__prop/condition__ __material__ __prop/armor__
+__prop/armor__ with __prop/detail__
+__prop/condition__ __material__ __prop/jewelry__
+__prop/jewelry__ set with __material/gem__
+__prop/condition__ __prop/container__
+__prop/container__ made of __material__ with __prop/detail__
+__prop/condition__ __prop/artifact__
+__prop/artifact__ with __prop/detail__
+__prop/potion__
+__prop/condition__ __prop/book__
+__prop/condition__ __prop/tool__
+__prop/condition__ __material/wood__ __prop/instrument__
+__prop/condition__ __prop/furniture__
+__prop/furniture__ in __art/movement__ style
+__prop/tech__
+__prop/condition__ __prop/tech__ with __color/neon__ lights

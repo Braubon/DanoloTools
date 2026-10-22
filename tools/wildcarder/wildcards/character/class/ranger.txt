@@ -1,0 +1,19 @@
+# __character/class/ranger__
+ranger
+hunter
+huntress
+archer
+horse archer
+scout
+tracker
+beastmaster
+falconer
+trapper
+warden
+forest guardian
+monster tracker
+explorer
+cartographer
+wanderer
+pathfinder
+nomad

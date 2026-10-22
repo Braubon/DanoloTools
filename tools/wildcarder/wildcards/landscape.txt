@@ -1,0 +1,18 @@
+# __landscape__ : any landscape, sometimes with a feature
+__landscape/forest__
+__landscape/mountain__
+__landscape/desert__
+__landscape/water__
+__landscape/frozen__
+__landscape/plains__
+__landscape/underground__
+__landscape/volcanic__
+__landscape/fantasy__
+__landscape/fantasy__
+__landscape/alien__
+__landscape/wasteland__
+__landscape/forest__ with __landscape/feature__
+__landscape/mountain__ with __landscape/feature__ in the distance
+__landscape/plains__ with __landscape/feature__
+__landscape/fantasy__ with __landscape/feature__
+__landscape/water__ with __landscape/feature__

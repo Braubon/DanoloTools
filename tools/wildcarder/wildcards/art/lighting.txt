@@ -1,0 +1,36 @@
+# __art/lighting__
+golden hour lighting
+blue hour lighting
+soft diffused light
+overcast light
+harsh midday sun
+dappled sunlight through leaves
+dramatic chiaroscuro
+low-key lighting
+high-key lighting
+hard light with deep shadows
+rim lighting
+backlit silhouette
+volumetric light
+god rays
+cinematic lighting
+studio softbox lighting
+three-point lighting
+rembrandt lighting
+split lighting
+underlighting
+top-down spotlight
+candlelight
+firelight
+lantern light
+moonlight
+twilight glow
+aurora light
+lightning flash
+neon glow
+colored gel lighting in __color/neon__ and __color/cool__
+bioluminescent glow
+stained-glass light
+caustic light reflections
+subsurface scattering
+foggy diffused light

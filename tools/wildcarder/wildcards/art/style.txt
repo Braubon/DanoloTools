@@ -1,0 +1,12 @@
+# __art/style__ : any art style or medium
+__art/style/painting__
+__art/style/painting__
+__art/style/digital__
+__art/style/digital__
+__art/style/illustration__
+__art/style/illustration__
+__art/style/drawing__
+__art/style/photo__
+__art/style/craft__
+__art/style/painting__ in __art/movement__ style
+__art/style/illustration__ with __art/movement__ influences

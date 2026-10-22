@@ -1,0 +1,38 @@
+# __character/race/fantasy__ : classic fantasy peoples
+human
+elf
+high elf
+wood elf
+dark elf
+sea elf
+snow elf
+sun elf
+moon elf
+half-elf
+dwarf
+mountain dwarf
+deep dwarf
+hill dwarf
+halfling
+gnome
+forest gnome
+deep gnome
+orc
+half-orc
+goblin
+hobgoblin
+kobold
+gnoll
+troll
+ogre
+tiefling
+aasimar
+dragonkin
+changeling
+gargoyle-blooded
+stone-skinned giantkin
+sylph
+undine
+fire-blooded salamander-kin
+treant-kin
+sand elf

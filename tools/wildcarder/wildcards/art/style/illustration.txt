@@ -1,0 +1,34 @@
+# __art/style/illustration__
+storybook illustration
+children's book illustration
+fairy tale book illustration
+comic book art
+graphic novel art
+anime style
+retro anime style
+manga ink style
+western cartoon style
+chibi style
+editorial illustration
+fashion illustration
+botanical illustration
+scientific illustration
+anatomical illustration
+tarot card art
+playing card art
+trading card art
+tattoo flash art
+vintage travel poster
+propaganda poster
+pulp magazine cover
+woodcut print
+linocut print
+japanese woodblock print
+copperplate etching
+engraving
+lithograph
+screen print
+risograph print
+halftone print
+line art
+sticker art

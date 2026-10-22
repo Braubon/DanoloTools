@@ -1,0 +1,20 @@
+# __prop/weapon/ranged__
+longbow
+shortbow
+recurve bow
+composite bow
+crossbow
+hand crossbow
+repeating crossbow
+sling
+throwing knives
+javelin
+blowgun
+flintlock pistol
+blunderbuss
+musket
+arquebus
+boomerang
+bolas
+shuriken
+harpoon gun

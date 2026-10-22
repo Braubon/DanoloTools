@@ -1,0 +1,6 @@
+# __scene__ : time of day, weather, season and atmosphere combos
+__scene/time__, __scene/weather__
+__scene/time__, __scene/atmosphere__
+__scene/season__ __scene/time__, __scene/weather__
+__scene/season__, __scene/atmosphere__
+__scene/time__, __scene/weather__, __scene/atmosphere__

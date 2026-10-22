@@ -1,0 +1,41 @@
+# __prop/weapon/melee__
+longsword
+broadsword
+greatsword
+claymore
+zweihander
+estoc
+shortsword
+gladius
+katana
+wakizashi
+scimitar
+falchion
+rapier
+sabre
+khopesh
+dagger
+kris dagger
+stiletto
+kukri
+cleaver
+battle axe
+greataxe
+hatchet
+war hammer
+mace
+morning star
+flail
+spear
+glaive
+halberd
+bardiche
+trident
+naginata
+guandao
+scythe
+war scythe
+quarterstaff
+whip
+chakram
+sickle

@@ -1,0 +1,16 @@
+# __vehicle/ground__
+horse-drawn carriage
+covered wagon
+war chariot
+steam locomotive
+armored car
+motorcycle
+muscle car
+vintage roadster
+hover bike
+tank
+all-terrain rover
+monster truck
+caravan
+armored war wagon
+tuk-tuk

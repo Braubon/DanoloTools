@@ -1,0 +1,28 @@
+# __color/pastel__ : soft, light, low-saturation colors
+pastel pink
+blush pink
+cotton candy pink
+rose quartz pink
+baby blue
+powder blue
+pastel sky blue
+pale aqua
+icy mint
+mint
+seafoam
+pistachio
+soft sage
+lemon chiffon
+pale butter yellow
+buttercream
+champagne
+peach
+apricot
+pale coral
+misty rose
+lavender
+pale lilac
+light mauve
+periwinkle
+lilac gray
+faded denim

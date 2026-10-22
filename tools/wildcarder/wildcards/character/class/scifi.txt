@@ -1,0 +1,41 @@
+# __character/class/scifi__
+space marine
+exosuit trooper
+starship captain
+starship engineer
+navigator
+starfighter pilot
+mech pilot
+smuggler pilot
+cargo hauler
+netrunner
+hacker
+data courier
+bounty hunter
+synth hunter
+street samurai
+cyber-samurai
+corporate agent
+riot cop
+android detective
+rebel insurgent
+xenobiologist
+terraformer
+asteroid miner
+void salvager
+space archaeologist
+quantum physicist
+colony doctor
+field medic
+combat engineer
+drone operator
+orbital sniper
+psionic
+telepath
+gene hacker
+black-market cyber surgeon
+techno-priest
+diplomatic envoy
+solar sailor
+wasteland scavenger
+rad-zone ranger

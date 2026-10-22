@@ -1,0 +1,16 @@
+# __prop/instrument__ : musical instruments
+lute
+lyre
+harp
+flute
+pan flute
+war horn
+drum
+bagpipes
+violin
+hurdy-gurdy
+oud
+shamisen
+koto
+ocarina
+bell

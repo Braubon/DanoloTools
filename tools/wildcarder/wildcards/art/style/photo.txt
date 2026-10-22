@@ -1,0 +1,28 @@
+# __art/style/photo__
+cinematic film still
+portrait photography
+fashion photography
+street photography
+documentary photography
+macro photography
+product photography
+architectural photography
+landscape photography
+wildlife photography
+astrophotography
+underwater photography
+drone photography
+long exposure photography
+double exposure photography
+tilt-shift photography
+infrared photography
+polaroid photo
+35mm film photo
+medium format film photo
+vintage slide film
+daguerreotype
+tintype photograph
+cyanotype print
+black and white film noir photo
+analog film grain
+studio flash photography

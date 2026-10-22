@@ -1,0 +1,30 @@
+# __character/race/spirit__ : fae, celestial, infernal and nature spirits
+fae
+sidhe noble
+fairy
+pixie
+sprite
+dryad
+nymph
+naiad
+will-o'-the-wisp
+kitsune
+tengu
+oni
+yokai
+djinn
+ifrit
+angel
+seraph
+fallen angel
+celestial
+demon
+archdemon
+elemental spirit of __elemental/type__
+ancestral spirit
+forest spirit
+mountain spirit
+river spirit
+shadow spirit
+star spirit
+moth spirit

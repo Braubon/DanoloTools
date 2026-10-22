@@ -1,0 +1,31 @@
+# __material/synthetic__ : modern, industrial and sci-fi materials
+carbon fiber
+kevlar
+glossy polymer
+matte plastic
+matte ceramic
+porcelain
+glass
+frosted glass
+stained glass
+smoked glass
+acrylic
+resin
+fiberglass
+rubber
+silicone
+concrete
+reinforced concrete
+plexiglass
+holographic film
+nanofiber mesh
+graphene
+aerogel
+bioplastic
+ferrofluid
+liquid metal
+transparent aluminum
+memory foam
+circuit board
+optical fiber
+LED panels

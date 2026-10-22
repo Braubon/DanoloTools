@@ -1,0 +1,15 @@
+# __prop/jewelry__
+crown
+diadem
+circlet
+ring
+signet ring
+amulet
+locket
+necklace
+torc
+brooch
+earrings
+bracelet
+anklet
+hair pin

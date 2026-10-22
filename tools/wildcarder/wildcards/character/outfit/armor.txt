@@ -1,0 +1,27 @@
+# __character/outfit/armor__
+full plate armor
+ornate gilded plate armor
+__material/metal__ plate armor
+__material/finish__ __material/metal__ armor
+chainmail hauberk
+scale mail
+lamellar armor
+samurai armor
+brigandine
+leather armor
+studded leather armor
+padded gambeson
+roman segmented armor
+bronze cuirass
+viking chainmail and furs
+a knight's tabard over mail
+dragonscale armor
+bone armor
+crystal armor
+obsidian armor
+elven leaf armor
+runic dwarven armor
+spiked blackened armor
+celestial silver armor
+rusted battered armor
+ceremonial parade armor

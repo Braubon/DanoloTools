@@ -1,0 +1,26 @@
+# __character/hair/color__ : adjectives, used before a hair style
+black
+raven black
+blue-black
+dark brown
+chestnut
+auburn
+copper red
+ginger
+strawberry blonde
+golden blonde
+honey blonde
+platinum blonde
+ash blonde
+silver
+snow white
+gray
+salt-and-pepper
+pastel pink
+deep blue
+teal
+emerald green
+violet
+lavender
+crimson
+ombre __color/basic__ to __color/basic__

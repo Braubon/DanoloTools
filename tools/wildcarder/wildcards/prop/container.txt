@@ -1,0 +1,15 @@
+# __prop/container__
+treasure chest
+reliquary
+ornate box
+music box
+puzzle box
+coffer
+urn
+amphora
+potion rack
+birdcage
+satchel
+lantern
+jewelry box
+sea chest

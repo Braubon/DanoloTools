@@ -1,0 +1,27 @@
+# __color/metallic__ : metal and shimmer colors
+gold
+antique gold
+champagne gold
+rose gold
+white gold
+silver
+tarnished silver
+platinum
+bronze
+burnished bronze
+copper
+verdigris copper
+brass
+gunmetal
+chrome
+titanium
+pewter
+blackened steel
+gilded
+pearlescent
+mother-of-pearl
+iridescent
+oil-slick iridescent
+anodized blue
+anodized purple
+iridescent bismuth

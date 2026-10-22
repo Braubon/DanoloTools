@@ -1,0 +1,26 @@
+# __art/style/digital__
+digital painting
+concept art
+matte painting
+speedpainting
+photobashed concept art
+3d render
+ray traced render
+stylized 3d render
+toy-like 3d render
+clay render
+wireframe render
+digital sculpture
+game engine render
+cel shading
+low poly
+voxel art
+pixel art
+isometric pixel art
+vector art
+flat design illustration
+digital illustration
+glitch art
+generative art
+fractal art
+holographic render

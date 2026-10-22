@@ -1,0 +1,31 @@
+# __material/gem__
+diamond
+ruby
+emerald
+sapphire
+star sapphire
+amethyst
+topaz
+opal
+fire opal
+pearl
+black pearl
+moonstone
+garnet
+citrine
+aquamarine
+peridot
+jade
+onyx
+turquoise
+amber
+jet
+lapis lazuli
+tourmaline
+alexandrite
+labradorite
+bloodstone
+quartz crystal
+rose quartz
+smoky quartz
+obsidian shard

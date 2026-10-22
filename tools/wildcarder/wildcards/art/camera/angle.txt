@@ -1,0 +1,15 @@
+# __art/camera/angle__
+eye level
+low angle
+high angle
+bird's-eye view
+worm's-eye view
+dutch angle
+overhead top-down view
+three-quarter view
+profile view
+front view
+back view
+isometric view
+aerial view
+first-person point of view

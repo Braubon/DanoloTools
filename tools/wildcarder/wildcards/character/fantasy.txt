@@ -1,0 +1,17 @@
+# __character/fantasy__ : full fantasy character descriptions built from the other lists
+__character/age__ __character/race__ __character/class__
+__character/trait__ __character/race__ __character/class__ with __character/hair__
+__character/race__ __character/class__, __character/body__, __character/face__
+__character/race__ __character/class__ wearing __character/outfit__
+__character/trait__ __character/race__ __character/class__ wearing __character/outfit__, __character/hair__
+__character/age__ __character/gender__, __character/race__ __character/class__, __character/face/eye_color__, __character/hair__
+__character/race__ __character/class/magic__ wielding __elemental/type__ magic, __elemental__
+__character/race__ __character/class/warrior__ in __character/outfit/armor__, __character/face/marks__
+__character/race__ __character/class/warrior__ holding a __prop/weapon__
+__character/race__ __character/class/rogue__, __character/face/expression__, __character/outfit/fantasy__
+__character/age__ __character/race__ __character/class/civilian__, __character/face/expression__, __character/outfit/fantasy__
+__character/race__ __character/class__ inspired by __inspiration/culture__ culture, __character/outfit__
+__character/trait__ __character/race/undead__ __character/class__, __character/face__
+__character/race/spirit__ __character/class/magic__, __elemental__, __character/face/eye_color__
+__character/race/beastfolk__ __character/class/ranger__, __character/body__, __character/outfit/fantasy__
+__character/race/mythic__ __character/class/warrior__, __character/face/marks__, __character/outfit/armor__

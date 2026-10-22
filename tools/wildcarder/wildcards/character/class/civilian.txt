@@ -1,0 +1,45 @@
+# __character/class/civilian__ : everyday and noble roles
+blacksmith
+armorsmith
+weaponsmith
+merchant
+noble
+king
+queen
+prince
+princess
+emperor
+empress
+courtier
+jester
+scholar
+librarian
+scribe
+innkeeper
+tavern keeper
+farmer
+fisherman
+shepherd
+miner
+carpenter
+stonemason
+tailor
+cook
+baker
+brewer
+gardener
+beekeeper
+sailor
+ship captain
+street urchin
+beggar
+hermit
+gravedigger
+lamplighter
+clockmaker
+inventor
+astronomer
+toymaker
+mask maker
+perfumer
+tea master

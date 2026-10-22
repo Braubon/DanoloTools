@@ -1,0 +1,12 @@
+# __vehicle/air__
+airship
+zeppelin
+hot air balloon
+biplane
+fighter jet
+helicopter
+gyrocopter
+ornithopter
+glider
+dropship
+VTOL gunship

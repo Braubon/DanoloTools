@@ -1,0 +1,16 @@
+# __scene/time__
+dawn
+sunrise
+early morning
+midday
+late afternoon
+golden hour
+sunset
+dusk
+blue hour
+twilight
+night
+midnight
+starry night
+full moon night
+solar eclipse

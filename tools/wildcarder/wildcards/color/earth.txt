@@ -1,0 +1,31 @@
+# __color/earth__ : natural, earthy, muted tones
+moss green
+olive
+khaki
+fern green
+lichen green
+sage
+terracotta
+clay
+ochre
+umber
+burnt sienna
+rust
+mud brown
+peat brown
+loam
+sandstone
+desert sand
+dune beige
+driftwood gray
+bark brown
+chestnut
+acorn brown
+cinnamon
+cedar
+mahogany
+hay
+wheat
+flax
+mossy stone
+slate

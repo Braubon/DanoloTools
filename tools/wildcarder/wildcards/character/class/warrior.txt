@@ -1,0 +1,40 @@
+# __character/class/warrior__
+knight
+knight errant
+paladin
+templar
+crusader
+berserker
+barbarian
+gladiator
+pit fighter
+samurai
+ronin
+viking raider
+shieldmaiden
+roman legionary
+centurion
+hoplite
+cataphract
+janissary
+mamluk
+conquistador
+musketeer
+duelist
+swordmaster
+blademaster
+spearmaster
+halberdier
+lancer
+cavalier
+warlord
+warchief
+dragon slayer
+monster hunter
+sellsword
+mercenary captain
+royal guard
+executioner
+war monk
+martial artist
+battle priest

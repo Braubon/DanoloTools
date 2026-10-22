@@ -1,0 +1,19 @@
+# __character/class/support__
+cleric
+priest
+priestess
+monk
+nun
+healer
+herbalist
+apothecary
+plague doctor
+bard
+minstrel
+skald
+dancer
+chaplain
+inquisitor
+exorcist
+pilgrim
+mender

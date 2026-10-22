@@ -1,0 +1,7 @@
+# __template/vehicle__
+__vehicle__, __landscape__, __scene__, __art/style__, __art/lighting__, __art/quality__
+concept art of a __inspiration/genre__ __vehicle__, side view, __art/style/digital__, __color/neutral__ background
+__vehicle/air__ flying over __landscape__, __scene/time__, __art/camera/angle__, __art/style__
+__vehicle/sea__ on a __scene/weather__ sea, __art/style/painting__, __art/mood__ mood
+__vehicle/space__ approaching __landscape/alien__, __elemental/void__, __art/style/digital__, __art/quality__
+blueprint of a __vehicle__, technical drawing, annotations, __color/cool__ background

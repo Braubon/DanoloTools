@@ -1,0 +1,16 @@
+# __character/face/facial_hair__
+clean-shaven
+stubble
+full beard
+braided beard
+forked beard
+long wizard beard
+neatly trimmed beard
+wild unkempt beard
+salt-and-pepper beard
+beard with metal rings
+goatee
+mustache
+handlebar mustache
+mutton chops
+sideburns

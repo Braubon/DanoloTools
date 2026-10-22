@@ -1,0 +1,44 @@
+# __art/movement__ : art and design movements
+art deco
+art nouveau
+bauhaus
+baroque
+rococo
+gothic
+neoclassical
+romanticism
+pre-raphaelite
+symbolism
+mannerism
+impressionism
+post-impressionism
+pointillism
+fauvism
+expressionism
+cubism
+futurism
+constructivism
+de stijl
+dada
+surrealism
+abstract expressionism
+pop art
+op art
+minimalism
+brutalism
+memphis design
+mid-century modern
+streamline moderne
+arts and crafts movement
+swiss international style
+psychedelic 1960s
+pop surrealism
+art brut
+ukiyo-e
+byzantine iconography
+illuminated manuscript
+persian miniature
+mughal miniature
+socialist realism poster
+vaporwave
+synthwave

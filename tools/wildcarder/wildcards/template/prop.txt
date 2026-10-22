@@ -1,0 +1,9 @@
+# __template/prop__ : base ideas for props and items
+__prop__, game asset, isolated on a __color/neutral__ background, __art/style/digital__, __art/quality__
+product shot of a __prop/weapon__, __art/lighting__, __art/camera/lens__, __art/quality__
+__prop/condition__ __prop/artifact__ resting on a __material/wood__ table, __art/lighting__, __art/style__
+prop design sheet of a __prop__, multiple views, annotations, __art/style/drawing__
+__prop__ floating in the air, __elemental__, __color/palette__, __art/style__, __art/quality__
+legendary __prop/weapon__ inspired by __inspiration/culture__ art, __prop/detail__, __art/lighting__, __art/style/digital__
+__prop/potion__ on an alchemist's shelf, __art/lighting__, __art/style/painting__, __art/quality__
+inventory icon of a __prop__, __art/style/digital__, clean background, centered

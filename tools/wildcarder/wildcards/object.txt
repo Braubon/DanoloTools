@@ -1,0 +1,11 @@
+# __object__ : everyday real-world objects (use __prop__ for fantasy/sci-fi items)
+__object/household__
+__object/household__
+__object/food__
+__object/plant__
+__object/animal__
+__object/toy__
+__object/gadget__
+__object/household__ made of __material__
+__material/finish__ __object/household__
+__object/household__ in __art/movement__ style

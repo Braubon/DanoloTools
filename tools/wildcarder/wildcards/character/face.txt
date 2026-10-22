@@ -1,0 +1,7 @@
+# __character/face__ : face description built from face parts
+__character/face/shape__, __character/face/eyes__, __character/face/expression__
+__character/face/shape__, __character/face/eye_color__, __character/face/nose__
+__character/face/eyes__, __character/face/mouth__, __character/face/skin__
+__character/face/skin__, __character/face/marks__, __character/face/expression__
+__character/face/shape__, __character/face/eye_color__, __character/face/facial_hair__
+__character/face/eye_color__, __character/face/marks__, __character/face/mouth__

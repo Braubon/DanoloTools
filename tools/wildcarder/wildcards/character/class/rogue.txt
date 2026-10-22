@@ -1,0 +1,25 @@
+# __character/class/rogue__
+thief
+master thief
+cat burglar
+cutpurse
+assassin
+spy
+infiltrator
+smuggler
+pirate
+pirate captain
+corsair
+highwayman
+bandit
+outlaw
+trickster
+con artist
+card shark
+forger
+poisoner
+shadow dancer
+ninja
+shinobi
+guild enforcer
+black market dealer

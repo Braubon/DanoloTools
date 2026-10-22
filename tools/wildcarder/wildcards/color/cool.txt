@@ -1,0 +1,49 @@
+# __color/cool__ : blues, greens, purples
+cobalt blue
+cerulean
+azure
+ultramarine
+prussian blue
+navy blue
+midnight blue
+sapphire blue
+lapis blue
+royal blue
+electric blue
+steel blue
+denim blue
+slate blue
+ice blue
+glacier blue
+powder blue
+sky blue
+peacock blue
+deep sea blue
+teal
+turquoise
+aquamarine
+cyan
+seafoam green
+mint green
+jade green
+emerald green
+viridian
+verdigris
+forest green
+pine green
+spruce green
+bottle green
+sage green
+celadon
+eucalyptus green
+periwinkle
+lavender
+lilac
+wisteria
+violet
+amethyst purple
+indigo
+royal purple
+plum
+mauve
+orchid

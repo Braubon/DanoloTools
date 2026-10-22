@@ -1,0 +1,11 @@
+# __prop/weapon__ : any weapon (fantasy, ranged, magic focus or sci-fi)
+__material/finish__ __material/metal__ __prop/weapon/melee__
+__material/metal__ __prop/weapon/melee__
+__prop/weapon/melee__ with __prop/detail__
+__elemental/type__-enchanted __prop/weapon/melee__
+__prop/weapon/ranged__ of __material/wood__
+__prop/weapon/ranged__ with __prop/detail__
+__prop/weapon/focus__
+__prop/weapon/focus__ crackling with __elemental__
+__prop/weapon/scifi__
+__prop/weapon/scifi__ with __color/neon__ accents

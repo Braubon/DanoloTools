@@ -1,0 +1,26 @@
+# __creature/anatomy__ : body features for creatures and monsters
+bat-like wings
+feathered wings
+insect wings
+ram horns
+spiraling horns
+antlers
+multiple eyes
+glowing eyes
+tusks
+mandibles
+a long barbed tail
+a scaled hide
+armored plates
+quills
+spines along the back
+tentacles
+crystal growths
+bioluminescent markings
+a fur mane
+a hooked beak
+gills and fins
+extra limbs
+exposed bone
+smoldering cracks
+a moss-covered back

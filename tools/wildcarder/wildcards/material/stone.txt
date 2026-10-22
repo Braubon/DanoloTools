@@ -1,0 +1,29 @@
+# __material/stone__
+marble
+black marble
+veined marble
+granite
+rough-hewn granite
+basalt
+carved basalt
+obsidian
+slate
+sandstone
+limestone
+travertine
+alabaster
+jade
+onyx
+quartz
+soapstone
+porphyry
+volcanic rock
+flint
+pumice
+malachite
+lapis lazuli
+terrazzo
+cobblestone
+river stone
+moss-covered stone
+crystal geode

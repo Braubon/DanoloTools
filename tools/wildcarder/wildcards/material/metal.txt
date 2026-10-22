@@ -1,0 +1,30 @@
+# __material/metal__
+iron
+wrought iron
+cast iron
+meteoric iron
+cold-forged iron
+steel
+damascus steel
+blackened steel
+gilded steel
+gunmetal
+bronze
+verdigris bronze
+brass
+copper
+hammered copper
+gold
+rose gold
+silver
+platinum
+electrum
+pewter
+tin
+lead
+nickel
+titanium
+chrome
+aluminum
+tungsten
+cobalt alloy

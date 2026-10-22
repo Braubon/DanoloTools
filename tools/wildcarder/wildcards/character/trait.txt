@@ -1,0 +1,27 @@
+# __character/trait__ : personality / reputation adjectives
+noble
+cunning
+wise
+battle-hardened
+mysterious
+cheerful
+grim
+arrogant
+compassionate
+fearless
+cursed
+exiled
+haunted
+scholarly
+wild
+regal
+humble
+eccentric
+ruthless
+kind-hearted
+legendary
+disgraced
+devout
+reckless
+enigmatic
+melancholic

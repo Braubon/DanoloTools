@@ -1,0 +1,10 @@
+# __landscape/frozen__
+arctic tundra
+ice field
+glacier
+frozen sea
+snowy plains
+ice caves
+frozen waterfall
+polar night under the aurora
+snow-buried forest

@@ -1,0 +1,16 @@
+# __prop/tech__ : sci-fi gadgets
+datapad
+holo-projector
+hacking deck
+cybernetic implant
+power cell
+energy core
+communicator
+AR visor
+med-injector
+handheld scanner
+plasma torch
+robotic arm
+hoverboard
+jetpack
+stasis pod

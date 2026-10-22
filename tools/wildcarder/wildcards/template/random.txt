@@ -1,0 +1,12 @@
+# __template/random__ : any of the base ideas
+__template/fantasy_character__
+__template/fantasy_character__
+__template/scifi_character__
+__template/scifi_character__
+__template/creature__
+__template/prop__
+__template/landscape__
+__template/location__
+__template/vehicle__
+__template/still_life__
+__template/mashup__

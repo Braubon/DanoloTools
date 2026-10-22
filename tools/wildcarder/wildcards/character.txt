@@ -1,0 +1,4 @@
+# __character__ : a full character description, fantasy or sci-fi
+__character/fantasy__
+__character/fantasy__
+__character/scifi__
