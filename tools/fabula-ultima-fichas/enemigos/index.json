@@ -1,0 +1,11 @@
+{
+  "descripcion": "Fichas de enemigo de ejemplo. El panel del DJ las importa con «Cargar ejemplos». Ver LEEME.md.",
+  "enemigos": [
+    "aullador-gris.json",
+    "rata-gigante.json",
+    "murcielago-vampiro.json",
+    "diablillo.json",
+    "gargola.json",
+    "mercenario.json"
+  ]
+}

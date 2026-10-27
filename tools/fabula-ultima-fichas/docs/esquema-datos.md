@@ -1,6 +1,6 @@
 # Esquema de la base de datos
 
-Referencia completa de los JSON de `data/`. El generador, el visor y `tools/validar.mjs` dependen de estos campos: respétalos al añadir contenido.
+Referencia completa de los JSON de `data/`. El generador, las fichas, la vista de combate y `tools/validar.mjs` dependen de estos campos: respétalos al añadir contenido.
 
 ## 1. Estructura
 
@@ -73,7 +73,7 @@ Competencias válidas: `armas_marciales_cuerpo`, `armas_marciales_distancia`, `a
 | --- | --- |
 | `id`, `nombre`, `nombre_original` | |
 | `sl_max` | Nivel máximo de habilidad (1 si no se repite). |
-| `tipo` | `pasiva` · `accion` · `reaccion` · `otra` (sin acción / especial). Alimenta el filtro del visor. |
+| `tipo` | `pasiva` · `accion` · `reaccion` · `otra` (sin acción / especial). Alimenta el filtro de la página de fichas. |
 | `activacion` | Texto de «Activación / coste». |
 | `efecto` | Texto completo. |
 | `modificadores` | Opcional. Apartado 5. |
@@ -192,3 +192,42 @@ En el personaje: habilidades de clase → `elecciones["hab:<id>"][clave]`; heroi
 ## 8. Formato del personaje (resumen)
 
 `formato: "fabula-ultima-pj"`, `version: 1`. Campos principales: `contenido`, `modo_libre`, `creacion_completa`, `identidad`, `nivel`, `px`, `pf`, `zenit`, `atributos { perfil, base, mejoras[] }`, `clases[] { id, habilidades { id: SL }, beneficio }`, `heroicas[]`, `elecciones`, `equipo { equipado, objetos[] }`, `vinculos[] { hacia, emociones[] }`, `opcionales`, `estado { pv, pm, pi, estados[] }`, `notas`, `historial[]`, `calculado` (solo informativo). El nivel de una clase es la suma de los SL de sus habilidades. Los objetos de inventario apuntan a la base de datos (`coleccion` + `ref`) o llevan su definición en `personalizado`.
+
+
+## 9. Fichas de PNJ (enemigos y aliados del DJ)
+
+Las guarda el panel del DJ en la base de datos de la partida (no en `data/`). Ejemplos en `enemigos/`. Validación: `normalizarPnj` en `assets/js/pnj.js`.
+
+```json
+{
+  "formato": "fabula-ultima-pnj", "version": 1,
+  "id": "aullador-gris", "nombre": "Aullador gris",
+  "descripcion": "Cánido corpulento adiestrado como guardián leal…",
+  "nivel": 5, "rango": "soldado", "rango_n": null, "especie": "bestia",
+  "rasgos": ["Atento", "Inteligente", "Leal", "Vigilante"],
+  "atributos": { "DES": 10, "PER": 8, "VIG": 8, "VOL": 6 },
+  "pv": 50, "pm": 35, "iniciativa": 9, "defensa": 10, "defensa_magica": 8,
+  "afinidades": { "aire": "RS", "hielo": "RS" },
+  "ataques": [ { "nombre": "Mordisco feroz", "alcance": "cuerpo", "precision": ["DES", "VIG"], "bonus": 3, "dano": 10, "tipo": "fisico", "contra": "def", "efecto": "" } ],
+  "conjuros": [ { "nombre": "Cólera", "pm": 10, "por_objetivo": false, "objetivo": "Una criatura", "duracion": "Instantánea", "ofensivo": true, "precision": ["PER", "VOL"], "bonus": 0, "dano": null, "tipo": null, "efecto": "…" } ],
+  "otras_acciones": [ { "nombre": "…", "efecto": "…" } ],
+  "reglas": [ { "nombre": "Protección", "efecto": "…" } ],
+  "equipo": "", "notas": ""
+}
+```
+
+| Campo | Valores |
+| --- | --- |
+| `id` | minúsculas y guiones; si falta, se genera del nombre. Identifica la ficha: importar otra con el mismo `id` la sustituye. |
+| `rango` | `soldado`, `elite`, `campeon` (con `rango_n` = N). Solo informativo: PV, PM e iniciativa se escriben ya con el rango aplicado. |
+| `especie` | `bestia`, `constructo`, `demonio`, `elemental`, `monstruo`, `no-muerto`, `planta`, `humanoide` |
+| `atributos` | tamaño de dado: 6, 8, 10 o 12 |
+| `defensa`, `defensa_magica` | valores finales (con armadura, escudo y habilidades) |
+| `afinidades` | por tipo de daño (`fisico aire rayo oscuro tierra fuego hielo luz veneno`): `VU` vulnerable (×2), `RS` resistente (½), `IM` inmune (0), `AS` absorbe (cura). Omite los tipos sin afinidad. |
+| `ataques[].bonus` | bonificador total a la precisión (nivel incluido, como en el bestiario) |
+| `ataques[].dano` | X de `[TM + X]`; `tipo` como en afinidades; `contra`: `def` o `mdef`; `alcance`: `cuerpo` o `distancia` |
+| `conjuros[].pm` | coste; `por_objetivo: true` si es «× obj.». `dano` (X de `[TM + X]`) y `tipo` solo si hace daño; `precision` y `bonus` para la prueba de magia si es `ofensivo` |
+
+El servidor añade `revelado` (0, 10, 13 o 16: lo descubierto con la acción de Estudio) y `modificado`; no hace falta escribirlos. La imagen se sube aparte desde el panel o la vista de combate.
+
+Lo que ven los jugadores según `revelado`: 10+ rango, especie, PV y PM máximos; 13+ además rasgos, atributos, defensas y afinidades; 16+ además ataques, conjuros, otras acciones y reglas especiales. Siempre ven nombre, imagen, estados y daño recibido. Los PNJ del lado aliado se ven completos.

@@ -1,4 +1,4 @@
-// Piezas de presentación compartidas por el generador y el visor.
+// Piezas de presentación compartidas por el generador, las fichas y la vista de combate.
 import { esc, md } from './ui.js';
 import { get, tabla, nombreAtlas } from './db.js';
 import { ATR, nivelClase, fmtPrecision, fmtDano, fmtDado, RANURA_NOMBRE } from './rules.js';

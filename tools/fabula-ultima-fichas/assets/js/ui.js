@@ -104,6 +104,31 @@ export function toast(msg, tipo = '') {
   setTimeout(() => t.remove(), 3100);
 }
 
+/** Reduce una imagen a 124×124 (sin deformar, fondo transparente). */
+export function reducirImagen(file) {
+  return new Promise((res, rej) => {
+    if (file.size > 8 * 1024 * 1024) { rej(new Error('La imagen es demasiado grande.')); return; }
+    const img = new Image();
+    img.onload = () => {
+      const L = 124;
+      const cv = document.createElement('canvas');
+      cv.width = L; cv.height = L;
+      const cx = cv.getContext('2d');
+      const k = Math.min(L / img.width, L / img.height);
+      const w = Math.round(img.width * k), h = Math.round(img.height * k);
+      cx.imageSmoothingEnabled = k !== 1;
+      cx.imageSmoothingQuality = 'high';
+      cx.drawImage(img, Math.floor((L - w) / 2), Math.floor((L - h) / 2), w, h);
+      URL.revokeObjectURL(img.src);
+      let url = cv.toDataURL('image/png');
+      if (url.length > 120 * 1024) url = cv.toDataURL('image/webp', 0.9);
+      res(url);
+    };
+    img.onerror = () => rej(new Error('No se pudo leer la imagen.'));
+    img.src = URL.createObjectURL(file);
+  });
+}
+
 export const ICON = {
   sol: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
   luna: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>',

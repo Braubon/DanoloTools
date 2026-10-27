@@ -1,0 +1,71 @@
+{
+  "formato": "fabula-ultima-pnj",
+  "version": 1,
+  "id": "mercenario",
+  "nombre": "Mercenario",
+  "descripcion": "Combatientes veteranos endurecidos por incontables batallas, equipados con armamento especializado y técnicas mortales.",
+  "nivel": 10,
+  "rango": "soldado",
+  "rango_n": null,
+  "especie": "humanoide",
+  "rasgos": [
+    "Cínico",
+    "Competente",
+    "Despiadado",
+    "Sombrío"
+  ],
+  "atributos": {
+    "DES": 8,
+    "PER": 8,
+    "VIG": 8,
+    "VOL": 8
+  },
+  "pv": 60,
+  "pm": 50,
+  "iniciativa": 5,
+  "defensa": 11,
+  "defensa_magica": 9,
+  "afinidades": {
+    "aire": "RS",
+    "tierra": "VU",
+    "fuego": "RS"
+  },
+  "ataques": [
+    {
+      "nombre": "Espada de bronce",
+      "alcance": "cuerpo",
+      "precision": [
+        "DES",
+        "VIG"
+      ],
+      "bonus": 5,
+      "dano": 11,
+      "tipo": "fisico",
+      "contra": "def",
+      "efecto": ""
+    },
+    {
+      "nombre": "Pistola",
+      "alcance": "distancia",
+      "precision": [
+        "DES",
+        "PER"
+      ],
+      "bonus": 4,
+      "dano": 8,
+      "tipo": "fisico",
+      "contra": "def",
+      "efecto": ""
+    }
+  ],
+  "conjuros": [],
+  "otras_acciones": [
+    {
+      "nombre": "Ataque cargado",
+      "efecto": "El próximo ataque del mercenario obtiene multi (2) e ignora las Resistencias a cualquier tipo de daño."
+    }
+  ],
+  "reglas": [],
+  "equipo": "Coraza rúnica, espada de bronce, pistola.",
+  "notas": ""
+}

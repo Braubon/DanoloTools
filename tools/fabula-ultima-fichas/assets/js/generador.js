@@ -869,7 +869,7 @@ function cerrarDialogo() { const d = document.getElementById('dialogo'); if (d.o
 function panelVinculos() {
   const max = param(db, 'vinculos_max', 6);
   const pares = [['admiracion', 'inferioridad'], ['lealtad', 'desconfianza'], ['afecto', 'odio']];
-  let h = `<div class="seccion fila entre"><div><h2>Vínculos</h2><p class="muted small">Hasta ${max}. Cada vínculo admite una emoción de cada pareja; su fuerza es el número de emociones. Usa el nombre exacto de otro personaje para que el visor dibuje las relaciones del grupo.</p></div>
+  let h = `<div class="seccion fila entre"><div><h2>Vínculos</h2><p class="muted small">Hasta ${max}. Cada vínculo admite una emoción de cada pareja; su fuerza es el número de emociones. Usa el nombre exacto de otro personaje para que la página de fichas dibuje las relaciones del grupo.</p></div>
     <span class="chip">${pj.vinculos.length} / ${max}</span></div>`;
   if (!pj.vinculos.length) h += '<div class="vacio">Sin vínculos todavía.</div>';
   h += '<div class="pila">' + pj.vinculos.map((v, i) => `<div class="tarjeta">
@@ -1130,7 +1130,7 @@ function panelFicha() {
     <div class="tarjeta"><h3>Combate</h3>${F.htmlStats(c, pj)}<div style="margin-top:10px">${F.htmlAtributos(c)}</div>
       <div style="margin-top:12px">${F.htmlAtaques(c, dbTodo)}</div>
       ${comp.length || rit.length ? `<div class="fila" style="margin-top:10px">${comp.map((x) => `<span class="chip">${esc(x)}</span>`).join('')}${rit.map((x) => `<span class="chip acento">Rituales: ${esc(x)}</span>`).join('')}${c.proyectos ? '<span class="chip acento">Proyectos</span>' : ''}</div>` : ''}</div>
-    <p class="muted small" style="margin-top:12px">Para ver la ficha completa con pestañas y filtros, descarga el JSON y ábrelo en el <a href="../visor/">visor</a>.</p>`;
+    <p class="muted small" style="margin-top:12px">Para ver la ficha completa con pestañas y filtros, descarga el JSON y ábrelo en <a href="../ficha/">Fichas</a> (botón «Abrir JSON»).</p>`;
 }
 
 // =========================================================== ACCIONES

@@ -20,6 +20,10 @@
   <style>
     .contenedor { max-width: 1000px; }
     .pj-fila { display: grid; grid-template-columns: minmax(0, 1fr) 220px auto; gap: 12px; align-items: center; }
+    .pj-fila img, .pnj-fila img { width: 40px; height: 40px; border-radius: 6px; background: var(--surface-2); object-fit: contain; flex: none; }
+    .pnj-fila { display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; gap: 12px; align-items: center; }
+    .pnj-fila .botones { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; }
+    @media (max-width: 760px) { .pnj-fila { grid-template-columns: 40px minmax(0, 1fr); } .pnj-fila .botones { grid-column: 1 / -1; justify-content: flex-start; } }
     .pj-fila select { width: 100%; }
     .pj-fila .botones { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; }
     @media (max-width: 760px) { .pj-fila { grid-template-columns: 1fr; } .pj-fila .botones { justify-content: flex-start; } }
@@ -42,7 +46,8 @@
     <div class="acciones">
       <span id="usuario"></span>
       <a class="btn fantasma" href="../generador/index.html">Generador</a>
-      <a class="btn fantasma" href="../visor/index.html">Visor</a>
+      <a class="btn fantasma" href="../visor/index.html">Combate</a>
+      <a class="btn fantasma" href="../ficha/index.html">Fichas</a>
       <a class="btn fantasma" href="../comandos/index.html">Comandos</a>
       <button class="btn icono fantasma" data-tema-toggle aria-label="Cambiar tema"></button>
     </div>
@@ -52,6 +57,8 @@
     <main id="vista" aria-live="polite"><p class="muted">Cargando…</p></main>
   </div>
   <input type="file" id="importar" accept=".json,application/json" multiple class="sr">
+  <input type="file" id="importar-pnj" accept=".json,application/json" multiple class="sr">
+  <input type="file" id="subir-imagen" accept="image/png,image/webp,image/jpeg,image/gif" class="sr">
   <script type="module" src="../assets/js/panel.js"></script>
 </body>
 </html>

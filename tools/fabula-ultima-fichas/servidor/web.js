@@ -2,14 +2,23 @@
 // Manejadores HTTP de las funciones de Vercel:
 //   /api/discord/  → interacciones del bot
 //   /api/auth/     → inicio de sesión con Discord (panel del DJ)
-//   /api/datos/    → personajes para el visor, el generador y el panel
+//   /api/datos/    → personajes, enemigos y escena de combate para las webs
+//
+// Permisos en la web (cuenta de Discord):
+//   espectador  sin sesión o sin pertenecer al servidor: posiciones e imágenes
+//   jugador     miembro del servidor: fichas de los PJ y lo revelado de los PNJ;
+//               mueve sus propios PJ
+//   dj          rol DJ: todo
 // ---------------------------------------------------------------------------
 import { randomBytes } from 'node:crypto';
-import { verificarFirma, api, env, usuarioEsDj, nombreUsuario, rolesDj, API } from './discord.js';
-import { getJSON, setJSON, del, cmd, kvConfigurado } from './kv.js';
+import { verificarFirma, api, env, rolUsuario, nombreUsuario, rolesDj, API } from './discord.js';
+import { getJSON, setJSON, del, cmd, kvConfigurado, versionPartida, tocar } from './kv.js';
 import { manejarInteraccion } from './bot.js';
 import { paraDiscord } from './comandos.js';
 import * as P from './personajes.js';
+import * as E from './escena.js';
+import { vistaRevelada, exportarPnj } from '../assets/js/pnj.js';
+import { aplicarValor, R } from './motor.js';
 import { baseDatos } from './motor.js';
 
 const RUTA_PANEL = '/tools/fabula-ultima-fichas/panel/index.html';
@@ -41,12 +50,29 @@ async function sesion(req) {
   return getJSON(`fu:sesion:${t}`);
 }
 
+/** Sesión y papel del visitante: { s, rol: 'espectador'|'jugador'|'dj' }. */
+async function quien(req) {
+  const s = await sesion(req);
+  if (!s) return { s: null, rol: 'espectador' };
+  let rol = null;
+  try { rol = await rolUsuario(s.id); } catch (e) { rol = null; }
+  return { s, rol: rol || 'espectador' };
+}
+
 /** Exige una sesión con rol DJ. Devuelve el usuario o lanza una Response. */
 async function exigirDj(req) {
-  const s = await sesion(req);
+  const { s, rol } = await quien(req);
   if (!s) throw error('Inicia sesión con Discord.', 401);
-  if (!(await usuarioEsDj(s.id))) throw error(`Tu cuenta no tiene el rol ${env('DJ_ROLE_NAME') || 'DJ'} en el servidor.`, 403);
+  if (rol !== 'dj') throw error(`Tu cuenta no tiene el rol ${env('DJ_ROLE_NAME') || 'DJ'} en el servidor.`, 403);
   return s;
+}
+
+/** Exige ser miembro del servidor (jugador o DJ). */
+async function exigirMiembro(req) {
+  const q = await quien(req);
+  if (!q.s) throw error('Inicia sesión con Discord para ver las fichas.', 401);
+  if (q.rol === 'espectador') throw error('Tu cuenta de Discord no está en el servidor de la partida.', 403);
+  return q;
 }
 
 async function cuerpo(req) {
@@ -113,10 +139,10 @@ export const auth = envoltorio(async (req) => {
 
   if (accion === 'yo') {
     const s = await sesion(req);
-    if (!s) return json({ usuario: null, dj: false });
-    let dj = false, aviso = null;
-    try { dj = await usuarioEsDj(s.id); } catch (e) { aviso = e.message; }
-    return json({ usuario: s, dj, aviso });
+    if (!s) return json({ usuario: null, dj: false, rol: 'espectador' });
+    let rol = null, aviso = null;
+    try { rol = await rolUsuario(s.id); } catch (e) { aviso = e.message; }
+    return json({ usuario: s, dj: rol === 'dj', rol: rol || 'espectador', aviso });
   }
 
   if (accion === 'salir') {
@@ -135,9 +161,32 @@ export const datos = envoltorio(async (req) => {
   const post = req.method === 'POST';
 
   switch (accion) {
-    // ---------------- público
-    case 'publico':
+    // ---------------- vista de combate (cualquiera; el contenido depende del papel)
+    case 'campo': {
+      const v = Number(url.searchParams.get('v')) || 0;
+      const ver = await versionPartida();
+      if (v && v === ver) return json({ sinCambios: true, version: ver });
+      const q = await quien(req);
+      return json({ version: ver, ...(await vistaCampo(q)) });
+    }
+    case 'imagen': {
+      const clave = url.searchParams.get('clave') || '';
+      const img = /^(pj|pnj):[\w-]{1,80}$/.test(clave) ? await E.imagen(clave) : null;
+      const m = img && img.match(/^data:(image\/[a-z]+);base64,(.+)$/);
+      if (!m) return new Response(null, { status: 302, headers: { Location: '/tools/fabula-ultima-fichas/assets/img/sprite-defecto.png' } });
+      return new Response(Buffer.from(m[2], 'base64'), { headers: { 'Content-Type': m[1], 'Cache-Control': 'public, max-age=31536000, immutable' } });
+    }
+    case 'mover': {
+      if (!post) return error('Usa POST.', 405);
+      const q = await exigirMiembro(req);
+      return json(await mover(q, await cuerpo(req)));
+    }
+
+    // ---------------- miembros del servidor (fichas completas)
+    case 'publico': {
+      await exigirMiembro(req);
       return json({ personajes: (await P.listar()).map(P.publico) });
+    }
     case 'descargar': {
       const pj = id && await P.obtener(id);
       if (!pj) return error('Personaje no encontrado.', 404);
@@ -157,7 +206,8 @@ export const datos = envoltorio(async (req) => {
     }
     case 'lista': {
       await exigirDj(req);
-      return json({ personajes: await P.listar() });
+      const [personajes, plantillas, imagenes] = await Promise.all([P.listar(), E.plantillas(), E.versionesImagen()]);
+      return json({ personajes, plantillas, imagenes });
     }
     case 'guardar': {
       if (!post) return error('Usa POST.', 405);
@@ -178,6 +228,77 @@ export const datos = envoltorio(async (req) => {
       await exigirDj(req);
       const b = await cuerpo(req);
       await P.eliminar(b.id);
+      await E.olvidarPj(b.id);
+      return json({ ok: true });
+    }
+
+    // ---------------- DJ: enemigos y escena
+    case 'plantillas': {
+      await exigirDj(req);
+      return json({ plantillas: await E.plantillas() });
+    }
+    case 'guardar-plantilla': {
+      if (!post) return error('Usa POST.', 405);
+      await exigirDj(req);
+      const b = await cuerpo(req);
+      try {
+        const r = await E.guardarPlantilla(b.plantilla, { reemplazar: !!b.reemplazar });
+        if (b.idAnterior && b.idAnterior !== r.plantilla.id) await renombrarPlantilla(b.idAnterior, r.plantilla.id);
+        return json(r);
+      } catch (e) {
+        return json({ error: e.message, conflicto: !!e.conflicto }, e.conflicto ? 409 : 400);
+      }
+    }
+    case 'eliminar-plantilla': {
+      if (!post) return error('Usa POST.', 405);
+      await exigirDj(req);
+      await E.eliminarPlantilla((await cuerpo(req)).id);
+      return json({ ok: true });
+    }
+    case 'descargar-plantilla': {
+      await exigirDj(req);
+      const t = id && await E.plantilla(id);
+      if (!t) return error('PNJ no encontrado.', 404);
+      const limpio = exportarPnj(t); delete limpio.modificado;
+      return new Response(JSON.stringify(limpio, null, 2), { headers: { 'Content-Type': 'application/json; charset=utf-8', 'Content-Disposition': `attachment; filename="${t.id}.json"`, 'Cache-Control': 'no-store' } });
+    }
+    case 'sacar': {
+      if (!post) return error('Usa POST.', 405);
+      await exigirDj(req);
+      const b = await cuerpo(req);
+      const t = await E.plantilla(b.plantilla);
+      if (!t) return error('PNJ no encontrado.', 404);
+      try { return json({ nuevos: await E.sacar(t, b) }); } catch (e) { return error(e.message); }
+    }
+    case 'retirar': {
+      if (!post) return error('Usa POST.', 405);
+      await exigirDj(req);
+      const b = await cuerpo(req);
+      if (b.id) await E.retirar(b.id); else await E.vaciar(b.lado || null);
+      return json({ ok: true });
+    }
+    case 'ajustar': {
+      if (!post) return error('Usa POST.', 405);
+      await exigirDj(req);
+      try { return json(await ajustar(await cuerpo(req))); } catch (e) { return error(e.message); }
+    }
+    case 'revelar': {
+      if (!post) return error('Usa POST.', 405);
+      await exigirDj(req);
+      const b = await cuerpo(req);
+      try { await E.revelar(b.plantilla, b.nivel); } catch (e) { return error(e.message, 404); }
+      return json({ ok: true });
+    }
+    case 'subir-imagen': {
+      if (!post) return error('Usa POST.', 405);
+      await exigirDj(req);
+      const b = await cuerpo(req);
+      try { return json({ version: await E.guardarImagen(b.clave, b.imagen) }); } catch (e) { return error(e.message); }
+    }
+    case 'quitar-imagen': {
+      if (!post) return error('Usa POST.', 405);
+      await exigirDj(req);
+      await E.borrarImagen((await cuerpo(req)).clave);
       return json({ ok: true });
     }
     case 'asignar': {
@@ -203,6 +324,125 @@ export const datos = envoltorio(async (req) => {
       return error('Acción desconocida.', 404);
   }
 });
+
+// ================================================================== escena
+const urlImagen = (clave, vers) => (vers[clave] ? `/api/datos/?accion=imagen&clave=${encodeURIComponent(clave)}&v=${vers[clave]}` : null);
+
+/** Datos de la vista de combate según el papel del visitante. */
+async function vistaCampo({ s, rol }) {
+  const [pjs, c, form, vers, lista, cb] = await Promise.all([P.listar(), E.campo(), E.formacion(), E.versionesImagen(), E.plantillas(), P.combate()]);
+  const tpl = Object.fromEntries(lista.map((t) => [t.id, t]));
+  const ve = rol !== 'espectador';
+  const out = {
+    rol,
+    usuario: s ? { id: s.id, nombre: s.nombre, avatar: s.avatar } : null,
+    combate: cb ? { ronda: cb.ronda } : null,
+    pjs: pjs.map((pj) => {
+      const f = form[pj.id] || {};
+      const propio = !!(s && pj.discord && pj.discord.id === s.id);
+      return {
+        clave: `pj:${pj.id}`, id: pj.id, nombre: (pj.identidad && pj.identidad.nombre) || 'Sin nombre',
+        fila: E.FILAS.includes(f.fila) || f.fila === 'fuera' ? f.fila : 'vanguardia', orden: Number(f.orden) || 0,
+        imagen: urlImagen(`pj:${pj.id}`, vers), propio,
+        ...(ve ? { datos: rol === 'dj' ? pj : P.publico(pj) } : {})
+      };
+    }),
+    pnj: c.enemigos.filter((i) => tpl[i.plantilla]).map((i) => {
+      const t = tpl[i.plantilla];
+      const base = { clave: `pnj:${i.id}`, id: i.id, plantilla: t.id, nombre: i.nombre, lado: i.lado, fila: i.fila, orden: Number(i.orden) || 0, imagen: urlImagen(`pnj:${t.id}`, vers) };
+      if (!ve) return base;
+      if (rol === 'dj') return { ...base, pv: i.pv, pm: i.pm, estados: i.estados || [], dano: Math.max(0, t.pv - i.pv), ficha: t };
+      const aliado = i.lado === 'aliado';
+      const info = aliado ? vistaRevelada(t, 16) : vistaRevelada(t);
+      return { ...base, estados: i.estados || [], dano: Math.max(0, t.pv - i.pv), info: { nombre: t.nombre, descripcion: t.descripcion, ...info }, ...(aliado || info.revelado >= 10 ? { pv: i.pv, pm: i.pm } : {}) };
+    })
+  };
+  if (rol === 'dj') out.plantillas = lista.map((t) => ({ id: t.id, nombre: t.nombre, nivel: t.nivel, especie: t.especie, revelado: t.revelado || 0 }));
+  return out;
+}
+
+/**
+ * Reordena una columna. Cuerpo: { movida: clave, lado, fila, claves: [orden final de la columna] }
+ * El jugador solo puede mover sus PJ (y siempre en el lado aliado).
+ */
+async function mover({ s, rol }, b) {
+  const lado = E.LADOS.includes(b.lado) ? b.lado : 'aliado';
+  const fila = E.FILAS.includes(b.fila) || (b.fila === 'fuera' && rol === 'dj') ? b.fila : null;
+  if (!fila) throw error('Fila no válida.');
+  const claves = Array.isArray(b.claves) ? b.claves.map(String).slice(0, 60) : [];
+  const [tipo, id] = String(b.movida || '').split(':');
+  if (rol !== 'dj') {
+    if (tipo !== 'pj' || lado !== 'aliado' || fila === 'fuera') throw error('Solo puedes mover tus personajes.', 403);
+    const pj = await P.obtener(id);
+    if (!pj || !pj.discord || pj.discord.id !== s.id) throw error('Solo puedes mover tus personajes.', 403);
+  }
+  if (tipo === 'pj' && lado !== 'aliado') throw error('Los personajes jugadores van en el lado aliado.');
+  const c = await E.campo();
+  let cambiaCampo = false;
+  for (const [k, clave] of (claves.includes(b.movida) ? claves : [...claves, b.movida]).entries()) {
+    const [t2, id2] = clave.split(':');
+    if (t2 === 'pj') {
+      if (clave === b.movida) await E.colocarPj(id2, { fila, orden: k });
+      else await E.colocarPj(id2, { orden: k });
+    } else if (t2 === 'pnj') {
+      const i = c.enemigos.find((x) => x.id === id2);
+      if (!i) continue;
+      if (clave === b.movida) { if (rol !== 'dj') continue; i.fila = fila === 'fuera' ? i.fila : fila; i.lado = lado; }
+      i.orden = k; cambiaCampo = true;
+    }
+  }
+  if (cambiaCampo) await E.guardarCampo(c); else await tocar();
+  return { ok: true };
+}
+
+/** Ajustes rápidos del DJ desde la vista: PV, PM, estados o daño con afinidades. */
+async function ajustar(b) {
+  const [tipo, id] = String(b.clave || '').split(':');
+  const lineas = [];
+  if (tipo === 'pnj') {
+    const c = await E.campo();
+    const i = c.enemigos.find((x) => x.id === id);
+    if (!i) throw new Error('Ese PNJ ya no está en el campo.');
+    const t = await E.plantilla(i.plantilla);
+    if (!t) throw new Error('La ficha de ese PNJ ya no existe.');
+    if (b.dano) {
+      const r = E.danar(i, t, b.dano.cantidad, b.dano.tipo, { ignoraResistencia: !!b.dano.ignora });
+      lineas.push(`${i.nombre}: ${r.res.cura ? `absorbe y recupera ${r.res.final}` : `pierde ${r.res.final}`} PV (${r.antes} → ${r.despues}).`);
+    }
+    if (b.pv !== undefined && b.pv !== '') i.pv = aplicarValor(i.pv, b.pv, t.pv);
+    if (b.pm !== undefined && b.pm !== '') i.pm = aplicarValor(i.pm, b.pm, t.pm);
+    if (Array.isArray(b.estados)) i.estados = b.estados.filter((x) => typeof x === 'string').slice(0, 6);
+    if (b.nombre) i.nombre = String(b.nombre).trim().slice(0, 60) || i.nombre;
+    await E.guardarCampo(c);
+    return { ok: true, texto: lineas.join(' ') };
+  }
+  if (tipo === 'pj') {
+    const pj = await P.obtener(id);
+    if (!pj) throw new Error('Personaje no encontrado.');
+    const c = R.calcular(pj, await baseDatos());
+    pj.estado = pj.estado || {};
+    const act = (k, max) => (pj.estado[k] === null || pj.estado[k] === undefined ? max : pj.estado[k]);
+    if (b.pv !== undefined && b.pv !== '') pj.estado.pv = aplicarValor(act('pv', c.pv_max), b.pv, c.pv_max);
+    if (b.pm !== undefined && b.pm !== '') pj.estado.pm = aplicarValor(act('pm', c.pm_max), b.pm, c.pm_max);
+    if (b.pf !== undefined && b.pf !== '') pj.pf = aplicarValor(pj.pf || 0, b.pf, null);
+    if (Array.isArray(b.estados)) pj.estado.estados = b.estados.filter((x) => typeof x === 'string').slice(0, 6);
+    if (b.fila && (E.FILAS.includes(b.fila) || b.fila === 'fuera')) await E.colocarPj(id, { fila: b.fila });
+    await P.escribir(pj);
+    return { ok: true };
+  }
+  throw new Error('Clave no válida.');
+}
+
+/** Si el DJ cambia el identificador de una ficha, mueve sus instancias e imagen. */
+async function renombrarPlantilla(viejo, nuevo) {
+  const c = await E.campo();
+  let n = 0;
+  for (const i of c.enemigos) if (i.plantilla === viejo) { i.plantilla = nuevo; n++; }
+  if (n) await E.guardarCampo(c);
+  const img = await E.imagen(`pnj:${viejo}`);
+  if (img) await E.guardarImagen(`pnj:${nuevo}`, img);
+  await E.eliminarPlantilla(viejo);
+}
 
 /** Miembros del servidor para el selector de jugadores. */
 async function miembros() {

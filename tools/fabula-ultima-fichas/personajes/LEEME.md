@@ -1,6 +1,6 @@
 # Carpeta de personajes de ejemplo
 
-Con la partida en la nube configurada (ver `../docs/bot-discord.md`), el visor, el panel y el bot usan los personajes guardados en la base de datos y **no leen esta carpeta**. Solo se usa como alternativa cuando no hay API (por ejemplo, sirviendo la web en local con un servidor estático).
+Con la partida en la nube configurada (ver `../docs/bot-discord.md`), la vista de combate, las fichas, el panel y el bot usan los personajes guardados en la base de datos y **no leen esta carpeta**. Solo la página de fichas (`ficha/`) la usa como alternativa cuando no hay API (por ejemplo, sirviendo la web en local con un servidor estático).
 
 ## Formato de los archivos
 
@@ -10,7 +10,7 @@ Cada `.json` es un personaje con el mismo formato que devuelve **Exportar** en e
 - Sin `rev` ni `discord`: la versión y el jugador asignado solo existen en la base de datos.
 - Sin `calculado`: PV, PM, Defensa, etc. se recalculan siempre a partir de los libros.
 
-Los archivos que descarga el generador con **Descargar JSON** añaden un bloque `calculado` de solo lectura. Es opcional: el panel, el bot y el visor lo ignoran, así que ambos formatos se importan igual.
+Los archivos que descarga el generador con **Descargar JSON** añaden un bloque `calculado` de solo lectura. Es opcional: el panel, el bot y las webs lo ignoran, así que ambos formatos se importan igual.
 
 ## Pasar estos personajes a la partida
 
@@ -18,7 +18,7 @@ Panel del DJ → **Importar JSON** y selecciona los archivos. También puedes ha
 
 ## Usarlos sin nube (local)
 
-El visor carga las fichas listadas en `index.json`:
+La página de fichas carga las listadas en `index.json`:
 
 1. Descarga el personaje desde el panel (**Exportar**) o desde el generador (**Descargar JSON**).
 2. Copia el archivo a esta carpeta.

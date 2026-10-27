@@ -1,12 +1,13 @@
 # Fabula Ultima · Fichas
 
-Generador y visor de personajes de *Fabula Ultima*. Web estática: HTML, CSS y JavaScript sin compilación, lista para Vercel.
+Generador de personajes, vista de combate y bot de Discord para *Fabula Ultima*. Web estática: HTML, CSS y JavaScript sin compilación, lista para Vercel.
 
 | Web | Ruta | Para qué |
 | --- | --- | --- |
 | Generador | `/generador/` | Crear personajes paso a paso, subirlos de nivel, cargar y descargar JSON. |
-| Visor | `/visor/` | Ver varias fichas, navegar entre ellas con pestañas y filtros, y ver el grupo con sus relaciones. |
-| Panel del DJ | `/panel/` | Personajes de la partida en la nube: importar, exportar, asignar a jugadores, editar y eliminar. Configuración del bot. |
+| Combate | `/visor/` | Vista de combate: el grupo y los enemigos en vanguardia y retaguardia, con una ficha rápida al pulsar cada uno. |
+| Fichas | `/ficha/` | Fichas completas con pestañas y filtros, y el grupo con sus relaciones. La abre el botón «Detalles» de la vista de combate. |
+| Panel del DJ | `/panel/` | Personajes y fichas de enemigo de la partida: importar, exportar, asignar a jugadores, editar, imágenes. Configuración del bot. |
 | Comandos | `/comandos/` | Consulta de todos los comandos del bot de Discord, para jugadores y DJ. |
 
 El bot de Discord y la partida en la nube funcionan con funciones de Vercel (`/api/`) y Upstash Redis. Configuración paso a paso: **`docs/bot-discord.md`**.
@@ -29,11 +30,28 @@ En la pestaña **Contenido** del generador se activan los atlas y, dentro de cad
 - Tienda filtrable, arma personalizada, objeto raro a medida (base + cualidad) y objetos libres.
 - Guarda automáticamente en el navegador. **Descargar JSON** / **Cargar** para mover el personaje.
 
-## Visor
+## Combate (`/visor/`)
 
-- Carga los personajes de la partida guardados en la nube. Si la API no está disponible (en local sin `vercel dev`), usa las fichas de `personajes/` (lista en `personajes/index.json`). También puedes subir otras con **Cargar fichas** (se recuerdan en el navegador).
+- Cuatro columnas: retaguardia y vanguardia enemigas | vanguardia y retaguardia aliadas. Sin enemigos en el campo se ve solo el grupo en formación.
+- Cada ficha tiene una imagen de 124 × 124 (por defecto `assets/img/sprite-defecto.png`; el DJ la cambia con el botón **Imagen**).
+- Al pulsar un personaje: PV, PM, PI, PF, ataque básico, defensas, iniciativa, atributos (con los estados aplicados), habilidades y conjuros desplegables, y **Detalles** (ficha completa en otra pestaña).
+- Lo que ve cada uno lo decide el servidor según la cuenta de Discord:
+  - **Espectador** (sin entrar, o sin estar en el servidor): posiciones, nombres e imágenes.
+  - **Jugador** (miembro del servidor): las fichas de los PJ; de los enemigos, el nombre, la imagen, los estados, el daño recibido y lo revelado con el Estudio. Mueve sus propios PJ.
+  - **DJ**: todo. Saca PNJ de sus fichas, aplica daño con afinidades, PV, PM y estados, revela información y mueve cualquier ficha.
+- Se actualiza sola cada pocos segundos mientras la pestaña está visible.
+
+## Fichas (`/ficha/`)
+
+- Carga los personajes de la partida (exige entrar con Discord). Si la API no está disponible (en local sin `vercel dev`), usa las fichas de `personajes/`. También puedes abrir otras con **Abrir JSON** (se recuerdan en el navegador).
 - Por personaje: Resumen, Habilidades, Magia, Equipo, Vínculos y Notas, con buscador y filtros por tipo.
 - **Grupo**: PV, PM, PI, defensas, estados, orden de iniciativa y matriz de relaciones entre los personajes.
+
+## Enemigos y PNJ
+
+- Las fichas de PNJ se guardan en la partida (panel del DJ → **Fichas de enemigo y PNJ**): importar JSON, crear, editar el JSON a mano, imagen, exportar y eliminar. Formato en `docs/esquema-datos.md`.
+- `enemigos/` trae seis criaturas del manual básico como ejemplo; el panel las importa con **Cargar ejemplos**.
+- Cada PNJ colocado en el campo es una copia con sus propios PV, PM y estados («Aullador gris A», «B»…). Lo revelado con el Estudio vale para todas las copias de la misma ficha y se conserva para la próxima vez.
 
 ## Probar en local
 
@@ -57,7 +75,7 @@ Abre `http://localhost:3000/` (o el puerto que indique).
 
 - **Panel del DJ** (`/panel/`): entra con Discord; solo quien tenga el rol `DJ` en el servidor puede gestionar personajes.
 - **Generador**: si has entrado como DJ, aparece **Guardar en la partida**. Desde el panel, **Editar** abre un personaje de la partida en el generador.
-- **Bot**: tiradas, ataques, conjuros, PV/PM/PI/PF, estados, relojes, iniciativa, combate y gestión. Lista completa en `/comandos/`.
+- **Bot**: tiradas, ataques, conjuros, PV/PM/PI/PF, estados, relojes, iniciativa, combate, enemigos (`/enemigo`, `/estudiar`, `/revelar`) y gestión. Lista completa en `/comandos/`.
 - Código del servidor en `servidor/` (sin dependencias); funciones de entrada en `/api/` de la raíz del repositorio.
 - Guía de configuración: `docs/bot-discord.md`.
 
@@ -65,7 +83,7 @@ Para probar las funciones en local hace falta la CLI de Vercel (`vercel dev`) co
 
 ## Personajes de ejemplo
 
-`personajes/` contiene tres fichas de ejemplo que el visor solo usa si no hay API (ver `personajes/LEEME.md`). Puedes importarlas en el panel para probar el bot.
+`personajes/` contiene tres fichas de ejemplo que la página de fichas solo usa si no hay API (ver `personajes/LEEME.md`). Puedes importarlas en el panel para probar el bot. `enemigos/` contiene seis fichas de enemigo de ejemplo (ver `enemigos/LEEME.md`).
 
 ## Añadir más atlas
 
@@ -84,10 +102,15 @@ node tools/validar.mjs
 
 ```
 index.html            Portada
-generador/  visor/    Las dos webs
-assets/               CSS y módulos JS compartidos
+generador/            Generador de personajes
+visor/                Vista de combate
+ficha/                Fichas completas
+panel/  comandos/     Panel del DJ y consulta de comandos
+assets/               CSS, módulos JS compartidos e imagen por defecto
 data/                 Base de datos por libro
-personajes/           Fichas por defecto del visor
+servidor/             Bot de Discord y API (funciones de Vercel)
+personajes/           Personajes de ejemplo
+enemigos/             Fichas de enemigo de ejemplo
 tools/validar.mjs     Validador de datos y personajes
 docs/                 Esquema de datos
 ```

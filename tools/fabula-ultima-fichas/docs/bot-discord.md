@@ -67,10 +67,13 @@ Después, en **Deployments**, abre el último despliegue y pulsa **Redeploy** pa
 ## Uso diario
 
 - **Personajes nuevos**: los jugadores crean la ficha en el generador (no necesitan cuenta), pulsan **Descargar JSON** y te la mandan. Tú la subes con **Importar JSON** en el panel, o con `/importar archivo:… jugador:@…` en Discord.
-- **Asignar**: en el panel, elige el jugador en el desplegable de cada personaje; o en Discord `/asignar personaje:… jugador:@…`. Cada jugador tiene un único personaje asignado.
+- **Asignar**: en el panel, elige el jugador en el desplegable de cada personaje; o en Discord `/asignar personaje:… jugador:@…`. Un jugador puede llevar varios personajes; si tiene más de uno, sus comandos le piden elegir con la opción `personaje`.
 - **Editar**: en el panel, **Editar** abre el personaje en el generador; al terminar pulsa **Guardar en la partida**. Si mientras tanto cambió desde Discord (PV, PM…), te pregunta antes de sobrescribir.
 - **Subir de nivel**: `/px` reparte experiencia; la subida de nivel se hace en el generador (Editar → Progreso → Guardar en la partida).
-- **Visor**: muestra siempre los personajes de la partida, en solo lectura y para cualquiera con el enlace. `/ficha` enlaza directamente a cada uno.
+- **Vista de combate** (`…/tools/fabula-ultima-fichas/visor/`): el grupo en formación y, cuando sacas enemigos, las cuatro columnas. Quien entra con una cuenta de Discord del servidor ve las fichas de los PJ y lo que se sabe de los enemigos; sin entrar, solo posiciones e imágenes. Tú (rol DJ) ves y ajustas todo.
+- **Fichas completas** (`…/ficha/`): el botón «Detalles» de la vista de combate. `/ficha` enlaza directamente a cada personaje. Exige entrar con Discord.
+- **Imágenes**: botón **Imagen** en el panel o en la vista de combate (solo DJ). Se ajustan solas a 124 × 124 (sin deformarlas). La de un enemigo vale para todas sus copias.
+- **Enemigos**: crea o importa sus fichas en el panel (**Fichas de enemigo y PNJ**; **Cargar ejemplos** añade seis del manual básico). Sácalos al campo desde la vista de combate o con `/enemigo sacar`. El daño con afinidades, los estados, sus ataques y conjuros van con `/enemigo …` o desde su panel en la vista. `/estudiar` (jugadores) y `/revelar` (DJ) deciden qué ven los jugadores de su perfil. `/combate terminar` retira a los enemigos (los PNJ aliados se quedan).
 - **Comandos**: la lista completa está en `…/tools/fabula-ultima-fichas/comandos/index.html` (o con `/ayuda`).
 
 ## Si algo falla
@@ -84,6 +87,8 @@ Después, en **Deployments**, abre el último despliegue y pulsa **Redeploy** pa
 | «La base de datos no está conectada» | Falta conectar Upstash al proyecto (paso 4) o redesplegar. |
 | El desplegable de jugadores sale casi vacío | Activa **Server Members Intent** (paso 1.3). Mientras tanto aparecen quienes ya han usado el bot o el panel. |
 | «No tienes personaje asignado» | Asígnalo desde el panel o con `/asignar`. |
+| No aparecen `/enemigo`, `/estudiar` o `/revelar` | Tras actualizar la web, pulsa **Actualizar comandos de Discord** en el panel. |
+| Un jugador solo ve la formación, sin fichas | Debe entrar con la cuenta de Discord que está en el servidor de la partida. |
 
 ## Añadir comandos más adelante
 

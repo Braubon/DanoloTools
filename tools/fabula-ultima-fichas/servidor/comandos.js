@@ -21,12 +21,18 @@ const ESTADOS = [
 const optPersonaje = (desc = 'Personaje (por defecto, el tuyo). Solo el DJ puede elegir otro para modificarlo.') =>
   ({ type: T.TEXTO, name: 'personaje', description: desc, autocomplete: true });
 const optBono = { type: T.ENTERO, name: 'bono', description: 'Bonificador o penalizador a la tirada', min_value: -20, max_value: 20 };
+const optEnemigo = (desc = 'PNJ en el campo', required = true) => ({ type: T.TEXTO, name: 'enemigo', description: desc, required, autocomplete: true });
+const TIPOS_DANO = [['fisico', 'Físico'], ['aire', 'Aire'], ['rayo', 'Rayo'], ['oscuro', 'Oscuro'], ['tierra', 'Tierra'], ['fuego', 'Fuego'], ['hielo', 'Hielo'], ['luz', 'Luz'], ['veneno', 'Veneno']]
+  .map(([value, name]) => ({ name, value }));
+const ATRIBUTOS = ['DES', 'PER', 'VIG', 'VOL'].map((v) => ({ name: v, value: v }));
+const optObjetivoPj = (name = 'objetivo', desc = 'Personaje atacado (compara con su defensa)') => ({ type: T.TEXTO, name, description: desc, autocomplete: true });
 
 export const CATEGORIAS = [
   { id: 'tiradas', nombre: 'Tiradas' },
   { id: 'recursos', nombre: 'Ficha y recursos' },
   { id: 'relojes', nombre: 'Relojes' },
   { id: 'combate', nombre: 'Iniciativa y combate' },
+  { id: 'enemigos', nombre: 'Enemigos y PNJ' },
   { id: 'gestion', nombre: 'Gestión de personajes' },
   { id: 'otros', nombre: 'Otros' }
 ];
@@ -54,10 +60,11 @@ export const COMANDOS = [
   {
     name: 'atacar', description: 'Ataque con un arma equipada: precisión, tirada mayor y daño',
     categoria: 'tiradas', dj: false,
-    ayuda: 'Usa la fórmula de precisión del arma equipada (con todos sus bonificadores) y calcula el daño: tirada mayor + daño del arma, con su tipo. Si no indicas arma, usa la primera equipada; sin armas, el golpe desarmado.',
-    ejemplos: ['/atacar', '/atacar arma:Katana bono:2'],
+    ayuda: 'Usa la fórmula de precisión del arma equipada (con todos sus bonificadores) y calcula el daño: tirada mayor + daño del arma, con su tipo. Si no indicas arma, usa la primera equipada; sin armas, el golpe desarmado. Con «objetivo» atacas a un PNJ del campo: el bot dice si impacta (sin mostrar su Defensa) y le aplica el daño con sus afinidades. Si repites la tirada con un Punto Fábula, el daño anterior se deshace.',
+    ejemplos: ['/atacar', '/atacar arma:Katana bono:2', '/atacar objetivo:Lobo A'],
     options: [
       { type: T.TEXTO, name: 'arma', description: 'Arma equipada', autocomplete: true },
+      { type: T.TEXTO, name: 'objetivo', description: 'PNJ del campo al que atacas (aplica el daño)', autocomplete: true },
       optBono,
       optPersonaje('Personaje que ataca (por defecto, el tuyo)')
     ]
@@ -65,10 +72,11 @@ export const COMANDOS = [
   {
     name: 'conjuro', description: 'Lanza un conjuro conocido: prueba de magia, daño y coste en PM',
     categoria: 'tiradas', dj: false,
-    ayuda: 'Muestra el coste en PM y el efecto. Si el conjuro es ofensivo, hace la prueba de magia (PER + VOL por defecto) y calcula el daño cuando el conjuro tiene fórmula [TM + X]. El botón «Gastar PM» descuenta el coste de tu ficha. Para conjuros con coste por objetivo, indica cuántos objetivos.',
-    ejemplos: ['/conjuro conjuro:Ignis objetivos:3', '/conjuro conjuro:Sanación objetivos:2', '/conjuro conjuro:Fulgur atributos:VOL+VOL'],
+    ayuda: 'Muestra el coste en PM y el efecto. Si el conjuro es ofensivo, hace la prueba de magia (PER + VOL por defecto) y calcula el daño cuando el conjuro tiene fórmula [TM + X]. El botón «Gastar PM» descuenta el coste de tu ficha. Para conjuros con coste por objetivo, indica cuántos objetivos. Con «objetivo» lanzas un conjuro ofensivo contra un PNJ del campo: el bot dice si impacta y, si el conjuro tiene daño, se lo aplica con sus afinidades.',
+    ejemplos: ['/conjuro conjuro:Ignis objetivos:3', '/conjuro conjuro:Sanación objetivos:2', '/conjuro conjuro:Fulgur atributos:VOL+VOL', '/conjuro conjuro:Ignis objetivo:Diablillo'],
     options: [
       { type: T.TEXTO, name: 'conjuro', description: 'Conjuro conocido por el personaje', required: true, autocomplete: true },
+      { type: T.TEXTO, name: 'objetivo', description: 'PNJ del campo (conjuros ofensivos; aplica el daño)', autocomplete: true },
       { type: T.ENTERO, name: 'objetivos', description: 'Número de objetivos (para costes «× obj.»)', min_value: 1, max_value: 10 },
       optBono,
       { type: T.TEXTO, name: 'atributos', description: 'Atributos de la prueba de magia (por defecto PER + VOL)',
@@ -88,7 +96,7 @@ export const COMANDOS = [
   {
     name: 'ficha', description: 'Resumen de la ficha de un personaje y enlace a la ficha completa',
     categoria: 'recursos', dj: false,
-    ayuda: 'Muestra nivel, clases, PV, PM, PI, defensas, atributos (con estados aplicados), estados alterados, Puntos Fábula y arma equipada, con enlace al visor.',
+    ayuda: 'Muestra nivel, clases, PV, PM, PI, defensas, atributos (con estados aplicados), estados alterados, Puntos Fábula y arma equipada, con enlace a su ficha completa.',
     ejemplos: ['/ficha', '/ficha personaje:Nim'],
     options: [optPersonaje('Personaje a consultar (por defecto, el tuyo)')]
   },
@@ -199,18 +207,118 @@ export const COMANDOS = [
         options: [{ type: T.TEXTO, name: 'empieza', description: 'Bando que empieza cada ronda', required: true,
           choices: [{ name: 'Jugadores', value: 'pj' }, { name: 'Enemigos', value: 'enemigos' }] }] },
       { type: T.SUB, name: 'turno', description: 'Marca un turno como hecho', dj: false,
-        ayuda: 'Cada jugador marca su turno al terminarlo. El DJ puede marcar el de cualquier personaje o el de un enemigo escribiendo su nombre.',
-        ejemplos: ['/combate turno', '/combate turno enemigo:Dragón de llamas'],
+        ayuda: 'Cada jugador marca su turno al terminarlo. El DJ puede marcar el de cualquier personaje o el de un enemigo.',
+        ejemplos: ['/combate turno', '/combate turno enemigo:Lobo A'],
         options: [
           optPersonaje('Personaje que ha actuado (por defecto, el tuyo)'),
-          { type: T.TEXTO, name: 'enemigo', description: 'Nombre del enemigo que ha actuado (solo DJ)', max_length: 60 }
+          { type: T.TEXTO, name: 'enemigo', description: 'Enemigo que ha actuado (solo DJ)', max_length: 60, autocomplete: true }
         ] },
       { type: T.SUB, name: 'ronda', description: 'Pasa a la siguiente ronda (solo DJ)', dj: true,
         ayuda: 'Reinicia los turnos y suma una ronda.', ejemplos: ['/combate ronda'], options: [] },
       { type: T.SUB, name: 'ver', description: 'Muestra la ronda y quién falta por actuar', dj: false,
         ayuda: 'Estado del conflicto.', ejemplos: ['/combate ver'], options: [] },
-      { type: T.SUB, name: 'terminar', description: 'Cierra el conflicto (solo DJ)', dj: true,
-        ayuda: 'Termina el conflicto.', ejemplos: ['/combate terminar'], options: [] }
+      { type: T.SUB, name: 'terminar', description: 'Cierra el conflicto y retira a los enemigos (solo DJ)', dj: true,
+        ayuda: 'Termina el conflicto y retira del campo a los enemigos. Los PNJ aliados se quedan con el grupo.', ejemplos: ['/combate terminar'], options: [] }
+    ]
+  },
+
+  // ------------------------------------------------------------------ enemigos
+  {
+    name: 'enemigo', description: 'PNJ en combate: sacar, daño, ataques, conjuros… (solo DJ)',
+    categoria: 'enemigos',
+    options: [
+      { type: T.SUB, name: 'sacar', description: 'Coloca PNJ de una ficha en el campo', dj: true,
+        ayuda: 'Pone en el campo una o varias copias de una ficha de PNJ, cada una con sus propios PV, PM y estados. Con varias copias se llaman «Lobo A», «Lobo B»… Con lado «aliado» se colocan junto al grupo.',
+        ejemplos: ['/enemigo sacar plantilla:Aullador gris cantidad:3', '/enemigo sacar plantilla:Mercenario fila:retaguardia', '/enemigo sacar plantilla:Gárgola lado:aliado nombre:Piedrecita'],
+        options: [
+          { type: T.TEXTO, name: 'plantilla', description: 'Ficha de PNJ', required: true, autocomplete: true },
+          { type: T.ENTERO, name: 'cantidad', description: 'Cuántos (por defecto 1)', min_value: 1, max_value: 12 },
+          { type: T.TEXTO, name: 'fila', description: 'Fila (por defecto vanguardia)', choices: [{ name: 'Vanguardia', value: 'vanguardia' }, { name: 'Retaguardia', value: 'retaguardia' }] },
+          { type: T.TEXTO, name: 'lado', description: 'Bando (por defecto enemigo)', choices: [{ name: 'Enemigo', value: 'enemigo' }, { name: 'Aliado', value: 'aliado' }] },
+          { type: T.TEXTO, name: 'nombre', description: 'Nombre propio (por defecto el de la ficha)', max_length: 60 }
+        ] },
+      { type: T.SUB, name: 'retirar', description: 'Quita un PNJ del campo (o todos los enemigos)', dj: true,
+        ayuda: 'Retira un PNJ del campo (huye, muere…). Con «todos» retira a todos los enemigos.',
+        ejemplos: ['/enemigo retirar enemigo:Lobo B', '/enemigo retirar todos:True'],
+        options: [optEnemigo('PNJ a retirar', false), { type: T.BOOL, name: 'todos', description: 'Retirar a todos los enemigos' }] },
+      { type: T.SUB, name: 'daño', description: 'Daño a un PNJ aplicando sus afinidades', dj: true,
+        ayuda: 'Resta PV aplicando sus afinidades: vulnerable ×2, resistente ½, inmune 0, absorbe = cura. Los jugadores ven el daño, pero no su vida máxima. Si cae a 0 se anuncia; si entra en Crisis, solo lo ves tú con el botón «Estado (DJ)».',
+        ejemplos: ['/enemigo daño enemigo:Lobo A cantidad:12 tipo:Fuego', '/enemigo daño enemigo:Diablillo cantidad:30 tipo:Hielo ignora_resistencia:True'],
+        options: [
+          optEnemigo(),
+          { type: T.ENTERO, name: 'cantidad', description: 'Daño antes de afinidades', required: true, min_value: 0, max_value: 999 },
+          { type: T.TEXTO, name: 'tipo', description: 'Tipo de daño', required: true, choices: TIPOS_DANO },
+          { type: T.BOOL, name: 'ignora_resistencia', description: 'El daño ignora Resistencias' }
+        ] },
+      { type: T.SUB, name: 'pv', description: 'Consulta o ajusta los PV de un PNJ (solo lo ves tú)', dj: true,
+        ayuda: 'Igual que /pv, sin afinidades: +N cura, -N resta, N fija, max restablece. La respuesta solo la ves tú.',
+        ejemplos: ['/enemigo pv enemigo:Lobo A', '/enemigo pv enemigo:Lobo A valor:+10'],
+        options: [optEnemigo(), { type: T.TEXTO, name: 'valor', description: '+N, -N, N o max', max_length: 10 }] },
+      { type: T.SUB, name: 'pm', description: 'Consulta o ajusta los PM de un PNJ (solo lo ves tú)', dj: true,
+        ayuda: 'Como /enemigo pv, para los Puntos de Mente.',
+        ejemplos: ['/enemigo pm enemigo:Diablillo valor:-10'],
+        options: [optEnemigo(), { type: T.TEXTO, name: 'valor', description: '+N, -N, N o max', max_length: 10 }] },
+      { type: T.SUB, name: 'estado', description: 'Añade o quita estados alterados a un PNJ', dj: true,
+        ayuda: 'Los estados reducen sus dados en las tiradas del bot, igual que en los PJ. Los jugadores los ven en la vista de combate.',
+        ejemplos: ['/enemigo estado enemigo:Lobo A accion:añadir estado:Lento'],
+        options: [
+          optEnemigo(),
+          { type: T.TEXTO, name: 'accion', description: 'Qué hacer', required: true,
+            choices: [{ name: 'añadir', value: 'anadir' }, { name: 'quitar', value: 'quitar' }, { name: 'limpiar todos', value: 'limpiar' }] },
+          { type: T.TEXTO, name: 'estado', description: 'Estado alterado', choices: ESTADOS }
+        ] },
+      { type: T.SUB, name: 'atacar', description: 'Ataque básico de un PNJ', dj: true,
+        ayuda: 'Tira la precisión del ataque con los dados del PNJ (ya reducidos por sus estados) y su bonificador. Con «objetivo» la compara con la Defensa (o la Defensa Mágica) del personaje y ofrece un botón para aplicarle el daño.',
+        ejemplos: ['/enemigo atacar enemigo:Lobo A objetivo:Nim', '/enemigo atacar enemigo:Mercenario ataque:Pistola objetivo:Lio Arden'],
+        options: [
+          optEnemigo(),
+          { type: T.TEXTO, name: 'ataque', description: 'Ataque (por defecto, el primero)', autocomplete: true },
+          optObjetivoPj(),
+          optBono
+        ] },
+      { type: T.SUB, name: 'conjuro', description: 'Conjuro de un PNJ', dj: true,
+        ayuda: 'Descuenta los PM del PNJ y muestra el efecto. Si es ofensivo, hace la prueba de magia contra la Defensa Mágica de cada objetivo (hasta tres) y ofrece botones para aplicar el daño.',
+        ejemplos: ['/enemigo conjuro enemigo:Gárgola conjuro:Andanada de rocas objetivo:Aria Valen'],
+        options: [
+          optEnemigo(),
+          { type: T.TEXTO, name: 'conjuro', description: 'Conjuro del PNJ', required: true, autocomplete: true },
+          optObjetivoPj('objetivo', 'Primer objetivo'),
+          optObjetivoPj('objetivo2', 'Segundo objetivo'),
+          optObjetivoPj('objetivo3', 'Tercer objetivo'),
+          optBono
+        ] },
+      { type: T.SUB, name: 'tirada', description: 'Tirada libre de dos atributos de un PNJ', dj: true,
+        ayuda: 'Como /tirada, con los dados del PNJ (reducidos por sus estados).',
+        ejemplos: ['/enemigo tirada enemigo:Lobo A atributo1:VIG atributo2:VIG dificultad:10'],
+        options: [
+          optEnemigo(),
+          { type: T.TEXTO, name: 'atributo1', description: 'Primer atributo', required: true, choices: ATRIBUTOS },
+          { type: T.TEXTO, name: 'atributo2', description: 'Segundo atributo', required: true, choices: ATRIBUTOS },
+          optBono,
+          { type: T.ENTERO, name: 'dificultad', description: 'Dificultad a superar', min_value: 1, max_value: 40 }
+        ] },
+      { type: T.SUB, name: 'ver', description: 'Ficha completa de un PNJ (solo la ves tú)', dj: true,
+        ayuda: 'Muestra su ficha completa y su estado actual en un mensaje que solo ves tú.',
+        ejemplos: ['/enemigo ver enemigo:Lobo A'],
+        options: [optEnemigo()] }
+    ]
+  },
+  {
+    name: 'estudiar', description: 'Acción de Estudio: PER + PER para descubrir el perfil de un PNJ',
+    categoria: 'enemigos', dj: false,
+    ayuda: 'Tira PER + PER del personaje y revela a todo el grupo lo que corresponde al resultado: 10+ rango, especie, PV y PM; 13+ además rasgos, atributos, defensas y afinidades; 16+ además ataques, conjuros, otras acciones y reglas. Lo revelado aparece en el panel del PNJ en la vista de combate y vale para todos los PNJ de esa misma ficha. Recuerda: no se puede repetir el Estudio contra el mismo tipo de criatura en la misma sesión.',
+    ejemplos: ['/estudiar enemigo:Lobo A', '/estudiar enemigo:Diablillo personaje:Lio Arden bono:2'],
+    options: [optEnemigo('PNJ a estudiar'), optPersonaje('Personaje que estudia (por defecto, el tuyo)'), optBono]
+  },
+  {
+    name: 'revelar', description: 'Revela a los jugadores el perfil de un PNJ (solo DJ)',
+    categoria: 'enemigos', dj: true,
+    ayuda: 'Fija a mano el nivel de información revelado de una ficha de PNJ (como si se hubiera hecho un Estudio). Con «nada» se vuelve a ocultar.',
+    ejemplos: ['/revelar enemigo:Lobo A nivel:13+'],
+    options: [
+      optEnemigo('PNJ (se revela para todos los de su ficha)'),
+      { type: T.ENTERO, name: 'nivel', description: 'Nivel revelado', required: true,
+        choices: [{ name: 'Nada', value: 0 }, { name: '10+ · rango, especie, PV y PM', value: 10 }, { name: '13+ · rasgos, atributos, defensas, afinidades', value: 13 }, { name: '16+ · todo', value: 16 }] }
     ]
   },
 
@@ -235,7 +343,7 @@ export const COMANDOS = [
   {
     name: 'asignar', description: 'Asigna un personaje a un jugador (solo DJ)',
     categoria: 'gestion', dj: true,
-    ayuda: 'Liga el personaje a un jugador de Discord: a partir de ahí, sus comandos usan ese personaje. Cada jugador tiene un único personaje asignado; asignarle otro libera el anterior. Sin jugador, el personaje queda libre.',
+    ayuda: 'Liga el personaje a un jugador de Discord: a partir de ahí, sus comandos usan ese personaje y puede moverlo en la vista de combate. Un jugador puede llevar varios personajes; en ese caso sus comandos le piden elegir con la opción «personaje». Sin jugador, el personaje queda libre.',
     ejemplos: ['/asignar personaje:Nim jugador:@Sergio', '/asignar personaje:Nim'],
     options: [
       { type: T.TEXTO, name: 'personaje', description: 'Personaje', required: true, autocomplete: true },

@@ -5,7 +5,7 @@
 //   fu:combate     JSON  estado del conflicto
 //   fu:usuarios    hash  id de Discord → { id, nombre, visto }
 // ---------------------------------------------------------------------------
-import { hgetallJSON, hgetJSON, hsetJSON, hdel, getJSON, setJSON, del, pipe } from './kv.js';
+import { hgetallJSON, hgetJSON, hsetJSON, hdel, getJSON, setJSON, del, tocar } from './kv.js';
 import { normalizarPersonaje, FORMATO } from '../assets/js/rules.js';
 
 const H_PJ = 'fu:personajes';
@@ -57,31 +57,25 @@ export async function escribir(pj, previo) {
   pj.rev = Number((base && base.rev) || 0) + 1;
   pj.modificado = new Date().toISOString();
   await hsetJSON(H_PJ, pj.id, pj);
+  await tocar();
   return pj;
 }
 
-export const eliminar = (id) => hdel(H_PJ, id);
+export async function eliminar(id) { await hdel(H_PJ, id); await tocar(); }
 
-/** Asigna un personaje a un usuario de Discord (y libera el que tuviera antes). */
+/**
+ * Asigna un personaje a un usuario de Discord (o lo deja libre con null).
+ * Un jugador puede llevar varios personajes.
+ */
 export async function asignar(id, usuario) {
-  const todos = await listar();
-  const pj = todos.find((p) => p.id === id);
+  const pj = await obtener(id);
   if (!pj) throw new Error('Personaje no encontrado.');
-  const cambios = [];
-  if (usuario) {
-    for (const p of todos) {
-      if (p.id !== id && p.discord && p.discord.id === usuario.id) {
-        p.discord = null; p.rev = Number(p.rev || 0) + 1;
-        cambios.push(['HSET', H_PJ, p.id, JSON.stringify(p)]);
-      }
-    }
-  }
   pj.discord = usuario ? { id: usuario.id, nombre: usuario.nombre } : null;
   pj.rev = Number(pj.rev || 0) + 1;
   pj.modificado = new Date().toISOString();
-  cambios.push(['HSET', H_PJ, pj.id, JSON.stringify(pj)]);
-  await pipe(cambios);
-  return { pj, liberados: cambios.length - 1 };
+  await hsetJSON(H_PJ, pj.id, pj);
+  await tocar();
+  return { pj, liberados: 0 };
 }
 
 /** Versión pública (visor): sin el id de Discord. */
@@ -100,8 +94,8 @@ export const borrarReloj = (nombre) => hdel(H_RELOJ, norm(nombre));
 
 // ------------------------------------------------------------------ combate
 export const combate = () => getJSON(K_COMBATE);
-export const guardarCombate = (c) => setJSON(K_COMBATE, c);
-export const terminarCombate = () => del(K_COMBATE);
+export async function guardarCombate(c) { await setJSON(K_COMBATE, c); await tocar(); }
+export async function terminarCombate() { await del(K_COMBATE); await tocar(); }
 
 // ------------------------------------------------------------------ usuarios conocidos
 export async function registrarUsuario(u) {

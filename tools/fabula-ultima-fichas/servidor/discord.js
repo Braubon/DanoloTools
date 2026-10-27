@@ -58,22 +58,28 @@ export async function miembroEsDj(member, guildId) {
   return (member.roles || []).some((r) => ids.includes(r));
 }
 
-/** ¿El usuario tiene el rol DJ en el servidor configurado? (para la web; caché 5 min) */
-export async function usuarioEsDj(userId) {
+/**
+ * Papel del usuario en el servidor de la partida (para la web; caché 5 min):
+ * 'dj' si tiene el rol DJ, 'jugador' si es miembro del servidor, null si no.
+ */
+export async function rolUsuario(userId) {
   const guild = env('DISCORD_GUILD_ID');
-  if (!guild || !userId) return false;
-  const clave = `fu:cache:dj:${userId}`;
+  if (!guild || !userId) return null;
+  const clave = `fu:cache:rol:${userId}`;
   const cache = await getJSON(clave).catch(() => null);
-  if (cache !== null) return cache;
-  let es = false;
+  if (cache) return cache.rol;
+  let rol = null;
   try {
     const m = await api(`/guilds/${guild}/members/${userId}`);
-    es = await miembroEsDj(m, guild);
+    rol = (await miembroEsDj(m, guild)) ? 'dj' : 'jugador';
   } catch (e) {
     if (e.status !== 404) throw e;
   }
-  await setJSON(clave, es, 300).catch(() => {});
-  return es;
+  await setJSON(clave, { rol }, 300).catch(() => {});
+  return rol;
 }
+
+/** ¿El usuario tiene el rol DJ en el servidor configurado? */
+export const usuarioEsDj = async (userId) => (await rolUsuario(userId)) === 'dj';
 
 export const nombreUsuario = (u) => (u ? (u.global_name || u.username || u.id) : '');

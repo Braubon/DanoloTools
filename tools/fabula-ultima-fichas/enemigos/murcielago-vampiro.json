@@ -1,0 +1,71 @@
+{
+  "formato": "fabula-ultima-pnj",
+  "version": 1,
+  "id": "murcielago-vampiro",
+  "nombre": "Murciélago vampiro",
+  "descripcion": "Depredador alado de tamaño desmesurado dotado de una insólita inteligencia para hostigar a sus presas en bandadas.",
+  "nivel": 5,
+  "rango": "soldado",
+  "rango_n": null,
+  "especie": "bestia",
+  "rasgos": [
+    "Agresivo",
+    "Inteligente",
+    "Ruidoso",
+    "Fotófobo"
+  ],
+  "atributos": {
+    "DES": 10,
+    "PER": 8,
+    "VIG": 6,
+    "VOL": 8
+  },
+  "pv": 50,
+  "pm": 45,
+  "iniciativa": 9,
+  "defensa": 10,
+  "defensa_magica": 8,
+  "afinidades": {
+    "aire": "VU",
+    "tierra": "RS",
+    "veneno": "RS"
+  },
+  "ataques": [
+    {
+      "nombre": "Chupasangre",
+      "alcance": "cuerpo",
+      "precision": [
+        "DES",
+        "DES"
+      ],
+      "bonus": 0,
+      "dano": 5,
+      "tipo": "fisico",
+      "contra": "def",
+      "efecto": "Recupera PV equivalentes a la mitad de los PV perdidos por el objetivo."
+    },
+    {
+      "nombre": "Chirrido",
+      "alcance": "distancia",
+      "precision": [
+        "DES",
+        "VOL"
+      ],
+      "bonus": 0,
+      "dano": 5,
+      "tipo": "aire",
+      "contra": "def",
+      "efecto": "El objetivo sufre el estado confundido."
+    }
+  ],
+  "conjuros": [],
+  "otras_acciones": [],
+  "reglas": [
+    {
+      "nombre": "Volador",
+      "efecto": "Puede volar o levitar. Las criaturas terrestres no pueden alcanzarlo con ataques cuerpo a cuerpo mientras permanezca en el aire (él sí puede atacar cuerpo a cuerpo a objetivos terrestres). Si sufre daño de un tipo al que es Vulnerable, aterriza y pierde esta habilidad hasta el final del asalto. Puede forzarse su aterrizaje gastando una oportunidad. En Crisis pierde esta habilidad."
+    }
+  ],
+  "equipo": "",
+  "notas": ""
+}

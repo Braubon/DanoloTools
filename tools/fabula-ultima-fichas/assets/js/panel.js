@@ -1,17 +1,23 @@
 // ---------------------------------------------------------------------------
 // Panel del DJ: personajes de la partida (importar, exportar, asignar,
-// editar, eliminar) y estado de la configuración del bot.
+// editar, eliminar, imagen), fichas de enemigo (PNJ) y estado de la
+// configuración del bot.
 // Requiere iniciar sesión con Discord y tener el rol DJ en el servidor.
 // ---------------------------------------------------------------------------
 import { cargarRaw, construirDb } from './db.js';
 import * as R from './rules.js';
-import { esc, initTema, leerArchivo, toast, normTxt } from './ui.js';
+import { esc, initTema, leerArchivo, toast, normTxt, reducirImagen } from './ui.js';
 import { resumenClases } from './ficha.js';
+import * as N from './pnj.js';
 
 const A = '/api/';
 let db = null;
 let sesion = null;
 let personajes = [];
+let plantillas = [];
+let imagenes = {};
+let imagenPara = null;
+let editando = null;      // { idAnterior } mientras el editor de PNJ está abierto
 let miembros = { miembros: [], aviso: null };
 let estado = null;
 let filtro = '';
@@ -45,12 +51,21 @@ async function iniciar() {
   if (!sesion.usuario) return pintarEntrar();
   if (!sesion.dj) return pintarSinPermiso();
   await recargar();
+  abrirDesdeHash();
+}
+
+function abrirDesdeHash() {
+  const m = location.hash.match(/^#pnj=(.+)$/);
+  if (m) { const t = plantillas.find((x) => x.id === decodeURIComponent(m[1])); if (t) abrirEditor(t); }
+  else if (location.hash === '#enemigos') { const el = document.getElementById('enemigos'); if (el) el.scrollIntoView(); }
 }
 
 async function recargar() {
   try {
     const [l, m] = await Promise.all([pedir('datos/?accion=lista'), pedir('datos/?accion=miembros').catch((e) => ({ miembros: [], aviso: e.message }))]);
     personajes = l.personajes.map((p) => R.normalizarPersonaje(p));
+    plantillas = l.plantillas || [];
+    imagenes = l.imagenes || {};
     miembros = m;
     if (!db) db = construirDb(await cargarRaw('../data/'), null);
   } catch (e) { toast(e.message, 'err'); }
@@ -78,7 +93,7 @@ function pintarEntrar() {
 function pintarSinPermiso() {
   vista().innerHTML = `<div class="tarjeta entrar">
       <p><strong>Tu cuenta no tiene el rol ${esc((estado && estado.rolDj) || 'DJ')}</strong> en el servidor de la partida.</p>
-      <p class="muted small">Pide que te lo asignen y vuelve a entrar. Puedes consultar las fichas en el <a href="../visor/index.html">visor</a>.</p>
+      <p class="muted small">Pide que te lo asignen y vuelve a entrar. Puedes seguir la partida en la <a href="../visor/index.html">vista de combate</a>.</p>
       ${sesion.aviso ? `<p class="small" style="color:var(--err)">${esc(sesion.aviso)}</p>` : ''}
     </div>${htmlConfig(false)}`;
 }
@@ -91,7 +106,7 @@ function pintar() {
   vista().innerHTML = `
     <div class="seccion fila entre">
       <div><h2 style="font-size:20px">Personajes de la partida</h2>
-        <p class="muted small">${personajes.length} personaje${personajes.length === 1 ? '' : 's'} · ${asignados} con jugador. Los jugadores crean su ficha en el generador, la exportan y te mandan el JSON.</p></div>
+        <p class="muted small">${personajes.length} personaje${personajes.length === 1 ? '' : 's'} · ${asignados} con jugador. Los jugadores crean su ficha en el generador, la exportan y te mandan el JSON. Un jugador puede llevar varios personajes.</p></div>
       <div class="fila">
         <button class="btn" data-act="importar">Importar JSON</button>
         <a class="btn primario" href="../generador/index.html?nube=nuevo">Nuevo personaje</a>
@@ -101,7 +116,107 @@ function pintar() {
     ${personajes.length > 4 ? `<div class="buscador" style="margin-bottom:12px"><input type="search" placeholder="Buscar personaje o jugador" value="${esc(filtro)}" data-filtro="1" aria-label="Buscar"></div>` : ''}
     ${personajes.length ? `<div class="lista">${lista.map(filaPj).join('')}</div>`
       : '<div class="vacio"><p>Todavía no hay personajes en la partida.</p><p class="small">Importa los JSON que te manden los jugadores o crea uno nuevo.</p></div>'}
+    ${htmlEnemigos()}
     ${htmlConfig(true)}`;
+}
+
+const urlImg = (clave) => (imagenes[clave] ? `${A}datos/?accion=imagen&clave=${encodeURIComponent(clave)}&v=${imagenes[clave]}` : '../assets/img/sprite-defecto.png');
+
+function htmlEnemigos() {
+  return `<div class="seccion fila entre" id="enemigos" style="margin-top:28px">
+      <div><h2 style="font-size:20px">Fichas de enemigo y PNJ</h2>
+        <p class="muted small">${plantillas.length} ficha${plantillas.length === 1 ? '' : 's'}. Los jugadores no las ven: en la <a href="../visor/index.html">vista de combate</a> solo ven nombre, imagen, estados, daño recibido y lo que reveléis con el Estudio.</p></div>
+      <div class="fila">
+        <button class="btn" data-act="importar-pnj">Importar JSON</button>
+        <button class="btn fantasma" data-act="ejemplos" title="Añade las seis criaturas de ejemplo del manual básico que falten">Cargar ejemplos</button>
+        <button class="btn primario" data-act="nuevo-pnj">Nueva ficha</button>
+      </div>
+    </div>
+    ${plantillas.length ? `<div class="lista">${plantillas.map((t) => `<div class="item pnj-fila">
+      <img src="${esc(urlImg(`pnj:${t.id}`))}" alt="" width="40" height="40">
+      <div><span class="titulo">${esc(t.nombre)}</span>
+        <div class="sub">Nivel ${t.nivel} · ${esc(N.nombreRango(t))} · ${esc(N.nombreEspecie(t.especie))} · PV ${t.pv} · PM ${t.pm}${t.revelado ? ` · <span style="color:var(--accent)">revelado ${t.revelado}+</span>` : ''}</div></div>
+      <div class="botones">
+        <button class="btn peq" data-act="editar-pnj" data-id="${esc(t.id)}">Editar</button>
+        <button class="btn peq fantasma" data-act="imagen" data-clave="pnj:${esc(t.id)}">Imagen</button>
+        <a class="btn peq fantasma" href="${A}datos/?accion=descargar-plantilla&id=${encodeURIComponent(t.id)}">Exportar</a>
+        <button class="btn peq fantasma peligro" data-act="eliminar-pnj" data-id="${esc(t.id)}">Eliminar</button>
+      </div></div>`).join('')}</div>`
+      : '<div class="vacio"><p>No hay fichas de enemigo.</p><p class="small">Pulsa «Cargar ejemplos» para tener seis criaturas del manual básico, impórtalas en JSON o crea una nueva.</p></div>'}`;
+}
+
+// ================================================================== editor de PNJ
+function abrirEditor(t) {
+  editando = { idAnterior: t ? t.id : null };
+  const base = t ? N.exportarPnj(t) : N.pnjVacio();
+  delete base.modificado;
+  let d = document.getElementById('editor-pnj');
+  if (!d) {
+    d = document.createElement('dialog');
+    d.id = 'editor-pnj';
+    d.style.width = 'min(820px, calc(100vw - 32px))';
+    document.body.appendChild(d);
+  }
+  d.innerHTML = `<div class="cab"><h2>${t ? `Editar «${esc(t.nombre)}»` : 'Nueva ficha de PNJ'}</h2><button class="btn icono fantasma" data-act="cerrar-editor" aria-label="Cerrar">✕</button></div>
+    <div class="cuerpo-d">
+      <p class="small muted" style="margin-top:0">Edita el JSON directamente. Formato y valores posibles en <code>docs/esquema-datos.md</code> (sección «Fichas de PNJ»). Tipos de daño: ${N.TIPOS_DANO.map(([k]) => `<code>${k}</code>`).join(' ')}. Afinidades: <code>VU</code> <code>RS</code> <code>IM</code> <code>AS</code>. Especies: ${N.ESPECIES.map(([k]) => `<code>${k}</code>`).join(' ')}.</p>
+      <textarea id="json-pnj" spellcheck="false" style="min-height:52vh;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace">${esc(JSON.stringify(base, null, 2))}</textarea>
+      <p id="error-pnj" class="small" style="color:var(--err);min-height:1.4em;margin:8px 0 0"></p>
+    </div>
+    <div class="pie"><button class="btn fantasma" data-act="cerrar-editor">Cancelar</button><button class="btn primario" data-act="guardar-pnj">Guardar</button></div>`;
+  d.showModal();
+}
+
+async function guardarEditor() {
+  const err = document.getElementById('error-pnj');
+  let datos;
+  try { datos = JSON.parse(document.getElementById('json-pnj').value); } catch (e) { err.textContent = 'El JSON no es válido: ' + e.message; return; }
+  let t;
+  try { t = N.normalizarPnj(datos); } catch (e) { err.textContent = e.message; return; }
+  const cambiaId = editando.idAnterior && editando.idAnterior !== t.id;
+  if ((!editando.idAnterior || cambiaId) && plantillas.some((x) => x.id === t.id) && !confirm(`Ya hay una ficha con el identificador «${t.id}». ¿Sustituirla?`)) return;
+  try {
+    await post('datos/?accion=guardar-plantilla', { plantilla: datos, reemplazar: true, idAnterior: cambiaId ? editando.idAnterior : null });
+  } catch (e) { err.textContent = e.message; return; }
+  document.getElementById('editor-pnj').close();
+  if (location.hash.startsWith('#pnj=')) history.replaceState(null, '', location.pathname);
+  toast(`«${t.nombre}» guardado.`);
+  await recargar();
+}
+
+async function importarPnj(files) {
+  let ok = 0;
+  for (const f of files) {
+    try {
+      const contenido = await leerArchivo(f);
+      const lista = Array.isArray(contenido) ? contenido : [contenido];
+      for (const datos of lista) {
+        if (datos && datos.formato === R.FORMATO) throw new Error(`${f.name}: es un personaje jugador; impórtalo arriba, en «Personajes de la partida».`);
+        const t = N.normalizarPnj(datos);
+        const existe = plantillas.some((x) => x.id === t.id);
+        if (existe && !confirm(`«${t.nombre}» ya existe. ¿Sustituir su ficha? (se conserva su imagen y lo revelado)`)) continue;
+        await post('datos/?accion=guardar-plantilla', { plantilla: datos, reemplazar: true });
+        ok++;
+      }
+    } catch (e) { toast(e.message, 'err'); }
+  }
+  if (ok) toast(`${ok} ficha${ok > 1 ? 's' : ''} de PNJ importada${ok > 1 ? 's' : ''}.`);
+  await recargar();
+}
+
+async function cargarEjemplos() {
+  try {
+    const idx = await (await fetch('../enemigos/index.json', { cache: 'no-cache' })).json();
+    let ok = 0;
+    for (const f of idx.enemigos || []) {
+      const datos = await (await fetch('../enemigos/' + f, { cache: 'no-cache' })).json();
+      if (plantillas.some((x) => x.id === datos.id)) continue;
+      await post('datos/?accion=guardar-plantilla', { plantilla: datos, reemplazar: false });
+      ok++;
+    }
+    toast(ok ? `${ok} fichas de ejemplo cargadas.` : 'Los ejemplos ya estaban cargados.');
+  } catch (e) { toast(e.message, 'err'); }
+  await recargar();
 }
 
 function filaPj(pj) {
@@ -112,14 +227,15 @@ function filaPj(pj) {
   const opciones = [...miembros.miembros];
   if (asignado && !opciones.some((m) => m.id === pj.discord.id)) opciones.unshift({ id: pj.discord.id, nombre: pj.discord.nombre || pj.discord.id });
   return `<div class="item pj-fila">
-    <div><a class="titulo" href="../visor/index.html#${encodeURIComponent(pj.id)}" style="color:var(--text)">${esc(i.nombre || 'Sin nombre')}</a>
-      <div class="sub">Nivel ${pj.nivel}${clases ? ' · ' + esc(clases) : ''}${i.identidad ? ' · ' + esc(i.identidad) : ''}</div></div>
+    <div class="fila" style="flex-wrap:nowrap"><img src="${esc(urlImg(`pj:${pj.id}`))}" alt="" width="40" height="40" class="miniatura"><div><a class="titulo" href="../ficha/index.html#${encodeURIComponent(pj.id)}" style="color:var(--text)">${esc(i.nombre || 'Sin nombre')}</a>
+      <div class="sub">Nivel ${pj.nivel}${clases ? ' · ' + esc(clases) : ''}${i.identidad ? ' · ' + esc(i.identidad) : ''}</div></div></div>
     <select data-act="asignar" data-id="${esc(pj.id)}" aria-label="Jugador de ${esc(i.nombre)}">
       <option value="">Sin jugador</option>
       ${opciones.map((m) => `<option value="${esc(m.id)}" ${asignado === m.id ? 'selected' : ''}>${esc(m.nombre)}</option>`).join('')}
     </select>
     <div class="botones">
       <a class="btn peq" href="../generador/index.html?nube=${encodeURIComponent(pj.id)}">Editar</a>
+      <button class="btn peq fantasma" data-act="imagen" data-clave="pj:${esc(pj.id)}">Imagen</button>
       <a class="btn peq fantasma" href="${A}datos/?accion=descargar&id=${encodeURIComponent(pj.id)}">Exportar</a>
       <button class="btn peq fantasma peligro" data-act="eliminar" data-id="${esc(pj.id)}">Eliminar</button>
     </div>
@@ -176,6 +292,20 @@ document.addEventListener('click', async (e) => {
       location.reload();
       return;
     case 'importar': document.getElementById('importar').click(); return;
+    case 'importar-pnj': document.getElementById('importar-pnj').click(); return;
+    case 'ejemplos': t.disabled = true; await cargarEjemplos(); return;
+    case 'nuevo-pnj': abrirEditor(null); return;
+    case 'editar-pnj': abrirEditor(plantillas.find((x) => x.id === ds.id)); return;
+    case 'cerrar-editor': document.getElementById('editor-pnj').close(); return;
+    case 'guardar-pnj': await guardarEditor(); return;
+    case 'eliminar-pnj': {
+      const tp = plantillas.find((x) => x.id === ds.id);
+      if (!tp || !confirm(`¿Eliminar la ficha «${tp.nombre}»? Si hay PNJ suyos en el campo, se retiran. Exporta antes su JSON si lo quieres conservar.`)) return;
+      try { await post('datos/?accion=eliminar-plantilla', { id: ds.id }); toast('Ficha eliminada.'); } catch (err) { toast(err.message, 'err'); }
+      await recargar();
+      return;
+    }
+    case 'imagen': imagenPara = ds.clave; document.getElementById('subir-imagen').click(); return;
     case 'eliminar': {
       const pj = personajes.find((p) => p.id === ds.id);
       if (!pj || !confirm(`¿Eliminar a ${pj.identidad.nombre || 'este personaje'} de la partida? No se puede deshacer (exporta antes su JSON si lo quieres conservar).`)) return;
@@ -200,11 +330,22 @@ document.addEventListener('click', async (e) => {
 document.addEventListener('change', async (e) => {
   const t = e.target;
   if (t.id === 'importar') { await importar([...t.files]); t.value = ''; return; }
+  if (t.id === 'importar-pnj') { await importarPnj([...t.files]); t.value = ''; return; }
+  if (t.id === 'subir-imagen' && t.files[0] && imagenPara) {
+    const f = t.files[0];
+    t.value = '';
+    try {
+      await post('datos/?accion=subir-imagen', { clave: imagenPara, imagen: await reducirImagen(f) });
+      toast('Imagen guardada.');
+    } catch (err) { toast(err.message, 'err'); }
+    await recargar();
+    return;
+  }
   if (t.dataset.act === 'asignar') {
     const m = miembros.miembros.find((x) => x.id === t.value) || (t.value ? { id: t.value, nombre: t.selectedOptions[0].textContent } : null);
     try {
       const r = await post('datos/?accion=asignar', { id: t.dataset.id, usuario: m });
-      toast(m ? `Asignado a ${m.nombre}.${r.liberados ? ' Su personaje anterior queda libre.' : ''}` : 'Personaje sin jugador.');
+      toast(m ? `Asignado a ${m.nombre}.` : 'Personaje sin jugador.');
     } catch (err) { toast(err.message, 'err'); }
     await recargar();
   }

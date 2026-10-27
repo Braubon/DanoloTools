@@ -1,7 +1,9 @@
 // ---------------------------------------------------------------------------
-// Visor de fichas de Fabula Ultima (solo lectura)
-// Carga los personajes guardados en la nube (/api/datos/). Si la API no está
-// disponible (por ejemplo en local), usa los listados en /personajes/index.json
+// Fichas completas de Fabula Ultima (solo lectura). La abre el botón
+// «Detalles» de la vista de combate.
+// Carga los personajes de la partida (/api/datos/), que exige iniciar sesión
+// con una cuenta de Discord del servidor. Si la API no está disponible (por
+// ejemplo en local), usa los listados en /personajes/index.json.
 // ---------------------------------------------------------------------------
 import { cargarRaw, construirDb, get, hab, tabla } from './db.js';
 import * as R from './rules.js';
@@ -14,6 +16,7 @@ const LS_LOCALES = 'fu-visor-locales';
 let raw, db;
 const pjs = [];           // { key, pj, origen: 'nube'|'carpeta'|'local' }
 const API_PUBLICO = '/api/datos/?accion=publico';
+let acceso = null;        // { motivo } si la API pide iniciar sesión
 let actual = 'grupo';     // 'grupo' | key
 let pestana = 'resumen';
 const filtro = { q: '', hab: 'todas', clase: '', magia: 'todos', equipo: 'todo' };
@@ -30,23 +33,37 @@ async function iniciar() {
     return;
   }
   db = construirDb(raw, null);
-  if (!(await cargarNube())) await cargarCarpeta();
+  const nube = await cargarNube();
+  if (nube === false) await cargarCarpeta();
+  pintarUsuario();
   cargarLocales();
   const hash = decodeURIComponent(location.hash.slice(1));
   if (hash && pjs.some((p) => p.key === hash)) actual = hash;
   render();
 }
 
+/** true = cargado; 'login' = la API pide sesión; false = no hay API (local). */
 async function cargarNube() {
   try {
     const r = await fetch(API_PUBLICO, { cache: 'no-store' });
-    if (!r.ok || !(r.headers.get('content-type') || '').includes('json')) return false;
+    if (!(r.headers.get('content-type') || '').includes('json')) return false;
     const j = await r.json();
-    if (!Array.isArray(j.personajes)) return false;
+    if (r.status === 401 || r.status === 403) { acceso = { motivo: j.error, status: r.status }; return 'login'; }
+    if (!r.ok || !Array.isArray(j.personajes)) return false;
     j.personajes.forEach((d) => { try { anadir(d, 'nube'); } catch (e) { console.warn(e); } });
     return true;
   } catch (e) { return false; }
 }
+
+let sesion = null;
+async function pintarUsuario() {
+  try { sesion = await (await fetch('/api/auth/?accion=yo', { cache: 'no-store' })).json(); } catch (e) { return; }
+  const u = sesion && sesion.usuario;
+  document.getElementById('usuario').innerHTML = u
+    ? `<span class="fila small muted">${u.avatar ? `<img src="${esc(u.avatar)}" alt="" width="22" height="22" style="border-radius:50%">` : ''}${esc(u.nombre)}<button class="btn peq fantasma" data-act="salir">Salir</button></span>`
+    : '';
+}
+const urlEntrar = () => `/api/auth/?accion=entrar&volver=${encodeURIComponent(location.pathname + location.hash)}`;
 
 async function cargarCarpeta() {
   let lista = [];
@@ -103,6 +120,12 @@ function renderSelector() {
 
 // ------------------------------------------------------------ grupo
 function vistaGrupo() {
+  if (!pjs.length && acceso) {
+    return `<div class="tarjeta" style="text-align:center;padding:40px 16px">
+      <div class="display" style="font-size:26px;margin-bottom:6px">Fichas del grupo</div>
+      <p class="muted">${acceso.status === 403 ? esc(acceso.motivo) : 'Entra con tu cuenta de Discord del servidor de la partida para ver las fichas.'}</p>
+      ${acceso.status === 403 ? '' : `<a class="btn primario" href="${urlEntrar()}">Entrar con Discord</a>`}</div>`;
+  }
   if (!pjs.length) {
     return `<div class="vacio"><p><strong>No hay personajes cargados.</strong></p>
       <p class="small">Usa «Cargar fichas» o añade archivos a la carpeta <code>personajes/</code> y lístalos en <code>personajes/index.json</code>.</p></div>`;
@@ -362,6 +385,7 @@ document.addEventListener('click', (e) => {
       break;
     }
     case 'pestana': pestana = ds.id; filtro.q = ''; render(); break;
+    case 'salir': fetch('/api/auth/?accion=salir', { method: 'POST' }).finally(() => location.reload()); break;
     case 'filtro': filtro[ds.clave] = ds.id; render(); break;
     default:
   }

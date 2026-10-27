@@ -53,6 +53,19 @@ export async function hgetallJSON(h) {
   return out;
 }
 
+/** Hash sin interpretar como JSON (por ejemplo, imágenes en base64). */
+export async function hgetall(h) {
+  const plano = (await cmd('HGETALL', h)) || [];
+  const out = {};
+  if (Array.isArray(plano)) for (let i = 0; i < plano.length; i += 2) out[plano[i]] = plano[i + 1];
+  else Object.assign(out, plano);
+  return out;
+}
+
+/** Marca que algo de la partida ha cambiado (la vista de combate lo consulta). */
+export const tocar = () => cmd('INCR', 'fu:version').catch(() => null);
+export const versionPartida = async () => Number(await cmd('GET', 'fu:version').catch(() => 0)) || 0;
+
 // ------------------------------------------------------------------ memoria (local)
 const MEM = globalThis.__fuMemoria || (globalThis.__fuMemoria = new Map());
 function vivo(k) {
@@ -80,6 +93,7 @@ function memoria([op, k, ...a]) {
     }
     case 'HDEL': if (!e || e.v[a[0]] === undefined) return 0; delete e.v[a[0]]; return 1;
     case 'HGETALL': return e ? Object.entries(e.v).flat() : [];
+    case 'INCR': { const n = (e ? Number(e.v) : 0) + 1; MEM.set(k, { v: String(n), exp: 0 }); return n; }
     case 'PING': return 'PONG';
     default: throw new Error('Operación no soportada en memoria: ' + op);
   }
