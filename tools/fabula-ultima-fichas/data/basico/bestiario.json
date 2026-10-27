@@ -61,38 +61,52 @@
     "notas": ""
   },
   {
-    "id": "rata-gigante",
-    "nombre": "Rata gigante",
-    "descripcion": "Roedor desmesurado portador de fiebres ponzoñosas que prolifera en cloacas y galerías subterráneas.",
+    "id": "escolopendra-guillotina",
+    "nombre": "Escolopendra guillotina",
+    "descripcion": "Ciempiés de proporciones titánicas que se repliega sobre sí mismo como una esfera acorazada para desviar ataques antes de abalanzarse con mandíbulas cortantes.",
     "nivel": 5,
     "rango": "soldado",
     "rango_n": null,
     "especie": "bestia",
     "rasgos": [
-      "Hambrienta",
-      "Feroz",
-      "Pirófoba",
-      "Veloz"
+      "Lenta",
+      "Pesada",
+      "Resiliente",
+      "Territorial"
     ],
     "atributos": {
-      "DES": 12,
-      "PER": 8,
-      "VIG": 6,
-      "VOL": 6
+      "DES": 8,
+      "PER": 6,
+      "VIG": 10,
+      "VOL": 8
     },
-    "pv": 40,
-    "pm": 35,
-    "iniciativa": 14,
-    "defensa": 12,
-    "defensa_magica": 8,
+    "pv": 60,
+    "pm": 45,
+    "iniciativa": 7,
+    "defensa": 10,
+    "defensa_magica": 7,
     "afinidades": {
+      "rayo": "RS",
       "tierra": "RS",
       "fuego": "VU",
-      "veneno": "RS"
+      "hielo": "VU"
     },
     "ataques": [
       {
-        "nombre": "Mordisco infeccioso",
+        "nombre": "Mandíbula",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "VIG"
+        ],
+        "bonus": 0,
+        "dano": 5,
+        "tipo": "veneno",
+        "contra": "def",
+        "efecto": "El objetivo sufre el estado débil."
+      },
+      {
+        "nombre": "Esfera cortante",
         "alcance": "cuerpo",
         "precision": [
           "DES",
@@ -102,19 +116,15 @@
         "dano": 5,
         "tipo": "fisico",
         "contra": "def",
-        "efecto": "El objetivo sufre el estado envenenado."
+        "efecto": "Si ejecutó la acción de Guardia en su turno previo, inflige 5 puntos de daño adicional."
       }
     ],
     "conjuros": [],
     "otras_acciones": [],
     "reglas": [
       {
-        "nombre": "Rápido",
-        "efecto": "Al llenar o vaciar secciones de relojes vinculados a persecuciones o huidas, llena o vacía 1 sección adicional."
-      },
-      {
-        "nombre": "Rata acorralada",
-        "efecto": "Mientras se encuentre en Crisis, obtiene un bonificador de +3 a todas sus tiradas."
+        "nombre": "Hacerse una bola",
+        "efecto": "Al realizar la acción de Guardia, se vuelve Inmune al daño físico hasta el comienzo de su próximo turno."
       }
     ],
     "habilidades": [],
@@ -193,6 +203,976 @@
       }
     ],
     "inmunidades_estados": [],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "rata-gigante",
+    "nombre": "Rata gigante",
+    "descripcion": "Roedor desmesurado portador de fiebres ponzoñosas que prolifera en cloacas y galerías subterráneas.",
+    "nivel": 5,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "bestia",
+    "rasgos": [
+      "Hambrienta",
+      "Feroz",
+      "Pirófoba",
+      "Veloz"
+    ],
+    "atributos": {
+      "DES": 12,
+      "PER": 8,
+      "VIG": 6,
+      "VOL": 6
+    },
+    "pv": 40,
+    "pm": 35,
+    "iniciativa": 14,
+    "defensa": 12,
+    "defensa_magica": 8,
+    "afinidades": {
+      "tierra": "RS",
+      "fuego": "VU",
+      "veneno": "RS"
+    },
+    "ataques": [
+      {
+        "nombre": "Mordisco infeccioso",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "VIG"
+        ],
+        "bonus": 0,
+        "dano": 5,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": "El objetivo sufre el estado envenenado."
+      }
+    ],
+    "conjuros": [],
+    "otras_acciones": [],
+    "reglas": [
+      {
+        "nombre": "Rápido",
+        "efecto": "Al llenar o vaciar secciones de relojes vinculados a persecuciones o huidas, llena o vacía 1 sección adicional."
+      },
+      {
+        "nombre": "Rata acorralada",
+        "efecto": "Mientras se encuentre en Crisis, obtiene un bonificador de +3 a todas sus tiradas."
+      }
+    ],
+    "habilidades": [],
+    "inmunidades_estados": [],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "hormiga-bombardera",
+    "nombre": "Hormiga bombardera",
+    "descripcion": "Hormiga de tamaño humano que actúa como vector ciego de la Reina colonial subterránea.",
+    "nivel": 10,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "bestia",
+    "rasgos": [
+      "Explosiva",
+      "Inflamable",
+      "Sin mente individual",
+      "Territorial"
+    ],
+    "atributos": {
+      "DES": 10,
+      "PER": 6,
+      "VIG": 10,
+      "VOL": 6
+    },
+    "pv": 70,
+    "pm": 40,
+    "iniciativa": 12,
+    "defensa": 10,
+    "defensa_magica": 6,
+    "afinidades": {
+      "rayo": "RS",
+      "fuego": "VU",
+      "luz": "RS"
+    },
+    "ataques": [
+      {
+        "nombre": "Carga de hormiga",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "VIG"
+        ],
+        "bonus": 1,
+        "dano": 10,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": ""
+      },
+      {
+        "nombre": "Cañón de ácido",
+        "alcance": "distancia",
+        "precision": [
+          "DES",
+          "PER"
+        ],
+        "bonus": 1,
+        "dano": 5,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": "El objetivo sufre el estado confundido."
+      }
+    ],
+    "conjuros": [],
+    "otras_acciones": [],
+    "reglas": [
+      {
+        "nombre": "Excavatierras",
+        "efecto": "Al realizar la acción de Guardia sobre tierra o roca, obtiene +2 a la Defensa y se vuelve Vulnerable al daño de tierra hasta su próximo turno."
+      }
+    ],
+    "habilidades": [],
+    "inmunidades_estados": [
+      "confundido",
+      "enfurecido"
+    ],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "pez-espina",
+    "nombre": "Pez espina",
+    "descripcion": "Pez volador de escamas aceradas que planea en ráfagas sobre el mar para lacerar con sus púas.",
+    "nivel": 10,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "bestia",
+    "rasgos": [
+      "Agresivo",
+      "Piel gruesa",
+      "Pequeño",
+      "Rápido"
+    ],
+    "atributos": {
+      "DES": 10,
+      "PER": 10,
+      "VIG": 6,
+      "VOL": 6
+    },
+    "pv": 50,
+    "pm": 40,
+    "iniciativa": 14,
+    "defensa": 10,
+    "defensa_magica": 10,
+    "afinidades": {
+      "rayo": "VU",
+      "oscuro": "RS",
+      "fuego": "RS",
+      "hielo": "RS",
+      "veneno": "RS"
+    },
+    "ataques": [
+      {
+        "nombre": "Zambullida espinada",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "DES"
+        ],
+        "bonus": 1,
+        "dano": 10,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": ""
+      },
+      {
+        "nombre": "Chorro oceánico",
+        "alcance": "distancia",
+        "precision": [
+          "DES",
+          "PER"
+        ],
+        "bonus": 1,
+        "dano": 5,
+        "tipo": "hielo",
+        "contra": "def",
+        "efecto": "El objetivo sufre el estado lento."
+      }
+    ],
+    "conjuros": [],
+    "otras_acciones": [],
+    "reglas": [],
+    "habilidades": [
+      {
+        "id": "volador"
+      }
+    ],
+    "inmunidades_estados": [],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "oso-solar",
+    "nombre": "Oso solar",
+    "descripcion": "Fiera monumental de pelaje dorado venerada por comunidades tribales por sus dones telúricos.",
+    "nivel": 15,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "bestia",
+    "rasgos": [
+      "Enorme",
+      "Inteligente",
+      "Pacífico",
+      "Tupido"
+    ],
+    "atributos": {
+      "DES": 8,
+      "PER": 8,
+      "VIG": 10,
+      "VOL": 6
+    },
+    "pv": 80,
+    "pm": 45,
+    "iniciativa": 8,
+    "defensa": 9,
+    "defensa_magica": 10,
+    "afinidades": {
+      "rayo": "RS",
+      "oscuro": "VU",
+      "tierra": "VU",
+      "fuego": "RS",
+      "hielo": "RS",
+      "luz": "RS"
+    },
+    "ataques": [
+      {
+        "nombre": "Abrazo de oso",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "VIG"
+        ],
+        "bonus": 1,
+        "dano": 10,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": "El objetivo sufre el estado débil."
+      }
+    ],
+    "conjuros": [],
+    "otras_acciones": [],
+    "reglas": [
+      {
+        "nombre": "Bendición solar",
+        "efecto": "Mientras se encuentre en Crisis, *Abrazo de oso* inflige 5 puntos de daño adicional y todo su daño se transforma en daño de fuego."
+      }
+    ],
+    "habilidades": [],
+    "inmunidades_estados": [
+      "debil",
+      "lento"
+    ],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "aullador-blanco",
+    "nombre": "Aullador blanco",
+    "descripcion": "Lobo sagrado de las cumbres nevadas cuya presencia regia inspira a sus congéneres y domina el hielo.",
+    "nivel": 20,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "bestia",
+    "rasgos": [
+      "Valeroso",
+      "Regio",
+      "Perspicaz",
+      "Vigilante"
+    ],
+    "atributos": {
+      "DES": 8,
+      "PER": 8,
+      "VIG": 10,
+      "VOL": 8
+    },
+    "pv": 90,
+    "pm": 60,
+    "iniciativa": 8,
+    "defensa": 10,
+    "defensa_magica": 9,
+    "afinidades": {
+      "aire": "RS",
+      "fuego": "VU",
+      "hielo": "RS"
+    },
+    "ataques": [
+      {
+        "nombre": "Fauces árticas",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "VIG"
+        ],
+        "bonus": 5,
+        "dano": 15,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": "El objetivo sufre el estado débil."
+      }
+    ],
+    "conjuros": [
+      {
+        "nombre": "Iceberg",
+        "pm": 20,
+        "por_objetivo": false,
+        "objetivo": "Una criatura",
+        "duracion": "Instantánea",
+        "ofensivo": true,
+        "precision": [
+          "VIG",
+          "VOL"
+        ],
+        "bonus": 2,
+        "dano": 30,
+        "tipo": "hielo",
+        "efecto": "El objetivo sufre [TM + 30] puntos de daño de hielo (este daño ignora Resistencia)."
+      },
+      {
+        "nombre": "Lamerse las heridas",
+        "pm": 5,
+        "por_objetivo": false,
+        "objetivo": "El lanzador",
+        "duracion": "Instantánea",
+        "ofensivo": false,
+        "precision": [
+          "PER",
+          "VOL"
+        ],
+        "bonus": 0,
+        "dano": null,
+        "tipo": null,
+        "efecto": "Recupera 30 Puntos de Vida."
+      }
+    ],
+    "otras_acciones": [],
+    "reglas": [
+      {
+        "nombre": "Aura regia",
+        "efecto": "Los aliados del aullador blanco son inmunes al estado estremecido."
+      }
+    ],
+    "habilidades": [],
+    "inmunidades_estados": [],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "linterna-arcana",
+    "nombre": "Linterna arcana",
+    "descripcion": "Artilugio flotante de iluminación y condensación anímica fabricado por magos.",
+    "nivel": 5,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "constructo",
+    "rasgos": [
+      "Luminosa",
+      "Mágica",
+      "Minúscula",
+      "Solícita"
+    ],
+    "atributos": {
+      "DES": 8,
+      "PER": 8,
+      "VIG": 6,
+      "VOL": 10
+    },
+    "pv": 40,
+    "pm": 55,
+    "iniciativa": 8,
+    "defensa": 9,
+    "defensa_magica": 10,
+    "afinidades": {
+      "aire": "VU",
+      "tierra": "RS",
+      "fuego": "RS",
+      "hielo": "RS",
+      "veneno": "IM"
+    },
+    "ataques": [
+      {
+        "nombre": "Descarga elemental",
+        "alcance": "distancia",
+        "precision": [
+          "DES",
+          "PER"
+        ],
+        "bonus": 0,
+        "dano": 5,
+        "tipo": "rayo",
+        "contra": "def",
+        "efecto": "Tira 1d6 al atacar para fijar el tipo de daño: 1–2 rayo, 3–4 fuego, 5–6 hielo."
+      }
+    ],
+    "conjuros": [],
+    "otras_acciones": [
+      {
+        "nombre": "Transferencia de maná",
+        "efecto": "Gasta hasta 10 PM para que una criatura visible recupere esa misma cantidad de Puntos de Mente."
+      }
+    ],
+    "reglas": [],
+    "habilidades": [],
+    "inmunidades_estados": [
+      "envenenado"
+    ],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "clangolatra",
+    "nombre": "Clangólatra",
+    "descripcion": "Autómata bufonesco descartado en desguaces y animado por energías de despecho.",
+    "nivel": 10,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "constructo",
+    "rasgos": [
+      "Inquietante",
+      "Diminuto",
+      "Ruidoso",
+      "Vengativo"
+    ],
+    "atributos": {
+      "DES": 8,
+      "PER": 10,
+      "VIG": 8,
+      "VOL": 6
+    },
+    "pv": 60,
+    "pm": 50,
+    "iniciativa": 13,
+    "defensa": 8,
+    "defensa_magica": 10,
+    "afinidades": {
+      "aire": "VU",
+      "tierra": "RS",
+      "fuego": "RS",
+      "veneno": "IM"
+    },
+    "ataques": [
+      {
+        "nombre": "Patada del bufón",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "PER"
+        ],
+        "bonus": 1,
+        "dano": 5,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": "+5 de daño adicional si el objetivo está confundido o estremecido."
+      }
+    ],
+    "conjuros": [
+      {
+        "nombre": "Bufón danzarín",
+        "pm": 20,
+        "por_objetivo": false,
+        "objetivo": "Especial",
+        "duracion": "Instantánea",
+        "ofensivo": false,
+        "precision": [
+          "PER",
+          "VOL"
+        ],
+        "bonus": 0,
+        "dano": null,
+        "tipo": null,
+        "efecto": "Cada criatura visible que elija el PNJ sufre el estado estremecido."
+      }
+    ],
+    "otras_acciones": [],
+    "reglas": [],
+    "habilidades": [],
+    "inmunidades_estados": [
+      "envenenado"
+    ],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "gargola",
+    "nombre": "Gárgola",
+    "descripcion": "Estatua de granito animada que custodia bastiones y santuarios levitando sobre los intrusos.",
+    "nivel": 10,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "constructo",
+    "rasgos": [
+      "Flotante",
+      "Sagaz",
+      "Vigilante",
+      "Atada a un enclave"
+    ],
+    "atributos": {
+      "DES": 10,
+      "PER": 8,
+      "VIG": 8,
+      "VOL": 6
+    },
+    "pv": 70,
+    "pm": 50,
+    "iniciativa": 9,
+    "defensa": 10,
+    "defensa_magica": 8,
+    "afinidades": {
+      "aire": "RS",
+      "tierra": "RS",
+      "fuego": "RS",
+      "hielo": "VU",
+      "veneno": "IM"
+    },
+    "ataques": [
+      {
+        "nombre": "Garras de piedra",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "VIG"
+        ],
+        "bonus": 1,
+        "dano": 5,
+        "tipo": "fisico",
+        "contra": "mdef",
+        "efecto": ""
+      }
+    ],
+    "conjuros": [
+      {
+        "nombre": "Andanada de rocas",
+        "pm": 10,
+        "por_objetivo": false,
+        "objetivo": "Una criatura",
+        "duracion": "Instantánea",
+        "ofensivo": true,
+        "precision": [
+          "VIG",
+          "VOL"
+        ],
+        "bonus": 1,
+        "dano": 15,
+        "tipo": "tierra",
+        "efecto": "El objetivo sufre 【TM + 15】 de daño de tierra y el estado estremecido."
+      }
+    ],
+    "otras_acciones": [],
+    "reglas": [],
+    "habilidades": [
+      {
+        "id": "volador"
+      }
+    ],
+    "inmunidades_estados": [
+      "envenenado"
+    ],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "soldado-magitech",
+    "nombre": "Soldado magitech",
+    "descripcion": "Armadura pesada de combate motorizada por un núcleo artificial de almas sintéticas.",
+    "nivel": 10,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "constructo",
+    "rasgos": [
+      "Leal",
+      "Predecible",
+      "Despiadado",
+      "Vigilante"
+    ],
+    "atributos": {
+      "DES": 8,
+      "PER": 8,
+      "VIG": 10,
+      "VOL": 6
+    },
+    "pv": 80,
+    "pm": 40,
+    "iniciativa": 5,
+    "defensa": 11,
+    "defensa_magica": 8,
+    "afinidades": {
+      "aire": "VU",
+      "rayo": "VU",
+      "tierra": "RS",
+      "fuego": "RS",
+      "hielo": "RS",
+      "veneno": "IM"
+    },
+    "ataques": [
+      {
+        "nombre": "Golpe de hacha",
+        "alcance": "cuerpo",
+        "precision": [
+          "VIG",
+          "VIG"
+        ],
+        "bonus": 1,
+        "dano": 14,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": "El objetivo sufre el estado lento."
+      }
+    ],
+    "conjuros": [],
+    "otras_acciones": [],
+    "reglas": [
+      {
+        "nombre": "Núcleo expuesto",
+        "efecto": "Mientras esté en Crisis, pierde la Resistencia a fuego y hielo, y el daño de su arma pasa a ser de tipo rayo."
+      }
+    ],
+    "habilidades": [
+      {
+        "id": "equipable"
+      }
+    ],
+    "inmunidades_estados": [
+      "envenenado"
+    ],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "Hacha de guerra, coraza de bronce.",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "golem-bronce",
+    "nombre": "Gólem de bronce",
+    "descripcion": "Coloso de engranajes y placas macizas que aplasta y barre sectores enteros.",
+    "nivel": 15,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "constructo",
+    "rasgos": [
+      "Imponente",
+      "Lento",
+      "Mastodóntico",
+      "Chirriante"
+    ],
+    "atributos": {
+      "DES": 6,
+      "PER": 8,
+      "VIG": 12,
+      "VOL": 6
+    },
+    "pv": 100,
+    "pm": 45,
+    "iniciativa": 7,
+    "defensa": 8,
+    "defensa_magica": 9,
+    "afinidades": {
+      "aire": "VU",
+      "rayo": "VU",
+      "tierra": "RS",
+      "veneno": "IM"
+    },
+    "ataques": [
+      {
+        "nombre": "Puñetazo",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "VIG"
+        ],
+        "bonus": 1,
+        "dano": 10,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": "El objetivo sufre el estado estremecido."
+      },
+      {
+        "nombre": "Torbellino",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "VIG"
+        ],
+        "bonus": 1,
+        "dano": 5,
+        "tipo": "aire",
+        "contra": "def",
+        "efecto": "Propiedad multi (2)."
+      }
+    ],
+    "conjuros": [],
+    "otras_acciones": [],
+    "reglas": [],
+    "habilidades": [],
+    "inmunidades_estados": [
+      "envenenado"
+    ],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "hendedorcielos",
+    "nombre": "Hendedorcielos",
+    "descripcion": "Dron de intercepción aérea armado con cañones automáticos y proyectiles de napalm.",
+    "nivel": 15,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "constructo",
+    "rasgos": [
+      "Leal",
+      "Fuertemente artillado",
+      "Veloz",
+      "Volador"
+    ],
+    "atributos": {
+      "DES": 10,
+      "PER": 8,
+      "VIG": 8,
+      "VOL": 6
+    },
+    "pv": 80,
+    "pm": 45,
+    "iniciativa": 9,
+    "defensa": 10,
+    "defensa_magica": 8,
+    "afinidades": {
+      "aire": "VU",
+      "rayo": "VU",
+      "tierra": "RS",
+      "fuego": "IM",
+      "hielo": "VU",
+      "veneno": "IM"
+    },
+    "ataques": [
+      {
+        "nombre": "Picado lacerante",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "DES"
+        ],
+        "bonus": 1,
+        "dano": 10,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": "Tras atacar, pierde la condición de Volador hasta su próximo turno."
+      },
+      {
+        "nombre": "Gatling",
+        "alcance": "distancia",
+        "precision": [
+          "DES",
+          "PER"
+        ],
+        "bonus": 1,
+        "dano": 5,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": "Propiedad multi (2)."
+      },
+      {
+        "nombre": "Cohete incendiario",
+        "alcance": "distancia",
+        "precision": [
+          "DES",
+          "PER"
+        ],
+        "bonus": 1,
+        "dano": 10,
+        "tipo": "fuego",
+        "contra": "def",
+        "efecto": ""
+      }
+    ],
+    "conjuros": [],
+    "otras_acciones": [],
+    "reglas": [],
+    "habilidades": [
+      {
+        "id": "volador"
+      }
+    ],
+    "inmunidades_estados": [
+      "envenenado",
+      "debil",
+      "lento"
+    ],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "golem-bosques",
+    "nombre": "Gólem de los bosques",
+    "descripcion": "Centinela ancestral de troncos milenarios y zarzas animado por rituales druídicos.",
+    "nivel": 20,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "constructo",
+    "rasgos": [
+      "Inflamable",
+      "Impasible",
+      "Solitario",
+      "Gigantesco"
+    ],
+    "atributos": {
+      "DES": 6,
+      "PER": 6,
+      "VIG": 12,
+      "VOL": 10
+    },
+    "pv": 110,
+    "pm": 80,
+    "iniciativa": 6,
+    "defensa": 6,
+    "defensa_magica": 6,
+    "afinidades": {
+      "aire": "RS",
+      "rayo": "RS",
+      "tierra": "RS",
+      "fuego": "VU",
+      "hielo": "VU",
+      "veneno": "IM"
+    },
+    "ataques": [
+      {
+        "nombre": "Garras lígneas",
+        "alcance": "cuerpo",
+        "precision": [
+          "VIG",
+          "VIG"
+        ],
+        "bonus": 2,
+        "dano": 10,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": "Propiedad multi (2)."
+      },
+      {
+        "nombre": "Deflagración vital",
+        "alcance": "distancia",
+        "precision": [
+          "DES",
+          "VIG"
+        ],
+        "bonus": 2,
+        "dano": 15,
+        "tipo": "luz",
+        "contra": "def",
+        "efecto": ""
+      }
+    ],
+    "conjuros": [
+      {
+        "nombre": "Antimagia",
+        "pm": 10,
+        "por_objetivo": false,
+        "objetivo": "Una criatura",
+        "duracion": "Instantánea",
+        "ofensivo": false,
+        "precision": [
+          "PER",
+          "VOL"
+        ],
+        "bonus": 0,
+        "dano": null,
+        "tipo": null,
+        "efecto": "Disipa todos los conjuros de duración «Escena» activos sobre el objetivo."
+      },
+      {
+        "nombre": "Aliento de esporas",
+        "pm": 10,
+        "por_objetivo": false,
+        "objetivo": "Una criatura",
+        "duracion": "Instantánea",
+        "ofensivo": true,
+        "precision": [
+          "VIG",
+          "VOL"
+        ],
+        "bonus": 2,
+        "dano": 15,
+        "tipo": "veneno",
+        "efecto": "El objetivo sufre [TM + 15] puntos de daño de veneno y el estado débil."
+      },
+      {
+        "nombre": "Enredo de zarcillos",
+        "pm": 20,
+        "por_objetivo": false,
+        "objetivo": "Especial",
+        "duracion": "Instantánea",
+        "ofensivo": false,
+        "precision": [
+          "PER",
+          "VOL"
+        ],
+        "bonus": 0,
+        "dano": null,
+        "tipo": null,
+        "efecto": "Cada criatura visible elegida sufre el estado lento."
+      }
+    ],
+    "otras_acciones": [],
+    "reglas": [],
+    "habilidades": [],
+    "inmunidades_estados": [
+      "envenenado"
+    ],
     "villano": null,
     "puntos_ultima": 0,
     "siguiente_fase": null,
@@ -292,47 +1272,124 @@
     "notas": ""
   },
   {
-    "id": "gargola",
-    "nombre": "Gárgola",
-    "descripcion": "Estatua de granito animada que custodia bastiones y santuarios levitando sobre los intrusos.",
+    "id": "rueda-relampagos",
+    "nombre": "Rueda de relámpagos",
+    "descripcion": "Espíritu infernal encerrado en una llanta llameante de chispas nacido del terror a las tormentas.",
     "nivel": 10,
     "rango": "soldado",
     "rango_n": null,
-    "especie": "constructo",
+    "especie": "demonio",
     "rasgos": [
-      "Flotante",
-      "Sagaz",
-      "Vigilante",
-      "Atada a un enclave"
+      "Cruel",
+      "Resplandeciente",
+      "Burlón",
+      "Veloz"
     ],
     "atributos": {
-      "DES": 10,
-      "PER": 8,
-      "VIG": 8,
-      "VOL": 6
+      "DES": 12,
+      "PER": 6,
+      "VIG": 6,
+      "VOL": 8
     },
-    "pv": 70,
-    "pm": 50,
+    "pv": 60,
+    "pm": 60,
     "iniciativa": 9,
-    "defensa": 10,
-    "defensa_magica": 8,
+    "defensa": 12,
+    "defensa_magica": 6,
     "afinidades": {
-      "aire": "RS",
-      "tierra": "RS",
-      "fuego": "RS",
-      "hielo": "VU",
-      "veneno": "IM"
+      "rayo": "AS",
+      "oscuro": "RS",
+      "tierra": "VU"
     },
     "ataques": [
       {
-        "nombre": "Garras de piedra",
+        "nombre": "Bandazo violento",
         "alcance": "cuerpo",
         "precision": [
           "DES",
           "VIG"
         ],
         "bonus": 1,
-        "dano": 5,
+        "dano": 10,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": ""
+      }
+    ],
+    "conjuros": [
+      {
+        "nombre": "Fúlgur",
+        "pm": 10,
+        "por_objetivo": true,
+        "objetivo": "Hasta tres criaturas",
+        "duracion": "Instantánea",
+        "ofensivo": true,
+        "precision": [
+          "PER",
+          "VOL"
+        ],
+        "bonus": 1,
+        "dano": 15,
+        "tipo": "rayo",
+        "efecto": "Cada objetivo sufre [TM + 15] puntos de daño de rayo. *Oportunidad:* Sufre el estado confundido."
+      }
+    ],
+    "otras_acciones": [],
+    "reglas": [
+      {
+        "nombre": "Rápido",
+        "efecto": "Al llenar o vaciar secciones de relojes vinculados a persecuciones o huidas, llena o vacía 2 secciones adicionales."
+      }
+    ],
+    "habilidades": [],
+    "inmunidades_estados": [],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "aullador-tenebroso",
+    "nombre": "Aullador tenebroso",
+    "descripcion": "Sabueso de las sombras que anuncia tragedias y cataclismos inminentes.",
+    "nivel": 15,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "demonio",
+    "rasgos": [
+      "Espeluznante",
+      "Corpulento",
+      "Silencioso",
+      "De otro mundo"
+    ],
+    "atributos": {
+      "DES": 8,
+      "PER": 6,
+      "VIG": 10,
+      "VOL": 8
+    },
+    "pv": 80,
+    "pm": 55,
+    "iniciativa": 7,
+    "defensa": 9,
+    "defensa_magica": 8,
+    "afinidades": {
+      "rayo": "VU",
+      "oscuro": "RS",
+      "fuego": "RS"
+    },
+    "ataques": [
+      {
+        "nombre": "Mordisco fatuo",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "VIG"
+        ],
+        "bonus": 4,
+        "dano": 10,
         "tipo": "fisico",
         "contra": "mdef",
         "efecto": ""
@@ -340,7 +1397,7 @@
     ],
     "conjuros": [
       {
-        "nombre": "Andanada de rocas",
+        "nombre": "Aliento de ascuas",
         "pm": 10,
         "por_objetivo": false,
         "objetivo": "Una criatura",
@@ -352,8 +1409,210 @@
         ],
         "bonus": 1,
         "dano": 15,
-        "tipo": "tierra",
-        "efecto": "El objetivo sufre 【TM + 15】 de daño de tierra y el estado estremecido."
+        "tipo": "fuego",
+        "efecto": "El objetivo sufre [TM + 15] puntos de daño de fuego y el estado débil."
+      },
+      {
+        "nombre": "Aullido de desdicha",
+        "pm": 5,
+        "por_objetivo": false,
+        "objetivo": "Una criatura",
+        "duracion": "Instantánea",
+        "ofensivo": true,
+        "precision": [
+          "VIG",
+          "VOL"
+        ],
+        "bonus": 1,
+        "dano": null,
+        "tipo": null,
+        "efecto": "El objetivo sufre el estado estremecido."
+      }
+    ],
+    "otras_acciones": [],
+    "reglas": [],
+    "habilidades": [],
+    "inmunidades_estados": [],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "equidna",
+    "nombre": "Equidna",
+    "descripcion": "Entidad serpentina que encarna el rencor y la sospecha, manipulando voluntades y congelando la mente.",
+    "nivel": 20,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "demonio",
+    "rasgos": [
+      "Imperecedera",
+      "Sagaz",
+      "Erudita",
+      "Reptante"
+    ],
+    "atributos": {
+      "DES": 8,
+      "PER": 10,
+      "VIG": 6,
+      "VOL": 10
+    },
+    "pv": 70,
+    "pm": 80,
+    "iniciativa": 9,
+    "defensa": 8,
+    "defensa_magica": 10,
+    "afinidades": {
+      "aire": "VU",
+      "oscuro": "RS",
+      "fuego": "IM",
+      "hielo": "RS",
+      "luz": "VU"
+    },
+    "ataques": [
+      {
+        "nombre": "Nido de víboras",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "PER"
+        ],
+        "bonus": 5,
+        "dano": 15,
+        "tipo": "veneno",
+        "contra": "def",
+        "efecto": ""
+      },
+      {
+        "nombre": "Mirada gélida",
+        "alcance": "distancia",
+        "precision": [
+          "DES",
+          "VOL"
+        ],
+        "bonus": 5,
+        "dano": 10,
+        "tipo": "hielo",
+        "contra": "mdef",
+        "efecto": "El objetivo no puede realizar la acción de Objetivo en su próximo turno."
+      }
+    ],
+    "conjuros": [
+      {
+        "nombre": "Fundementes",
+        "pm": 5,
+        "por_objetivo": true,
+        "objetivo": "Hasta tres criaturas",
+        "duracion": "Instantánea",
+        "ofensivo": true,
+        "precision": [
+          "PER",
+          "VOL"
+        ],
+        "bonus": 2,
+        "dano": null,
+        "tipo": null,
+        "efecto": "Cada objetivo impactado pierde [TM + 10] Puntos de Mente."
+      }
+    ],
+    "otras_acciones": [],
+    "reglas": [
+      {
+        "nombre": "Elocuencia",
+        "efecto": "Bonificador de +3 a tiradas enfrentadas en interacciones sociales."
+      }
+    ],
+    "habilidades": [],
+    "inmunidades_estados": [],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "bellotita",
+    "nombre": "Bellotita",
+    "descripcion": "Hada elemental ligada a arboledas sagradas donde el flujo de la vida permanece puro e impoluto.",
+    "nivel": 5,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "elemental",
+    "rasgos": [
+      "Curiosa",
+      "Amable",
+      "Juguetona",
+      "Luminosa"
+    ],
+    "atributos": {
+      "DES": 10,
+      "PER": 6,
+      "VIG": 6,
+      "VOL": 10
+    },
+    "pv": 40,
+    "pm": 55,
+    "iniciativa": 8,
+    "defensa": 10,
+    "defensa_magica": 6,
+    "afinidades": {
+      "aire": "VU",
+      "oscuro": "VU",
+      "tierra": "IM",
+      "luz": "IM",
+      "veneno": "IM"
+    },
+    "ataques": [
+      {
+        "nombre": "Aguja afilada",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "DES"
+        ],
+        "bonus": 0,
+        "dano": 5,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": "+5 de daño adicional si el objetivo sufre el estado lento."
+      }
+    ],
+    "conjuros": [
+      {
+        "nombre": "Enredar",
+        "pm": 5,
+        "por_objetivo": false,
+        "objetivo": "Una criatura",
+        "duracion": "Instantánea",
+        "ofensivo": true,
+        "precision": [
+          "PER",
+          "VOL"
+        ],
+        "bonus": 0,
+        "dano": null,
+        "tipo": null,
+        "efecto": "El objetivo sufre el estado lento."
+      },
+      {
+        "nombre": "Sanación",
+        "pm": 10,
+        "por_objetivo": true,
+        "objetivo": "Hasta tres criaturas",
+        "duracion": "Instantánea",
+        "ofensivo": false,
+        "precision": [
+          "PER",
+          "VOL"
+        ],
+        "bonus": 0,
+        "dano": null,
+        "tipo": null,
+        "efecto": "Cada objetivo recupera 40 Puntos de Vida."
       }
     ],
     "otras_acciones": [],
@@ -370,6 +1629,2619 @@
     "puntos_ultima": 0,
     "siguiente_fase": null,
     "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "esquirla-caos",
+    "nombre": "Esquirla del caos",
+    "descripcion": "Fragmento irracional de entropía condensada que absorbe residuos de magia corrupta.",
+    "nivel": 5,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "elemental",
+    "rasgos": [
+      "Hambrienta",
+      "Alienígena",
+      "Difusora de oscuridad",
+      "Diminuta"
+    ],
+    "atributos": {
+      "DES": 8,
+      "PER": 10,
+      "VIG": 8,
+      "VOL": 6
+    },
+    "pv": 50,
+    "pm": 35,
+    "iniciativa": 9,
+    "defensa": 8,
+    "defensa_magica": 10,
+    "afinidades": {
+      "aire": "VU",
+      "oscuro": "IM",
+      "fuego": "RS",
+      "hielo": "RS",
+      "luz": "VU",
+      "veneno": "IM"
+    },
+    "ataques": [
+      {
+        "nombre": "Dardo caótico",
+        "alcance": "distancia",
+        "precision": [
+          "DES",
+          "PER"
+        ],
+        "bonus": 0,
+        "dano": 5,
+        "tipo": "oscuro",
+        "contra": "def",
+        "efecto": "El objetivo sufre el estado débil."
+      }
+    ],
+    "conjuros": [],
+    "otras_acciones": [],
+    "reglas": [],
+    "habilidades": [],
+    "inmunidades_estados": [
+      "envenenado",
+      "confundido",
+      "enfurecido",
+      "estremecido"
+    ],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "flan-fulgido",
+    "nombre": "Flán fúlgido",
+    "descripcion": "Masa viscosa bioeléctrica creada como acumulador arcano en talleres magitech.",
+    "nivel": 10,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "elemental",
+    "rasgos": [
+      "Hambriento",
+      "Eléctrico",
+      "Lento",
+      "Viscoso"
+    ],
+    "atributos": {
+      "DES": 6,
+      "PER": 6,
+      "VIG": 10,
+      "VOL": 10
+    },
+    "pv": 70,
+    "pm": 70,
+    "iniciativa": 6,
+    "defensa": 7,
+    "defensa_magica": 8,
+    "afinidades": {
+      "fisico": "RS",
+      "rayo": "AS",
+      "tierra": "VU",
+      "fuego": "RS",
+      "veneno": "IM"
+    },
+    "ataques": [
+      {
+        "nombre": "Golpe gelatinoso",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "VIG"
+        ],
+        "bonus": 1,
+        "dano": 5,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": ""
+      }
+    ],
+    "conjuros": [
+      {
+        "nombre": "Onda eléctrica",
+        "pm": 10,
+        "por_objetivo": false,
+        "objetivo": "Una criatura",
+        "duracion": "Instantánea",
+        "ofensivo": true,
+        "precision": [
+          "VIG",
+          "VOL"
+        ],
+        "bonus": 1,
+        "dano": 15,
+        "tipo": "rayo",
+        "efecto": "El objetivo sufre [TM + 15] puntos de daño de rayo y el estado lento."
+      }
+    ],
+    "otras_acciones": [],
+    "reglas": [],
+    "habilidades": [],
+    "inmunidades_estados": [
+      "envenenado"
+    ],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "grenado",
+    "nombre": "Grenado",
+    "descripcion": "Elementa ígneo inestable forjado en las calderas de fundición que detona violentamente al fenecer.",
+    "nivel": 10,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "elemental",
+    "rasgos": [
+      "Abrasador",
+      "Inestable",
+      "Fulgurante",
+      "Volátil"
+    ],
+    "atributos": {
+      "DES": 8,
+      "PER": 6,
+      "VIG": 8,
+      "VOL": 10
+    },
+    "pv": 60,
+    "pm": 60,
+    "iniciativa": 7,
+    "defensa": 9,
+    "defensa_magica": 8,
+    "afinidades": {
+      "tierra": "VU",
+      "fuego": "AS",
+      "hielo": "VU",
+      "veneno": "IM"
+    },
+    "ataques": [
+      {
+        "nombre": "Bufido llameante",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "VOL"
+        ],
+        "bonus": 1,
+        "dano": 10,
+        "tipo": "fuego",
+        "contra": "def",
+        "efecto": "El objetivo pierde la Resistencia al daño de fuego hasta el final del próximo turno del grenado."
+      }
+    ],
+    "conjuros": [],
+    "otras_acciones": [],
+    "reglas": [
+      {
+        "nombre": "Detonación",
+        "efecto": "Al quedar reducido a 0 PV, el grenado explota causando 10 puntos de daño de fuego a todas las demás criaturas en la escena. Si queda reducido a 0 PV mediante daño de hielo, la detonación se anula y no explota."
+      }
+    ],
+    "habilidades": [],
+    "inmunidades_estados": [
+      "envenenado"
+    ],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "espino-nieve",
+    "nombre": "Espino de nieve",
+    "descripcion": "Esfera levitante de ventisca de la que brotan y se retraen agujas de hielo afilado.",
+    "nivel": 15,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "elemental",
+    "rasgos": [
+      "Flotante",
+      "Gélido",
+      "Giratorio",
+      "Termosensible"
+    ],
+    "atributos": {
+      "DES": 8,
+      "PER": 10,
+      "VIG": 6,
+      "VOL": 8
+    },
+    "pv": 70,
+    "pm": 65,
+    "iniciativa": 9,
+    "defensa": 9,
+    "defensa_magica": 12,
+    "afinidades": {
+      "rayo": "VU",
+      "fuego": "VU",
+      "hielo": "AS",
+      "veneno": "IM"
+    },
+    "ataques": [
+      {
+        "nombre": "Mordisco frío",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "PER"
+        ],
+        "bonus": 1,
+        "dano": 5,
+        "tipo": "hielo",
+        "contra": "def",
+        "efecto": ""
+      }
+    ],
+    "conjuros": [
+      {
+        "nombre": "Aliento gélido",
+        "pm": 10,
+        "por_objetivo": false,
+        "objetivo": "Una criatura",
+        "duracion": "Instantánea",
+        "ofensivo": true,
+        "precision": [
+          "PER",
+          "VOL"
+        ],
+        "bonus": 4,
+        "dano": 15,
+        "tipo": "hielo",
+        "efecto": "El objetivo sufre [TM + 15] puntos de daño de hielo y el estado débil."
+      }
+    ],
+    "otras_acciones": [],
+    "reglas": [],
+    "habilidades": [],
+    "inmunidades_estados": [
+      "envenenado"
+    ],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "ninfa",
+    "nombre": "Ninfa",
+    "descripcion": "Espíritu telúrico de las fuentes montañosas que adapta sus influjos a las estaciones del año.",
+    "nivel": 15,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "elemental",
+    "rasgos": [
+      "Sabia",
+      "Suspicaz",
+      "Territorial",
+      "Veloz"
+    ],
+    "atributos": {
+      "DES": 8,
+      "PER": 10,
+      "VIG": 6,
+      "VOL": 8
+    },
+    "pv": 70,
+    "pm": 55,
+    "iniciativa": 10,
+    "defensa": 8,
+    "defensa_magica": 10,
+    "afinidades": {
+      "tierra": "IM",
+      "fuego": "RS",
+      "hielo": "RS",
+      "veneno": "IM"
+    },
+    "ataques": [
+      {
+        "nombre": "Toque estacional",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "PER"
+        ],
+        "bonus": 1,
+        "dano": 10,
+        "tipo": "aire",
+        "contra": "def",
+        "efecto": "El objetivo sufre un estado según la estación: confundido en primavera, débil en verano, lento en otoño o estremecido en invierno."
+      }
+    ],
+    "conjuros": [],
+    "otras_acciones": [],
+    "reglas": [],
+    "habilidades": [],
+    "inmunidades_estados": [
+      "envenenado"
+    ],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "verraco-petreo",
+    "nombre": "Verraco pétreo",
+    "descripcion": "Monolito zoomorfo de granito despertado por fallas sísmicas que arremete en estampida.",
+    "nivel": 20,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "elemental",
+    "rasgos": [
+      "Destructivo",
+      "Irritable",
+      "Macizo",
+      "Rocoso"
+    ],
+    "atributos": {
+      "DES": 8,
+      "PER": 6,
+      "VIG": 12,
+      "VOL": 8
+    },
+    "pv": 110,
+    "pm": 60,
+    "iniciativa": 7,
+    "defensa": 8,
+    "defensa_magica": 6,
+    "afinidades": {
+      "aire": "VU",
+      "rayo": "RS",
+      "tierra": "IM",
+      "veneno": "IM"
+    },
+    "ataques": [
+      {
+        "nombre": "Carga pétrea",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "VIG"
+        ],
+        "bonus": 2,
+        "dano": 15,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": "Propiedad multi (2). Si el ataque falla a al menos un objetivo, el verraco sufre 20 PV de daño directo."
+      },
+      {
+        "nombre": "Colmillo de roca",
+        "alcance": "cuerpo",
+        "precision": [
+          "VIG",
+          "VIG"
+        ],
+        "bonus": 2,
+        "dano": 10,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": ""
+      }
+    ],
+    "conjuros": [
+      {
+        "nombre": "Andanada de rocas",
+        "pm": 10,
+        "por_objetivo": false,
+        "objetivo": "Una criatura",
+        "duracion": "Instantánea",
+        "ofensivo": true,
+        "precision": [
+          "VIG",
+          "VOL"
+        ],
+        "bonus": 2,
+        "dano": 20,
+        "tipo": "tierra",
+        "efecto": "El objetivo sufre [TM + 20] puntos de daño de tierra y el estado confundido."
+      },
+      {
+        "nombre": "Terra",
+        "pm": 10,
+        "por_objetivo": true,
+        "objetivo": "Hasta tres criaturas",
+        "duracion": "Instantánea",
+        "ofensivo": true,
+        "precision": [
+          "VIG",
+          "VOL"
+        ],
+        "bonus": 2,
+        "dano": 20,
+        "tipo": "tierra",
+        "efecto": "Cada objetivo sufre [TM + 20] puntos de daño de tierra (no afecta a criaturas voladoras o en el aire). *Oportunidad:* El objetivo pierde 1 acción en su próximo turno."
+      }
+    ],
+    "otras_acciones": [
+      {
+        "nombre": "Gruñido colérico",
+        "efecto": "En su próximo turno debe ejecutar forzosamente Carga pétrea, y quienes resulten alcanzados sufren además el estado estremecido."
+      }
+    ],
+    "reglas": [],
+    "habilidades": [],
+    "inmunidades_estados": [
+      "envenenado"
+    ],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "cait-sith",
+    "nombre": "Cait Sith",
+    "descripcion": "Felino feérico reanimado por espíritus del invierno; astuto, bromista y maestro termal.",
+    "nivel": 5,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "monstruo",
+    "rasgos": [
+      "Curioso",
+      "Bromista",
+      "Inteligente",
+      "Diminuto"
+    ],
+    "atributos": {
+      "DES": 8,
+      "PER": 8,
+      "VIG": 6,
+      "VOL": 10
+    },
+    "pv": 45,
+    "pm": 65,
+    "iniciativa": 12,
+    "defensa": 9,
+    "defensa_magica": 10,
+    "afinidades": {
+      "rayo": "VU",
+      "fuego": "RS",
+      "hielo": "RS",
+      "veneno": "VU"
+    },
+    "ataques": [
+      {
+        "nombre": "Zarpazo",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "VIG"
+        ],
+        "bonus": 0,
+        "dano": 5,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": ""
+      },
+      {
+        "nombre": "Fuego fatuo",
+        "alcance": "distancia",
+        "precision": [
+          "PER",
+          "VOL"
+        ],
+        "bonus": 0,
+        "dano": 5,
+        "tipo": "fuego",
+        "contra": "mdef",
+        "efecto": "Fuego o hielo, a elección del cait sith."
+      }
+    ],
+    "conjuros": [
+      {
+        "nombre": "Termocontrol",
+        "pm": 15,
+        "por_objetivo": false,
+        "objetivo": "Una criatura",
+        "duracion": "Escena",
+        "ofensivo": true,
+        "precision": [
+          "PER",
+          "VOL"
+        ],
+        "bonus": 0,
+        "dano": null,
+        "tipo": null,
+        "efecto": "Elige entre fuego o hielo: el objetivo sufre 5 puntos de daño adicional de todas las fuentes del tipo elegido."
+      }
+    ],
+    "otras_acciones": [],
+    "reglas": [],
+    "habilidades": [],
+    "inmunidades_estados": [],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "flan-caramelo",
+    "nombre": "Flan de caramelo",
+    "descripcion": "Célula de baba dulce que habita en simbiosis con grandes bestias y segrega fluidos reconfortantes.",
+    "nivel": 5,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "monstruo",
+    "rasgos": [
+      "Cálido",
+      "Luminoso",
+      "Esponjoso",
+      "Entrañable"
+    ],
+    "atributos": {
+      "DES": 8,
+      "PER": 6,
+      "VIG": 10,
+      "VOL": 8
+    },
+    "pv": 60,
+    "pm": 55,
+    "iniciativa": 7,
+    "defensa": 9,
+    "defensa_magica": 8,
+    "afinidades": {
+      "fisico": "RS",
+      "rayo": "RS",
+      "fuego": "RS",
+      "hielo": "RS",
+      "veneno": "VU"
+    },
+    "ataques": [
+      {
+        "nombre": "Baba dulce",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "VIG"
+        ],
+        "bonus": 0,
+        "dano": 10,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": ""
+      },
+      {
+        "nombre": "Aliento dulce",
+        "alcance": "distancia",
+        "precision": [
+          "DES",
+          "PER"
+        ],
+        "bonus": 0,
+        "dano": 5,
+        "tipo": "aire",
+        "contra": "def",
+        "efecto": ""
+      }
+    ],
+    "conjuros": [
+      {
+        "nombre": "Danza dulce",
+        "pm": 10,
+        "por_objetivo": false,
+        "objetivo": "Una criatura",
+        "duracion": "Instantánea",
+        "ofensivo": false,
+        "precision": [
+          "PER",
+          "VOL"
+        ],
+        "bonus": 0,
+        "dano": null,
+        "tipo": null,
+        "efecto": "El objetivo recupera 30 Puntos de Vida y se cura de un estado alterado a elección del flan."
+      }
+    ],
+    "otras_acciones": [],
+    "reglas": [],
+    "habilidades": [],
+    "inmunidades_estados": [],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "terrordoptero",
+    "nombre": "Terrordóptero",
+    "descripcion": "Polilla carroñera de envergadura alada amenazante que esparce polvillo alucinógeno.",
+    "nivel": 5,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "monstruo",
+    "rasgos": [
+      "Inquietante",
+      "Velludo",
+      "Fétido",
+      "Volador"
+    ],
+    "atributos": {
+      "DES": 10,
+      "PER": 6,
+      "VIG": 8,
+      "VOL": 8
+    },
+    "pv": 60,
+    "pm": 55,
+    "iniciativa": 8,
+    "defensa": 10,
+    "defensa_magica": 6,
+    "afinidades": {
+      "fuego": "VU",
+      "hielo": "RS",
+      "veneno": "RS"
+    },
+    "ataques": [
+      {
+        "nombre": "Mordisco de polilla",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "VIG"
+        ],
+        "bonus": 0,
+        "dano": 10,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": ""
+      }
+    ],
+    "conjuros": [
+      {
+        "nombre": "Nube venenosa",
+        "pm": 10,
+        "por_objetivo": true,
+        "objetivo": "Hasta tres criaturas",
+        "duracion": "Instantánea",
+        "ofensivo": true,
+        "precision": [
+          "VIG",
+          "VOL"
+        ],
+        "bonus": 0,
+        "dano": null,
+        "tipo": null,
+        "efecto": "Cada objetivo impactado sufre el estado envenenado."
+      }
+    ],
+    "otras_acciones": [],
+    "reglas": [],
+    "habilidades": [
+      {
+        "id": "volador"
+      }
+    ],
+    "inmunidades_estados": [],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "aojador",
+    "nombre": "Aojador",
+    "descripcion": "Orbe ocular alado que focaliza miradas condenatorias capaces de bloquear las acciones del enemigo.",
+    "nivel": 10,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "monstruo",
+    "rasgos": [
+      "Alado",
+      "Hipnótico",
+      "Sagaz",
+      "Silencioso"
+    ],
+    "atributos": {
+      "DES": 10,
+      "PER": 6,
+      "VIG": 8,
+      "VOL": 8
+    },
+    "pv": 60,
+    "pm": 60,
+    "iniciativa": 12,
+    "defensa": 10,
+    "defensa_magica": 6,
+    "afinidades": {
+      "aire": "RS",
+      "rayo": "VU",
+      "tierra": "RS",
+      "luz": "VU"
+    },
+    "ataques": [
+      {
+        "nombre": "Garra",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "VIG"
+        ],
+        "bonus": 1,
+        "dano": 10,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": ""
+      },
+      {
+        "nombre": "Mirada entrópica",
+        "alcance": "distancia",
+        "precision": [
+          "DES",
+          "VOL"
+        ],
+        "bonus": 1,
+        "dano": 5,
+        "tipo": "oscuro",
+        "contra": "def",
+        "efecto": "Si el objetivo está confundido, realiza 1 acción menos en su próximo turno (mínimo 0)."
+      }
+    ],
+    "conjuros": [
+      {
+        "nombre": "Mirada del destino",
+        "pm": 10,
+        "por_objetivo": false,
+        "objetivo": "Una criatura",
+        "duracion": "Instantánea",
+        "ofensivo": true,
+        "precision": [
+          "VIG",
+          "VOL"
+        ],
+        "bonus": 4,
+        "dano": null,
+        "tipo": null,
+        "efecto": "El objetivo sufre los estados confundido y débil."
+      }
+    ],
+    "otras_acciones": [],
+    "reglas": [],
+    "habilidades": [
+      {
+        "id": "volador"
+      }
+    ],
+    "inmunidades_estados": [],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "draco",
+    "nombre": "Draco",
+    "descripcion": "Saurio ápice cuadrúpedo dotado de escamas ignífugas y una mandíbula trituradora.",
+    "nivel": 10,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "monstruo",
+    "rasgos": [
+      "Hambriento",
+      "Perezoso",
+      "Pesado",
+      "Escamado"
+    ],
+    "atributos": {
+      "DES": 8,
+      "PER": 8,
+      "VIG": 10,
+      "VOL": 6
+    },
+    "pv": 70,
+    "pm": 50,
+    "iniciativa": 8,
+    "defensa": 10,
+    "defensa_magica": 9,
+    "afinidades": {
+      "fuego": "IM",
+      "veneno": "VU"
+    },
+    "ataques": [
+      {
+        "nombre": "Mordisco",
+        "alcance": "cuerpo",
+        "precision": [
+          "VIG",
+          "VIG"
+        ],
+        "bonus": 4,
+        "dano": 10,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": ""
+      }
+    ],
+    "conjuros": [
+      {
+        "nombre": "Aliento de dragón",
+        "pm": 10,
+        "por_objetivo": false,
+        "objetivo": "Una criatura",
+        "duracion": "Instantánea",
+        "ofensivo": true,
+        "precision": [
+          "VIG",
+          "VOL"
+        ],
+        "bonus": 4,
+        "dano": 15,
+        "tipo": "fuego",
+        "efecto": "El objetivo sufre [TM + 15] puntos de daño de fuego y el estado estremecido."
+      }
+    ],
+    "otras_acciones": [],
+    "reglas": [],
+    "habilidades": [],
+    "inmunidades_estados": [],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "hidrozoo",
+    "nombre": "Hidrozoo",
+    "descripcion": "Medusa luminiscente que planea por corrientes electromagnéticas destilando neurotoxinas.",
+    "nivel": 10,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "monstruo",
+    "rasgos": [
+      "Flotante",
+      "Luminiscente",
+      "Silencioso",
+      "Transparente"
+    ],
+    "atributos": {
+      "DES": 8,
+      "PER": 8,
+      "VIG": 10,
+      "VOL": 6
+    },
+    "pv": 70,
+    "pm": 40,
+    "iniciativa": 8,
+    "defensa": 9,
+    "defensa_magica": 10,
+    "afinidades": {
+      "rayo": "VU",
+      "hielo": "RS",
+      "veneno": "RS"
+    },
+    "ataques": [
+      {
+        "nombre": "Tentáculo urticante",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "VIG"
+        ],
+        "bonus": 1,
+        "dano": 5,
+        "tipo": "rayo",
+        "contra": "def",
+        "efecto": "El objetivo sufre el estado enfurecido."
+      },
+      {
+        "nombre": "Toque ácido",
+        "alcance": "cuerpo",
+        "precision": [
+          "VIG",
+          "VIG"
+        ],
+        "bonus": 1,
+        "dano": 10,
+        "tipo": "veneno",
+        "contra": "def",
+        "efecto": "El objetivo pierde 1 Punto de Inventario."
+      }
+    ],
+    "conjuros": [],
+    "otras_acciones": [],
+    "reglas": [],
+    "habilidades": [
+      {
+        "id": "volador"
+      }
+    ],
+    "inmunidades_estados": [],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "cocatriz",
+    "nombre": "Cocatriz",
+    "descripcion": "Monstruosidad ornitomorfa voraz cuyo picotazo inocula toxinas de petrificación progresiva.",
+    "nivel": 15,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "monstruo",
+    "rasgos": [
+      "Ágil",
+      "Impredecible",
+      "Pequeña",
+      "Hedionda"
+    ],
+    "atributos": {
+      "DES": 8,
+      "PER": 10,
+      "VIG": 8,
+      "VOL": 6
+    },
+    "pv": 70,
+    "pm": 45,
+    "iniciativa": 9,
+    "defensa": 9,
+    "defensa_magica": 12,
+    "afinidades": {
+      "rayo": "RS",
+      "tierra": "RS",
+      "hielo": "VU"
+    },
+    "ataques": [
+      {
+        "nombre": "Picotazo petrificante",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "PER"
+        ],
+        "bonus": 4,
+        "dano": 0,
+        "tipo": "fisico",
+        "contra": "mdef",
+        "efecto": "Sin daño. El objetivo sufre el estado lento; si ya estaba lento, debe superar una tirada de [VIG + VOL] contra ND 10 o quedará permanentemente petrificado."
+      },
+      {
+        "nombre": "Picotazo tóxico",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "VIG"
+        ],
+        "bonus": 4,
+        "dano": 10,
+        "tipo": "veneno",
+        "contra": "def",
+        "efecto": ""
+      }
+    ],
+    "conjuros": [],
+    "otras_acciones": [],
+    "reglas": [],
+    "habilidades": [],
+    "inmunidades_estados": [],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "mimico",
+    "nombre": "Mímico",
+    "descripcion": "Depredador metamórfico insidioso que adopta la apariencia exacta de cofres o enseres suntuosos.",
+    "nivel": 15,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "monstruo",
+    "rasgos": [
+      "Famélico",
+      "Sigiloso",
+      "Astuto",
+      "Amorfo"
+    ],
+    "atributos": {
+      "DES": 10,
+      "PER": 8,
+      "VIG": 8,
+      "VOL": 6
+    },
+    "pv": 70,
+    "pm": 45,
+    "iniciativa": 9,
+    "defensa": 11,
+    "defensa_magica": 10,
+    "afinidades": {
+      "fisico": "RS",
+      "aire": "RS",
+      "oscuro": "RS",
+      "tierra": "VU",
+      "luz": "RS",
+      "veneno": "VU"
+    },
+    "ataques": [
+      {
+        "nombre": "Zarpazo del mímico",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "VIG"
+        ],
+        "bonus": 4,
+        "dano": 5,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": "Inflige daño duplicado si toma por sorpresa al objetivo."
+      },
+      {
+        "nombre": "Robaobjetos",
+        "alcance": "distancia",
+        "precision": [
+          "DES",
+          "PER"
+        ],
+        "bonus": 4,
+        "dano": 5,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": "El objetivo pierde 2 Puntos de Inventario."
+      }
+    ],
+    "conjuros": [],
+    "otras_acciones": [],
+    "reglas": [
+      {
+        "nombre": "Cambiar de forma",
+        "efecto": "Mientras está transformado, resulta indistinguible del objeto copiado, salvo por un detalle inquietante o anómalo que el DJ debe incorporar en su descripción."
+      }
+    ],
+    "habilidades": [],
+    "inmunidades_estados": [],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "urna-temible",
+    "nombre": "Urna temible",
+    "descripcion": "Urnas sepulcrales repletas de huesos antiguos y habitadas por espíritus errantes corroídos por la envidia hacia los vivos.",
+    "nivel": 5,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "no-muerto",
+    "rasgos": [
+      "Burlona",
+      "Diminuta",
+      "Flotante",
+      "Frágil"
+    ],
+    "atributos": {
+      "DES": 10,
+      "PER": 6,
+      "VIG": 6,
+      "VOL": 10
+    },
+    "pv": 50,
+    "pm": 55,
+    "iniciativa": 8,
+    "defensa": 11,
+    "defensa_magica": 8,
+    "afinidades": {
+      "fisico": "VU",
+      "oscuro": "IM",
+      "fuego": "VU",
+      "luz": "VU",
+      "veneno": "IM"
+    },
+    "ataques": [
+      {
+        "nombre": "Toque de la urna",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "VIG"
+        ],
+        "bonus": 0,
+        "dano": 5,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": ""
+      },
+      {
+        "nombre": "Risa caótica",
+        "alcance": "distancia",
+        "precision": [
+          "DES",
+          "VIG"
+        ],
+        "bonus": 0,
+        "dano": 5,
+        "tipo": "oscuro",
+        "contra": "mdef",
+        "efecto": "El objetivo sufre el estado estremecido."
+      }
+    ],
+    "conjuros": [],
+    "otras_acciones": [],
+    "reglas": [],
+    "habilidades": [],
+    "inmunidades_estados": [
+      "envenenado"
+    ],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "zombi",
+    "nombre": "Zombi",
+    "descripcion": "Restos putrefactos de humanoides animados mediante magia oscura e impulsados por un hambre insaciable.",
+    "nivel": 5,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "no-muerto",
+    "rasgos": [
+      "Inquietante",
+      "Lento",
+      "Putrefacto",
+      "Sin intelecto"
+    ],
+    "atributos": {
+      "DES": 6,
+      "PER": 6,
+      "VIG": 12,
+      "VOL": 8
+    },
+    "pv": 70,
+    "pm": 45,
+    "iniciativa": 6,
+    "defensa": 8,
+    "defensa_magica": 7,
+    "afinidades": {
+      "oscuro": "IM",
+      "tierra": "VU",
+      "fuego": "VU",
+      "luz": "VU",
+      "veneno": "IM"
+    },
+    "ataques": [
+      {
+        "nombre": "Zarpazo zombi",
+        "alcance": "cuerpo",
+        "precision": [
+          "VIG",
+          "VIG"
+        ],
+        "bonus": 0,
+        "dano": 5,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": ""
+      },
+      {
+        "nombre": "Mordisco voraz",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "VIG"
+        ],
+        "bonus": 0,
+        "dano": 5,
+        "tipo": "oscuro",
+        "contra": "def",
+        "efecto": "El objetivo sufre el estado débil."
+      }
+    ],
+    "conjuros": [],
+    "otras_acciones": [],
+    "reglas": [],
+    "habilidades": [],
+    "inmunidades_estados": [
+      "envenenado",
+      "confundido",
+      "enfurecido",
+      "estremecido"
+    ],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "mago-esqueletico",
+    "nombre": "Mago esquelético",
+    "descripcion": "Antiguos lugartenientes de nigromantes, dotados de un intelecto maligno capaz de canalizar magia umbría.",
+    "nivel": 10,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "no-muerto",
+    "rasgos": [
+      "Ambicioso",
+      "Astuto",
+      "Despiadado",
+      "Erudito"
+    ],
+    "atributos": {
+      "DES": 6,
+      "PER": 8,
+      "VIG": 8,
+      "VOL": 10
+    },
+    "pv": 60,
+    "pm": 70,
+    "iniciativa": 5,
+    "defensa": 8,
+    "defensa_magica": 12,
+    "afinidades": {
+      "oscuro": "IM",
+      "tierra": "VU",
+      "fuego": "RS",
+      "hielo": "RS",
+      "luz": "VU",
+      "veneno": "IM"
+    },
+    "ataques": [
+      {
+        "nombre": "Bastón",
+        "alcance": "cuerpo",
+        "precision": [
+          "VOL",
+          "VOL"
+        ],
+        "bonus": 1,
+        "dano": 6,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": "El mago esquelético recupera 5 PM."
+      }
+    ],
+    "conjuros": [
+      {
+        "nombre": "Umbra",
+        "pm": 10,
+        "por_objetivo": true,
+        "objetivo": "Hasta tres criaturas",
+        "duracion": "Instantánea",
+        "ofensivo": true,
+        "precision": [
+          "PER",
+          "VOL"
+        ],
+        "bonus": 1,
+        "dano": 15,
+        "tipo": "oscuro",
+        "efecto": "Cada objetivo sufre [TM + 15] daño de oscuro. Oportunidad: Cada objetivo alcanzado sufre el estado estremecido."
+      }
+    ],
+    "otras_acciones": [],
+    "reglas": [],
+    "habilidades": [
+      {
+        "id": "equipable"
+      }
+    ],
+    "inmunidades_estados": [
+      "envenenado"
+    ],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "Bastón, vestidura de sabio.",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "soldado-esqueletico",
+    "nombre": "Soldado esquelético",
+    "descripcion": "Guerreros cadavéricos implacables y sanguinarios que custodian ruinas antiguas al servicio de nigromantes.",
+    "nivel": 10,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "no-muerto",
+    "rasgos": [
+      "Cruel",
+      "Sanguinario",
+      "Silencioso",
+      "Sin mente"
+    ],
+    "atributos": {
+      "DES": 8,
+      "PER": 8,
+      "VIG": 10,
+      "VOL": 6
+    },
+    "pv": 70,
+    "pm": 40,
+    "iniciativa": 6,
+    "defensa": 12,
+    "defensa_magica": 8,
+    "afinidades": {
+      "aire": "VU",
+      "oscuro": "IM",
+      "tierra": "VU",
+      "luz": "VU",
+      "veneno": "IM"
+    },
+    "ataques": [
+      {
+        "nombre": "Espada de bronce",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "VIG"
+        ],
+        "bonus": 5,
+        "dano": 11,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": ""
+      }
+    ],
+    "conjuros": [],
+    "otras_acciones": [],
+    "reglas": [],
+    "habilidades": [
+      {
+        "id": "equipable"
+      }
+    ],
+    "inmunidades_estados": [
+      "envenenado",
+      "confundido",
+      "enfurecido",
+      "estremecido"
+    ],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "Brigantina, escudo de bronce, espada de bronce.",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "aullador-oseo",
+    "nombre": "Aullador óseo",
+    "descripcion": "Abominaciones esqueléticas desprovistas de lealtad, movidas únicamente por una voracidad salvaje e insaciable.",
+    "nivel": 15,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "no-muerto",
+    "rasgos": [
+      "Eternamente hambriento",
+      "Feroz",
+      "Resistente",
+      "Veloz"
+    ],
+    "atributos": {
+      "DES": 10,
+      "PER": 6,
+      "VIG": 10,
+      "VOL": 6
+    },
+    "pv": 80,
+    "pm": 55,
+    "iniciativa": 8,
+    "defensa": 10,
+    "defensa_magica": 6,
+    "afinidades": {
+      "fisico": "RS",
+      "aire": "VU",
+      "oscuro": "IM",
+      "hielo": "RS",
+      "luz": "VU",
+      "veneno": "IM"
+    },
+    "ataques": [
+      {
+        "nombre": "Fauces aserradas",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "VIG"
+        ],
+        "bonus": 1,
+        "dano": 10,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": "El objetivo sufre el estado lento."
+      }
+    ],
+    "conjuros": [
+      {
+        "nombre": "Aliento pútrido",
+        "pm": 10,
+        "por_objetivo": false,
+        "objetivo": "Una criatura",
+        "duracion": "Instantánea",
+        "ofensivo": true,
+        "precision": [
+          "VIG",
+          "VOL"
+        ],
+        "bonus": 1,
+        "dano": 15,
+        "tipo": "oscuro",
+        "efecto": "El objetivo sufre [TM + 15] de daño oscuro y el estado débil."
+      }
+    ],
+    "otras_acciones": [],
+    "reglas": [],
+    "habilidades": [],
+    "inmunidades_estados": [
+      "envenenado"
+    ],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "necrofago",
+    "nombre": "Necrófago",
+    "descripcion": "Poderosos cadáveres poseídos por almas enloquecidas que infestan cementerios devorando cuerpos recientes.",
+    "nivel": 15,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "no-muerto",
+    "rasgos": [
+      "Agresivo",
+      "Aterrador",
+      "Enorme",
+      "Poderoso"
+    ],
+    "atributos": {
+      "DES": 8,
+      "PER": 6,
+      "VIG": 12,
+      "VOL": 6
+    },
+    "pv": 90,
+    "pm": 45,
+    "iniciativa": 7,
+    "defensa": 8,
+    "defensa_magica": 6,
+    "afinidades": {
+      "oscuro": "IM",
+      "luz": "VU",
+      "veneno": "IM"
+    },
+    "ataques": [
+      {
+        "nombre": "Aliento venenoso",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "VIG"
+        ],
+        "bonus": 1,
+        "dano": 5,
+        "tipo": "veneno",
+        "contra": "def",
+        "efecto": "El objetivo sufre el estado envenenado."
+      },
+      {
+        "nombre": "Garras furiosas",
+        "alcance": "cuerpo",
+        "precision": [
+          "VIG",
+          "VIG"
+        ],
+        "bonus": 1,
+        "dano": 10,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": "Propiedad multi (2)."
+      }
+    ],
+    "conjuros": [],
+    "otras_acciones": [],
+    "reglas": [],
+    "habilidades": [],
+    "inmunidades_estados": [
+      "envenenado"
+    ],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "alma-encadenada",
+    "nombre": "Alma encadenada",
+    "descripcion": "Espíritus atormentados en vida convertidos en espectros de gran poder consumidos por el ansia de venganza.",
+    "nivel": 20,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "no-muerto",
+    "rasgos": [
+      "Agónica",
+      "Etérea",
+      "Maldita",
+      "Vengativa"
+    ],
+    "atributos": {
+      "DES": 12,
+      "PER": 8,
+      "VIG": 6,
+      "VOL": 8
+    },
+    "pv": 70,
+    "pm": 70,
+    "iniciativa": 10,
+    "defensa": 12,
+    "defensa_magica": 8,
+    "afinidades": {
+      "fisico": "IM",
+      "aire": "VU",
+      "oscuro": "IM",
+      "tierra": "RS",
+      "fuego": "VU",
+      "hielo": "RS",
+      "luz": "VU",
+      "veneno": "IM"
+    },
+    "ataques": [
+      {
+        "nombre": "Garra furiosa",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "VOL"
+        ],
+        "bonus": 5,
+        "dano": 10,
+        "tipo": "oscuro",
+        "contra": "def",
+        "efecto": "El objetivo sufre el estado enfurecido."
+      }
+    ],
+    "conjuros": [
+      {
+        "nombre": "Lamento aterrador",
+        "pm": 10,
+        "por_objetivo": false,
+        "objetivo": "Una criatura",
+        "duracion": "Instantánea",
+        "ofensivo": true,
+        "precision": [
+          "PER",
+          "VOL"
+        ],
+        "bonus": 5,
+        "dano": 20,
+        "tipo": "hielo",
+        "efecto": "El objetivo sufre [TM + 20] de daño de hielo y el estado estremecido."
+      }
+    ],
+    "otras_acciones": [],
+    "reglas": [],
+    "habilidades": [],
+    "inmunidades_estados": [
+      "envenenado"
+    ],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "momia",
+    "nombre": "Momia",
+    "descripcion": "Cadáveres preservados mediante ritos ancestrales que obedecen con lealtad ciega sus órdenes originales.",
+    "nivel": 20,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "no-muerto",
+    "rasgos": [
+      "Eternamente leal",
+      "Inflamable",
+      "Maldita",
+      "Silenciosa"
+    ],
+    "atributos": {
+      "DES": 6,
+      "PER": 8,
+      "VIG": 10,
+      "VOL": 10
+    },
+    "pv": 90,
+    "pm": 70,
+    "iniciativa": 7,
+    "defensa": 6,
+    "defensa_magica": 8,
+    "afinidades": {
+      "aire": "VU",
+      "oscuro": "IM",
+      "fuego": "VU",
+      "luz": "VU",
+      "veneno": "IM"
+    },
+    "ataques": [
+      {
+        "nombre": "Garra sepulcral",
+        "alcance": "cuerpo",
+        "precision": [
+          "VIG",
+          "VOL"
+        ],
+        "bonus": 5,
+        "dano": 10,
+        "tipo": "tierra",
+        "contra": "def",
+        "efecto": "Cada objetivo alcanzado sufre el estado lento; si ya lo estaba, se vuelve Vulnerable a todos los tipos de daño hasta que elimine el estado lento."
+      }
+    ],
+    "conjuros": [],
+    "otras_acciones": [],
+    "reglas": [
+      {
+        "nombre": "Maldición antigua",
+        "efecto": "Cuando queda reducida a 0 Puntos de Vida, la momia se disuelve en cenizas y desata una maldición: todas las criaturas de la escena sufren los estados débil y estremecido."
+      }
+    ],
+    "habilidades": [],
+    "inmunidades_estados": [
+      "envenenado",
+      "confundido",
+      "enfurecido",
+      "estremecido"
+    ],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "calabaza-maldita",
+    "nombre": "Calabaza maldita",
+    "descripcion": "Restos rencorosos de calabazas talladas arrojadas tras festivales otoñales antiguos, famosas en relatos de terror.",
+    "nivel": 5,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "planta",
+    "rasgos": [
+      "Apestosa",
+      "Furiosa",
+      "Podrida",
+      "Pequeña"
+    ],
+    "atributos": {
+      "DES": 8,
+      "PER": 8,
+      "VIG": 8,
+      "VOL": 8
+    },
+    "pv": 50,
+    "pm": 55,
+    "iniciativa": 8,
+    "defensa": 9,
+    "defensa_magica": 10,
+    "afinidades": {
+      "aire": "VU",
+      "oscuro": "RS",
+      "tierra": "VU",
+      "fuego": "RS"
+    },
+    "ataques": [
+      {
+        "nombre": "Mordisco podrido",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "VIG"
+        ],
+        "bonus": 3,
+        "dano": 5,
+        "tipo": "veneno",
+        "contra": "def",
+        "efecto": ""
+      }
+    ],
+    "conjuros": [
+      {
+        "nombre": "Escupitajo de pulpa",
+        "pm": 10,
+        "por_objetivo": false,
+        "objetivo": "Una criatura",
+        "duracion": "Escena",
+        "ofensivo": false,
+        "precision": [
+          "PER",
+          "VOL"
+        ],
+        "bonus": 0,
+        "dano": null,
+        "tipo": null,
+        "efecto": "Hasta el final del conjuro, el objetivo sufre 5 de daño adicional de todas las fuentes que le inflijan daño de veneno."
+      }
+    ],
+    "otras_acciones": [],
+    "reglas": [],
+    "habilidades": [],
+    "inmunidades_estados": [
+      "confundido",
+      "enfurecido",
+      "estremecido"
+    ],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "mandragora",
+    "nombre": "Mandrágora",
+    "descripcion": "Raíces vegetales diminutas y maliciosas célebres por acarrear infortunio a quien se cruza en su camino.",
+    "nivel": 5,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "planta",
+    "rasgos": [
+      "Diminuta",
+      "Inquietante",
+      "Malévola",
+      "Rápida"
+    ],
+    "atributos": {
+      "DES": 10,
+      "PER": 8,
+      "VIG": 6,
+      "VOL": 8
+    },
+    "pv": 45,
+    "pm": 45,
+    "iniciativa": 9,
+    "defensa": 10,
+    "defensa_magica": 8,
+    "afinidades": {
+      "aire": "RS",
+      "tierra": "RS",
+      "hielo": "VU",
+      "veneno": "VU"
+    },
+    "ataques": [
+      {
+        "nombre": "Bofetada de hoja",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "VIG"
+        ],
+        "bonus": 0,
+        "dano": 5,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": "+5 de daño adicional si el objetivo sufre el estado estremecido."
+      },
+      {
+        "nombre": "Grito de mandrágora",
+        "alcance": "distancia",
+        "precision": [
+          "VOL",
+          "VOL"
+        ],
+        "bonus": 0,
+        "dano": 0,
+        "tipo": "fisico",
+        "contra": "mdef",
+        "efecto": "Sin daño. El objetivo sufre el estado estremecido. No surte efecto en criaturas incapaces de oír el chillido."
+      }
+    ],
+    "conjuros": [],
+    "otras_acciones": [],
+    "reglas": [],
+    "habilidades": [],
+    "inmunidades_estados": [
+      "confundido",
+      "enfurecido",
+      "estremecido"
+    ],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "mala-hierba",
+    "nombre": "Mala hierba",
+    "descripcion": "Entramados espinosos de zarzas que ocultan un núcleo correoso y fauces sin fondo en su interior.",
+    "nivel": 10,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "planta",
+    "rasgos": [
+      "Agresiva",
+      "Espinosa",
+      "Maldita",
+      "Veloz"
+    ],
+    "atributos": {
+      "DES": 10,
+      "PER": 8,
+      "VIG": 8,
+      "VOL": 6
+    },
+    "pv": 60,
+    "pm": 40,
+    "iniciativa": 9,
+    "defensa": 10,
+    "defensa_magica": 8,
+    "afinidades": {
+      "aire": "VU",
+      "oscuro": "IM",
+      "tierra": "RS",
+      "fuego": "VU",
+      "veneno": "RS"
+    },
+    "ataques": [
+      {
+        "nombre": "Mordisco sombrío",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "VIG"
+        ],
+        "bonus": 1,
+        "dano": 10,
+        "tipo": "oscuro",
+        "contra": "def",
+        "efecto": ""
+      },
+      {
+        "nombre": "Lianas aletargantes",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "DES"
+        ],
+        "bonus": 1,
+        "dano": 5,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": "El objetivo sufre el estado débil y, mientras dure, no puede realizar la acción de Guardia."
+      }
+    ],
+    "conjuros": [],
+    "otras_acciones": [],
+    "reglas": [],
+    "habilidades": [],
+    "inmunidades_estados": [
+      "confundido",
+      "enfurecido",
+      "estremecido"
+    ],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "micoide",
+    "nombre": "Micoide",
+    "descripcion": "Criaturas fúngicas robustas y lentas; pacíficas por naturaleza pero implacables si sus ciénagas resultan profanadas.",
+    "nivel": 10,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "planta",
+    "rasgos": [
+      "Amante del fango",
+      "Ciega",
+      "Lenta",
+      "Pacífica"
+    ],
+    "atributos": {
+      "DES": 6,
+      "PER": 8,
+      "VIG": 10,
+      "VOL": 8
+    },
+    "pv": 70,
+    "pm": 60,
+    "iniciativa": 7,
+    "defensa": 8,
+    "defensa_magica": 9,
+    "afinidades": {
+      "oscuro": "RS",
+      "tierra": "RS",
+      "hielo": "VU"
+    },
+    "ataques": [
+      {
+        "nombre": "Bofetada fúngica",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "VIG"
+        ],
+        "bonus": 1,
+        "dano": 5,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": ""
+      }
+    ],
+    "conjuros": [
+      {
+        "nombre": "Soplo de esporas",
+        "pm": 10,
+        "por_objetivo": false,
+        "objetivo": "Una criatura",
+        "duracion": "Instantánea",
+        "ofensivo": true,
+        "precision": [
+          "VIG",
+          "VOL"
+        ],
+        "bonus": 1,
+        "dano": 15,
+        "tipo": "veneno",
+        "efecto": "El objetivo sufre [TM + 15] de daño de veneno y el estado estremecido."
+      }
+    ],
+    "otras_acciones": [],
+    "reglas": [
+      {
+        "nombre": "Gran sombrero",
+        "efecto": "Cuando el micoide realiza la acción de Guardia, puede elegir a otra criatura: hasta el inicio del próximo turno del micoide, la criatura elegida obtiene Resistencia a todos los tipos de daño."
+      }
+    ],
+    "habilidades": [],
+    "inmunidades_estados": [
+      "confundido",
+      "enfurecido",
+      "estremecido"
+    ],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "cactrol",
+    "nombre": "Cactrol",
+    "descripcion": "Cactos gigantescos que pasan la mayor parte del día inmóviles entre dunas y se vuelven sumamente activos al caer la noche.",
+    "nivel": 15,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "planta",
+    "rasgos": [
+      "Inquietante",
+      "Poderosa",
+      "Sensible al agua",
+      "Territorial"
+    ],
+    "atributos": {
+      "DES": 8,
+      "PER": 6,
+      "VIG": 12,
+      "VOL": 6
+    },
+    "pv": 90,
+    "pm": 55,
+    "iniciativa": 7,
+    "defensa": 8,
+    "defensa_magica": 6,
+    "afinidades": {
+      "aire": "RS",
+      "tierra": "RS",
+      "fuego": "RS",
+      "hielo": "VU",
+      "luz": "RS"
+    },
+    "ataques": [
+      {
+        "nombre": "Abrazo perforante",
+        "alcance": "cuerpo",
+        "precision": [
+          "VIG",
+          "VIG"
+        ],
+        "bonus": 1,
+        "dano": 10,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": ""
+      },
+      {
+        "nombre": "Ráfaga de espinas",
+        "alcance": "distancia",
+        "precision": [
+          "DES",
+          "VIG"
+        ],
+        "bonus": 1,
+        "dano": 5,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": ""
+      }
+    ],
+    "conjuros": [
+      {
+        "nombre": "Drenaje de humedad",
+        "pm": 10,
+        "por_objetivo": false,
+        "objetivo": "Una criatura",
+        "duracion": "Instantánea",
+        "ofensivo": true,
+        "precision": [
+          "VIG",
+          "VOL"
+        ],
+        "bonus": 1,
+        "dano": 15,
+        "tipo": "veneno",
+        "efecto": "El objetivo sufre [TM + 15] de daño de veneno y el cactrol recupera PV iguales a la mitad de los PV perdidos por el objetivo."
+      }
+    ],
+    "otras_acciones": [
+      {
+        "nombre": "Jugo de cactrol",
+        "efecto": "El cactrol se cura de los estados lento y débil y, acto seguido, realiza un ataque gratuito con Ráfaga de espinas."
+      }
+    ],
+    "reglas": [],
+    "habilidades": [],
+    "inmunidades_estados": [
+      "confundido",
+      "enfurecido",
+      "estremecido"
+    ],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "atrapadragones",
+    "nombre": "Atrapadragones",
+    "descripcion": "Planta colosal arraigada al terreno con fauces tan descomunales que pueden cercenar los miembros de un dragón adulto.",
+    "nivel": 20,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "planta",
+    "rasgos": [
+      "Arraigada al terreno",
+      "Colosal",
+      "Hambrienta",
+      "Paciente"
+    ],
+    "atributos": {
+      "DES": 8,
+      "PER": 8,
+      "VIG": 10,
+      "VOL": 8
+    },
+    "pv": 90,
+    "pm": 60,
+    "iniciativa": 8,
+    "defensa": 8,
+    "defensa_magica": 8,
+    "afinidades": {
+      "aire": "RS",
+      "rayo": "VU",
+      "tierra": "VU",
+      "fuego": "RS",
+      "luz": "RS",
+      "veneno": "VU"
+    },
+    "ataques": [
+      {
+        "nombre": "Devoradragones",
+        "alcance": "cuerpo",
+        "precision": [
+          "VIG",
+          "VIG"
+        ],
+        "bonus": 5,
+        "dano": 10,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": "Si el objetivo sufre el estado débil, es engullido: sufre 20 de daño físico al inicio de cada turno del atrapadragones y solo puede usar la acción de Objetivo para liberarse (reloj de 4 secciones). Un soldado engulle a una criatura a la vez; un élite o campeón, a dos; si no le quedan bocas libres, escupe antes a una."
+      },
+      {
+        "nombre": "Azote de zarcillos",
+        "alcance": "distancia",
+        "precision": [
+          "DES",
+          "VIG"
+        ],
+        "bonus": 5,
+        "dano": 15,
+        "tipo": "aire",
+        "contra": "def",
+        "efecto": "El objetivo sufre el estado débil."
+      }
+    ],
+    "conjuros": [
+      {
+        "nombre": "Gas aturdidor",
+        "pm": 10,
+        "por_objetivo": true,
+        "objetivo": "Hasta tres criaturas",
+        "duracion": "Instantánea",
+        "ofensivo": true,
+        "precision": [
+          "VIG",
+          "VOL"
+        ],
+        "bonus": 2,
+        "dano": null,
+        "tipo": null,
+        "efecto": "Cada objetivo sufre la pérdida de la mitad de sus Puntos de Mente actuales."
+      },
+      {
+        "nombre": "Predigestión",
+        "pm": 10,
+        "por_objetivo": false,
+        "objetivo": "Una criatura",
+        "duracion": "Escena",
+        "ofensivo": false,
+        "precision": [
+          "PER",
+          "VOL"
+        ],
+        "bonus": 2,
+        "dano": null,
+        "tipo": null,
+        "efecto": "Hasta el final del conjuro, el objetivo sufre 10 de daño adicional de todas las fuentes que inflijan daño físico."
+      }
+    ],
+    "otras_acciones": [],
+    "reglas": [],
+    "habilidades": [],
+    "inmunidades_estados": [
+      "confundido",
+      "enfurecido",
+      "estremecido"
+    ],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "bandido",
+    "nombre": "Bandido",
+    "descripcion": "Salteadores habituales en senderos poco vigilados que asaltan carretas mercantes y viajeros desprevenidos.",
+    "nivel": 5,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "humanoide",
+    "rasgos": [
+      "Fuerte",
+      "Orgulloso",
+      "Irritable",
+      "Jactancioso"
+    ],
+    "atributos": {
+      "DES": 6,
+      "PER": 8,
+      "VIG": 10,
+      "VOL": 8
+    },
+    "pv": 60,
+    "pm": 45,
+    "iniciativa": 10,
+    "defensa": 9,
+    "defensa_magica": 9,
+    "afinidades": {
+      "tierra": "RS",
+      "hielo": "RS"
+    },
+    "ataques": [
+      {
+        "nombre": "Hacha de bandido",
+        "alcance": "cuerpo",
+        "precision": [
+          "VIG",
+          "VIG"
+        ],
+        "bonus": 0,
+        "dano": 10,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": ""
+      }
+    ],
+    "conjuros": [],
+    "otras_acciones": [],
+    "reglas": [
+      {
+        "nombre": "Pésimo carácter",
+        "efecto": "Mientras se encuentre en Crisis, el bandido es inmune a todos los estados alterados."
+      }
+    ],
+    "habilidades": [
+      {
+        "id": "equipable"
+      }
+    ],
+    "inmunidades_estados": [],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "Atuendo de viaje, hacha, escudo de bronce.",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "bruja-kobold",
+    "nombre": "Bruja kóbold",
+    "descripcion": "Kóbolds versados en la magia de la naturaleza que imitan rasgos de bestias y monstruos para potenciar a su clan.",
+    "nivel": 5,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "humanoide",
+    "rasgos": [
+      "Críptica",
+      "Peluda",
+      "Pequeña",
+      "Sabia"
+    ],
+    "atributos": {
+      "DES": 8,
+      "PER": 8,
+      "VIG": 6,
+      "VOL": 10
+    },
+    "pv": 50,
+    "pm": 55,
+    "iniciativa": 6,
+    "defensa": 9,
+    "defensa_magica": 10,
+    "afinidades": {
+      "aire": "RS",
+      "luz": "RS"
+    },
+    "ataques": [
+      {
+        "nombre": "Bastón de roble",
+        "alcance": "cuerpo",
+        "precision": [
+          "VOL",
+          "VOL"
+        ],
+        "bonus": 0,
+        "dano": 6,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": ""
+      }
+    ],
+    "conjuros": [
+      {
+        "nombre": "Aliento fétido",
+        "pm": 5,
+        "por_objetivo": false,
+        "objetivo": "Una criatura",
+        "duracion": "Instantánea",
+        "ofensivo": true,
+        "precision": [
+          "PER",
+          "VOL"
+        ],
+        "bonus": 0,
+        "dano": 10,
+        "tipo": "veneno",
+        "efecto": "El objetivo sufre [TM + 10] daño de veneno."
+      },
+      {
+        "nombre": "Despertar",
+        "pm": 20,
+        "por_objetivo": false,
+        "objetivo": "Una criatura",
+        "duracion": "Escena",
+        "ofensivo": false,
+        "precision": [
+          "PER",
+          "VOL"
+        ],
+        "bonus": 0,
+        "dano": null,
+        "tipo": null,
+        "efecto": "La bruja kóbold escoge entre Destreza, Percepción, Vigor o Voluntad: hasta el final del conjuro, el objetivo considera el atributo escogido incrementado en un tamaño de dado (máximo d12)."
+      }
+    ],
+    "otras_acciones": [],
+    "reglas": [],
+    "habilidades": [
+      {
+        "id": "equipable"
+      }
+    ],
+    "inmunidades_estados": [],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "Bastón, vestidura de sabio.",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "explorador-kobold",
+    "nombre": "Explorador kóbold",
+    "descripcion": "Humanoides de muy pequeña estatura cubiertos de denso vello azabache, nativos de espesos bosques y cordilleras.",
+    "nivel": 5,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "humanoide",
+    "rasgos": [
+      "Atento",
+      "Peludo",
+      "Pequeño",
+      "Veloz"
+    ],
+    "atributos": {
+      "DES": 10,
+      "PER": 8,
+      "VIG": 6,
+      "VOL": 8
+    },
+    "pv": 40,
+    "pm": 45,
+    "iniciativa": 8,
+    "defensa": 11,
+    "defensa_magica": 9,
+    "afinidades": {
+      "aire": "RS",
+      "fuego": "RS"
+    },
+    "ataques": [
+      {
+        "nombre": "Daga de acero",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "PER"
+        ],
+        "bonus": 1,
+        "dano": 4,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": "+5 de daño adicional si el objetivo sufre al menos un estado alterado."
+      },
+      {
+        "nombre": "Pedrada",
+        "alcance": "distancia",
+        "precision": [
+          "DES",
+          "VIG"
+        ],
+        "bonus": 0,
+        "dano": 5,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": "El objetivo sufre el estado confundido."
+      }
+    ],
+    "conjuros": [],
+    "otras_acciones": [],
+    "reglas": [],
+    "habilidades": [
+      {
+        "id": "equipable"
+      }
+    ],
+    "inmunidades_estados": [],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "Atuendo de viaje, daga de acero.",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "guardia",
+    "nombre": "Guardia",
+    "descripcion": "Soldados profesionales encargados de custodiar murallas, patrullar calles citadinas o escoltar caravanas a través de bosques.",
+    "nivel": 5,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "humanoide",
+    "rasgos": [
+      "Adiestrado",
+      "Disciplinado",
+      "Leal",
+      "Valiente"
+    ],
+    "atributos": {
+      "DES": 8,
+      "PER": 8,
+      "VIG": 8,
+      "VOL": 8
+    },
+    "pv": 60,
+    "pm": 45,
+    "iniciativa": 5,
+    "defensa": 11,
+    "defensa_magica": 8,
+    "afinidades": {},
+    "ataques": [
+      {
+        "nombre": "Lanza pesada",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "VIG"
+        ],
+        "bonus": 0,
+        "dano": 12,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": ""
+      },
+      {
+        "nombre": "Ballesta",
+        "alcance": "distancia",
+        "precision": [
+          "DES",
+          "PER"
+        ],
+        "bonus": 0,
+        "dano": 8,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": ""
+      }
+    ],
+    "conjuros": [],
+    "otras_acciones": [],
+    "reglas": [
+      {
+        "nombre": "Formación defensiva",
+        "efecto": "La guardia obtiene un bonificador de +1 a la Defensa y a la Defensa Mágica mientras participe en el combate al menos otra guardia aliada."
+      },
+      {
+        "nombre": "Protección",
+        "efecto": "Cuando otra criatura aliada sufra un ataque o daño, la guardia puede interponerse y recibirlo en su lugar (según las reglas de la habilidad Protección)."
+      }
+    ],
+    "habilidades": [
+      {
+        "id": "equipable"
+      }
+    ],
+    "inmunidades_estados": [],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "Ballesta, coraza de bronce, lanza pesada.",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "colinita",
+    "nombre": "Colinita",
+    "descripcion": "Seres híbridos humanos y abeja dotados de exquisitas dotes artesanales, habitualmente aislados y celosos de sus colmenas.",
+    "nivel": 10,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "humanoide",
+    "rasgos": [
+      "Amante de la belleza",
+      "Hacendosa",
+      "Reservada",
+      "Zumbante"
+    ],
+    "atributos": {
+      "DES": 10,
+      "PER": 8,
+      "VIG": 8,
+      "VOL": 6
+    },
+    "pv": 70,
+    "pm": 50,
+    "iniciativa": 11,
+    "defensa": 11,
+    "defensa_magica": 10,
+    "afinidades": {
+      "aire": "RS",
+      "fuego": "VU",
+      "veneno": "RS"
+    },
+    "ataques": [
+      {
+        "nombre": "Espada colmena",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "PER"
+        ],
+        "bonus": 5,
+        "dano": 10,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": ""
+      }
+    ],
+    "conjuros": [
+      {
+        "nombre": "Danza de las abejas",
+        "pm": 20,
+        "por_objetivo": false,
+        "objetivo": "Una criatura",
+        "duracion": "Instantánea",
+        "ofensivo": false,
+        "precision": [
+          "PER",
+          "VOL"
+        ],
+        "bonus": 0,
+        "dano": null,
+        "tipo": null,
+        "efecto": "El objetivo puede realizar de inmediato un ataque gratuito con un arma equipada (o un ataque básico si es un PNJ)."
+      }
+    ],
+    "otras_acciones": [],
+    "reglas": [],
+    "habilidades": [
+      {
+        "id": "volador"
+      },
+      {
+        "id": "equipable"
+      }
+    ],
+    "inmunidades_estados": [],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "Katana, vestidura de sabio.",
     "botin": "",
     "notas": ""
   },
@@ -449,6 +4321,173 @@
     "puntos_ultima": 0,
     "siguiente_fase": null,
     "equipo": "Coraza rúnica, espada de bronce, pistola.",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "francotirador",
+    "nombre": "Francotirador",
+    "descripcion": "Especialistas en fuego de precisión a larga distancia que abaten objetivos clave desde posiciones ocultas en la retaguardia.",
+    "nivel": 15,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "humanoide",
+    "rasgos": [
+      "Disciplinado",
+      "Escurridizo",
+      "Observador",
+      "Preciso"
+    ],
+    "atributos": {
+      "DES": 10,
+      "PER": 10,
+      "VIG": 6,
+      "VOL": 6
+    },
+    "pv": 60,
+    "pm": 45,
+    "iniciativa": 13,
+    "defensa": 11,
+    "defensa_magica": 11,
+    "afinidades": {
+      "rayo": "RS",
+      "fuego": "RS",
+      "hielo": "VU"
+    },
+    "ataques": [
+      {
+        "nombre": "Daga",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "PER"
+        ],
+        "bonus": 5,
+        "dano": 4,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": ""
+      },
+      {
+        "nombre": "Arco de francotirador",
+        "alcance": "distancia",
+        "precision": [
+          "DES",
+          "DES"
+        ],
+        "bonus": 4,
+        "dano": 8,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": "El objetivo sufre el estado confundido o lento (a elección del francotirador)."
+      }
+    ],
+    "conjuros": [],
+    "otras_acciones": [],
+    "reglas": [],
+    "habilidades": [
+      {
+        "id": "equipable"
+      }
+    ],
+    "inmunidades_estados": [],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "Atuendo de viaje, arco corto, daga de acero.",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "mago-de-batalla",
+    "nombre": "Mago de batalla",
+    "descripcion": "Comandantes protegidos con blindajes rúnicos que dirigen batallones combinando devastadores rayos elementales y conjuros de sanación.",
+    "nivel": 20,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "humanoide",
+    "rasgos": [
+      "Ambicioso",
+      "Disciplinado",
+      "Sagaz",
+      "Sabio"
+    ],
+    "atributos": {
+      "DES": 8,
+      "PER": 8,
+      "VIG": 8,
+      "VOL": 10
+    },
+    "pv": 80,
+    "pm": 90,
+    "iniciativa": 9,
+    "defensa": 11,
+    "defensa_magica": 9,
+    "afinidades": {
+      "fuego": "RS",
+      "hielo": "RS"
+    },
+    "ataques": [
+      {
+        "nombre": "Bastón decorado",
+        "alcance": "cuerpo",
+        "precision": [
+          "VOL",
+          "VOL"
+        ],
+        "bonus": 2,
+        "dano": 11,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": ""
+      }
+    ],
+    "conjuros": [
+      {
+        "nombre": "Fulgur",
+        "pm": 10,
+        "por_objetivo": true,
+        "objetivo": "Hasta tres criaturas",
+        "duracion": "Instantánea",
+        "ofensivo": true,
+        "precision": [
+          "PER",
+          "VOL"
+        ],
+        "bonus": 5,
+        "dano": 20,
+        "tipo": "rayo",
+        "efecto": "Cada objetivo sufre [TM + 20] daño de rayo. Oportunidad: Cada objetivo alcanzado sufre el estado confundido."
+      },
+      {
+        "nombre": "Sanación",
+        "pm": 10,
+        "por_objetivo": true,
+        "objetivo": "Hasta tres criaturas",
+        "duracion": "Instantánea",
+        "ofensivo": false,
+        "precision": [
+          "PER",
+          "VOL"
+        ],
+        "bonus": 0,
+        "dano": null,
+        "tipo": null,
+        "efecto": "Cada objetivo recupera 40 Puntos de Vida (50 a partir del nivel 20+, 60 a partir del nivel 40+)."
+      }
+    ],
+    "otras_acciones": [],
+    "reglas": [],
+    "habilidades": [
+      {
+        "id": "equipable"
+      }
+    ],
+    "inmunidades_estados": [],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "Bastón, coraza rúnica.",
     "botin": "",
     "notas": ""
   }
