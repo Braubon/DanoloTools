@@ -17,7 +17,7 @@ import { manejarInteraccion } from './bot.js';
 import { paraDiscord } from './comandos.js';
 import * as P from './personajes.js';
 import * as E from './escena.js';
-import { vistaRevelada, exportarPnj } from '../assets/js/pnj.js';
+import { vistaRevelada, exportarPnj, completarHabilidades } from '../assets/js/pnj.js';
 import { aplicarValor, R } from './motor.js';
 import { baseDatos } from './motor.js';
 
@@ -242,6 +242,9 @@ export const datos = envoltorio(async (req) => {
       await exigirDj(req);
       const b = await cuerpo(req);
       try {
+        if (b.plantilla && Array.isArray(b.plantilla.habilidades)) {
+          b.plantilla = completarHabilidades({ ...b.plantilla, habilidades: b.plantilla.habilidades.map((h) => ({ ...h })) }, (await baseDatos()).col.habilidades_pnj);
+        }
         const r = await E.guardarPlantilla(b.plantilla, { reemplazar: !!b.reemplazar });
         if (b.idAnterior && b.idAnterior !== r.plantilla.id) await renombrarPlantilla(b.idAnterior, r.plantilla.id);
         return json(r);
@@ -350,11 +353,13 @@ async function vistaCampo({ s, rol }) {
     pnj: c.enemigos.filter((i) => tpl[i.plantilla]).map((i) => {
       const t = tpl[i.plantilla];
       const base = { clave: `pnj:${i.id}`, id: i.id, plantilla: t.id, nombre: i.nombre, lado: i.lado, fila: i.fila, orden: Number(i.orden) || 0, imagen: urlImagen(`pnj:${t.id}`, vers) };
-      if (!ve) return base;
-      if (rol === 'dj') return { ...base, pv: i.pv, pm: i.pm, estados: i.estados || [], dano: Math.max(0, t.pv - i.pv), ficha: t };
+      if (!ve) { delete base.plantilla; return base; }
+      if (rol === 'dj') return { ...base, pv: i.pv, pm: i.pm, pu: i.pu || 0, estados: i.estados || [], dano: Math.max(0, t.pv - i.pv), ficha: t, siguiente: t.siguiente_fase && tpl[t.siguiente_fase] ? { id: t.siguiente_fase, nombre: tpl[t.siguiente_fase].nombre } : null };
       const aliado = i.lado === 'aliado';
       const info = aliado ? vistaRevelada(t, 16) : vistaRevelada(t);
-      return { ...base, estados: i.estados || [], dano: Math.max(0, t.pv - i.pv), info: { nombre: t.nombre, descripcion: t.descripcion, ...info }, ...(aliado || info.revelado >= 10 ? { pv: i.pv, pm: i.pm } : {}) };
+      const conoce = aliado || info.revelado >= 10;
+      delete base.plantilla; // el id de la ficha no se envía a los jugadores
+      return { ...base, estados: i.estados || [], dano: Math.max(0, t.pv - i.pv), info: { ...(conoce ? { nombre: t.nombre, descripcion: t.descripcion } : {}), ...info }, ...(conoce ? { pv: i.pv, pm: i.pm } : {}) };
     })
   };
   if (rol === 'dj') out.plantillas = lista.map((t) => ({ id: t.id, nombre: t.nombre, nivel: t.nivel, especie: t.especie, revelado: t.revelado || 0 }));
@@ -407,11 +412,22 @@ async function ajustar(b) {
     if (!t) throw new Error('La ficha de ese PNJ ya no existe.');
     if (b.dano) {
       const r = E.danar(i, t, b.dano.cantidad, b.dano.tipo, { ignoraResistencia: !!b.dano.ignora });
-      lineas.push(`${i.nombre}: ${r.res.cura ? `absorbe y recupera ${r.res.final}` : `pierde ${r.res.final}`} PV (${r.antes} → ${r.despues}).`);
+      lineas.push(`${i.nombre}: ${r.res.cura ? `absorbe y recupera ${r.despues - r.antes}` : `pierde ${r.antes - r.despues}`} PV (${r.antes} → ${r.despues})${r.res.afinidad ? ` · ${{ VU: 'vulnerable', RS: 'resiste', IM: 'inmune', AS: 'absorbe' }[r.res.afinidad]}` : ''}.`);
     }
     if (b.pv !== undefined && b.pv !== '') i.pv = aplicarValor(i.pv, b.pv, t.pv);
     if (b.pm !== undefined && b.pm !== '') i.pm = aplicarValor(i.pm, b.pm, t.pm);
-    if (Array.isArray(b.estados)) i.estados = b.estados.filter((x) => typeof x === 'string').slice(0, 6);
+    if (b.pu !== undefined && b.pu !== '') i.pu = aplicarValor(i.pu || 0, b.pu, null);
+    if (Array.isArray(b.estados)) {
+      const inmunes = b.estados.filter((x) => (t.inmunidades_estados || []).includes(x) && !(i.estados || []).includes(x));
+      if (inmunes.length) throw new Error(`${i.nombre} es inmune a ${inmunes.join(', ')}.`);
+      i.estados = b.estados.filter((x) => typeof x === 'string').slice(0, 6);
+    }
+    if (b.fase) {
+      const sig = t.siguiente_fase && await E.plantilla(t.siguiente_fase);
+      if (!sig) throw new Error('Esta ficha no tiene una fase siguiente.');
+      E.cambiarFase(i, t, sig);
+      lineas.push(`${i.nombre} pasa a su siguiente fase.`);
+    }
     if (b.nombre) i.nombre = String(b.nombre).trim().slice(0, 60) || i.nombre;
     await E.guardarCampo(c);
     return { ok: true, texto: lineas.join(' ') };

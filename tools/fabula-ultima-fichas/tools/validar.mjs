@@ -10,6 +10,7 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { cargarRaw, construirDb, COLECCIONES } from '../assets/js/db.js';
 import * as R from '../assets/js/rules.js';
+import * as N from '../assets/js/pnj.js';
 
 const raiz = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const leer = async (p) => JSON.parse(await readFile(p, 'utf8'));
@@ -116,6 +117,34 @@ for (const a of db.col.armaduras) {
 }
 for (const col of ['escudos', 'accesorios', 'cualidades']) for (const o of db.col[col]) comprobarMods(`${col} ${o.id}`, o.modificadores);
 for (const c of db.col.conjuros) if (!db.tablas.listas_conjuros.valores.some((l) => l.id === c.lista)) avi(`conjuro ${c.id}: lista "${c.lista}" no declarada en tablas.listas_conjuros`);
+
+// ------------------------------------------------------------------ PNJ: habilidades y bestiario
+const EFECTOS_PNJ = new Set(['pv', 'pm', 'iniciativa', 'defensa', 'defensa_magica', 'precision', 'magia']);
+for (const h of db.col.habilidades_pnj) {
+  if (!h.efecto) err(`habilidad de PNJ ${h.id}: falta "efecto"`);
+  for (const k of Object.keys(h.efectos || {})) if (!EFECTOS_PNJ.has(k)) err(`habilidad de PNJ ${h.id}: efecto desconocido "${k}"`);
+  for (const o of h.opciones || []) {
+    if (!o.id || !o.etiqueta) err(`habilidad de PNJ ${h.id}: opción sin id o etiqueta`);
+    for (const k of Object.keys(o.efectos || {})) if (!EFECTOS_PNJ.has(k)) err(`habilidad de PNJ ${h.id}/${o.id}: efecto desconocido "${k}"`);
+  }
+  for (const e of [...(h.especies_excluidas || []), ...(h.gratis_para || [])]) if (!N.ESPECIES_INFO[e]) err(`habilidad de PNJ ${h.id}: especie desconocida "${e}"`);
+}
+const idsBestiario = new Set(db.col.bestiario.map((b) => b.id));
+for (const b of db.col.bestiario) {
+  let t;
+  try { t = N.normalizarPnj(b); } catch (e) { err(`bestiario ${b.id}: ${e.message}`); continue; }
+  if (t.id !== b.id) err(`bestiario ${b.id}: id no válido (sería "${t.id}")`);
+  if (!N.ESPECIES_INFO[b.especie]) err(`bestiario ${b.id}: especie "${b.especie}" no válida`);
+  for (const [k, v] of Object.entries(b.afinidades || {})) if (!tipos.has(k) || !N.AFINIDADES[v]) err(`bestiario ${b.id}: afinidad no válida ${k}: ${v}`);
+  for (const a of b.ataques || []) if (a.tipo && !tipos.has(a.tipo)) err(`bestiario ${b.id}: ataque «${a.nombre}» con tipo de daño "${a.tipo}" no válido`);
+  for (const h of b.habilidades || []) {
+    if (h.id && !db.idx.habilidades_pnj.has(h.id)) err(`bestiario ${b.id}: habilidad de PNJ "${h.id}" inexistente`);
+    if (!h.id && !h.nombre) err(`bestiario ${b.id}: habilidad sin id ni nombre`);
+  }
+  for (const e of b.inmunidades_estados || []) if (!N.ESTADOS.some(([k]) => k === e)) err(`bestiario ${b.id}: estado "${e}" no válido`);
+  if (b.siguiente_fase && !idsBestiario.has(b.siguiente_fase)) err(`bestiario ${b.id}: siguiente_fase "${b.siguiente_fase}" no existe en el bestiario`);
+  for (const a of N.calcularPnj(N.completarHabilidades(t, db.col.habilidades_pnj), db.col.habilidades_pnj).avisos) avi(`bestiario ${b.id}: ${a}`);
+}
 
 // ------------------------------------------------------------------ personajes
 const personajes = [];

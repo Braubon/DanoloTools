@@ -7,7 +7,8 @@
 //   fu:imgver      hash  misma clave → versión (para refrescar la caché)
 //
 // Instancia: { id, plantilla, nombre, lado: 'enemigo'|'aliado',
-//              fila: 'vanguardia'|'retaguardia', orden, pv, pm, estados: [] }
+//              fila: 'vanguardia'|'retaguardia', orden, pv, pm, pu, estados: [] }
+// (pu = Puntos Última que le quedan si la ficha es de un villano)
 // Las estadísticas salen siempre de la plantilla; la instancia solo guarda
 // su estado. Al borrar una plantilla se retiran sus instancias.
 // ---------------------------------------------------------------------------
@@ -80,7 +81,9 @@ export async function guardarCampo(c) { await setJSON(K_CAMPO, c); await tocar()
 /** Nombres libres: «Lobo», o «Lobo A», «Lobo B»… si hay varios. */
 function nombresLibres(base, n, ocupados) {
   const usados = new Set(ocupados.map(norm));
-  if (n === 1 && !usados.has(norm(base)) && !ocupados.some((x) => norm(x).startsWith(norm(base) + ' '))) return [base];
+  const escapado = norm(base).replace(/[.*+?^$()|[\]\\{}]/g, '\\$&');
+  const copia = new RegExp('^' + escapado + ' ([a-z]|\\d+)$'); // «Lobo A», «Lobo 12»
+  if (n === 1 && !usados.has(norm(base)) && !ocupados.some((x) => copia.test(norm(x)))) return [base];
   const out = [];
   for (let k = 0; out.length < n && k < 200; k++) {
     const letra = k < 26 ? String.fromCharCode(65 + k) : String(k + 1);
@@ -103,7 +106,7 @@ export async function sacar(t, { cantidad = 1, fila = 'vanguardia', lado = 'enem
   const f = FILAS.includes(fila) ? fila : 'vanguardia';
   const l = LADOS.includes(lado) ? lado : 'enemigo';
   const orden = c.enemigos.filter((i) => i.lado === l && i.fila === f).length;
-  const nuevos = nombres.map((nm, k) => ({ id: uid(), plantilla: t.id, nombre: nm, lado: l, fila: f, orden: orden + k, pv: t.pv, pm: t.pm, estados: [] }));
+  const nuevos = nombres.map((nm, k) => ({ id: uid(), plantilla: t.id, nombre: nm, lado: l, fila: f, orden: orden + k, pv: t.pv, pm: t.pm, pu: t.villano ? t.puntos_ultima || 0 : 0, estados: [] }));
   c.enemigos.push(...nuevos);
   await guardarCampo(c);
   return nuevos;
@@ -142,6 +145,20 @@ export function danar(inst, t, cantidad, tipo, { ignoraResistencia = false } = {
   const antes = inst.pv;
   inst.pv = res.cura ? Math.min(t.pv, inst.pv + res.final) : Math.max(0, inst.pv - res.final);
   return { antes, despues: inst.pv, res, ...cruces(antes, inst.pv, t) };
+}
+
+/**
+ * Jefes con varias fases: la instancia pasa a la ficha siguiente con sus PV y
+ * PM al máximo y sin estados. Conserva los Puntos Última que le queden.
+ */
+export function cambiarFase(inst, actual, siguiente) {
+  if (norm(inst.nombre) === norm(actual.nombre)) inst.nombre = siguiente.nombre;
+  inst.plantilla = siguiente.id;
+  inst.pv = siguiente.pv;
+  inst.pm = siguiente.pm;
+  inst.estados = [];
+  if (siguiente.villano && !inst.pu) inst.pu = siguiente.puntos_ultima || 0;
+  return inst;
 }
 
 export function cruces(antes, despues, t) {

@@ -17,7 +17,6 @@ let personajes = [];
 let plantillas = [];
 let imagenes = {};
 let imagenPara = null;
-let editando = null;      // { idAnterior } mientras el editor de PNJ está abierto
 let miembros = { miembros: [], aviso: null };
 let estado = null;
 let filtro = '';
@@ -56,8 +55,8 @@ async function iniciar() {
 
 function abrirDesdeHash() {
   const m = location.hash.match(/^#pnj=(.+)$/);
-  if (m) { const t = plantillas.find((x) => x.id === decodeURIComponent(m[1])); if (t) abrirEditor(t); }
-  else if (location.hash === '#enemigos') { const el = document.getElementById('enemigos'); if (el) el.scrollIntoView(); }
+  if (m) { location.href = `../pnj/index.html?id=${m[1]}`; return; }
+  if (location.hash === '#enemigos') { const el = document.getElementById('enemigos'); if (el) el.scrollIntoView(); }
 }
 
 async function recargar() {
@@ -128,60 +127,22 @@ function htmlEnemigos() {
         <p class="muted small">${plantillas.length} ficha${plantillas.length === 1 ? '' : 's'}. Los jugadores no las ven: en la <a href="../visor/index.html">vista de combate</a> solo ven nombre, imagen, estados, daño recibido y lo que reveléis con el Estudio.</p></div>
       <div class="fila">
         <button class="btn" data-act="importar-pnj">Importar JSON</button>
-        <button class="btn fantasma" data-act="ejemplos" title="Añade las seis criaturas de ejemplo del manual básico que falten">Cargar ejemplos</button>
-        <button class="btn primario" data-act="nuevo-pnj">Nueva ficha</button>
+        <a class="btn" href="../pnj/index.html?bestiario">Desde el bestiario</a>
+        <a class="btn primario" href="../pnj/index.html?nuevo">Nueva ficha</a>
       </div>
     </div>
     ${plantillas.length ? `<div class="lista">${plantillas.map((t) => `<div class="item pnj-fila">
       <img src="${esc(urlImg(`pnj:${t.id}`))}" alt="" width="40" height="40">
       <div><span class="titulo">${esc(t.nombre)}</span>
-        <div class="sub">Nivel ${t.nivel} · ${esc(N.nombreRango(t))} · ${esc(N.nombreEspecie(t.especie))} · PV ${t.pv} · PM ${t.pm}${t.revelado ? ` · <span style="color:var(--accent)">revelado ${t.revelado}+</span>` : ''}</div></div>
+        <div class="sub">Nivel ${t.nivel} · ${esc(N.nombreRango(t))} · ${esc(N.nombreEspecie(t.especie))} · PV ${t.pv} · PM ${t.pm}${t.villano ? ` · ${esc(N.nombreVillano(t.villano).toLowerCase())}` : ''}${t.siguiente_fase ? ' · con otra fase' : ''}${t.revelado ? ` · <span style="color:var(--accent)">revelado ${t.revelado}+</span>` : ''}</div></div>
       <div class="botones">
-        <button class="btn peq" data-act="editar-pnj" data-id="${esc(t.id)}">Editar</button>
+        <a class="btn peq" href="../pnj/index.html?id=${encodeURIComponent(t.id)}">Editar</a>
+        <a class="btn peq fantasma" href="../pnj/index.html?duplicar=${encodeURIComponent(t.id)}">Duplicar</a>
         <button class="btn peq fantasma" data-act="imagen" data-clave="pnj:${esc(t.id)}">Imagen</button>
         <a class="btn peq fantasma" href="${A}datos/?accion=descargar-plantilla&id=${encodeURIComponent(t.id)}">Exportar</a>
         <button class="btn peq fantasma peligro" data-act="eliminar-pnj" data-id="${esc(t.id)}">Eliminar</button>
       </div></div>`).join('')}</div>`
-      : '<div class="vacio"><p>No hay fichas de enemigo.</p><p class="small">Pulsa «Cargar ejemplos» para tener seis criaturas del manual básico, impórtalas en JSON o crea una nueva.</p></div>'}`;
-}
-
-// ================================================================== editor de PNJ
-function abrirEditor(t) {
-  editando = { idAnterior: t ? t.id : null };
-  const base = t ? N.exportarPnj(t) : N.pnjVacio();
-  delete base.modificado;
-  let d = document.getElementById('editor-pnj');
-  if (!d) {
-    d = document.createElement('dialog');
-    d.id = 'editor-pnj';
-    d.style.width = 'min(820px, calc(100vw - 32px))';
-    document.body.appendChild(d);
-  }
-  d.innerHTML = `<div class="cab"><h2>${t ? `Editar «${esc(t.nombre)}»` : 'Nueva ficha de PNJ'}</h2><button class="btn icono fantasma" data-act="cerrar-editor" aria-label="Cerrar">✕</button></div>
-    <div class="cuerpo-d">
-      <p class="small muted" style="margin-top:0">Edita el JSON directamente. Formato y valores posibles en <code>docs/esquema-datos.md</code> (sección «Fichas de PNJ»). Tipos de daño: ${N.TIPOS_DANO.map(([k]) => `<code>${k}</code>`).join(' ')}. Afinidades: <code>VU</code> <code>RS</code> <code>IM</code> <code>AS</code>. Especies: ${N.ESPECIES.map(([k]) => `<code>${k}</code>`).join(' ')}.</p>
-      <textarea id="json-pnj" spellcheck="false" style="min-height:52vh;font:12px/1.45 ui-monospace,Menlo,Consolas,monospace">${esc(JSON.stringify(base, null, 2))}</textarea>
-      <p id="error-pnj" class="small" style="color:var(--err);min-height:1.4em;margin:8px 0 0"></p>
-    </div>
-    <div class="pie"><button class="btn fantasma" data-act="cerrar-editor">Cancelar</button><button class="btn primario" data-act="guardar-pnj">Guardar</button></div>`;
-  d.showModal();
-}
-
-async function guardarEditor() {
-  const err = document.getElementById('error-pnj');
-  let datos;
-  try { datos = JSON.parse(document.getElementById('json-pnj').value); } catch (e) { err.textContent = 'El JSON no es válido: ' + e.message; return; }
-  let t;
-  try { t = N.normalizarPnj(datos); } catch (e) { err.textContent = e.message; return; }
-  const cambiaId = editando.idAnterior && editando.idAnterior !== t.id;
-  if ((!editando.idAnterior || cambiaId) && plantillas.some((x) => x.id === t.id) && !confirm(`Ya hay una ficha con el identificador «${t.id}». ¿Sustituirla?`)) return;
-  try {
-    await post('datos/?accion=guardar-plantilla', { plantilla: datos, reemplazar: true, idAnterior: cambiaId ? editando.idAnterior : null });
-  } catch (e) { err.textContent = e.message; return; }
-  document.getElementById('editor-pnj').close();
-  if (location.hash.startsWith('#pnj=')) history.replaceState(null, '', location.pathname);
-  toast(`«${t.nombre}» guardado.`);
-  await recargar();
+      : '<div class="vacio"><p>No hay fichas de enemigo.</p><p class="small">Crea una nueva, parte de una criatura del bestiario o importa un JSON.</p></div>'}`;
 }
 
 async function importarPnj(files) {
@@ -192,7 +153,7 @@ async function importarPnj(files) {
       const lista = Array.isArray(contenido) ? contenido : [contenido];
       for (const datos of lista) {
         if (datos && datos.formato === R.FORMATO) throw new Error(`${f.name}: es un personaje jugador; impórtalo arriba, en «Personajes de la partida».`);
-        const t = N.normalizarPnj(datos);
+        const t = N.normalizarPnj(N.completarHabilidades({ ...datos, habilidades: (datos.habilidades || []).map((h) => ({ ...h })) }, (db && db.col.habilidades_pnj) || []));
         const existe = plantillas.some((x) => x.id === t.id);
         if (existe && !confirm(`«${t.nombre}» ya existe. ¿Sustituir su ficha? (se conserva su imagen y lo revelado)`)) continue;
         await post('datos/?accion=guardar-plantilla', { plantilla: datos, reemplazar: true });
@@ -204,20 +165,7 @@ async function importarPnj(files) {
   await recargar();
 }
 
-async function cargarEjemplos() {
-  try {
-    const idx = await (await fetch('../enemigos/index.json', { cache: 'no-cache' })).json();
-    let ok = 0;
-    for (const f of idx.enemigos || []) {
-      const datos = await (await fetch('../enemigos/' + f, { cache: 'no-cache' })).json();
-      if (plantillas.some((x) => x.id === datos.id)) continue;
-      await post('datos/?accion=guardar-plantilla', { plantilla: datos, reemplazar: false });
-      ok++;
-    }
-    toast(ok ? `${ok} fichas de ejemplo cargadas.` : 'Los ejemplos ya estaban cargados.');
-  } catch (e) { toast(e.message, 'err'); }
-  await recargar();
-}
+
 
 function filaPj(pj) {
   const i = pj.identidad;
@@ -293,11 +241,6 @@ document.addEventListener('click', async (e) => {
       return;
     case 'importar': document.getElementById('importar').click(); return;
     case 'importar-pnj': document.getElementById('importar-pnj').click(); return;
-    case 'ejemplos': t.disabled = true; await cargarEjemplos(); return;
-    case 'nuevo-pnj': abrirEditor(null); return;
-    case 'editar-pnj': abrirEditor(plantillas.find((x) => x.id === ds.id)); return;
-    case 'cerrar-editor': document.getElementById('editor-pnj').close(); return;
-    case 'guardar-pnj': await guardarEditor(); return;
     case 'eliminar-pnj': {
       const tp = plantillas.find((x) => x.id === ds.id);
       if (!tp || !confirm(`¿Eliminar la ficha «${tp.nombre}»? Si hay PNJ suyos en el campo, se retiran. Exporta antes su JSON si lo quieres conservar.`)) return;

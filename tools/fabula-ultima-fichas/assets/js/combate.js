@@ -13,6 +13,7 @@ import { cargarRaw, construirDb, get } from './db.js';
 import * as R from './rules.js';
 import * as N from './pnj.js';
 import * as F from './ficha.js';
+import * as VP from './vista-pnj.js';
 import { esc, md, initTema, toast, ICON, reducirImagen } from './ui.js';
 
 const A = '/api/';
@@ -204,7 +205,7 @@ function cabecera(e, sub) {
     <button class="btn icono fantasma" data-act="cerrar" aria-label="Cerrar">${ICON.x}</button></div>`;
 }
 
-const barraRec = (k, cls, act, max) => `<div class="rec"><span class="k">${k}</span><div class="barra ${cls}"><i style="width:${Math.max(0, Math.min(100, (act / (max || 1)) * 100))}%"></i></div><span class="v">${act}<small> / ${max}</small></span></div>`;
+const barraRec = VP.barraRec;
 const seg = (n) => `${n >= 0 ? '+' : ''}${n}`;
 
 function controlesMover(e) {
@@ -217,11 +218,13 @@ function controlesMover(e) {
   </div></div>`;
 }
 
-function selectorEstados(actuales) {
-  return `<div class="estados-sel">${N.ESTADOS.map(([id, n]) => `<button class="chip" data-act="estado" data-estado="${id}" aria-pressed="${actuales.includes(id)}">${n}</button>`).join('')}</div>`;
+function selectorEstados(actuales, inmunes = []) {
+  return `<div class="estados-sel">${N.ESTADOS.map(([id, n]) => inmunes.includes(id) && !actuales.includes(id)
+    ? `<button class="chip inmune" disabled title="Inmune">${n} · inmune</button>`
+    : `<button class="chip" data-act="estado" data-estado="${id}" aria-pressed="${actuales.includes(id)}">${n}</button>`).join('')}</div>`;
 }
 /** Bloque visible (solo DJ) para marcar y desmarcar estados alterados con un clic. */
-const bloqueEstados = (actuales) => `<div class="bloque"><h4>Estados alterados</h4>${selectorEstados(actuales)}
+const bloqueEstados = (actuales, inmunes = []) => `<div class="bloque"><h4>Estados alterados</h4>${selectorEstados(actuales, inmunes)}
   <p class="nota" style="margin:6px 0 0">Pulsa para marcar o quitar. Reducen sus dados en las tiradas del bot.</p></div>`;
 
 // ------------------------------------------------------------------ PJ
@@ -268,80 +271,36 @@ function detallePj(e) {
 }
 
 // ------------------------------------------------------------------ PNJ
-const afinidades = (af) => `<div class="afin">${N.TIPOS_DANO.map(([k, n]) => `<div class="${af[k] || ''}" title="${esc(n)}${af[k] ? ': ' + N.AFINIDADES[af[k]] : ''}">${esc(n.slice(0, 3))}<b>${af[k] || '—'}</b></div>`).join('')}</div>`;
-const listaPnj = (titulo, items) => (items && items.length ? `<div class="bloque"><h4>${titulo}</h4><div class="lista">${items.join('')}</div></div>` : '');
-
-/** Secciones de la ficha de un PNJ con lo que se conoce (v = plantilla o vista revelada). */
-function seccionesPnj(v, estados, completo) {
-  const nivel = completo ? 16 : v.revelado || 0;
-  let h = '';
-  if (nivel >= 13 && v.atributos) {
-    const dados = N.dadosPnj(v, estados);
-    h += `<div class="bloque"><div class="numeros">
-        <div class="stat"><div class="k">DEF</div><div class="v">${v.defensa}</div></div>
-        <div class="stat"><div class="k">D. Mág</div><div class="v">${v.defensa_magica}</div></div>
-        ${completo ? `<div class="stat"><div class="k">Inic.</div><div class="v">${v.iniciativa}</div></div><div class="stat"><div class="k">Nivel</div><div class="v">${v.nivel}</div></div>` : ''}
-      </div></div>
-      <div class="bloque"><h4>Atributos</h4><div class="atributos">${N.ATR.map((a) => `<div class="atributo"><div class="k">${a}</div><div class="v ${dados[a] < v.atributos[a] ? 'baja' : ''}">d${dados[a]}</div><div class="b">${dados[a] < v.atributos[a] ? `de d${v.atributos[a]}` : '&nbsp;'}</div></div>`).join('')}</div></div>
-      <div class="bloque"><h4>Afinidades</h4>${afinidades(v.afinidades || {})}</div>
-      ${v.rasgos && v.rasgos.length ? `<div class="bloque"><h4>Rasgos</h4><div class="fila">${v.rasgos.map((r) => `<span class="chip">${esc(r)}</span>`).join('')}</div></div>` : ''}`;
-  }
-  if (nivel >= 16) {
-    h += listaPnj('Ataques básicos', (v.ataques || []).map((a) => `<div class="item"><div class="titulo">${esc(a.nombre)}</div><div class="mono small">${esc(N.textoAtaque(a))}</div>${a.efecto ? `<div class="sub">${esc(a.efecto)}</div>` : ''}</div>`));
-    h += listaPnj('Conjuros', (v.conjuros || []).map((c, k) => `<details class="item" data-det="pcj:${k}"><summary><span class="titulo">${esc(c.nombre)}</span><span class="muted small">${esc(N.metaConjuroPnj(c))}</span></summary><div class="cuerpo texto">${md(c.efecto)}</div></details>`));
-    h += listaPnj('Otras acciones', (v.otras_acciones || []).map((x, k) => `<details class="item" data-det="poa:${k}"><summary><span class="titulo">${esc(x.nombre)}</span></summary><div class="cuerpo texto">${md(x.efecto)}</div></details>`));
-    h += listaPnj('Reglas especiales', (v.reglas || []).map((x, k) => `<details class="item" data-det="prg:${k}"><summary><span class="titulo">${esc(x.nombre)}</span></summary><div class="cuerpo texto">${md(x.efecto)}</div></details>`));
-  }
-  return h;
-}
-
 function detallePnj(e) {
   if (!ve()) return `${cabecera(e, '')}<div class="bloque"><p class="muted">Entra con tu cuenta de Discord del servidor para ver lo que el grupo sabe de él.</p></div>`;
   const estados = e.estados || [];
-  const chipsEstado = estados.length ? `<div class="fila small" style="margin-top:6px">${estados.map((s) => `<span class="chip err">${esc(N.nombreEstado(s))}</span>`).join('')}</div>` : '';
-  if (esDj()) {
-    const t = e.ficha;
-    const cr = N.crisisPnj(t);
-    const sub = esc(`${t.nombre !== e.nombre ? t.nombre + ' · ' : ''}Nivel ${t.nivel} · ${N.nombreRango(t)} · ${N.nombreEspecie(t.especie)}`);
-    return `${cabecera(e, sub)}
-      <div class="bloque">${barraRec('PV', 'pv', e.pv, t.pv)}${barraRec('PM', 'pm', e.pm, t.pm)}
-        <div class="fila small">${e.pv === 0 ? '<span class="chip err">Caído</span>' : e.pv <= cr ? '<span class="chip err">En Crisis</span>' : `<span class="faint">Crisis ≤ ${cr}</span>`}<span class="faint">· Los jugadores ven ${e.dano ? `−${e.dano} de daño` : 'que está intacto'}</span></div>
-        ${t.descripcion ? `<p class="small muted" style="margin-top:8px"><em>${esc(t.descripcion)}</em></p>` : ''}</div>
-      ${bloqueEstados(estados)}
-      <div class="bloque"><details class="dj" open data-bloque="ajustes-pnj"><summary>Ajustes del DJ</summary><div class="controles">
-        <div class="fila"><label class="small muted">Daño</label><input type="text" id="aj-dano" inputmode="numeric" placeholder="12" aria-label="Daño">
-          <select id="aj-tipo" aria-label="Tipo de daño">${N.TIPOS_DANO.map(([k, n]) => `<option value="${k}">${n}</option>`).join('')}</select>
-          <label class="small fila" style="gap:4px"><input type="checkbox" id="aj-ignora"> ignora RS</label>
-          <button class="btn peq primario" data-act="danar">Aplicar</button></div>
-        <div class="fila"><label class="small muted" style="width:28px">PV</label><input type="text" id="aj-pv" placeholder="+10, max" aria-label="PV"><label class="small muted" style="width:28px">PM</label><input type="text" id="aj-pm" placeholder="-10" aria-label="PM"><button class="btn peq" data-act="ajustar">Fijar</button></div>
-        <div><div class="small muted" style="margin-bottom:4px">Revelado a los jugadores</div>
-          <select id="aj-revelado" data-act="revelar">${N.NIVELES_ESTUDIO.map(([n, txt]) => `<option value="${n}" ${(t.revelado || 0) === n ? 'selected' : ''}>${esc(txt)}</option>`).join('')}</select></div>
-        <p class="nota" style="margin:0">El nivel revelado vale para todos los PNJ de la ficha «${esc(t.nombre)}».</p>
-      </div></details></div>
-      ${controlesMover(e)}
-      <div class="bloque"><div class="numeros"><div class="stat"><div class="k">PV máx</div><div class="v">${t.pv}</div></div><div class="stat"><div class="k">PM máx</div><div class="v">${t.pm}</div></div><div class="stat"><div class="k">Crisis</div><div class="v">${cr}</div></div><div class="stat"><div class="k">Rango</div><div class="v small" style="font-size:13px">${esc(N.nombreRango(t))}</div></div></div></div>
-      ${seccionesPnj(t, estados, true)}
-      ${t.equipo ? `<div class="bloque"><h4>Equipo</h4><p class="small">${esc(t.equipo)}</p></div>` : ''}
-      ${t.notas ? `<div class="bloque"><h4>Notas</h4><div class="texto small">${md(t.notas)}</div></div>` : ''}
-      <div class="acciones-pj">
-        <button class="btn" data-act="imagen">Imagen</button>${e.imagen ? '<button class="btn fantasma" data-act="quitar-imagen">Quitar imagen</button>' : ''}
-        <a class="btn fantasma" href="../panel/index.html#pnj=${encodeURIComponent(t.id)}">Editar ficha</a>
-        <button class="btn fantasma peligro" data-act="retirar">Retirar del campo</button>
-      </div>`;
-  }
-  // Jugador: lo revelado
-  const v = e.info || { revelado: 0 };
-  const nivel = v.revelado || 0;
-  const sub = nivel >= 10 ? esc(`${N.nombreRango(v)} · ${N.nombreEspecie(v.especie)}`) : (e.lado === 'aliado' ? 'Aliado' : 'Perfil desconocido');
-  let rec = '';
-  if (e.pv !== undefined && v.pv) rec = `${barraRec('PV', 'pv', e.pv, v.pv)}${e.pm !== undefined && v.pm ? barraRec('PM', 'pm', e.pm, v.pm) : ''}`;
-  return `${cabecera(e, sub)}
-    <div class="bloque">${rec}
-      <div class="fila small">${e.dano ? `<span class="chip err">Daño recibido: ${e.dano}</span>` : '<span class="faint">Sin daño recibido</span>'}</div>${chipsEstado}
-      ${v.descripcion && nivel >= 10 ? `<p class="small muted" style="margin-top:8px"><em>${esc(v.descripcion)}</em></p>` : ''}
-      ${nivel < 16 && e.lado !== 'aliado' ? `<p class="nota" style="margin-top:10px">${nivel ? `Sabéis: ${esc(N.textoRevelado(nivel))}.` : 'No sabéis nada de su perfil.'} Usa <code>/estudiar</code> en Discord para descubrir más.</p>` : ''}
-    </div>
-    ${seccionesPnj(v, estados, false)}`;
+  if (!esDj()) return `${cabecera(e, esc(VP.subtituloPnj(e, false)))}${VP.htmlPnjJugador(e)}`;
+  const t = e.ficha;
+  const cr = N.crisisPnj(t);
+  return `${cabecera(e, esc(VP.subtituloPnj(e, true, t)))}
+    <div class="bloque">${barraRec('PV', 'pv', e.pv, t.pv)}${barraRec('PM', 'pm', e.pm, t.pm)}
+      <div class="fila small">${e.pv === 0 ? '<span class="chip err">Caído</span>' : e.pv <= cr ? '<span class="chip err">En Crisis</span>' : `<span class="faint">Crisis ≤ ${cr}</span>`}<span class="faint">· Los jugadores ven ${e.dano ? `−${e.dano} de daño` : 'que está intacto'}</span></div>
+      ${t.villano ? `<div class="fila small" style="margin-top:8px"><span class="chip acento">PU ${e.pu || 0}</span><button class="btn peq" data-act="pu" data-valor="-1" ${e.pu ? '' : 'disabled'}>Gastar 1 PU</button><button class="btn peq fantasma" data-act="pu" data-valor="+1">+1</button></div>` : ''}
+      ${e.siguiente ? `<div class="fila small" style="margin-top:8px"><button class="btn peq ${e.pv === 0 ? 'primario' : ''}" data-act="fase">Pasar a la fase siguiente: ${esc(e.siguiente.nombre)}</button></div>` : ''}
+      ${t.descripcion ? `<p class="small muted" style="margin-top:8px"><em>${esc(t.descripcion)}</em></p>` : ''}</div>
+    ${bloqueEstados(estados, t.inmunidades_estados || [])}
+    <div class="bloque"><details class="dj" open data-bloque="ajustes-pnj"><summary>Ajustes del DJ</summary><div class="controles">
+      <div class="fila"><label class="small muted">Daño</label><input type="text" id="aj-dano" inputmode="numeric" placeholder="12" aria-label="Daño">
+        <select id="aj-tipo" aria-label="Tipo de daño">${N.TIPOS_DANO.map(([k, n]) => `<option value="${k}">${n}</option>`).join('')}</select>
+        <label class="small fila" style="gap:4px"><input type="checkbox" id="aj-ignora"> ignora RS</label>
+        <button class="btn peq primario" data-act="danar">Aplicar</button></div>
+      <div class="fila"><label class="small muted" style="width:28px">PV</label><input type="text" id="aj-pv" placeholder="+10, max" aria-label="PV"><label class="small muted" style="width:28px">PM</label><input type="text" id="aj-pm" placeholder="-10" aria-label="PM"><button class="btn peq" data-act="ajustar">Fijar</button></div>
+      <div><div class="small muted" style="margin-bottom:4px">Revelado a los jugadores</div>
+        <select id="aj-revelado" data-act="revelar">${N.NIVELES_ESTUDIO.map(([n, txt]) => `<option value="${n}" ${(t.revelado || 0) === n ? 'selected' : ''}>${esc(txt)}</option>`).join('')}</select></div>
+      <p class="nota" style="margin:0">El nivel revelado vale para todos los PNJ de la ficha «${esc(t.nombre)}».</p>
+    </div></details></div>
+    ${controlesMover(e)}
+    ${VP.htmlPnjCompleto(t, estados)}
+    <div class="acciones-pj">
+      <button class="btn" data-act="imagen">Imagen</button>${e.imagen ? '<button class="btn fantasma" data-act="quitar-imagen">Quitar imagen</button>' : ''}
+      <a class="btn fantasma" href="../pnj/index.html?id=${encodeURIComponent(t.id)}" target="_blank" rel="noopener">Editar ficha</a>
+      <button class="btn fantasma peligro" data-act="retirar">Retirar del campo</button>
+    </div>`;
 }
 
 // ================================================================== acciones
@@ -419,6 +378,11 @@ document.addEventListener('click', async (ev) => {
       await accion(() => post('datos/?accion=ajustar', { clave: e.clave, dano: { cantidad, tipo: $('aj-tipo').value, ignora: $('aj-ignora').checked } }), (r) => r.texto || 'Hecho.');
       return;
     }
+    case 'pu': if (e) await accion(() => post('datos/?accion=ajustar', { clave: e.clave, pu: ds.valor })); return;
+    case 'fase':
+      if (!e || !confirm(`¿Pasar a ${e.nombre} a su siguiente fase (${e.siguiente.nombre})? Recupera todos sus PV y PM.`)) return;
+      await accion(() => post('datos/?accion=ajustar', { clave: e.clave, fase: true }), (r) => r.texto || 'Siguiente fase.');
+      return;
     case 'imagen': if (e) { imagenPara = e.clave.startsWith('pj:') ? `pj:${e.id}` : `pnj:${e.plantilla}`; $('subir-imagen').click(); } return;
     case 'quitar-imagen':
       if (!e) return;

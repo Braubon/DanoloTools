@@ -8,7 +8,8 @@ export const COLECCIONES = [
   'tablas', 'clases', 'conjuros', 'opciones', 'habilidades_heroicas',
   'armas', 'armaduras', 'escudos', 'accesorios', 'cualidades', 'artefactos',
   'peculiaridades', 'poderes_cero_disparadores', 'poderes_cero_efectos',
-  'personalizaciones_arma', 'plantillas_arma'
+  'personalizaciones_arma', 'plantillas_arma',
+  'habilidades_pnj', 'bestiario'
 ];
 
 const fetchJson = async (url) => {

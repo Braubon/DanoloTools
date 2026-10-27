@@ -1,0 +1,455 @@
+[
+  {
+    "id": "aullador-gris",
+    "nombre": "Aullador gris",
+    "descripcion": "Cánido corpulento adiestrado como guardián leal, capaz de interponerse para salvar a sus camaradas.",
+    "nivel": 5,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "bestia",
+    "rasgos": [
+      "Atento",
+      "Inteligente",
+      "Leal",
+      "Vigilante"
+    ],
+    "atributos": {
+      "DES": 10,
+      "PER": 8,
+      "VIG": 8,
+      "VOL": 6
+    },
+    "pv": 50,
+    "pm": 35,
+    "iniciativa": 9,
+    "defensa": 10,
+    "defensa_magica": 8,
+    "afinidades": {
+      "aire": "RS",
+      "hielo": "RS"
+    },
+    "ataques": [
+      {
+        "nombre": "Mordisco feroz",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "VIG"
+        ],
+        "bonus": 3,
+        "dano": 10,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": ""
+      }
+    ],
+    "conjuros": [],
+    "otras_acciones": [],
+    "reglas": [
+      {
+        "nombre": "Protección",
+        "efecto": "Cuando otra criatura sea objetivo de un ataque o peligro, puede ocupar su lugar (funciona como la habilidad Protección)."
+      }
+    ],
+    "habilidades": [],
+    "inmunidades_estados": [],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "rata-gigante",
+    "nombre": "Rata gigante",
+    "descripcion": "Roedor desmesurado portador de fiebres ponzoñosas que prolifera en cloacas y galerías subterráneas.",
+    "nivel": 5,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "bestia",
+    "rasgos": [
+      "Hambrienta",
+      "Feroz",
+      "Pirófoba",
+      "Veloz"
+    ],
+    "atributos": {
+      "DES": 12,
+      "PER": 8,
+      "VIG": 6,
+      "VOL": 6
+    },
+    "pv": 40,
+    "pm": 35,
+    "iniciativa": 14,
+    "defensa": 12,
+    "defensa_magica": 8,
+    "afinidades": {
+      "tierra": "RS",
+      "fuego": "VU",
+      "veneno": "RS"
+    },
+    "ataques": [
+      {
+        "nombre": "Mordisco infeccioso",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "VIG"
+        ],
+        "bonus": 0,
+        "dano": 5,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": "El objetivo sufre el estado envenenado."
+      }
+    ],
+    "conjuros": [],
+    "otras_acciones": [],
+    "reglas": [
+      {
+        "nombre": "Rápido",
+        "efecto": "Al llenar o vaciar secciones de relojes vinculados a persecuciones o huidas, llena o vacía 1 sección adicional."
+      },
+      {
+        "nombre": "Rata acorralada",
+        "efecto": "Mientras se encuentre en Crisis, obtiene un bonificador de +3 a todas sus tiradas."
+      }
+    ],
+    "habilidades": [],
+    "inmunidades_estados": [],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "murcielago-vampiro",
+    "nombre": "Murciélago vampiro",
+    "descripcion": "Depredador alado de tamaño desmesurado dotado de una insólita inteligencia para hostigar a sus presas en bandadas.",
+    "nivel": 5,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "bestia",
+    "rasgos": [
+      "Agresivo",
+      "Inteligente",
+      "Ruidoso",
+      "Fotófobo"
+    ],
+    "atributos": {
+      "DES": 10,
+      "PER": 8,
+      "VIG": 6,
+      "VOL": 8
+    },
+    "pv": 50,
+    "pm": 45,
+    "iniciativa": 9,
+    "defensa": 10,
+    "defensa_magica": 8,
+    "afinidades": {
+      "aire": "VU",
+      "tierra": "RS",
+      "veneno": "RS"
+    },
+    "ataques": [
+      {
+        "nombre": "Chupasangre",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "DES"
+        ],
+        "bonus": 0,
+        "dano": 5,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": "Recupera PV equivalentes a la mitad de los PV perdidos por el objetivo."
+      },
+      {
+        "nombre": "Chirrido",
+        "alcance": "distancia",
+        "precision": [
+          "DES",
+          "VOL"
+        ],
+        "bonus": 0,
+        "dano": 5,
+        "tipo": "aire",
+        "contra": "def",
+        "efecto": "El objetivo sufre el estado confundido."
+      }
+    ],
+    "conjuros": [],
+    "otras_acciones": [],
+    "reglas": [],
+    "habilidades": [
+      {
+        "id": "volador"
+      }
+    ],
+    "inmunidades_estados": [],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "diablillo",
+    "nombre": "Diablillo",
+    "descripcion": "Manifestación mezquina nacida de rencores cotidianos; taimado, huidizo y glacial.",
+    "nivel": 5,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "demonio",
+    "rasgos": [
+      "Contaminado",
+      "Cobarde",
+      "Mezquino",
+      "Sagaz"
+    ],
+    "atributos": {
+      "DES": 8,
+      "PER": 8,
+      "VIG": 6,
+      "VOL": 10
+    },
+    "pv": 50,
+    "pm": 55,
+    "iniciativa": 8,
+    "defensa": 8,
+    "defensa_magica": 8,
+    "afinidades": {
+      "oscuro": "RS",
+      "fuego": "IM",
+      "hielo": "RS",
+      "luz": "VU"
+    },
+    "ataques": [
+      {
+        "nombre": "Uñas congelantes",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "VOL"
+        ],
+        "bonus": 0,
+        "dano": 5,
+        "tipo": "hielo",
+        "contra": "mdef",
+        "efecto": ""
+      }
+    ],
+    "conjuros": [
+      {
+        "nombre": "Cólera",
+        "pm": 10,
+        "por_objetivo": false,
+        "objetivo": "Una criatura",
+        "duracion": "Instantánea",
+        "ofensivo": true,
+        "precision": [
+          "PER",
+          "VOL"
+        ],
+        "bonus": 0,
+        "dano": null,
+        "tipo": null,
+        "efecto": "El objetivo sufre el estado enfurecido y no puede realizar las acciones de Guardia ni Conjuro en su próximo turno."
+      },
+      {
+        "nombre": "Caparazón",
+        "pm": 10,
+        "por_objetivo": false,
+        "objetivo": "El lanzador",
+        "duracion": "Escena",
+        "ofensivo": false,
+        "precision": [
+          "PER",
+          "VOL"
+        ],
+        "bonus": 0,
+        "dano": null,
+        "tipo": null,
+        "efecto": "Obtiene Resistencia al daño físico."
+      }
+    ],
+    "otras_acciones": [],
+    "reglas": [],
+    "habilidades": [],
+    "inmunidades_estados": [],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "gargola",
+    "nombre": "Gárgola",
+    "descripcion": "Estatua de granito animada que custodia bastiones y santuarios levitando sobre los intrusos.",
+    "nivel": 10,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "constructo",
+    "rasgos": [
+      "Flotante",
+      "Sagaz",
+      "Vigilante",
+      "Atada a un enclave"
+    ],
+    "atributos": {
+      "DES": 10,
+      "PER": 8,
+      "VIG": 8,
+      "VOL": 6
+    },
+    "pv": 70,
+    "pm": 50,
+    "iniciativa": 9,
+    "defensa": 10,
+    "defensa_magica": 8,
+    "afinidades": {
+      "aire": "RS",
+      "tierra": "RS",
+      "fuego": "RS",
+      "hielo": "VU",
+      "veneno": "IM"
+    },
+    "ataques": [
+      {
+        "nombre": "Garras de piedra",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "VIG"
+        ],
+        "bonus": 1,
+        "dano": 5,
+        "tipo": "fisico",
+        "contra": "mdef",
+        "efecto": ""
+      }
+    ],
+    "conjuros": [
+      {
+        "nombre": "Andanada de rocas",
+        "pm": 10,
+        "por_objetivo": false,
+        "objetivo": "Una criatura",
+        "duracion": "Instantánea",
+        "ofensivo": true,
+        "precision": [
+          "VIG",
+          "VOL"
+        ],
+        "bonus": 1,
+        "dano": 15,
+        "tipo": "tierra",
+        "efecto": "El objetivo sufre 【TM + 15】 de daño de tierra y el estado estremecido."
+      }
+    ],
+    "otras_acciones": [],
+    "reglas": [],
+    "habilidades": [
+      {
+        "id": "volador"
+      }
+    ],
+    "inmunidades_estados": [
+      "envenenado"
+    ],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "",
+    "botin": "",
+    "notas": ""
+  },
+  {
+    "id": "mercenario",
+    "nombre": "Mercenario",
+    "descripcion": "Combatientes veteranos endurecidos por incontables batallas, equipados con armamento especializado y técnicas mortales.",
+    "nivel": 10,
+    "rango": "soldado",
+    "rango_n": null,
+    "especie": "humanoide",
+    "rasgos": [
+      "Cínico",
+      "Competente",
+      "Despiadado",
+      "Sombrío"
+    ],
+    "atributos": {
+      "DES": 8,
+      "PER": 8,
+      "VIG": 8,
+      "VOL": 8
+    },
+    "pv": 60,
+    "pm": 50,
+    "iniciativa": 5,
+    "defensa": 11,
+    "defensa_magica": 9,
+    "afinidades": {
+      "aire": "RS",
+      "tierra": "VU",
+      "fuego": "RS"
+    },
+    "ataques": [
+      {
+        "nombre": "Espada de bronce",
+        "alcance": "cuerpo",
+        "precision": [
+          "DES",
+          "VIG"
+        ],
+        "bonus": 5,
+        "dano": 11,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": ""
+      },
+      {
+        "nombre": "Pistola",
+        "alcance": "distancia",
+        "precision": [
+          "DES",
+          "PER"
+        ],
+        "bonus": 4,
+        "dano": 8,
+        "tipo": "fisico",
+        "contra": "def",
+        "efecto": ""
+      }
+    ],
+    "conjuros": [],
+    "otras_acciones": [
+      {
+        "nombre": "Ataque cargado",
+        "efecto": "El próximo ataque del mercenario obtiene multi (2) e ignora las Resistencias a cualquier tipo de daño."
+      }
+    ],
+    "reglas": [],
+    "habilidades": [
+      {
+        "id": "equipable"
+      }
+    ],
+    "inmunidades_estados": [],
+    "villano": null,
+    "puntos_ultima": 0,
+    "siguiente_fase": null,
+    "equipo": "Coraza rúnica, espada de bronce, pistola.",
+    "botin": "",
+    "notas": ""
+  }
+]

@@ -89,6 +89,7 @@
 .detalle-panel .estados-sel { display: flex; gap: 6px; flex-wrap: wrap; }
 .detalle-panel .estados-sel .chip { font-size: 13px; padding: 4px 10px; }
 .detalle-panel .estados-sel .chip[aria-pressed="true"] { color: #fff; background: var(--err); border-color: var(--err); }
+.detalle-panel .estados-sel .chip.inmune { opacity: .5; cursor: not-allowed; text-decoration: line-through; }
 .detalle-panel details.dj { border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; background: var(--surface-2); }
 .detalle-panel details.dj > summary { cursor: pointer; font-weight: 600; font-size: 13px; list-style: none; }
 .detalle-panel details.dj > summary::-webkit-details-marker { display: none; }

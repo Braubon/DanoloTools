@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Editor de PNJ · Fabula Ultima</title>
+  <meta name="description" content="Editor de fichas de enemigos y PNJ para el DJ.">
+  <meta name="robots" content="noindex">
+  <script>
+    if (!location.pathname.endsWith('/') && !location.pathname.endsWith('.html')) {
+      location.replace(location.pathname + '/' + location.search + location.hash);
+    }
+    try { var t = localStorage.getItem('fu-tema'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/combate.css">
+  <link rel="stylesheet" href="../assets/css/editor-pnj.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3l11 7v12l-11 7-11-7V10z' fill='%23d4b072'/%3E%3C/svg%3E">
+</head>
+<body>
+  <header class="topbar">
+    <a href="../panel/index.html#enemigos" class="btn fantasma" style="text-decoration:none;margin-right:8px;font-size:13px;" title="Volver al panel del DJ">← Panel</a>
+    <div class="marca"><h1 class="display">Fabula Ultima</h1><span>Editor de PNJ</span></div>
+    <div class="acciones">
+      <span id="usuario"></span>
+      <a class="btn fantasma" href="../visor/index.html">Combate</a>
+      <button class="btn icono fantasma" data-tema-toggle aria-label="Cambiar tema"></button>
+    </div>
+  </header>
+
+  <div class="contenedor ancho">
+    <main id="vista" aria-live="polite"><p class="muted">Cargando…</p></main>
+  </div>
+  <input type="file" id="importar-json" accept=".json,application/json" class="sr">
+  <script type="module" src="../assets/js/editor-pnj.js"></script>
+</body>
+</html>

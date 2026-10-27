@@ -196,7 +196,7 @@ En el personaje: habilidades de clase → `elecciones["hab:<id>"][clave]`; heroi
 
 ## 9. Fichas de PNJ (enemigos y aliados del DJ)
 
-Las guarda el panel del DJ en la base de datos de la partida (no en `data/`). Ejemplos en `enemigos/`. Validación: `normalizarPnj` en `assets/js/pnj.js`.
+El DJ las crea en el editor (`pnj/`) y se guardan en la base de datos de la partida. Las criaturas de los libros están en `data/<libro>/bestiario.json` (§10) con el mismo formato. Validación: `normalizarPnj` en `assets/js/pnj.js`.
 
 ```json
 {
@@ -208,26 +208,47 @@ Las guarda el panel del DJ en la base de datos de la partida (no en `data/`). Ej
   "atributos": { "DES": 10, "PER": 8, "VIG": 8, "VOL": 6 },
   "pv": 50, "pm": 35, "iniciativa": 9, "defensa": 10, "defensa_magica": 8,
   "afinidades": { "aire": "RS", "hielo": "RS" },
+  "inmunidades_estados": [],
   "ataques": [ { "nombre": "Mordisco feroz", "alcance": "cuerpo", "precision": ["DES", "VIG"], "bonus": 3, "dano": 10, "tipo": "fisico", "contra": "def", "efecto": "" } ],
   "conjuros": [ { "nombre": "Cólera", "pm": 10, "por_objetivo": false, "objetivo": "Una criatura", "duracion": "Instantánea", "ofensivo": true, "precision": ["PER", "VOL"], "bonus": 0, "dano": null, "tipo": null, "efecto": "…" } ],
   "otras_acciones": [ { "nombre": "…", "efecto": "…" } ],
+  "habilidades": [ { "id": "volador" }, { "id": "defensas-extra", "opcion": "def" }, { "nombre": "Habilidad libre", "efecto": "…" } ],
   "reglas": [ { "nombre": "Protección", "efecto": "…" } ],
-  "equipo": "", "notas": ""
+  "villano": null, "puntos_ultima": 0, "siguiente_fase": null,
+  "equipo": "", "botin": "", "notas": ""
 }
 ```
 
 | Campo | Valores |
 | --- | --- |
 | `id` | minúsculas y guiones; si falta, se genera del nombre. Identifica la ficha: importar otra con el mismo `id` la sustituye. |
-| `rango` | `soldado`, `elite`, `campeon` (con `rango_n` = N). Solo informativo: PV, PM e iniciativa se escriben ya con el rango aplicado. |
-| `especie` | `bestia`, `constructo`, `demonio`, `elemental`, `monstruo`, `no-muerto`, `planta`, `humanoide` |
+| `rango` | `soldado`, `elite`, `campeon` (con `rango_n` = N). PV, PM e iniciativa se escriben ya con el rango aplicado. |
+| `especie` | `bestia`, `constructo`, `demonio`, `elemental`, `monstruo`, `no-muerto`, `planta`, `humanoide` (reglas de cada una en `ESPECIES_INFO`, `pnj.js`) |
 | `atributos` | tamaño de dado: 6, 8, 10 o 12 |
-| `defensa`, `defensa_magica` | valores finales (con armadura, escudo y habilidades) |
+| `pv`, `pm`, `iniciativa`, `defensa`, `defensa_magica` | valores finales. El editor sugiere los del libro (`calcularPnj`), pero manda lo escrito aquí. |
 | `afinidades` | por tipo de daño (`fisico aire rayo oscuro tierra fuego hielo luz veneno`): `VU` vulnerable (×2), `RS` resistente (½), `IM` inmune (0), `AS` absorbe (cura). Omite los tipos sin afinidad. |
+| `inmunidades_estados` | estados que no se le pueden poner (la web y el bot lo impiden) |
 | `ataques[].bonus` | bonificador total a la precisión (nivel incluido, como en el bestiario) |
 | `ataques[].dano` | X de `[TM + X]`; `tipo` como en afinidades; `contra`: `def` o `mdef`; `alcance`: `cuerpo` o `distancia` |
 | `conjuros[].pm` | coste; `por_objetivo: true` si es «× obj.». `dano` (X de `[TM + X]`) y `tipo` solo si hace daño; `precision` y `bonus` para la prueba de magia si es `ofensivo` |
+| `habilidades` | del catálogo `habilidades_pnj` (`id`, `opcion` si la tiene, `nota` opcional) o libres (`nombre`, `efecto`). Cuentan para el cupo de habilidades. Al guardar se completan `nombre` y `efecto` desde el catálogo. |
+| `reglas` | reglas especiales propias (no cuentan para el cupo) |
+| `villano` | `null`, `menor`, `mayor` o `supremo`; `puntos_ultima` = Puntos Última con los que empieza cada combate (5, 10, 15 por defecto) |
+| `siguiente_fase` | `id` de otra ficha: al llegar a 0 PV no se anuncia que cae y el DJ puede pasarlo a esa fase (`/enemigo fase`) |
+| `botin`, `notas` | solo para el DJ |
 
 El servidor añade `revelado` (0, 10, 13 o 16: lo descubierto con la acción de Estudio) y `modificado`; no hace falta escribirlos. La imagen se sube aparte desde el panel o la vista de combate.
 
-Lo que ven los jugadores según `revelado`: 10+ rango, especie, PV y PM máximos; 13+ además rasgos, atributos, defensas y afinidades; 16+ además ataques, conjuros, otras acciones y reglas especiales. Siempre ven nombre, imagen, estados y daño recibido. Los PNJ del lado aliado se ven completos.
+Lo que ven los jugadores según `revelado`: 10+ rango, especie, PV y PM máximos; 13+ además rasgos, atributos, defensas, afinidades e inmunidades; 16+ además ataques, conjuros, otras acciones, habilidades y reglas especiales. Siempre ven nombre, imagen, estados y daño recibido. Los PNJ del lado aliado se ven completos.
+
+## 10. Bestiario y habilidades de PNJ (`data/`)
+
+- **`bestiario.json`** (colección `bestiario`): criaturas de cada libro, con el formato del §9 sin `formato` ni `version`. Las ofrece el editor de PNJ en **Desde el bestiario**; al elegir una se crea una copia editable. `siguiente_fase` debe apuntar a otra criatura del bestiario. Cómo pasarlas desde el libro: skill `incorporar-atlas`, §6 bis.
+- **`habilidades_pnj.json`** (colección `habilidades_pnj`, en el básico): catálogo de habilidades de PNJ.
+
+```json
+{ "id": "defensas-extra", "nombre": "Defensas extra", "max": 2, "efecto": "…",
+  "opciones": [ { "id": "def", "etiqueta": "+2 Defensa, +1 D. Mágica", "efectos": { "defensa": 2, "defensa_magica": 1 } } ] }
+```
+
+`limitada: true` = una sola vez; `max` = veces como máximo; `efectos` (o `opciones[].efectos`) = cifras que el editor suma a sus sugerencias (`pv pm iniciativa defensa defensa_magica precision magia`); `especies_excluidas` / `gratis_para` = especies que no pueden tenerla / la tienen gratis; `nota` = pista para el DJ en el editor.

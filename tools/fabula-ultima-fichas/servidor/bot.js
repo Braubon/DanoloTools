@@ -192,10 +192,10 @@ function lineaDanoPnj(inst, t, d, tipo) {
   const tn = N.nombreTipoDano(tipo).toLowerCase();
   const af = { VU: ' · ¡Vulnerable!', RS: ' · Resiste', IM: ' · Inmune' }[d.res.afinidad] || '';
   let l = d.res.cura
-    ? `🩸 **${inst.nombre}** absorbe el daño de ${tn} y recupera **${d.res.final}** PV`
-    : `💥 **${inst.nombre}** recibe **${d.res.final}** de daño de ${tn}${af}`;
+    ? `🩸 **${inst.nombre}** absorbe el daño ${tipo === 'fisico' ? 'físico' : `de ${tn}`} y recupera **${d.res.final}** PV`
+    : `💥 **${inst.nombre}** recibe **${d.res.final}** de daño ${tipo === 'fisico' ? 'físico' : `de ${tn}`}${af}`;
   l += ` · daño total recibido ${Math.max(0, t.pv - inst.pv)}`;
-  if (d.cae) l += `\n💀 **${inst.nombre} cae.**`;
+  if (d.cae) l += t.siguiente_fase ? `\n⚠️ **${inst.nombre} queda a 0 PV…**` : `\n💀 **${inst.nombre} cae.**`;
   return l;
 }
 
@@ -417,7 +417,8 @@ function notaEstadosPnj(t, dados, atributos) {
 function estadoPnjDj(inst, t) {
   const cr = N.crisisPnj(t);
   const est = (inst.estados || []).map(N.nombreEstado).join(', ');
-  return `**${inst.nombre}** · PV ${M.barra(inst.pv, t.pv)} **${inst.pv}** / ${t.pv}${inst.pv === 0 ? ' · **Caído**' : inst.pv <= cr ? ` · **En Crisis** (≤ ${cr})` : ` · Crisis ≤ ${cr}`}\nPM **${inst.pm}** / ${t.pm}${est ? ` · ${est}` : ''} · ${etiquetaFila(inst)}`;
+  const extra = [t.villano ? `PU **${inst.pu || 0}** (${N.nombreVillano(t.villano).toLowerCase()})` : '', t.siguiente_fase ? `Siguiente fase: \`${t.siguiente_fase}\`${inst.pv === 0 ? ' → usa /enemigo fase' : ''}` : ''].filter(Boolean).join(' · ');
+  return `**${inst.nombre}** · PV ${M.barra(inst.pv, t.pv)} **${inst.pv}** / ${t.pv}${inst.pv === 0 ? ' · **Caído**' : inst.pv <= cr ? ` · **En Crisis** (≤ ${cr})` : ` · Crisis ≤ ${cr}`}\nPM **${inst.pm}** / ${t.pm}${est ? ` · ${est}` : ''} · ${etiquetaFila(inst)}${extra ? `\n${extra}` : ''}`;
 }
 
 const recortar = (s, n = 1000) => (s.length > n ? s.slice(0, n - 1) + '…' : s);
@@ -429,13 +430,14 @@ function camposPnj(t, v = t, { completo = false } = {}) {
   if (nivel >= 10 || completo) f.push({ name: 'Perfil', value: `${completo ? `Nivel ${t.nivel} · ` : ''}${N.nombreRango(t)} · ${N.nombreEspecie(t.especie)}\nPV **${t.pv}** · PM **${t.pm}**${completo ? ` · Inic. ${t.iniciativa}` : ''}` });
   if (nivel >= 13) {
     f.push({ name: 'Atributos y defensas', value: `${N.ATR.map((a) => `${a} d${t.atributos[a]}`).join(' · ')}\nDEF **${t.defensa}** · D. Mág **${t.defensa_magica}**${t.rasgos.length ? `\nRasgos: ${t.rasgos.join(', ')}` : ''}` });
-    f.push({ name: 'Afinidades', value: N.textoAfinidades(t) });
+    f.push({ name: 'Afinidades', value: N.textoAfinidades(t) + ((t.inmunidades_estados || []).length ? `\nInmune a: ${t.inmunidades_estados.map(N.nombreEstado).join(', ').toLowerCase()}` : '') });
   }
   if (nivel >= 16) {
     if (t.ataques.length) f.push({ name: 'Ataques básicos', value: recortar(t.ataques.map((a) => `**${a.nombre}** ${N.textoAtaque(a)}${a.efecto ? ` — ${a.efecto}` : ''}`).join('\n')) });
     if (t.conjuros.length) f.push({ name: 'Conjuros', value: recortar(t.conjuros.map((c) => `**${c.nombre}** · ${N.metaConjuroPnj(c)} — ${c.efecto}`).join('\n')) });
     if (t.otras_acciones.length) f.push({ name: 'Otras acciones', value: recortar(t.otras_acciones.map((x) => `**${x.nombre}** — ${x.efecto}`).join('\n')) });
-    if (t.reglas.length) f.push({ name: 'Reglas especiales', value: recortar(t.reglas.map((x) => `**${x.nombre}** — ${x.efecto}`).join('\n')) });
+    const reglas = N.reglasVisibles(t);
+    if (reglas.length) f.push({ name: 'Habilidades y reglas especiales', value: recortar(reglas.map((x) => `**${x.nombre}** — ${x.efecto}`).join('\n')) });
   }
   return f.slice(0, 10);
 }
@@ -487,12 +489,13 @@ const SUB_ENEMIGO = {
   async pv(ctx) { return recursoPnj(ctx, 'pv'); },
   async pm(ctx) { return recursoPnj(ctx, 'pm'); },
   async estado(ctx) {
-    const { c, inst } = await resolverPnj(ctx.o.enemigo);
+    const { c, inst, t } = await resolverPnj(ctx.o.enemigo);
     const { accion, estado } = ctx.o;
     const set = new Set(inst.estados || []);
     if (accion === 'limpiar') set.clear();
     else {
       if (!estado) throw new Aviso('Elige el estado.');
+      if (accion === 'anadir' && N.inmuneA(t, estado)) return texto(`**${inst.nombre}** es inmune a ${N.nombreEstado(estado).toLowerCase()}.`);
       if (accion === 'anadir') set.add(estado); else set.delete(estado);
     }
     inst.estados = [...set];
@@ -577,6 +580,26 @@ const SUB_ENEMIGO = {
     const r = M.prueba(dados[a1], dados[a2], ctx.o.bono || 0, ctx.o.dificultad);
     const embed = embedPrueba({ titulo: `${inst.nombre} · ${a1} + ${a2}`, r, etiquetas: [`${a1} d${dados[a1]}`, `${a2} d${dados[a2]}`], pie: notaEstadosPnj(t, dados, [a1, a2]), color: r.critico ? COLOR.critico : r.pifia ? COLOR.pifia : COLOR.enemigo });
     return mensaje({ embeds: [embed] });
+  },
+  async pu(ctx) {
+    const { c, inst, t } = await resolverPnj(ctx.o.enemigo);
+    if (!t.villano) throw new Aviso(`${t.nombre} no es un villano: márcalo como villano en su ficha para que tenga Puntos Última.`);
+    const antes = inst.pu || 0;
+    if (ctx.o.valor !== undefined) {
+      try { inst.pu = M.aplicarValor(antes, ctx.o.valor, null); } catch (e) { throw new Aviso(e.message); }
+      await E.guardarCampo(c);
+    }
+    return texto(`**${inst.nombre}** · Puntos Última ${ctx.o.valor !== undefined ? `${antes} → ` : ''}**${inst.pu || 0}**`, true);
+  },
+  async fase(ctx) {
+    const { c, inst, t } = await resolverPnj(ctx.o.enemigo);
+    if (!t.siguiente_fase) throw new Aviso(`${t.nombre} no tiene una fase siguiente en su ficha.`);
+    const sig = await E.plantilla(t.siguiente_fase);
+    if (!sig) throw new Aviso(`No existe la ficha de la fase siguiente («${t.siguiente_fase}»). Créala en el panel.`);
+    const antes = inst.nombre;
+    E.cambiarFase(inst, t, sig);
+    await E.guardarCampo(c);
+    return mensaje({ content: `🔥 **${antes}** se transforma${inst.nombre !== antes ? `: **${inst.nombre}**` : ''}. ¡Comienza su siguiente fase!`, components: [fila(botonEstado(inst))] });
   },
   async ver(ctx) {
     const { inst, t } = await resolverPnj(ctx.o.enemigo);

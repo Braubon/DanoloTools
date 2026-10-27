@@ -8,6 +8,7 @@ Generador de personajes, vista de combate y bot de Discord para *Fabula Ultima*.
 | Combate | `/visor/` | Vista de combate: el grupo y los enemigos en vanguardia y retaguardia, con una ficha rápida al pulsar cada uno. |
 | Fichas | `/ficha/` | Fichas completas con pestañas y filtros, y el grupo con sus relaciones. La abre el botón «Detalles» de la vista de combate. |
 | Panel del DJ | `/panel/` | Personajes y fichas de enemigo de la partida: importar, exportar, asignar a jugadores, editar, imágenes. Configuración del bot. |
+| Editor de PNJ | `/pnj/` | Editor visual de fichas de enemigo y PNJ (solo DJ), con los cálculos del libro y vista previa de lo que ven los jugadores. |
 | Comandos | `/comandos/` | Consulta de todos los comandos del bot de Discord, para jugadores y DJ. |
 
 El bot de Discord y la partida en la nube funcionan con funciones de Vercel (`/api/`) y Upstash Redis. Configuración paso a paso: **`docs/bot-discord.md`**.
@@ -49,8 +50,10 @@ En la pestaña **Contenido** del generador se activan los atlas y, dentro de cad
 
 ## Enemigos y PNJ
 
-- Las fichas de PNJ se guardan en la partida (panel del DJ → **Fichas de enemigo y PNJ**): importar JSON, crear, editar el JSON a mano, imagen, exportar y eliminar. Formato en `docs/esquema-datos.md`.
-- `enemigos/` trae seis criaturas del manual básico como ejemplo; el panel las importa con **Cargar ejemplos**.
+- Las fichas de PNJ se guardan en la partida (panel del DJ → **Fichas de enemigo y PNJ**): nueva, desde el bestiario, editar, duplicar, imagen, importar y exportar JSON. Formato en `docs/esquema-datos.md` §9.
+- **Editor** (`/pnj/`): identidad, especie, rango, villano y fases; atributos con los perfiles del libro; valores sugeridos por las reglas de creación de PNJ (PV, PM, iniciativa, defensas, bonificadores por nivel) junto a los tuyos; afinidades e inmunidades a estados; ataques; conjuros de la lista de PNJ o de las clases; habilidades del catálogo de PNJ con su cupo; botín y notas; JSON. A la derecha, la ficha como la ves tú y como la ve un jugador en cada nivel de Estudio.
+- **Bestiario**: `data/<libro>/bestiario.json`. El básico trae seis criaturas de ejemplo; el resto se añade siguiendo la skill `incorporar-atlas` (§6 bis).
+- **Villanos** con Puntos Última, **jefes con varias fases** e **inmunidades a estados**, en la vista de combate y en el bot (`/enemigo pu`, `/enemigo fase`).
 - Cada PNJ colocado en el campo es una copia con sus propios PV, PM y estados («Aullador gris A», «B»…). Lo revelado con el Estudio vale para todas las copias de la misma ficha y se conserva para la próxima vez.
 
 ## Probar en local
@@ -83,7 +86,7 @@ Para probar las funciones en local hace falta la CLI de Vercel (`vercel dev`) co
 
 ## Personajes de ejemplo
 
-`personajes/` contiene tres fichas de ejemplo que la página de fichas solo usa si no hay API (ver `personajes/LEEME.md`). Puedes importarlas en el panel para probar el bot. `enemigos/` contiene seis fichas de enemigo de ejemplo (ver `enemigos/LEEME.md`).
+`personajes/` contiene tres fichas de ejemplo que la página de fichas solo usa si no hay API (ver `personajes/LEEME.md`). Puedes importarlas en el panel para probar el bot. Las criaturas de ejemplo están en el bestiario (`data/basico/bestiario.json`).
 
 ## Añadir más atlas
 
@@ -106,11 +109,11 @@ generador/            Generador de personajes
 visor/                Vista de combate
 ficha/                Fichas completas
 panel/  comandos/     Panel del DJ y consulta de comandos
+pnj/                  Editor de fichas de PNJ
 assets/               CSS, módulos JS compartidos e imagen por defecto
 data/                 Base de datos por libro
 servidor/             Bot de Discord y API (funciones de Vercel)
 personajes/           Personajes de ejemplo
-enemigos/             Fichas de enemigo de ejemplo
 tools/validar.mjs     Validador de datos y personajes
 docs/                 Esquema de datos
 ```

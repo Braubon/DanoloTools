@@ -19,7 +19,7 @@ data/                      Base de datos (un directorio por libro). Ver docs/esq
   basico/                  Manual básico (siempre activo)
   alta-fantasia/           Atlas de Alta Fantasía
 personajes/                Fichas de ejemplo (la página de fichas las usa si no hay API)
-enemigos/                  Fichas de PNJ de ejemplo (el panel las importa con «Cargar ejemplos»)
+pnj/                       Editor de fichas de PNJ (solo DJ)
 servidor/comandos.js       Definición de los comandos del bot (la usan Discord y comandos/)
 servidor/bot.js            Manejadores de cada comando, botones y autocompletado
 servidor/web.js            Funciones HTTP: /api/discord/, /api/auth/, /api/datos/
@@ -31,11 +31,13 @@ docs/bot-discord.md        Configuración del bot y de la base de datos
 assets/js/db.js            Carga y filtrado de la base de datos (sin DOM)
 assets/js/rules.js         Motor de reglas: cálculo, validación, subida de nivel (sin DOM)
 assets/js/ficha.js         Piezas de HTML compartidas por las dos webs
-assets/js/pnj.js           Formato de las fichas de PNJ, afinidades y Estudio (sin DOM; lo usan web y servidor)
+assets/js/pnj.js           Formato de las fichas de PNJ, cálculos del libro, afinidades y Estudio (sin DOM; lo usan web y servidor)
+assets/js/vista-pnj.js     HTML de una ficha de PNJ (vista de combate y vista previa del editor)
+assets/js/editor-pnj.js    Editor de PNJ (pnj/)
 assets/js/generador.js     Interfaz del generador
 assets/js/combate.js       Vista de combate (visor/)
 assets/js/fichas.js        Fichas completas (ficha/)
-assets/css/                base.css (tokens y componentes) + combate.css + fichas.css
+assets/css/                base.css (tokens y componentes) + combate.css + fichas.css + editor-pnj.css
 assets/img/sprite-defecto.png   Imagen por defecto de PJ y PNJ (124 × 124)
 tools/validar.mjs          Valida datos y personajes: node tools/validar.mjs
 docs/esquema-datos.md      Referencia de todos los campos JSON
@@ -76,7 +78,8 @@ Abrir los HTML con doble clic no funciona: los navegadores bloquean `fetch` en `
 ## Personajes y enemigos de ejemplo
 
 - `personajes/`: copia los `.json` exportados y añade sus nombres a `personajes/index.json`. La página de fichas los carga solo si no hay API.
-- `enemigos/`: fichas de PNJ (`formato: "fabula-ultima-pnj"`, ver `docs/esquema-datos.md` §9). Añade el archivo a `enemigos/index.json` para que «Cargar ejemplos» del panel lo importe. Valida el formato con `normalizarPnj` de `assets/js/pnj.js`.
+- **Bestiario**: las criaturas de los libros van en `data/<libro>/bestiario.json` (formato en `docs/esquema-datos.md` §9 y §10; cómo pasarlas del libro en la skill `incorporar-atlas`, §6 bis). El editor de PNJ las ofrece en «Desde el bestiario». Valida con `node tools/validar.mjs`.
+- Las reglas de creación de PNJ (fórmulas, rangos, especies, cupo de habilidades) están en `calcularPnj` y `ESPECIES_INFO` de `assets/js/pnj.js`; el catálogo de habilidades de PNJ, en `data/basico/habilidades_pnj.json`.
 
 ## Bot de Discord
 

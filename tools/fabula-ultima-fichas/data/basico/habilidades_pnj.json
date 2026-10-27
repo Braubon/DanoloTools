@@ -1,0 +1,169 @@
+[
+  {
+    "id": "acto-final",
+    "nombre": "Acto final",
+    "nombre_original": "Last Act",
+    "limitada": true,
+    "efecto": "Al quedar reducido a 0 PV, el PNJ ejecuta de inmediato una acción o ataque gratuito antes de caer (como una autodestrucción explosiva que inflige daño menor de la tabla de daño improvisado)."
+  },
+  {
+    "id": "accion-unica",
+    "nombre": "Acción única",
+    "nombre_original": "Unique Action",
+    "efecto": "El PNJ puede realizar la acción de Habilidad para desatar una maniobra especial:\n- Su próximo ataque o conjuro inflige 10 de daño adicional.\n- Cambia de postura, invirtiendo o intercambiando sus afinidades.\n- Invoca refuerzos menores en el campo de batalla."
+  },
+  {
+    "id": "dano-extra",
+    "nombre": "Daño extra",
+    "nombre_original": "Extra Damage",
+    "efecto": "Elige un ataque o conjuro del PNJ: inflige **5 puntos de daño adicional**. Si se adquiere varias veces, debe aplicarse a fuentes de daño distintas.",
+    "nota": "Indica en la nota a qué ataque o conjuro se aplica (y súmalo a su daño)."
+  },
+  {
+    "id": "defensas-extra",
+    "nombre": "Defensas extra",
+    "nombre_original": "Extra Defenses",
+    "max": 2,
+    "efecto": "Elige una opción: +2 a la Defensa y +1 a la Defensa Mágica, o +1 a la Defensa y +2 a la Defensa Mágica. Puede adquirirse hasta dos veces; sus efectos son acumulativos.",
+    "opciones": [
+      {
+        "id": "def",
+        "etiqueta": "+2 Defensa, +1 D. Mágica",
+        "efectos": {
+          "defensa": 2,
+          "defensa_magica": 1
+        }
+      },
+      {
+        "id": "mdef",
+        "etiqueta": "+1 Defensa, +2 D. Mágica",
+        "efectos": {
+          "defensa": 1,
+          "defensa_magica": 2
+        }
+      }
+    ]
+  },
+  {
+    "id": "efecto-crisis",
+    "nombre": "Efecto Crisis",
+    "nombre_original": "Crisis Effect",
+    "efecto": "Mientras se encuentre en Crisis, el PNJ obtiene una capacidad potenciada: sus afinidades se alteran, sus ataques obtienen la propiedad multi (2), o sus ataques ignoran Resistencia e Inmunidad.",
+    "nota": "Describe en la nota cuál."
+  },
+  {
+    "id": "equipable",
+    "nombre": "Equipable",
+    "nombre_original": "Equipment",
+    "limitada": true,
+    "especies_excluidas": [
+      "bestia"
+    ],
+    "gratis_para": [
+      "humanoide"
+    ],
+    "efecto": "El PNJ obtiene un espacio de armadura, un espacio de accesorio, uno de mano principal y uno de mano secundaria. Los soldados equipan objetos básicos; los élites y campeones pueden portar objetos raros."
+  },
+  {
+    "id": "inmunidad-dano",
+    "nombre": "Inmunidad al daño",
+    "nombre_original": "Damage Immunity",
+    "efecto": "El PNJ se vuelve Inmune a un tipo de daño a tu elección al que no sea Vulnerable.",
+    "nota": "Marca la inmunidad en Afinidades."
+  },
+  {
+    "id": "inmunidad-estados",
+    "nombre": "Inmunidad a estados",
+    "nombre_original": "Status Immunity",
+    "efecto": "El PNJ se vuelve completamente inmune a dos estados alterados a tu elección.",
+    "nota": "Marca los estados en Inmunidades."
+  },
+  {
+    "id": "lanzador-conjuros",
+    "nombre": "Lanzador de conjuros",
+    "nombre_original": "Spellcaster",
+    "efecto": "Elige una opción: aprende un conjuro y aumenta sus PM máximos en 10, o aprende dos conjuros. Los conjuros pueden tomarse de las clases de PJ o de la tabla de conjuros de PNJ. La prueba de magia para conjuros ofensivos emplea [VIG + VOL] o [PER + VOL].",
+    "opciones": [
+      {
+        "id": "uno",
+        "etiqueta": "Un conjuro y +10 PM",
+        "efectos": {
+          "pm": 10
+        }
+      },
+      {
+        "id": "dos",
+        "etiqueta": "Dos conjuros",
+        "efectos": {}
+      }
+    ]
+  },
+  {
+    "id": "iniciativa-extra",
+    "nombre": "Iniciativa extra",
+    "nombre_original": "Extra Initiative",
+    "limitada": true,
+    "efectos": {
+      "iniciativa": 4
+    },
+    "efecto": "El PNJ suma un bonificador de **+4 a su puntuación de Iniciativa**."
+  },
+  {
+    "id": "puntos-vida-extra",
+    "nombre": "Puntos de Vida extra",
+    "nombre_original": "Extra HP",
+    "efectos": {
+      "pv": 10
+    },
+    "efecto": "Aumenta los Puntos de Vida máximos del PNJ en **+10 PV** (útil para compensar defensas bajas o Vulnerabilidades)."
+  },
+  {
+    "id": "reaccion",
+    "nombre": "Reacción",
+    "nombre_original": "Reaction",
+    "efecto": "El PNJ reacciona a un desencadenante específico: contraataca tras ser fallado por un ataque cuerpo a cuerpo, inflige daño menor al ser alcanzado por un conjuro hostil, o recupera PM al recibir daño.",
+    "nota": "Describe en la nota el desencadenante y el efecto."
+  },
+  {
+    "id": "resistencia-dano",
+    "nombre": "Resistencia al daño",
+    "nombre_original": "Damage Resistance",
+    "efecto": "El PNJ adquiere Resistencia a dos tipos de daño a tu elección. Si se elige un tipo al que ya era Vulnerable, pierde dicha Vulnerabilidad en lugar de ganar Resistencia.",
+    "nota": "Marca las resistencias en Afinidades."
+  },
+  {
+    "id": "especializacion",
+    "nombre": "Especialización",
+    "nombre_original": "Specialization",
+    "max": 3,
+    "efecto": "Elige una opción: +3 a todas las tiradas de Precisión, +3 a todas las tiradas de Magia o +3 a tiradas enfrentadas en un contexto concreto. Puede adquirirse hasta tres veces, eligiendo una opción distinta cada vez.",
+    "opciones": [
+      {
+        "id": "precision",
+        "etiqueta": "+3 a la Precisión",
+        "efectos": {
+          "precision": 3
+        }
+      },
+      {
+        "id": "magia",
+        "etiqueta": "+3 a la Magia",
+        "efectos": {
+          "magia": 3
+        }
+      },
+      {
+        "id": "enfrentadas",
+        "etiqueta": "+3 a tiradas enfrentadas (contexto)",
+        "efectos": {}
+      }
+    ]
+  },
+  {
+    "id": "volador",
+    "nombre": "Volador",
+    "nombre_original": "Flying",
+    "limitada": true,
+    "efecto": "El PNJ puede volar o levitar. Las criaturas terrestres no pueden alcanzarlo con ataques cuerpo a cuerpo mientras permanezca en el aire (pero el PNJ puede atacar cuerpo a cuerpo a objetivos terrestres sin penalización).\n- Si sufre daño de un tipo al que sea Vulnerable, aterriza forzosamente y pierde los beneficios de esta habilidad hasta el final del asalto.\n- Puede forzarse su aterrizaje gastando una oportunidad.\n- Mientras se encuentre en Crisis, pierde todos los beneficios de esta habilidad."
+  }
+]

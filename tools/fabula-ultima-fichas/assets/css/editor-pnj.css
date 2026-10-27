@@ -1,0 +1,65 @@
+/* Editor de fichas de PNJ (pnj/). Reutiliza base.css y, para la vista previa, combate.css. */
+.editor { display: grid; grid-template-columns: minmax(0, 1fr) 400px; gap: 20px; align-items: start; }
+.editor > * { min-width: 0; }
+@media (max-width: 1080px) { .editor { grid-template-columns: minmax(0, 1fr); } }
+
+.cab-editor { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 14px; }
+.cab-editor .titulo-ed { font-size: 30px; line-height: 1.05; margin-right: auto; min-width: 0; overflow-wrap: anywhere; }
+.cab-editor .sucio { font-size: 12px; color: var(--warn); }
+
+.form-pnj .seccion-ed { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; margin-bottom: 14px; }
+.form-pnj .seccion-ed > h3 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 12px; display: flex; gap: 8px; align-items: center; }
+.form-pnj .seccion-ed > h3 .der { margin-left: auto; text-transform: none; letter-spacing: 0; font-weight: 500; }
+.rejilla-campos { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px 12px; }
+.rejilla-campos .ancho2 { grid-column: span 2; }
+.rejilla-campos .todo { grid-column: 1 / -1; }
+@media (max-width: 560px) { .rejilla-campos .ancho2 { grid-column: 1 / -1; } }
+.form-pnj input[type=number] { width: 100%; }
+.form-pnj textarea { min-height: 64px; }
+.nota-ed { font-size: 12px; color: var(--muted); margin: 6px 0 0; }
+
+/* Valores del libro */
+.valores { display: grid; grid-template-columns: minmax(110px, auto) 90px minmax(0, 1fr) auto; gap: 8px 12px; align-items: center; }
+.valores .lib { font-size: 12px; color: var(--muted); }
+.valores .lib b { color: var(--text); }
+.valores .lib.distinto b { color: var(--warn); }
+@media (max-width: 560px) { .valores { grid-template-columns: minmax(0, 1fr) 80px; } .valores .lib { grid-column: 1; } }
+
+/* Afinidades */
+.afin-ed { display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); gap: 6px; }
+.afin-ed button { appearance: none; border: 1px solid var(--line); background: var(--surface-2); color: var(--muted); border-radius: 8px; padding: 6px 0; font: inherit; font-size: 11px; cursor: pointer; }
+.afin-ed button b { display: block; font-size: 14px; color: var(--text); margin-top: 2px; }
+.afin-ed button.VU { border-color: var(--err); } .afin-ed button.VU b { color: var(--err); }
+.afin-ed button.RS { border-color: var(--mp); } .afin-ed button.RS b { color: var(--mp); }
+.afin-ed button.IM b, .afin-ed button.AS b { color: var(--ok); } .afin-ed button.IM, .afin-ed button.AS { border-color: var(--ok); }
+@media (max-width: 640px) { .afin-ed { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+
+/* Listas editables (ataques, conjuros…) */
+.elemento { border: 1px solid var(--line); border-radius: 10px; padding: 12px; background: var(--surface-2); margin-bottom: 10px; }
+.elemento .barra-el { display: flex; gap: 6px; align-items: center; margin-bottom: 10px; }
+.elemento .barra-el input { font-weight: 600; }
+.elemento .resumen { font-size: 12px; color: var(--muted); margin-top: 8px; font-variant-numeric: tabular-nums; }
+.elemento input, .elemento select, .elemento textarea { background: var(--surface); }
+
+/* Catálogo de habilidades */
+.cupo { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 12px; font-size: 13px; }
+.cupo .num { font-size: 22px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.cupo .num.pasado { color: var(--err); }
+.catalogo .item { padding: 8px 12px; }
+.catalogo .item .der .btn { margin-left: 4px; }
+
+/* Vista previa */
+.previa { position: sticky; top: 72px; }
+.previa .detalle-panel { position: static; height: auto; max-height: calc(100vh - 150px); width: 100%; border: 1px solid var(--line); border-radius: 12px; box-shadow: none; overflow-y: auto; }
+.previa .detalle-panel .cab { position: static; }
+.previa .segmento { width: 100%; margin-bottom: 10px; display: flex; }
+.previa .segmento button { flex: 1; padding: 6px 4px; font-size: 12px; }
+.avisos-ed { list-style: none; padding: 0; margin: 0 0 10px; font-size: 12px; }
+.avisos-ed li { padding: 4px 0 4px 16px; position: relative; color: var(--muted); }
+.avisos-ed li::before { content: ""; position: absolute; left: 2px; top: 10px; width: 6px; height: 6px; border-radius: 50%; background: var(--warn); }
+@media (max-width: 1080px) { .previa { position: static; } .previa .detalle-panel { max-height: none; } }
+
+/* Selector del bestiario */
+#bestiario .lista { max-height: 50vh; overflow-y: auto; }
+#bestiario .item { cursor: pointer; }
+#bestiario .item:hover { background: var(--surface-2); }

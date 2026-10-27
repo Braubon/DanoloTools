@@ -259,7 +259,7 @@ export const COMANDOS = [
         ejemplos: ['/enemigo pm enemigo:Diablillo valor:-10'],
         options: [optEnemigo(), { type: T.TEXTO, name: 'valor', description: '+N, -N, N o max', max_length: 10 }] },
       { type: T.SUB, name: 'estado', description: 'Añade o quita estados alterados a un PNJ', dj: true,
-        ayuda: 'Los estados reducen sus dados en las tiradas del bot, igual que en los PJ. Los jugadores los ven en la vista de combate.',
+        ayuda: 'Los estados reducen sus dados en las tiradas del bot, igual que en los PJ. Los jugadores los ven en la vista de combate. Si su ficha lo hace inmune a un estado, el bot no se lo pone y lo indica.',
         ejemplos: ['/enemigo estado enemigo:Lobo A accion:añadir estado:Lento'],
         options: [
           optEnemigo(),
@@ -297,6 +297,14 @@ export const COMANDOS = [
           optBono,
           { type: T.ENTERO, name: 'dificultad', description: 'Dificultad a superar', min_value: 1, max_value: 40 }
         ] },
+      { type: T.SUB, name: 'pu', description: 'Consulta o ajusta los Puntos Última de un villano (solo lo ves tú)', dj: true,
+        ayuda: 'Los villanos empiezan con los Puntos Última de su ficha (menor 5, mayor 10, supremo 15). -1 gasta uno; +N los suma; un número los fija.',
+        ejemplos: ['/enemigo pu enemigo:Ángela', '/enemigo pu enemigo:Ángela valor:-1'],
+        options: [optEnemigo(), { type: T.TEXTO, name: 'valor', description: '+N, -N o N', max_length: 10 }] },
+      { type: T.SUB, name: 'fase', description: 'Pasa a un jefe a su siguiente fase', dj: true,
+        ayuda: 'Para jefes con varias fases: cambia el PNJ a la ficha de su fase siguiente, con los PV y PM al máximo y sin estados. Cuando un jefe con otra fase llega a 0 PV, el bot no anuncia que cae.',
+        ejemplos: ['/enemigo fase enemigo:Ángela'],
+        options: [optEnemigo()] },
       { type: T.SUB, name: 'ver', description: 'Ficha completa de un PNJ (solo la ves tú)', dj: true,
         ayuda: 'Muestra su ficha completa y su estado actual en un mensaje que solo ves tú.',
         ejemplos: ['/enemigo ver enemigo:Lobo A'],
