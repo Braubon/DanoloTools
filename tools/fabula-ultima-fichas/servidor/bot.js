@@ -22,6 +22,14 @@ const texto = (content, efimero = false) => mensaje({ content }, efimero);
 const actualizar = (data) => ({ type: 7, data: { allowed_mentions: { parse: [] }, ...data } });
 const boton = (label, custom_id, style = 2) => ({ type: 2, style, label, custom_id });
 const fila = (...botones) => ({ type: 1, components: botones.filter(Boolean) });
+const filasBotones = (botones) => {
+  const validos = (botones || []).filter(Boolean);
+  const rows = [];
+  for (let idx = 0; idx < validos.length && rows.length < 5; idx += 5) {
+    rows.push(fila(...validos.slice(idx, idx + 5)));
+  }
+  return rows;
+};
 const signo = (n) => (n > 0 ? `+${n}` : n < 0 ? `−${-n}` : '');
 
 // ------------------------------------------------------------------ contexto
@@ -74,6 +82,46 @@ async function resolverPj(ctx, valor, { editar = false } = {}) {
   return pj;
 }
 
+/** Busca uno o varios personajes (o "todos" / lista separada por comas). */
+async function resolverPjs(ctx, valor, { editar = false } = {}) {
+  const todos = await ctx.todos();
+  if (!valor) {
+    const pj = await resolverPj(ctx, valor, { editar });
+    return pj ? [pj] : [];
+  }
+  const normVal = P.norm(String(valor).trim());
+  if (normVal === 'todos' || normVal === 'all' || normVal === 'grupo') {
+    if (!todos.length) throw new Aviso('No hay personajes en la partida.');
+    if (editar && !ctx.dj) throw new Aviso('Solo el DJ puede modificar varios personajes a la vez.');
+    return todos;
+  }
+  if (String(valor).includes(',') || String(valor).includes('+')) {
+    const trozos = String(valor).split(/[,+]/).map((s) => s.trim()).filter(Boolean);
+    const seleccionados = [];
+    for (const t of trozos) {
+      const nt = P.norm(t);
+      if (nt === 'todos' || nt === 'all' || nt === 'grupo') {
+        for (const p of todos) {
+          if (!seleccionados.some((s) => s.id === p.id)) seleccionados.push(p);
+        }
+        continue;
+      }
+      const match = todos.find((p) => p.id === t) ||
+                    todos.find((p) => P.norm(M.nombre(p)) === nt) ||
+                    todos.find((p) => P.norm(M.nombre(p)).includes(nt));
+      if (!match) throw new Aviso(`No encuentro el personaje «${t}».`);
+      if (!seleccionados.some((s) => s.id === match.id)) {
+        if (editar && !puedeEditar(ctx, match)) throw new Aviso(`Solo el DJ puede modificar a ${M.nombre(match)}.`);
+        seleccionados.push(match);
+      }
+    }
+    if (!seleccionados.length) throw new Aviso('No se ha seleccionado ningún personaje.');
+    return seleccionados;
+  }
+  const pj = await resolverPj(ctx, valor, { editar });
+  return [pj];
+}
+
 /** Personajes «del grupo»: los asignados a un jugador o, si no hay ninguno, todos. */
 async function grupo(ctx) {
   const todos = await ctx.todos();
@@ -111,21 +159,66 @@ const botonRepetir = (r, id) => (!r.critico && !r.pifia ? boton('Repetir (1 PF)'
 // --- tirada
 async function hacerTirada(ctx, { a1, a2, bono, dif, pjValor }) {
   const necesitaPj = [a1, a2].some((a) => R.ATR.includes(a));
-  let pj = null, c = null, dados = null;
-  if (necesitaPj || pjValor) {
-    pj = await resolverPj(ctx, pjValor);
-    c = M.calc(pj, ctx.db);
-    dados = M.dadosEfectivos(pj, c);
-    if (necesitaPj && [a1, a2].some((a) => R.ATR.includes(a) && !dados[a])) throw new Aviso(`${M.nombre(pj)} no tiene atributos definidos.`);
+  let pjs = [];
+  if (pjValor) {
+    pjs = await resolverPjs(ctx, pjValor);
+  } else if (necesitaPj) {
+    pjs = [await resolverPj(ctx, undefined)];
   }
-  const caras = (a) => (R.ATR.includes(a) ? dados[a] : Number(String(a).replace('d', '')));
-  const r = M.prueba(caras(a1), caras(a2), bono, dif);
-  const et = (a) => (R.ATR.includes(a) ? `${a} d${dados[a]}` : a);
-  const extra = [await pifiaPf(pj, r)].filter(Boolean);
-  const quien = pj ? M.nombre(pj) : ctx.user.nombre;
-  const embed = embedPrueba({ titulo: `${quien} · ${a1} + ${a2}`, r, etiquetas: [et(a1), et(a2)], extra, pie: pj ? notaEstados(pj, c, dados, [a1, a2]) : '' });
-  const rep = pj ? botonRepetir(r, `rr:t:${pj.id}:${a1}:${a2}:${bono || 0}:${dif ?? ''}`) : null;
-  return { embeds: [embed], components: rep ? [fila(rep)] : [] };
+
+  if (!pjs.length) {
+    const caras = (a) => Number(String(a).replace('d', ''));
+    const r = M.prueba(caras(a1), caras(a2), bono, dif);
+    const embed = embedPrueba({ titulo: `${ctx.user.nombre} · ${a1} + ${a2}`, r, etiquetas: [String(a1), String(a2)] });
+    return { embeds: [embed], components: [] };
+  }
+
+  if (pjs.length === 1) {
+    const pj = pjs[0];
+    const c = M.calc(pj, ctx.db);
+    const dados = M.dadosEfectivos(pj, c);
+    if (necesitaPj && [a1, a2].some((a) => R.ATR.includes(a) && !dados[a])) {
+      throw new Aviso(`${M.nombre(pj)} no tiene atributos definidos.`);
+    }
+    const caras = (a) => (R.ATR.includes(a) ? dados[a] : Number(String(a).replace('d', '')));
+    const r = M.prueba(caras(a1), caras(a2), bono, dif);
+    const et = (a) => (R.ATR.includes(a) ? `${a} d${dados[a]}` : a);
+    const extra = [await pifiaPf(pj, r)].filter(Boolean);
+    const embed = embedPrueba({
+      titulo: `${M.nombre(pj)} · ${a1} + ${a2}`,
+      r,
+      etiquetas: [et(a1), et(a2)],
+      extra,
+      pie: notaEstados(pj, c, dados, [a1, a2])
+    });
+    const rep = botonRepetir(r, `rr:t:${pj.id}:${a1}:${a2}:${bono || 0}:${dif ?? ''}`);
+    return { embeds: [embed], components: rep ? [fila(rep)] : [] };
+  }
+
+  const embeds = [];
+  const botones = [];
+  for (const pj of pjs.slice(0, 10)) {
+    const c = M.calc(pj, ctx.db);
+    const dados = M.dadosEfectivos(pj, c);
+    if (necesitaPj && [a1, a2].some((a) => R.ATR.includes(a) && !dados[a])) {
+      throw new Aviso(`${M.nombre(pj)} no tiene atributos definidos.`);
+    }
+    const caras = (a) => (R.ATR.includes(a) ? dados[a] : Number(String(a).replace('d', '')));
+    const r = M.prueba(caras(a1), caras(a2), bono, dif);
+    const et = (a) => (R.ATR.includes(a) ? `${a} d${dados[a]}` : a);
+    const extra = [await pifiaPf(pj, r)].filter(Boolean);
+    embeds.push(embedPrueba({
+      titulo: `${M.nombre(pj)} · ${a1} + ${a2}`,
+      r,
+      etiquetas: [et(a1), et(a2)],
+      extra,
+      pie: notaEstados(pj, c, dados, [a1, a2])
+    }));
+    if (!r.critico && !r.pifia) {
+      botones.push(boton(`Repetir ${M.nombre(pj)} (1 PF)`, `rr:t:${pj.id}:${a1}:${a2}:${bono || 0}:${dif ?? ''}`));
+    }
+  }
+  return { embeds, components: filasBotones(botones) };
 }
 
 // --- ataque
@@ -645,8 +738,10 @@ const MANEJADORES = {
     return mensaje({ embeds: [{ title: `${ctx.user.nombre} · ${ctx.o.expresion}`, description: `${r.detalle}\n**Total ${r.total}**`, color: COLOR.normal }] });
   },
   async ficha(ctx) {
-    const pj = await resolverPj(ctx, ctx.o.personaje);
-    return mensaje({ embeds: [embedFicha(ctx, pj)] });
+    const pjs = await resolverPjs(ctx, ctx.o.personaje);
+    if (!pjs.length) throw new Aviso('No hay personajes.');
+    if (pjs.length === 1) return mensaje({ embeds: [embedFicha(ctx, pjs[0])] });
+    return mensaje({ embeds: pjs.slice(0, 10).map((pj) => embedFicha(ctx, pj)) });
   },
   pv: (ctx) => cambiarRecurso(ctx, 'pv'),
   pm: (ctx) => cambiarRecurso(ctx, 'pm'),
@@ -732,13 +827,58 @@ const MANEJADORES = {
 
   async iniciativa(ctx) {
     const { dificultad, bono } = ctx.o;
-    let pj;
-    if (ctx.o.personaje) pj = await resolverPj(ctx, ctx.o.personaje);
-    else {
-      const pjs = await grupo(ctx);
-      if (!pjs.length) throw new Aviso('No hay personajes en la partida.');
-      pj = pjs.map((p) => ({ p, init: M.calc(p, ctx.db).init })).sort((a, b) => b.init - a.init)[0].p;
+    if (ctx.o.personaje) {
+      const pjs = await resolverPjs(ctx, ctx.o.personaje);
+      if (!pjs.length) throw new Aviso('No hay personajes.');
+      if (pjs.length === 1) {
+        const pj = pjs[0];
+        const c = M.calc(pj, ctx.db);
+        const dados = M.dadosEfectivos(pj, c);
+        const r = M.prueba(dados.DES, dados.PER, c.init + (bono || 0), dificultad);
+        const extra = [r.exito ? '**Los jugadores eligen quién empieza.**' : '**Empiezan los enemigos.**'];
+        const pf = await pifiaPf(pj, r);
+        if (pf) extra.push(pf);
+        const embed = embedPrueba({
+          titulo: `Iniciativa · ${M.nombre(pj)}`, r, etiquetas: [`DES d${dados.DES}`, `PER d${dados.PER}`], extra,
+          pie: [
+            `Inic. ${signo(c.init) || '0'}${bono ? ` · bono ${signo(bono)}` : ''}`,
+            notaEstados(pj, c, dados, ['DES', 'PER'])
+          ].filter(Boolean).join(' · ')
+        });
+        const rep = botonRepetir(r, `rr:t:${pj.id}:DES:PER:${(c.init + (bono || 0))}:${dificultad ?? ''}`);
+        return mensaje({ embeds: [embed], components: rep ? [fila(rep)] : [] });
+      }
+
+      const embeds = [];
+      const botones = [];
+      for (const pj of pjs.slice(0, 10)) {
+        const c = M.calc(pj, ctx.db);
+        const dados = M.dadosEfectivos(pj, c);
+        const r = M.prueba(dados.DES, dados.PER, c.init + (bono || 0), dificultad);
+        const extra = [r.exito ? '✅ **Supera la iniciativa**' : '❌ **No supera la iniciativa**'];
+        const pf = await pifiaPf(pj, r);
+        if (pf) extra.push(pf);
+        const pie = [
+          `Inic. ${signo(c.init) || '0'}${bono ? ` · bono ${signo(bono)}` : ''}`,
+          notaEstados(pj, c, dados, ['DES', 'PER'])
+        ].filter(Boolean).join(' · ');
+        embeds.push(embedPrueba({
+          titulo: `Iniciativa · ${M.nombre(pj)}`,
+          r,
+          etiquetas: [`DES d${dados.DES}`, `PER d${dados.PER}`],
+          extra,
+          pie
+        }));
+        if (!r.critico && !r.pifia) {
+          botones.push(boton(`Repetir ${M.nombre(pj)} (1 PF)`, `rr:t:${pj.id}:DES:PER:${(c.init + (bono || 0))}:${dificultad ?? ''}`));
+        }
+      }
+      return mensaje({ embeds, components: filasBotones(botones) });
     }
+
+    const pjs = await grupo(ctx);
+    if (!pjs.length) throw new Aviso('No hay personajes en la partida.');
+    const pj = pjs.map((p) => ({ p, init: M.calc(p, ctx.db).init })).sort((a, b) => b.init - a.init)[0].p;
     const c = M.calc(pj, ctx.db);
     const dados = M.dadosEfectivos(pj, c);
     const r = M.prueba(dados.DES, dados.PER, c.init + (bono || 0), dificultad);
@@ -747,9 +887,13 @@ const MANEJADORES = {
     if (pf) extra.push(pf);
     const embed = embedPrueba({
       titulo: `Iniciativa · lidera ${M.nombre(pj)}`, r, etiquetas: [`DES d${dados.DES}`, `PER d${dados.PER}`], extra,
-      pie: `Incluye modificador de iniciativa ${signo(c.init) || '0'}${bono ? ` y bono ${signo(bono)}` : ''}`
+      pie: [
+        `Inic. ${signo(c.init) || '0'}${bono ? ` · bono ${signo(bono)}` : ''}`,
+        notaEstados(pj, c, dados, ['DES', 'PER'])
+      ].filter(Boolean).join(' · ')
     });
-    return mensaje({ embeds: [embed] });
+    const rep = botonRepetir(r, `rr:t:${pj.id}:DES:PER:${(c.init + (bono || 0))}:${dificultad ?? ''}`);
+    return mensaje({ embeds: [embed], components: rep ? [fila(rep)] : [] });
   },
 
   async combate(ctx) {
@@ -784,7 +928,23 @@ const MANEJADORES = {
         if (!cb) throw new Aviso('No hay ningún conflicto en curso.');
         await P.terminarCombate();
         const n = await E.vaciar('enemigo');
-        return texto(`Conflicto terminado tras ${cb.ronda} ronda${cb.ronda > 1 ? 's' : ''}.${n ? ` ${n} enemigo${n > 1 ? 's' : ''} retirado${n > 1 ? 's' : ''} del campo.` : ''}`);
+        const todosPjs = await ctx.todos();
+        for (const pj of todosPjs) {
+          if (pj.estado && pj.estado.estados && pj.estado.estados.length > 0) {
+            pj.estado.estados = [];
+            await P.escribir(pj);
+          }
+        }
+        const cCampo = await E.campo();
+        let campoTocado = false;
+        for (const inst of (cCampo.enemigos || [])) {
+          if (inst.estados && inst.estados.length > 0) {
+            inst.estados = [];
+            campoTocado = true;
+          }
+        }
+        if (campoTocado) await E.guardarCampo(cCampo);
+        return texto(`Conflicto terminado tras ${cb.ronda} ronda${cb.ronda > 1 ? 's' : ''}.${n ? ` ${n} enemigo${n > 1 ? 's' : ''} retirado${n > 1 ? 's' : ''} del campo.` : ''} Se han eliminado los estados alterados de los personajes.`);
       }
       default: throw new Aviso('Subcomando desconocido.');
     }
@@ -839,7 +999,7 @@ const MANEJADORES = {
   },
 
   async px(ctx) {
-    const lista = ctx.o.personaje ? [await resolverPj(ctx, ctx.o.personaje)] : await grupo(ctx);
+    const lista = ctx.o.personaje ? await resolverPjs(ctx, ctx.o.personaje) : await grupo(ctx);
     if (!lista.length) throw new Aviso('No hay personajes.');
     const lineas = [];
     for (const pj of lista) {
@@ -851,7 +1011,7 @@ const MANEJADORES = {
   },
 
   async zenit(ctx) {
-    const lista = ctx.o.personaje ? [await resolverPj(ctx, ctx.o.personaje)] : await grupo(ctx);
+    const lista = ctx.o.personaje ? await resolverPjs(ctx, ctx.o.personaje) : await grupo(ctx);
     if (!lista.length) throw new Aviso('No hay personajes.');
     const lineas = [];
     for (const pj of lista) {
@@ -985,7 +1145,31 @@ async function autocompletar(ctx) {
     if (f.name === 'personaje') {
       const todos = await ctx.todos();
       const mios = (p) => (p.discord && p.discord.id === ctx.user.id ? 0 : 1);
-      choices = filtra([...todos].sort((a, b) => mios(a) - mios(b)).map((p) => ({ name: `${M.nombre(p)}${p.discord && p.discord.nombre ? ` · ${p.discord.nombre}` : ''}`.slice(0, 100), value: p.id })));
+      const listaPjs = [...todos].sort((a, b) => mios(a) - mios(b));
+      const comandosConTodos = ['tirada', 'ficha', 'iniciativa', 'px'];
+      const trozos = (f.value || '').split(/[,+]/);
+      if (trozos.length > 1 && comandosConTodos.includes(cmdNombre)) {
+        const prefijo = trozos.slice(0, -1).map((s) => s.trim()).filter(Boolean).join(', ') + ', ';
+        const ultimo = P.norm(trozos[trozos.length - 1].trim());
+        const yaElegidos = trozos.slice(0, -1).map((s) => P.norm(s.trim()));
+        const disponibles = listaPjs.filter((p) => !yaElegidos.some((y) => y === P.norm(M.nombre(p)) || y === p.id));
+        choices = disponibles
+          .filter((p) => !ultimo || P.norm(M.nombre(p)).includes(ultimo))
+          .slice(0, 25)
+          .map((p) => ({
+            name: `${prefijo}${M.nombre(p)}`.slice(0, 100),
+            value: `${prefijo}${M.nombre(p)}`.slice(0, 100)
+          }));
+      } else {
+        const base = listaPjs.map((p) => ({
+          name: `${M.nombre(p)}${p.discord && p.discord.nombre ? ` · ${p.discord.nombre}` : ''}`.slice(0, 100),
+          value: p.id
+        }));
+        const lista = comandosConTodos.includes(cmdNombre)
+          ? [{ name: '👥 Todos los personajes', value: 'todos' }, ...base]
+          : base;
+        choices = filtra(lista);
+      }
     } else if (f.name === 'enemigo') {
       const lista = await enCampo(cmdNombre === 'combate' ? 'enemigo' : null);
       choices = filtra(lista.map((i) => ({ name: `${i.nombre}${i.lado === 'aliado' ? ' (aliado)' : ''}`.slice(0, 100), value: cmdNombre === 'combate' ? i.nombre.slice(0, 100) : i.id })));
@@ -1042,4 +1226,4 @@ export async function manejarInteraccion(i, origen) {
   }
 }
 
-export { MANEJADORES };
+export { MANEJADORES, autocompletar };

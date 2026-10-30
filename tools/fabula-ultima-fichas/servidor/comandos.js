@@ -47,14 +47,14 @@ export const COMANDOS = [
   {
     name: 'tirada', description: 'Tirada de dos atributos (o dados) con total, tirada mayor, crítico y pifia',
     categoria: 'tiradas', dj: false,
-    ayuda: 'Tira dos dados y los suma. Si eliges atributos (DES, PER, VIG, VOL) usa los dados de tu personaje, ya reducidos por sus estados alterados. También puedes elegir dados sueltos (d8, d10…) para PNJ o tiradas improvisadas. Muestra el total, la tirada mayor (TM), si es crítico (dos dados iguales de 6 o más) o pifia (dos unos) y, si indicas dificultad, si la superas. Una pifia te da 1 Punto Fábula automáticamente. Debajo aparece el botón «Repetir (1 PF)».',
-    ejemplos: ['/tirada atributo1:DES atributo2:PER', '/tirada atributo1:VIG atributo2:VIG bono:1 dificultad:10', '/tirada atributo1:d10 atributo2:d8'],
+    ayuda: 'Tira dos dados y los suma. Si eliges atributos (DES, PER, VIG, VOL) usa los dados de tu personaje, ya reducidos por sus estados alterados. Con «todos» o varios personajes separados por comas, realiza la tirada para cada uno de ellos. También puedes elegir dados sueltos (d8, d10…) para PNJ o tiradas improvisadas. Muestra el total, la tirada mayor (TM), si es crítico (dos dados iguales de 6 o más) o pifia (dos unos) y, si indicas dificultad, si la superas. Una pifia te da 1 Punto Fábula automáticamente. Debajo aparece el botón «Repetir (1 PF)».',
+    ejemplos: ['/tirada atributo1:DES atributo2:PER', '/tirada atributo1:DES atributo2:PER personaje:todos', '/tirada atributo1:VIG atributo2:VIG bono:1 dificultad:10'],
     options: [
       { type: T.TEXTO, name: 'atributo1', description: 'Primer atributo o dado', required: true, choices: DADOS },
       { type: T.TEXTO, name: 'atributo2', description: 'Segundo atributo o dado', required: true, choices: DADOS },
       optBono,
       { type: T.ENTERO, name: 'dificultad', description: 'Nivel de dificultad (ND) a superar', min_value: 1, max_value: 40 },
-      optPersonaje('Personaje que tira (por defecto, el tuyo)')
+      optPersonaje('Personaje que tira (por defecto el tuyo; o "todos")')
     ]
   },
   {
@@ -96,9 +96,9 @@ export const COMANDOS = [
   {
     name: 'ficha', description: 'Resumen de la ficha de un personaje y enlace a la ficha completa',
     categoria: 'recursos', dj: false,
-    ayuda: 'Muestra nivel, clases, PV, PM, PI, defensas, atributos (con estados aplicados), estados alterados, Puntos Fábula y arma equipada, con enlace a su ficha completa.',
-    ejemplos: ['/ficha', '/ficha personaje:Nim'],
-    options: [optPersonaje('Personaje a consultar (por defecto, el tuyo)')]
+    ayuda: 'Muestra nivel, clases, PV, PM, PI, defensas, atributos (con estados aplicados), estados alterados, Puntos Fábula y arma equipada, con enlace a su ficha completa. Con «todos» o varios personajes separados por comas, muestra las fichas de todos los elegidos.',
+    ejemplos: ['/ficha', '/ficha personaje:Nim', '/ficha personaje:todos'],
+    options: [optPersonaje('Personaje a consultar (por defecto el tuyo; o "todos")')]
   },
   ...['pv', 'pm', 'pi'].map((k) => ({
     name: k,
@@ -189,11 +189,11 @@ export const COMANDOS = [
   {
     name: 'iniciativa', description: 'Tirada de iniciativa del grupo (solo DJ)',
     categoria: 'combate', dj: true,
-    ayuda: 'Tirada de grupo de DES + PER + modificador de iniciativa contra la dificultad que indiques (normalmente la iniciativa más alta de los enemigos). Si no eliges personaje, tira el que tenga mejor modificador de iniciativa. Si se supera, los PJ eligen quién empieza; si no, empiezan los enemigos.',
-    ejemplos: ['/iniciativa dificultad:10', '/iniciativa dificultad:12 personaje:Aria Valen bono:2'],
+    ayuda: 'Tirada de iniciativa de DES + PER + modificador contra la dificultad (normalmente la iniciativa más alta de los enemigos). Sin personaje, tira el que tenga mejor modificador de iniciativa. Con «todos» o varios personajes separados por comas, tira la iniciativa por cada uno de ellos. Si se supera, los PJ eligen quién empieza; si no, empiezan los enemigos.',
+    ejemplos: ['/iniciativa dificultad:10', '/iniciativa dificultad:10 personaje:todos', '/iniciativa dificultad:12 personaje:Aria Valen bono:2'],
     options: [
       { type: T.ENTERO, name: 'dificultad', description: 'Iniciativa a superar', required: true, min_value: 1, max_value: 40 },
-      optPersonaje('Personaje que lidera la tirada (por defecto, el de mejor iniciativa)'),
+      optPersonaje('Personaje que lidera la tirada (por defecto, el de mejor iniciativa; o "todos")'),
       { type: T.ENTERO, name: 'bono', description: 'Bonificador (por ejemplo, +1 por cada aliado que apoye)', min_value: -10, max_value: 20 }
     ]
   },
@@ -218,7 +218,7 @@ export const COMANDOS = [
       { type: T.SUB, name: 'ver', description: 'Muestra la ronda y quién falta por actuar', dj: false,
         ayuda: 'Estado del conflicto.', ejemplos: ['/combate ver'], options: [] },
       { type: T.SUB, name: 'terminar', description: 'Cierra el conflicto y retira a los enemigos (solo DJ)', dj: true,
-        ayuda: 'Termina el conflicto y retira del campo a los enemigos. Los PNJ aliados se quedan con el grupo.', ejemplos: ['/combate terminar'], options: [] }
+        ayuda: 'Termina el conflicto, retira del campo a los enemigos y elimina los estados alterados de los personajes. Los PNJ aliados se quedan con el grupo.', ejemplos: ['/combate terminar'], options: [] }
     ]
   },
 
@@ -368,11 +368,11 @@ export const COMANDOS = [
   {
     name: 'px', description: 'Da puntos de experiencia (solo DJ)',
     categoria: 'gestion', dj: true,
-    ayuda: 'Suma PX a un personaje o, sin personaje, a todos los que tienen jugador asignado. Avisa de quién puede subir de nivel (10 PX). La subida se hace en el generador.',
-    ejemplos: ['/px cantidad:7', '/px cantidad:2 personaje:Nim'],
+    ayuda: 'Suma PX a un personaje, a varios separados por comas o, sin personaje o con «todos», a todos los que tienen jugador asignado. Avisa de quién puede subir de nivel (10 PX). La subida se hace en el generador.',
+    ejemplos: ['/px cantidad:7', '/px cantidad:5 personaje:todos', '/px cantidad:2 personaje:Nim'],
     options: [
       { type: T.ENTERO, name: 'cantidad', description: 'PX (puede ser negativo)', required: true, min_value: -100, max_value: 100 },
-      optPersonaje('Personaje (vacío para todo el grupo)')
+      optPersonaje('Personaje (vacío o "todos" para todo el grupo)')
     ]
   },
   {

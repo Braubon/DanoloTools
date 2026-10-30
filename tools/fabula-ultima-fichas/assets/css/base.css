@@ -73,6 +73,8 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 16px 0; }
   border-bottom: 1px solid var(--line);
 }
 .topbar .marca { display: flex; align-items: baseline; gap: 10px; margin-right: auto; min-width: 0; }
+.topbar .marca a { text-decoration: none; color: inherit; display: inline-flex; align-items: baseline; }
+.topbar .marca a:hover { color: var(--accent); }
 .topbar .marca h1 { font-size: 22px; white-space: nowrap; }
 .topbar .marca span { color: var(--faint); font-size: 12px; white-space: nowrap; }
 .acciones { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
