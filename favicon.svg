@@ -1,12 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 64 62.65">
+  <!-- Generator: Adobe Illustrator 30.5.1, SVG Export Plug-In . SVG Version: 2.1.4 Build 3)  -->
   <defs>
-    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#00f0ff"/>
-      <stop offset="100%" stop-color="#0070f3"/>
+    <style>
+      .st0 {
+        fill: url(#Degradado_sin_nombre);
+      }
+
+      .st1 {
+        fill: #06070a;
+      }
+    </style>
+    <linearGradient id="Degradado_sin_nombre" data-name="Degradado sin nombre" x1="6.45" y1="31.32" x2="57.55" y2="31.32" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#00f0ff"/>
+      <stop offset="1" stop-color="#0070f3"/>
     </linearGradient>
   </defs>
-  <rect width="64" height="64" rx="14" fill="#06070a"/>
-  <rect x="2" y="2" width="60" height="60" rx="12" fill="none" stroke="#232738" stroke-width="2"/>
-  <path d="M20 16 H34 C44 16 48 24 48 32 C48 40 44 48 34 48 H20 Z" fill="none" stroke="url(#grad)" stroke-width="6" stroke-linejoin="round"/>
-  <line x1="20" y1="16" x2="20" y2="48" stroke="#ffffff" stroke-width="6" stroke-linecap="round"/>
+  <rect class="st1" width="64" height="62.65" rx="14" ry="14"/>
+  <path class="st0" d="M57.28,28.57c-.28-2.56-.76-5.05-1.42-7.41-.78-2.83-1.84-5.54-3.15-8.03l-.33-.63h-9.05l1.36,1.89c.87,1.21,1.65,2.59,2.33,4.09-3.94-.7-9.57-1.12-15.03-1.12-6.02,0-11.79.53-17.15,1.57-2.03.38-4.02.86-5.92,1.42l-.62.18-.18.63c-.67,2.38-1.14,4.87-1.42,7.41-.18,1.72-.27,3.46-.27,5.19s.09,3.46.27,5.18c.28,2.53.75,5.03,1.42,7.41l.18.64.62.18c1.93.56,3.92,1.03,5.92,1.42,5.33,1.04,11.1,1.57,17.14,1.57s11.8-.53,17.15-1.57c2-.38,3.99-.86,5.92-1.42l.63-.18.18-.64c.66-2.36,1.13-4.86,1.42-7.42.18-1.72.27-3.46.27-5.18s-.09-3.46-.27-5.18h0s0,0,0,0ZM50.76,33.75c0,2.43-.27,4.82-.79,7.12-4.86,1.89-11.23,2.94-17.97,2.94s-13.1-1.04-17.96-2.93c-.53-2.29-.79-4.69-.79-7.12s.27-4.84.79-7.13c4.89-1.89,11.25-2.93,17.96-2.93s13.09,1.04,17.97,2.93c.53,2.31.79,4.7.79,7.13h0Z"/>
 </svg>
