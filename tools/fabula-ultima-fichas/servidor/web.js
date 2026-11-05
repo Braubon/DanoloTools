@@ -6,20 +6,20 @@
 //
 // Permisos en la web (cuenta de Discord):
 //   espectador  sin sesión o sin pertenecer al servidor: posiciones e imágenes
-//   jugador     miembro del servidor: fichas de los PJ y lo revelado de los PNJ;
+//   jugador     miembro del servidor con rol de la partida: fichas y combate de su partida;
 //               mueve sus propios PJ
-//   dj          rol DJ: todo
+//   dj          rol DJ: administración completa
 // ---------------------------------------------------------------------------
 import { randomBytes } from 'node:crypto';
-import { verificarFirma, api, env, rolUsuario, nombreUsuario, rolesDj, API } from './discord.js';
+import { verificarFirma, api, env, nombreUsuario, rolesDj, API, miembroServidor, listaRolesYCanales } from './discord.js';
 import { getJSON, setJSON, del, cmd, kvConfigurado, versionPartida, tocar } from './kv.js';
 import { manejarInteraccion } from './bot.js';
 import { paraDiscord } from './comandos.js';
 import * as P from './personajes.js';
 import * as E from './escena.js';
+import * as Partidas from './partidas.js';
 import { vistaRevelada, exportarPnj, completarHabilidades } from '../assets/js/pnj.js';
-import { aplicarValor, R } from './motor.js';
-import { baseDatos } from './motor.js';
+import { aplicarValor, R, baseDatos } from './motor.js';
 
 const RUTA_PANEL = '/tools/fabula-ultima-fichas/panel/index.html';
 const SESION = 'fu_sesion';
@@ -50,28 +50,34 @@ async function sesion(req) {
   return getJSON(`fu:sesion:${t}`);
 }
 
-/** Sesión y papel del visitante: { s, rol: 'espectador'|'jugador'|'dj' }. */
-async function quien(req) {
+/** Sesión y papel del visitante, opcionalmente en el contexto de una partida. */
+async function quien(req, partidaId = null) {
   const s = await sesion(req);
-  if (!s) return { s: null, rol: 'espectador' };
-  let rol = null;
-  try { rol = await rolUsuario(s.id); } catch (e) { rol = null; }
-  return { s, rol: rol || 'espectador' };
+  if (!s) return { s: null, rol: 'espectador', miembro: null, partida: null };
+  const miembro = await miembroServidor(s.id).catch(() => null);
+  if (!partidaId) {
+    const esDj = miembro && miembro.esDjGlobal;
+    return { s, rol: esDj ? 'dj' : (miembro ? 'jugador' : 'espectador'), miembro, partida: null };
+  }
+  const partida = await Partidas.obtener(partidaId);
+  if (!partida) return { s, rol: 'espectador', miembro, partida: null };
+  const rol = Partidas.rolEnPartida(partida, miembro);
+  return { s, rol, miembro, partidaId, partida };
 }
 
-/** Exige una sesión con rol DJ. Devuelve el usuario o lanza una Response. */
-async function exigirDj(req) {
-  const { s, rol } = await quien(req);
-  if (!s) throw error('Inicia sesión con Discord.', 401);
-  if (rol !== 'dj') throw error(`Tu cuenta no tiene el rol ${env('DJ_ROLE_NAME') || 'DJ'} en el servidor.`, 403);
-  return s;
+/** Exige una sesión con rol DJ (global o de la partida indicada). */
+async function exigirDj(req, partidaId = null) {
+  const q = await quien(req, partidaId);
+  if (!q.s) throw error('Inicia sesión con Discord.', 401);
+  if (q.rol !== 'dj') throw error(`Tu cuenta no tiene permisos de DJ en esta partida.`, 403);
+  return q.s;
 }
 
-/** Exige ser miembro del servidor (jugador o DJ). */
-async function exigirMiembro(req) {
-  const q = await quien(req);
+/** Exige ser miembro con acceso a la partida indicada (jugador o DJ). */
+async function exigirMiembro(req, partidaId = null) {
+  const q = await quien(req, partidaId);
   if (!q.s) throw error('Inicia sesión con Discord para ver las fichas.', 401);
-  if (q.rol === 'espectador') throw error('Tu cuenta de Discord no está en el servidor de la partida.', 403);
+  if (q.rol === 'espectador' || q.rol === 'bloqueado') throw error('No tienes acceso a esta partida según tus roles en Discord.', 403);
   return q;
 }
 
@@ -139,10 +145,22 @@ export const auth = envoltorio(async (req) => {
 
   if (accion === 'yo') {
     const s = await sesion(req);
-    if (!s) return json({ usuario: null, dj: false, rol: 'espectador' });
-    let rol = null, aviso = null;
-    try { rol = await rolUsuario(s.id); } catch (e) { aviso = e.message; }
-    return json({ usuario: s, dj: rol === 'dj', rol: rol || 'espectador', aviso });
+    if (!s) return json({ usuario: null, dj: false, rol: 'espectador', partidas: [] });
+    let miembro = null, aviso = null;
+    try { miembro = await miembroServidor(s.id); } catch (e) { aviso = e.message; }
+    const todas = await Partidas.listar();
+    const partidasUsuario = todas.map((p) => {
+      const rol = Partidas.rolEnPartida(p, miembro);
+      return { id: p.id, nombre: p.nombre, descripcion: p.descripcion, rol };
+    }).filter((p) => p.rol !== 'bloqueado');
+    const esDj = (miembro && miembro.esDjGlobal) || partidasUsuario.some((p) => p.rol === 'dj');
+    return json({
+      usuario: s,
+      dj: esDj,
+      rol: esDj ? 'dj' : (partidasUsuario.length ? 'jugador' : 'espectador'),
+      partidas: partidasUsuario,
+      aviso
+    });
   }
 
   if (accion === 'salir') {
@@ -158,16 +176,55 @@ export const datos = envoltorio(async (req) => {
   const url = new URL(req.url);
   const accion = url.searchParams.get('accion');
   const id = url.searchParams.get('id');
+  const pId = url.searchParams.get('partida') || 'principal';
   const post = req.method === 'POST';
 
   switch (accion) {
-    // ---------------- vista de combate (cualquiera; el contenido depende del papel)
+    // ---------------- gestión de partidas
+    case 'partidas': {
+      const q = await quien(req);
+      const todas = await Partidas.listar();
+      const accesibles = todas.map((p) => {
+        const rol = Partidas.rolEnPartida(p, q.miembro);
+        return {
+          id: p.id,
+          nombre: p.nombre,
+          descripcion: p.descripcion,
+          rol,
+          activa: p.activa !== false,
+          canales: p.canales || [],
+          rolJugador: p.rolJugador,
+          rolDj: p.rolDj
+        };
+      }).filter((p) => q.rol === 'dj' || p.rol !== 'bloqueado');
+      return json({ partidas: accesibles, actual: pId });
+    }
+    case 'guardar-partida': {
+      if (!post) return error('Usa POST.', 405);
+      await exigirDj(req);
+      const b = await cuerpo(req);
+      return json(await Partidas.guardar(b));
+    }
+    case 'eliminar-partida': {
+      if (!post) return error('Usa POST.', 405);
+      await exigirDj(req);
+      const b = await cuerpo(req);
+      await Partidas.eliminar(b.id);
+      return json({ ok: true });
+    }
+    case 'roles-canales': {
+      await exigirDj(req);
+      return json(await listaRolesYCanales());
+    }
+
+    // ---------------- vista de combate (el contenido depende de la partida y papel)
     case 'campo': {
       const v = Number(url.searchParams.get('v')) || 0;
-      const ver = await versionPartida();
+      const ver = await versionPartida(pId);
       if (v && v === ver) return json({ sinCambios: true, version: ver });
-      const q = await quien(req);
-      return json({ version: ver, ...(await vistaCampo(q)) });
+      const q = await quien(req, pId);
+      if (q.rol === 'bloqueado') return error('No tienes acceso a esta partida según tus roles en Discord.', 403);
+      return json({ version: ver, ...(await vistaCampo({ ...q, partidaId: pId })) });
     }
     case 'imagen': {
       const clave = url.searchParams.get('clave') || '';
@@ -178,17 +235,19 @@ export const datos = envoltorio(async (req) => {
     }
     case 'mover': {
       if (!post) return error('Usa POST.', 405);
-      const q = await exigirMiembro(req);
-      return json(await mover(q, await cuerpo(req)));
+      const b = await cuerpo(req);
+      const destinoPartida = b.partida || pId;
+      const q = await exigirMiembro(req, destinoPartida);
+      return json(await mover(q, b, destinoPartida));
     }
 
     // ---------------- miembros del servidor (fichas completas)
     case 'publico': {
-      await exigirMiembro(req);
-      return json({ personajes: (await P.listar()).map(P.publico) });
+      await exigirMiembro(req, pId);
+      return json({ personajes: (await P.listar(pId)).map(P.publico) });
     }
     case 'descargar': {
-      const pj = id && await P.obtener(id);
+      const pj = id && await P.obtener(id, pId);
       if (!pj) return error('Personaje no encontrado.', 404);
       const nombre = String((pj.identidad && pj.identidad.nombre) || 'personaje').normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'personaje';
       const limpio = P.publico(pj);
@@ -200,35 +259,42 @@ export const datos = envoltorio(async (req) => {
 
     // ---------------- DJ
     case 'uno': {
-      await exigirDj(req);
-      const pj = id && await P.obtener(id);
+      await exigirDj(req, pId);
+      const pj = id && await P.obtener(id, pId);
       return pj ? json({ personaje: pj }) : error('Personaje no encontrado.', 404);
     }
     case 'lista': {
-      await exigirDj(req);
-      const [personajes, plantillas, imagenes] = await Promise.all([P.listar(), E.plantillas(), E.versionesImagen()]);
-      return json({ personajes, plantillas, imagenes });
+      await exigirDj(req, pId);
+      const [personajes, plantillas, imagenes, partidas] = await Promise.all([
+        P.listar(pId),
+        E.plantillas(),
+        E.versionesImagen(),
+        Partidas.listar()
+      ]);
+      return json({ personajes, plantillas, imagenes, partidas, partidaId: pId });
     }
     case 'guardar': {
       if (!post) return error('Usa POST.', 405);
-      await exigirDj(req);
       const b = await cuerpo(req);
+      const destinoPartida = b.partida || pId;
+      await exigirDj(req, destinoPartida);
       let pj;
       try { pj = P.preparar(b.personaje); } catch (e) { return error(e.message); }
       try {
-        pj = await P.guardar(pj, { rev: b.rev ?? null, forzar: !!b.forzar });
+        pj = await P.guardar(pj, { rev: b.rev ?? null, forzar: !!b.forzar, partidaId: destinoPartida });
       } catch (e) {
-        if (e instanceof P.Conflicto) return json({ error: e.message, conflicto: true, actual: await P.obtener(pj.id) }, 409);
+        if (e instanceof P.Conflicto) return json({ error: e.message, conflicto: true, actual: await P.obtener(pj.id, destinoPartida) }, 409);
         throw e;
       }
       return json({ personaje: pj });
     }
     case 'eliminar': {
       if (!post) return error('Usa POST.', 405);
-      await exigirDj(req);
       const b = await cuerpo(req);
-      await P.eliminar(b.id);
-      await E.olvidarPj(b.id);
+      const destinoPartida = b.partida || pId;
+      await exigirDj(req, destinoPartida);
+      await P.eliminar(b.id, destinoPartida);
+      await E.olvidarPj(b.id, destinoPartida);
       return json({ ok: true });
     }
 
@@ -267,23 +333,27 @@ export const datos = envoltorio(async (req) => {
     }
     case 'sacar': {
       if (!post) return error('Usa POST.', 405);
-      await exigirDj(req);
       const b = await cuerpo(req);
+      const destinoPartida = b.partida || pId;
+      await exigirDj(req, destinoPartida);
       const t = await E.plantilla(b.plantilla);
       if (!t) return error('PNJ no encontrado.', 404);
-      try { return json({ nuevos: await E.sacar(t, b) }); } catch (e) { return error(e.message); }
+      try { return json({ nuevos: await E.sacar(t, { ...b, partidaId: destinoPartida }) }); } catch (e) { return error(e.message); }
     }
     case 'retirar': {
       if (!post) return error('Usa POST.', 405);
-      await exigirDj(req);
       const b = await cuerpo(req);
-      if (b.id) await E.retirar(b.id); else await E.vaciar(b.lado || null);
+      const destinoPartida = b.partida || pId;
+      await exigirDj(req, destinoPartida);
+      if (b.id) await E.retirar(b.id, destinoPartida); else await E.vaciar(b.lado || null, destinoPartida);
       return json({ ok: true });
     }
     case 'ajustar': {
       if (!post) return error('Usa POST.', 405);
-      await exigirDj(req);
-      try { return json(await ajustar(await cuerpo(req))); } catch (e) { return error(e.message); }
+      const b = await cuerpo(req);
+      const destinoPartida = b.partida || pId;
+      await exigirDj(req, destinoPartida);
+      try { return json(await ajustar(b, destinoPartida)); } catch (e) { return error(e.message); }
     }
     case 'revelar': {
       if (!post) return error('Usa POST.', 405);
@@ -306,9 +376,10 @@ export const datos = envoltorio(async (req) => {
     }
     case 'asignar': {
       if (!post) return error('Usa POST.', 405);
-      await exigirDj(req);
       const b = await cuerpo(req);
-      const r = await P.asignar(b.id, b.usuario && b.usuario.id ? { id: String(b.usuario.id), nombre: b.usuario.nombre || '' } : null);
+      const destinoPartida = b.partida || pId;
+      await exigirDj(req, destinoPartida);
+      const r = await P.asignar(b.id, b.usuario && b.usuario.id ? { id: String(b.usuario.id), nombre: b.usuario.nombre || '' } : null, destinoPartida);
       return json({ personaje: r.pj, liberados: r.liberados });
     }
     case 'miembros': {
@@ -331,12 +402,20 @@ export const datos = envoltorio(async (req) => {
 // ================================================================== escena
 const urlImagen = (clave, vers) => (vers[clave] ? `/api/datos/?accion=imagen&clave=${encodeURIComponent(clave)}&v=${vers[clave]}` : null);
 
-/** Datos de la vista de combate según el papel del visitante. */
-async function vistaCampo({ s, rol }) {
-  const [pjs, c, form, vers, lista, cb] = await Promise.all([P.listar(), E.campo(), E.formacion(), E.versionesImagen(), E.plantillas(), P.combate()]);
+/** Datos de la vista de combate según el papel del visitante y la partida. */
+async function vistaCampo({ s, rol, partidaId = 'principal' }) {
+  const [pjs, c, form, vers, lista, cb] = await Promise.all([
+    P.listar(partidaId),
+    E.campo(partidaId),
+    E.formacion(partidaId),
+    E.versionesImagen(),
+    E.plantillas(),
+    P.combate(partidaId)
+  ]);
   const tpl = Object.fromEntries(lista.map((t) => [t.id, t]));
   const ve = rol !== 'espectador';
   const out = {
+    partidaId,
     rol,
     usuario: s ? { id: s.id, nombre: s.nombre, avatar: s.avatar } : null,
     combate: cb ? { ronda: cb.ronda } : null,
@@ -370,7 +449,7 @@ async function vistaCampo({ s, rol }) {
  * Reordena una columna. Cuerpo: { movida: clave, lado, fila, claves: [orden final de la columna] }
  * El jugador solo puede mover sus PJ (y siempre en el lado aliado).
  */
-async function mover({ s, rol }, b) {
+async function mover({ s, rol }, b, partidaId = 'principal') {
   const lado = E.LADOS.includes(b.lado) ? b.lado : 'aliado';
   const fila = E.FILAS.includes(b.fila) || (b.fila === 'fuera' && rol === 'dj') ? b.fila : null;
   if (!fila) throw error('Fila no válida.');
@@ -378,17 +457,17 @@ async function mover({ s, rol }, b) {
   const [tipo, id] = String(b.movida || '').split(':');
   if (rol !== 'dj') {
     if (tipo !== 'pj' || lado !== 'aliado' || fila === 'fuera') throw error('Solo puedes mover tus personajes.', 403);
-    const pj = await P.obtener(id);
+    const pj = await P.obtener(id, partidaId);
     if (!pj || !pj.discord || pj.discord.id !== s.id) throw error('Solo puedes mover tus personajes.', 403);
   }
   if (tipo === 'pj' && lado !== 'aliado') throw error('Los personajes jugadores van en el lado aliado.');
-  const c = await E.campo();
+  const c = await E.campo(partidaId);
   let cambiaCampo = false;
   for (const [k, clave] of (claves.includes(b.movida) ? claves : [...claves, b.movida]).entries()) {
     const [t2, id2] = clave.split(':');
     if (t2 === 'pj') {
-      if (clave === b.movida) await E.colocarPj(id2, { fila, orden: k });
-      else await E.colocarPj(id2, { orden: k });
+      if (clave === b.movida) await E.colocarPj(id2, { fila, orden: k }, partidaId);
+      else await E.colocarPj(id2, { orden: k }, partidaId);
     } else if (t2 === 'pnj') {
       const i = c.enemigos.find((x) => x.id === id2);
       if (!i) continue;
@@ -396,16 +475,16 @@ async function mover({ s, rol }, b) {
       i.orden = k; cambiaCampo = true;
     }
   }
-  if (cambiaCampo) await E.guardarCampo(c); else await tocar();
+  if (cambiaCampo) await E.guardarCampo(c, partidaId); else await tocar(partidaId);
   return { ok: true };
 }
 
 /** Ajustes rápidos del DJ desde la vista: PV, PM, estados o daño con afinidades. */
-async function ajustar(b) {
+async function ajustar(b, partidaId = 'principal') {
   const [tipo, id] = String(b.clave || '').split(':');
   const lineas = [];
   if (tipo === 'pnj') {
-    const c = await E.campo();
+    const c = await E.campo(partidaId);
     const i = c.enemigos.find((x) => x.id === id);
     if (!i) throw new Error('Ese PNJ ya no está en el campo.');
     const t = await E.plantilla(i.plantilla);
@@ -429,11 +508,11 @@ async function ajustar(b) {
       lineas.push(`${i.nombre} pasa a su siguiente fase.`);
     }
     if (b.nombre) i.nombre = String(b.nombre).trim().slice(0, 60) || i.nombre;
-    await E.guardarCampo(c);
+    await E.guardarCampo(c, partidaId);
     return { ok: true, texto: lineas.join(' ') };
   }
   if (tipo === 'pj') {
-    const pj = await P.obtener(id);
+    const pj = await P.obtener(id, partidaId);
     if (!pj) throw new Error('Personaje no encontrado.');
     const c = R.calcular(pj, await baseDatos());
     pj.estado = pj.estado || {};
@@ -442,8 +521,8 @@ async function ajustar(b) {
     if (b.pm !== undefined && b.pm !== '') pj.estado.pm = aplicarValor(act('pm', c.pm_max), b.pm, c.pm_max);
     if (b.pf !== undefined && b.pf !== '') pj.pf = aplicarValor(pj.pf || 0, b.pf, null);
     if (Array.isArray(b.estados)) pj.estado.estados = b.estados.filter((x) => typeof x === 'string').slice(0, 6);
-    if (b.fila && (E.FILAS.includes(b.fila) || b.fila === 'fuera')) await E.colocarPj(id, { fila: b.fila });
-    await P.escribir(pj);
+    if (b.fila && (E.FILAS.includes(b.fila) || b.fila === 'fuera')) await E.colocarPj(id, { fila: b.fila }, partidaId);
+    await P.escribir(pj, undefined, partidaId);
     return { ok: true };
   }
   throw new Error('Clave no válida.');
@@ -451,10 +530,10 @@ async function ajustar(b) {
 
 /** Si el DJ cambia el identificador de una ficha, mueve sus instancias e imagen. */
 async function renombrarPlantilla(viejo, nuevo) {
-  const c = await E.campo();
+  const c = await E.campo('principal');
   let n = 0;
   for (const i of c.enemigos) if (i.plantilla === viejo) { i.plantilla = nuevo; n++; }
-  if (n) await E.guardarCampo(c);
+  if (n) await E.guardarCampo(c, 'principal');
   const img = await E.imagen(`pnj:${viejo}`);
   if (img) await E.guardarImagen(`pnj:${nuevo}`, img);
   await E.eliminarPlantilla(viejo);

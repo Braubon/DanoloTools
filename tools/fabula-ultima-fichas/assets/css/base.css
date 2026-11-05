@@ -78,6 +78,18 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 16px 0; }
 .topbar .marca h1 { font-size: 22px; white-space: nowrap; }
 .topbar .marca span { color: var(--faint); font-size: 12px; white-space: nowrap; }
 .acciones { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.selector-partida {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--surface-2); border: 1px solid var(--line);
+  border-radius: 6px; padding: 2px 8px; font-size: 13px; color: var(--muted);
+}
+.selector-partida label { font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--faint); font-weight: 600; }
+.selector-partida select {
+  background: transparent; border: 0; color: var(--accent);
+  font: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
+  padding: 2px 0; outline: none; max-width: 160px;
+}
+.selector-partida select option { background: var(--surface); color: var(--text); }
 
 .contenedor { max-width: 1240px; margin: 0 auto; padding: 20px; }
 .disposicion { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 20px; align-items: start; }

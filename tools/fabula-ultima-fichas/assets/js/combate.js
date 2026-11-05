@@ -29,20 +29,71 @@ let seleccion = null;      // clave seleccionada ('pj:…' | 'pnj:…')
 let sinApi = false;
 let pidiendo = false;
 let imagenPara = null;     // clave a la que se sube la imagen
+let partidaActual = new URLSearchParams(location.search).get('partida') || localStorage.getItem('fu-partida') || 'principal';
 
 const $ = (id) => document.getElementById(id);
 const esDj = () => datos && datos.rol === 'dj';
 const ve = () => datos && datos.rol !== 'espectador';
 
+const conPartida = (ruta) => {
+  const sep = ruta.includes('?') ? '&' : '?';
+  return `${ruta}${sep}partida=${encodeURIComponent(partidaActual)}`;
+};
+
+function actualizarEnlacesNav() {
+  const ef = $('enlace-fichas');
+  if (ef) ef.href = `../ficha/index.html?partida=${encodeURIComponent(partidaActual)}`;
+  const ep = $('enlace-panel');
+  if (ep) ep.href = `../panel/index.html?partida=${encodeURIComponent(partidaActual)}`;
+}
+
+async function cargarPartidas() {
+  const caja = $('caja-partida');
+  const sel = $('sel-partida');
+  if (!caja || !sel) return;
+  try {
+    const res = await pedir('datos/?accion=partidas');
+    const lista = (res && res.partidas) || [];
+    if (lista.length > 1 || (datos && datos.rol === 'dj')) {
+      sel.innerHTML = lista.map((p) => `<option value="${esc(p.id)}" ${p.id === partidaActual ? 'selected' : ''}>${esc(p.nombre || p.id)}</option>`).join('');
+      caja.classList.remove('oculto');
+      sel.onchange = () => {
+        partidaActual = sel.value;
+        localStorage.setItem('fu-partida', partidaActual);
+        const u = new URL(location);
+        u.searchParams.set('partida', partidaActual);
+        history.replaceState(null, '', u);
+        actualizarEnlacesNav();
+        version = 0;
+        datos = null;
+        actualizar(true);
+      };
+    } else {
+      caja.classList.add('oculto');
+    }
+  } catch (e) {
+    caja.classList.add('oculto');
+  }
+}
+
 // ================================================================== red
 async function pedir(ruta, opciones = {}) {
-  const r = await fetch(A + ruta, { cache: 'no-store', ...opciones, headers: { 'Content-Type': 'application/json', ...(opciones.headers || {}) } });
+  let url = ruta;
+  if (url.startsWith('datos/?') && !url.includes('partida=')) {
+    url = conPartida(url);
+  }
+  const r = await fetch(A + url, { cache: 'no-store', ...opciones, headers: { 'Content-Type': 'application/json', ...(opciones.headers || {}) } });
   let j = null;
   try { j = await r.json(); } catch (e) { /* sin json */ }
   if (!r.ok) { const err = new Error((j && j.error) || `Error ${r.status}`); err.status = r.status; throw err; }
   return j;
 }
-const post = (ruta, cuerpo) => pedir(ruta, { method: 'POST', body: JSON.stringify(cuerpo) });
+const post = (ruta, cuerpo = {}) => {
+  if (cuerpo && typeof cuerpo === 'object' && !cuerpo.partida) {
+    cuerpo.partida = partidaActual;
+  }
+  return pedir(ruta, { method: 'POST', body: JSON.stringify(cuerpo) });
+};
 
 let otraVez = false;
 async function actualizar(forzar = false) {
@@ -55,7 +106,14 @@ async function actualizar(forzar = false) {
     datos = j;
     if (ve() && !db) db = construirDb(await cargarRaw('../data/'), null);
     pintar();
+    cargarPartidas();
   } catch (e) {
+    if (e.status === 403) {
+      $('vista').innerHTML = `<div class="vacio"><p><strong>Acceso restringido</strong></p>
+        <p class="small">${esc(e.message)}</p></div>`;
+      cargarPartidas();
+      return;
+    }
     if (!datos) { sinApi = true; pintarSinApi(); }
   } finally {
     pidiendo = false;
@@ -493,4 +551,6 @@ const medirBarra = () => {
 addEventListener('resize', medirBarra);
 medirBarra();
 initTema();
+actualizarEnlacesNav();
+cargarPartidas();
 actualizar(true);

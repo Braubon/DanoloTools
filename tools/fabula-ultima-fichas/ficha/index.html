@@ -22,8 +22,12 @@
   <header class="topbar">
     <div class="marca"><a href="../index.html"><h1 class="display">Fábula RO</h1></a><span>Fichas completas</span></div>
     <div class="acciones">
+      <div id="caja-partida" class="selector-partida oculto">
+        <label for="sel-partida">Partida</label>
+        <select id="sel-partida" aria-label="Seleccionar partida"></select>
+      </div>
       <span id="usuario"></span>
-      <a class="btn fantasma" href="../visor/index.html">Combate</a>
+      <a class="btn fantasma" id="enlace-combate" href="../visor/index.html">Combate</a>
       <label class="btn fantasma" title="Abrir uno o varios personajes en JSON desde tu equipo">Abrir JSON<input type="file" accept=".json,application/json" id="cargar" multiple class="sr"></label>
       <a class="btn fantasma" href="../generador/index.html">Generador</a>
       <a class="btn fantasma" href="../comandos/index.html">Comandos</a>

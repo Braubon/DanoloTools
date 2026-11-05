@@ -1,10 +1,10 @@
 // ---------------------------------------------------------------------------
 // Escena de combate en Redis:
-//   fu:pnj         hash  id → ficha de PNJ (plantilla, ver assets/js/pnj.js)
-//   fu:campo       JSON  { enemigos: [instancia] }  PNJ colocados en el campo
-//   fu:formacion   hash  id de PJ → { fila, orden }
-//   fu:imagenes    hash  'pj:<id>' | 'pnj:<id>' → imagen en data URL (124×124)
-//   fu:imgver      hash  misma clave → versión (para refrescar la caché)
+//   fu:pnj                     hash  id → ficha de PNJ (plantilla, ver assets/js/pnj.js)
+//   fu:[<partida>:]campo       JSON  { enemigos: [instancia] }  PNJ colocados en el campo
+//   fu:[<partida>:]formacion   hash  id de PJ → { fila, orden }
+//   fu:imagenes                hash  'pj:<id>' | 'pnj:<id>' → imagen en data URL (124×124)
+//   fu:imgver                  hash  misma clave → versión (para refrescar la caché)
 //
 // Instancia: { id, plantilla, nombre, lado: 'enemigo'|'aliado',
 //              fila: 'vanguardia'|'retaguardia', orden, pv, pm, pu, estados: [] }
@@ -16,10 +16,15 @@ import { hgetallJSON, hgetJSON, hsetJSON, hdel, getJSON, setJSON, cmd, hgetall, 
 import { normalizarPnj, crisisPnj, aplicarAfinidad } from '../assets/js/pnj.js';
 
 const H_PNJ = 'fu:pnj';
-const K_CAMPO = 'fu:campo';
-const H_FORM = 'fu:formacion';
 const H_IMG = 'fu:imagenes';
 const H_IMGV = 'fu:imgver';
+
+export function kCampo(partidaId) {
+  return (!partidaId || partidaId === 'principal' || partidaId === 'default') ? 'fu:campo' : `fu:partida:${partidaId}:campo`;
+}
+export function kForm(partidaId) {
+  return (!partidaId || partidaId === 'principal' || partidaId === 'default') ? 'fu:formacion' : `fu:partida:${partidaId}:formacion`;
+}
 
 export const FILAS = ['vanguardia', 'retaguardia'];
 export const LADOS = ['enemigo', 'aliado'];
@@ -40,14 +45,14 @@ export async function guardarPlantilla(datos, { reemplazar = true } = {}) {
   t.revelado = previo ? previo.revelado || 0 : 0;
   t.modificado = new Date().toISOString();
   await hsetJSON(H_PNJ, t.id, t);
-  // Ajusta los PV/PM de sus instancias si el máximo ha bajado.
-  const c = await campo();
+  // Ajusta los PV/PM de sus instancias si el máximo ha bajado en el campo principal.
+  const c = await campo('principal');
   let cambia = false;
   for (const i of c.enemigos.filter((x) => x.plantilla === t.id)) {
     if (i.pv > t.pv) { i.pv = t.pv; cambia = true; }
     if (i.pm > t.pm) { i.pm = t.pm; cambia = true; }
   }
-  if (cambia) await setJSON(K_CAMPO, c);
+  if (cambia) await setJSON(kCampo('principal'), c);
   await tocar();
   return { plantilla: t, existia: !!previo };
 }
@@ -55,10 +60,10 @@ export async function guardarPlantilla(datos, { reemplazar = true } = {}) {
 export async function eliminarPlantilla(id) {
   await hdel(H_PNJ, id);
   await borrarImagen(`pnj:${id}`);
-  const c = await campo();
+  const c = await campo('principal');
   const antes = c.enemigos.length;
   c.enemigos = c.enemigos.filter((i) => i.plantilla !== id);
-  if (c.enemigos.length !== antes) await setJSON(K_CAMPO, c);
+  if (c.enemigos.length !== antes) await setJSON(kCampo('principal'), c);
   await tocar();
 }
 
@@ -72,11 +77,14 @@ export async function revelar(id, nivel) {
 }
 
 // ------------------------------------------------------------------ campo
-export async function campo() {
-  const c = await getJSON(K_CAMPO);
+export async function campo(partidaId = 'principal') {
+  const c = await getJSON(kCampo(partidaId));
   return c && Array.isArray(c.enemigos) ? c : { enemigos: [] };
 }
-export async function guardarCampo(c) { await setJSON(K_CAMPO, c); await tocar(); }
+export async function guardarCampo(c, partidaId = 'principal') {
+  await setJSON(kCampo(partidaId), c);
+  await tocar(partidaId);
+}
 
 /** Nombres libres: «Lobo», o «Lobo A», «Lobo B»… si hay varios. */
 function nombresLibres(base, n, ocupados) {
@@ -94,8 +102,8 @@ function nombresLibres(base, n, ocupados) {
 }
 
 /** Coloca PNJ de una plantilla en el campo. */
-export async function sacar(t, { cantidad = 1, fila = 'vanguardia', lado = 'enemigo', nombre = '' } = {}) {
-  const c = await campo();
+export async function sacar(t, { cantidad = 1, fila = 'vanguardia', lado = 'enemigo', nombre = '', partidaId = 'principal' } = {}) {
+  const c = await campo(partidaId);
   const base = String(nombre || t.nombre).trim().slice(0, 60) || t.nombre;
   const n = Math.max(1, Math.min(12, Number(cantidad) || 1));
   if (c.enemigos.length + n > 30) throw new Error('Máximo 30 PNJ en el campo.');
@@ -108,7 +116,7 @@ export async function sacar(t, { cantidad = 1, fila = 'vanguardia', lado = 'enem
   const orden = c.enemigos.filter((i) => i.lado === l && i.fila === f).length;
   const nuevos = nombres.map((nm, k) => ({ id: uid(), plantilla: t.id, nombre: nm, lado: l, fila: f, orden: orden + k, pv: t.pv, pm: t.pm, pu: t.villano ? t.puntos_ultima || 0 : 0, estados: [] }));
   c.enemigos.push(...nuevos);
-  await guardarCampo(c);
+  await guardarCampo(c, partidaId);
   return nuevos;
 }
 
@@ -119,20 +127,20 @@ export function buscarInstancia(c, valor) {
   return c.enemigos.find((i) => i.id === valor) || c.enemigos.find((i) => norm(i.nombre) === n) || c.enemigos.find((i) => norm(i.nombre).includes(n)) || null;
 }
 
-export async function retirar(id) {
-  const c = await campo();
+export async function retirar(id, partidaId = 'principal') {
+  const c = await campo(partidaId);
   const i = c.enemigos.find((x) => x.id === id);
   c.enemigos = c.enemigos.filter((x) => x.id !== id);
-  await guardarCampo(c);
+  await guardarCampo(c, partidaId);
   return i;
 }
 
 /** Retira todos los PNJ de un lado (o todos si no se indica). */
-export async function vaciar(lado = null) {
-  const c = await campo();
+export async function vaciar(lado = null, partidaId = 'principal') {
+  const c = await campo(partidaId);
   const antes = c.enemigos.length;
   c.enemigos = lado ? c.enemigos.filter((i) => i.lado !== lado) : [];
-  if (c.enemigos.length !== antes) await guardarCampo(c);
+  if (c.enemigos.length !== antes) await guardarCampo(c, partidaId);
   return antes - c.enemigos.length;
 }
 
@@ -167,14 +175,16 @@ export function cruces(antes, despues, t) {
 }
 
 // ------------------------------------------------------------------ formación de PJ
-export const formacion = async () => hgetallJSON(H_FORM);
-export async function colocarPj(id, datos) {
-  const previo = (await hgetJSON(H_FORM, id)) || {};
-  await hsetJSON(H_FORM, id, { ...previo, ...datos });
+export const formacion = async (partidaId = 'principal') => hgetallJSON(kForm(partidaId));
+export async function colocarPj(id, datos, partidaId = 'principal') {
+  const previo = (await hgetJSON(kForm(partidaId), id)) || {};
+  await hsetJSON(kForm(partidaId), id, { ...previo, ...datos });
+  await tocar(partidaId);
 }
-export async function olvidarPj(id) {
-  await hdel(H_FORM, id);
+export async function olvidarPj(id, partidaId = 'principal') {
+  await hdel(kForm(partidaId), id);
   await borrarImagen(`pj:${id}`);
+  await tocar(partidaId);
 }
 
 // ------------------------------------------------------------------ imágenes

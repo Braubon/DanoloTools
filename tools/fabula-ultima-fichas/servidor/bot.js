@@ -9,6 +9,7 @@ import * as P from './personajes.js';
 import * as E from './escena.js';
 import * as M from './motor.js';
 import * as N from '../assets/js/pnj.js';
+import * as Partidas from './partidas.js';
 
 const { R } = M;
 const COLOR = { normal: 0xd4b072, critico: 0x6fcf97, pifia: 0xe0727c, info: 0x6fa6dc, enemigo: 0xb07ad4 };
@@ -46,21 +47,46 @@ function opciones(i) {
 async function contexto(i, origen) {
   const u = (i.member && i.member.user) || i.user || {};
   const { o, sub, enfocada } = opciones(i);
+
+  let pjId = o.personaje || null;
+  if (!pjId && i.type === 3 && i.data && i.data.custom_id) {
+    const parts = i.data.custom_id.split(':');
+    if (['pm', 'ap'].includes(parts[0])) pjId = parts[1];
+    else if (parts[0] === 'rr' && parts[2]) pjId = parts[2];
+  }
+
+  const memberRoles = (i.member && i.member.roles) || [];
+  const partidaId = await Partidas.determinarPartida({
+    channelId: i.channel_id,
+    userId: u.id,
+    memberRoles,
+    pjId
+  });
+  const partida = await Partidas.obtener(partidaId);
+  const esDjGlobal = i.guild_id ? await miembroEsDj(i.member, i.guild_id) : false;
+  const rol = Partidas.rolEnPartida(partida, i.member ? { esDjGlobal, roles: memberRoles } : null);
+
   const ctx = {
     i, o, sub, enfocada, origen,
     user: { id: u.id, nombre: (i.member && i.member.nick) || nombreUsuario(u) },
     guild: i.guild_id,
+    partidaId,
+    partida,
+    rol,
+    dj: rol === 'dj',
     db: await M.baseDatos(),
     _todos: null
   };
-  ctx.dj = i.guild_id ? await miembroEsDj(i.member, i.guild_id) : false;
-  ctx.todos = async () => (ctx._todos || (ctx._todos = await P.listar()));
+  ctx.todos = async () => (ctx._todos || (ctx._todos = await P.listar(ctx.partidaId)));
   return ctx;
 }
 
-const urlVisor = (ctx, pj) => (pj
-  ? `${ctx.origen}/tools/fabula-ultima-fichas/ficha/index.html#${encodeURIComponent(pj.id)}`
-  : `${ctx.origen}/tools/fabula-ultima-fichas/visor/index.html`);
+const urlVisor = (ctx, pj) => {
+  const pParam = `partida=${encodeURIComponent(ctx.partidaId || 'principal')}`;
+  return pj
+    ? `${ctx.origen}/tools/fabula-ultima-fichas/ficha/index.html?${pParam}#${encodeURIComponent(pj.id)}`
+    : `${ctx.origen}/tools/fabula-ultima-fichas/visor/index.html?${pParam}`;
+};
 const urlComandos = (ctx) => `${ctx.origen}/tools/fabula-ultima-fichas/comandos/index.html`;
 const puedeEditar = (ctx, pj) => ctx.dj || (pj.discord && pj.discord.id === ctx.user.id);
 
@@ -147,10 +173,10 @@ function notaEstados(pj, c, dados, atributos) {
 }
 
 /** Si la tirada es pifia de un PJ, suma 1 PF. Devuelve la línea a mostrar. */
-async function pifiaPf(pj, r) {
+async function pifiaPf(pj, r, partidaId) {
   if (!pj || !r.pifia) return '';
   pj.pf = (pj.pf || 0) + 1;
-  await P.escribir(pj);
+  await P.escribir(pj, partidaId);
   return `+1 Punto Fábula por la pifia (ahora ${pj.pf}).`;
 }
 
@@ -183,7 +209,7 @@ async function hacerTirada(ctx, { a1, a2, bono, dif, pjValor }) {
     const caras = (a) => (R.ATR.includes(a) ? dados[a] : Number(String(a).replace('d', '')));
     const r = M.prueba(caras(a1), caras(a2), bono, dif);
     const et = (a) => (R.ATR.includes(a) ? `${a} d${dados[a]}` : a);
-    const extra = [await pifiaPf(pj, r)].filter(Boolean);
+    const extra = [await pifiaPf(pj, r, ctx.partidaId)].filter(Boolean);
     const embed = embedPrueba({
       titulo: `${M.nombre(pj)} · ${a1} + ${a2}`,
       r,
@@ -206,7 +232,7 @@ async function hacerTirada(ctx, { a1, a2, bono, dif, pjValor }) {
     const caras = (a) => (R.ATR.includes(a) ? dados[a] : Number(String(a).replace('d', '')));
     const r = M.prueba(caras(a1), caras(a2), bono, dif);
     const et = (a) => (R.ATR.includes(a) ? `${a} d${dados[a]}` : a);
-    const extra = [await pifiaPf(pj, r)].filter(Boolean);
+    const extra = [await pifiaPf(pj, r, ctx.partidaId)].filter(Boolean);
     embeds.push(embedPrueba({
       titulo: `${M.nombre(pj)} · ${a1} + ${a2}`,
       r,
@@ -237,12 +263,12 @@ async function hacerAtaque(ctx, { arma, bono, pjValor, objetivo }) {
   const r = M.prueba(dados[x], dados[y], (at.precision.bonus || 0) + (bono || 0));
   const extra = [];
   if (!r.pifia) extra.push(`Daño: TM ${r.tm} + ${at.dano.bonus} = **${r.tm + at.dano.bonus}** ${M.nombreTipo(ctx.db, at.dano.tipo)}`);
-  const pf = await pifiaPf(pj, r);
+  const pf = await pifiaPf(pj, r, ctx.partidaId);
   if (pf) extra.push(pf);
   if (at.cualidad) extra.push(`*${at.cualidad.length > 180 ? at.cualidad.slice(0, 177) + '…' : at.cualidad}*`);
   let aplicado = null;
   if (objetivo) {
-    const g = await golpearPnj(objetivo, r, 'def', r.pifia ? null : r.tm + at.dano.bonus, at.dano.tipo);
+    const g = await golpearPnj(objetivo, r, 'def', r.pifia ? null : r.tm + at.dano.bonus, at.dano.tipo, ctx.partidaId);
     extra.push(...g.lineas);
     aplicado = g;
   }
@@ -262,8 +288,8 @@ async function hacerAtaque(ctx, { arma, bono, pjValor, objetivo }) {
  * su defensa (sin mostrarla) y aplica el daño con sus afinidades.
  * Devuelve { inst, lineas, delta } (delta = cambio de PV aplicado, para deshacer).
  */
-async function golpearPnj(valor, r, contra, dano, tipo) {
-  const c = await E.campo();
+async function golpearPnj(valor, r, contra, dano, tipo, partidaId = 'principal') {
+  const c = await E.campo(partidaId);
   const inst = E.buscarInstancia(c, valor);
   if (!inst) throw new Aviso(`No hay ningún PNJ «${valor}» en el campo.`);
   const t = await E.plantilla(inst.plantilla);
@@ -276,7 +302,7 @@ async function golpearPnj(valor, r, contra, dano, tipo) {
     const d = E.danar(inst, t, dano, tipo);
     delta = d.despues - d.antes;
     lineas.push(lineaDanoPnj(inst, t, d, tipo));
-    await E.guardarCampo(c);
+    await E.guardarCampo(c, partidaId);
   }
   return { inst, lineas, delta };
 }
@@ -293,14 +319,14 @@ function lineaDanoPnj(inst, t, d, tipo) {
 }
 
 /** Deshace un cambio de PV hecho a un PNJ (al repetir una tirada). */
-async function deshacerPnj(instId, delta) {
+async function deshacerPnj(instId, delta, partidaId = 'principal') {
   if (!delta) return;
-  const c = await E.campo();
+  const c = await E.campo(partidaId);
   const inst = c.enemigos.find((i) => i.id === instId);
   if (!inst) return;
   const t = await E.plantilla(inst.plantilla);
   inst.pv = Math.max(0, Math.min(t ? t.pv : inst.pv - delta, inst.pv - delta));
-  await E.guardarCampo(c);
+  await E.guardarCampo(c, partidaId);
 }
 
 const botonEstado = (inst) => boton('Estado (DJ)', `ev:${inst.id}`);
@@ -336,14 +362,14 @@ async function hacerConjuro(ctx, { conjuro, objetivos, bono, atributos, pjValor,
       const plus = c.dano_conjuros || 0;
       extra.push(`Daño: TM ${r.tm} + ${f}${plus ? ` + ${plus}` : ''} = **${r.tm + f + plus}** ${M.tipoDanoTexto(cj)}`.trim());
     }
-    const pf = await pifiaPf(pj, r);
+    const pf = await pifiaPf(pj, r, ctx.partidaId);
     if (pf) extra.push(pf);
     let aplicado = null;
     if (objetivo) {
       const plus = c.dano_conjuros || 0;
       const tipo = TIPO_POR_NOMBRE[P.norm(M.tipoDanoTexto(cj))] || null;
       const dano = f !== null && tipo && !r.pifia ? r.tm + f + plus : null;
-      aplicado = await golpearPnj(objetivo, r, 'mdef', dano, tipo);
+      aplicado = await golpearPnj(objetivo, r, 'mdef', dano, tipo, ctx.partidaId);
       extra.push(...aplicado.lineas);
     }
     extra.push(`Coste: ${coste !== null ? `**${coste} PM**` : cj.pm} · ${M.nombre(pj)} tiene ${rec.pm} PM`);
@@ -379,7 +405,7 @@ async function hacerEstudio(ctx, { inst, t, pjValor, bono }) {
     extra.push(`🔎 **Descubre:** ${N.textoRevelado(nivel, t.revelado || 0)}.`);
   } else if (nivel) extra.push('No descubre nada que el grupo no supiera.');
   else extra.push('No descubre nada.');
-  const pf = await pifiaPf(pj, r);
+  const pf = await pifiaPf(pj, r, ctx.partidaId);
   if (pf) extra.push(pf);
   const embed = embedPrueba({ titulo: `${M.nombre(pj)} estudia a ${inst.nombre}`, r, etiquetas: [`PER d${dados.PER}`, `PER d${dados.PER}`], extra, pie: notaEstados(pj, c, dados, ['PER']) });
   const embeds = [embed];
@@ -436,7 +462,7 @@ async function cambiarRecurso(ctx, clave) {
   try { nuevo = M.aplicarValor(actual, valor, max); } catch (e) { throw new Aviso(e.message); }
   if (clave === 'pf') pj.pf = nuevo;
   else { pj.estado = pj.estado || {}; pj.estado[clave] = nuevo; }
-  await P.escribir(pj);
+  await P.escribir(pj, ctx.partidaId);
   const lineas = [`**${M.nombre(pj)}** · ${etiqueta} ${actual} → **${nuevo}**${max !== null ? ` / ${max}` : ''}${nuevo !== actual ? ` (${signo(nuevo - actual)})` : ''}`];
   if (clave === 'pv') {
     if (nuevo === 0) lineas.push('💀 **Cae a 0 PV.** Debe rendirse o sacrificarse.');
@@ -451,10 +477,10 @@ function dibujoReloj(r) {
   const llenas = Math.min(r.llenas, r.secciones);
   return `${'●'.repeat(llenas)}${'○'.repeat(r.secciones - llenas)}  ${llenas}/${r.secciones}`;
 }
-async function buscarReloj(nombre) {
-  const r = await P.reloj(nombre);
+async function buscarReloj(nombre, partidaId = 'principal') {
+  const r = await P.reloj(nombre, partidaId);
   if (r) return r;
-  const todos = await P.relojes();
+  const todos = await P.relojes(partidaId);
   const n = P.norm(nombre);
   const enc = todos.find((x) => P.norm(x.nombre).includes(n));
   if (!enc) throw new Aviso(`No hay ningún reloj «${nombre}».`);
@@ -469,7 +495,7 @@ async function textoCombate(ctx, cb) {
   const faltan = pjs.filter((p) => !hechos.has(p.id));
   const lineas = [`**Conflicto · ronda ${cb.ronda}** · empiezan ${cb.empieza === 'pj' ? 'los jugadores' : 'los enemigos'}`];
   lineas.push(pjs.map((p) => `${hechos.has(p.id) ? '✅' : '⬜'} ${M.nombre(p)}`).join('   '));
-  const campo = await E.campo();
+  const campo = await E.campo(ctx.partidaId);
   const enem = campo.enemigos.filter((i) => i.lado === 'enemigo');
   if (enem.length) lineas.push(`Enemigos: ${enem.map((i) => `${(cb.enemigos || []).some((n) => P.norm(n) === P.norm(i.nombre)) ? '✅' : '⬜'} ${i.nombre}${i.estados && i.estados.length ? ` (${i.estados.map(N.nombreEstado).join(', ').toLowerCase()})` : ''}`).join('   ')}`);
   else if ((cb.enemigos || []).length) lineas.push(`Enemigos que han actuado: ${cb.enemigos.join(', ')}`);
@@ -482,8 +508,8 @@ async function textoCombate(ctx, cb) {
 
 // ------------------------------------------------------------------ PNJ
 /** Busca un PNJ del campo y su ficha. */
-async function resolverPnj(valor) {
-  const c = await E.campo();
+async function resolverPnj(valor, partidaId = 'principal') {
+  const c = await E.campo(partidaId);
   const inst = E.buscarInstancia(c, valor);
   if (!inst) throw new Aviso(`No hay ningún PNJ «${valor}» en el campo.`);
   const t = await E.plantilla(inst.plantilla);
@@ -558,31 +584,31 @@ const SUB_ENEMIGO = {
     const o = ctx.o;
     const t = await buscarPlantilla(o.plantilla);
     let nuevos;
-    try { nuevos = await E.sacar(t, { cantidad: o.cantidad || 1, fila: o.fila, lado: o.lado, nombre: o.nombre }); } catch (e) { throw new Aviso(e.message); }
+    try { nuevos = await E.sacar(t, { cantidad: o.cantidad || 1, fila: o.fila, lado: o.lado, nombre: o.nombre }, ctx.partidaId); } catch (e) { throw new Aviso(e.message); }
     const lista = nuevos.map((i) => `**${i.nombre}**`).join(', ');
     const aliado = nuevos[0].lado === 'aliado';
     return texto(`${aliado ? '🤝' : '⚔️'} ${aliado ? `Se ${nuevos.length > 1 ? 'unen' : 'une'} al grupo` : `Entra${nuevos.length > 1 ? 'n' : ''} en escena`}: ${lista} (${etiquetaFila(nuevos[0])}). [Vista de combate](<${urlVisor(ctx)}>)`);
   },
   async retirar(ctx) {
     if (ctx.o.todos) {
-      const n = await E.vaciar('enemigo');
+      const n = await E.vaciar('enemigo', ctx.partidaId);
       return texto(n ? `Se retiran ${n} enemigo${n > 1 ? 's' : ''} del campo.` : 'No había enemigos en el campo.');
     }
     if (!ctx.o.enemigo) throw new Aviso('Indica el PNJ o usa todos:True.');
-    const { inst } = await resolverPnj(ctx.o.enemigo);
-    await E.retirar(inst.id);
+    const { inst } = await resolverPnj(ctx.o.enemigo, ctx.partidaId);
+    await E.retirar(inst.id, ctx.partidaId);
     return texto(`**${inst.nombre}** sale del campo.`);
   },
   async daño(ctx) {
-    const { c, inst, t } = await resolverPnj(ctx.o.enemigo);
+    const { c, inst, t } = await resolverPnj(ctx.o.enemigo, ctx.partidaId);
     const d = E.danar(inst, t, ctx.o.cantidad, ctx.o.tipo, { ignoraResistencia: !!ctx.o.ignora_resistencia });
-    await E.guardarCampo(c);
+    await E.guardarCampo(c, ctx.partidaId);
     return mensaje({ content: lineaDanoPnj(inst, t, d, ctx.o.tipo), components: [fila(botonEstado(inst))] });
   },
   async pv(ctx) { return recursoPnj(ctx, 'pv'); },
   async pm(ctx) { return recursoPnj(ctx, 'pm'); },
   async estado(ctx) {
-    const { c, inst, t } = await resolverPnj(ctx.o.enemigo);
+    const { c, inst, t } = await resolverPnj(ctx.o.enemigo, ctx.partidaId);
     const { accion, estado } = ctx.o;
     const set = new Set(inst.estados || []);
     if (accion === 'limpiar') set.clear();
@@ -592,13 +618,13 @@ const SUB_ENEMIGO = {
       if (accion === 'anadir') set.add(estado); else set.delete(estado);
     }
     inst.estados = [...set];
-    await E.guardarCampo(c);
+    await E.guardarCampo(c, ctx.partidaId);
     const lista = inst.estados.map(N.nombreEstado).join(', ') || 'ninguno';
     const verbo = accion === 'limpiar' ? 'Estados eliminados' : `${N.nombreEstado(estado)} ${accion === 'anadir' ? 'añadido' : 'quitado'}`;
     return texto(`**${inst.nombre}** · ${verbo}. Estados: ${lista}.`);
   },
   async atacar(ctx) {
-    const { inst, t } = await resolverPnj(ctx.o.enemigo);
+    const { inst, t } = await resolverPnj(ctx.o.enemigo, ctx.partidaId);
     if (!t.ataques.length) throw new Aviso(`${t.nombre} no tiene ataques básicos en su ficha.`);
     let a = t.ataques[0];
     if (ctx.o.ataque !== undefined && ctx.o.ataque !== '') {
@@ -630,7 +656,7 @@ const SUB_ENEMIGO = {
     return mensaje({ embeds: [embed], components: botones.length ? [fila(...botones)] : [] });
   },
   async conjuro(ctx) {
-    const { c: campo, inst, t } = await resolverPnj(ctx.o.enemigo);
+    const { c: campo, inst, t } = await resolverPnj(ctx.o.enemigo, ctx.partidaId);
     const n = P.norm(ctx.o.conjuro);
     const cj = (/^\d+$/.test(String(ctx.o.conjuro)) ? t.conjuros[Number(ctx.o.conjuro)] : null) || t.conjuros.find((x) => P.norm(x.nombre) === n) || t.conjuros.find((x) => P.norm(x.nombre).includes(n));
     if (!cj) throw new Aviso(`${t.nombre} no tiene el conjuro «${ctx.o.conjuro}».`);
@@ -639,7 +665,7 @@ const SUB_ENEMIGO = {
     const coste = N.costePnj(cj, objetivos.length || 1);
     if (inst.pm < coste) throw new Aviso(`${inst.nombre} solo tiene ${inst.pm} PM y ${cj.nombre} cuesta ${coste}.`);
     inst.pm -= coste;
-    await E.guardarCampo(campo);
+    await E.guardarCampo(campo, ctx.partidaId);
     const meta = N.metaConjuroPnj(cj);
     const botones = [];
     let embed;
@@ -667,7 +693,7 @@ const SUB_ENEMIGO = {
     return mensaje({ embeds: [embed], components: [fila(...botones.slice(0, 5))] });
   },
   async tirada(ctx) {
-    const { inst, t } = await resolverPnj(ctx.o.enemigo);
+    const { inst, t } = await resolverPnj(ctx.o.enemigo, ctx.partidaId);
     const { atributo1: a1, atributo2: a2 } = ctx.o;
     const dados = N.dadosPnj(t, inst.estados);
     const r = M.prueba(dados[a1], dados[a2], ctx.o.bono || 0, ctx.o.dificultad);
@@ -675,27 +701,27 @@ const SUB_ENEMIGO = {
     return mensaje({ embeds: [embed] });
   },
   async pu(ctx) {
-    const { c, inst, t } = await resolverPnj(ctx.o.enemigo);
+    const { c, inst, t } = await resolverPnj(ctx.o.enemigo, ctx.partidaId);
     if (!t.villano) throw new Aviso(`${t.nombre} no es un villano: márcalo como villano en su ficha para que tenga Puntos Última.`);
     const antes = inst.pu || 0;
     if (ctx.o.valor !== undefined) {
       try { inst.pu = M.aplicarValor(antes, ctx.o.valor, null); } catch (e) { throw new Aviso(e.message); }
-      await E.guardarCampo(c);
+      await E.guardarCampo(c, ctx.partidaId);
     }
     return texto(`**${inst.nombre}** · Puntos Última ${ctx.o.valor !== undefined ? `${antes} → ` : ''}**${inst.pu || 0}**`, true);
   },
   async fase(ctx) {
-    const { c, inst, t } = await resolverPnj(ctx.o.enemigo);
+    const { c, inst, t } = await resolverPnj(ctx.o.enemigo, ctx.partidaId);
     if (!t.siguiente_fase) throw new Aviso(`${t.nombre} no tiene una fase siguiente en su ficha.`);
     const sig = await E.plantilla(t.siguiente_fase);
     if (!sig) throw new Aviso(`No existe la ficha de la fase siguiente («${t.siguiente_fase}»). Créala en el panel.`);
     const antes = inst.nombre;
     E.cambiarFase(inst, t, sig);
-    await E.guardarCampo(c);
+    await E.guardarCampo(c, ctx.partidaId);
     return mensaje({ content: `🔥 **${antes}** se transforma${inst.nombre !== antes ? `: **${inst.nombre}**` : ''}. ¡Comienza su siguiente fase!`, components: [fila(botonEstado(inst))] });
   },
   async ver(ctx) {
-    const { inst, t } = await resolverPnj(ctx.o.enemigo);
+    const { inst, t } = await resolverPnj(ctx.o.enemigo, ctx.partidaId);
     const embed = {
       title: `${inst.nombre}${inst.nombre !== t.nombre ? ` · ${t.nombre}` : ''}`, url: urlVisor(ctx), color: COLOR.enemigo,
       description: [estadoPnjDj(inst, t), t.descripcion ? `*${t.descripcion}*` : '', `Revelado a los jugadores: ${N.NIVELES_ESTUDIO.find(([n]) => n === (t.revelado || 0))[1]}`].filter(Boolean).join('\n'),
@@ -706,12 +732,12 @@ const SUB_ENEMIGO = {
 };
 
 async function recursoPnj(ctx, clave) {
-  const { c, inst, t } = await resolverPnj(ctx.o.enemigo);
+  const { c, inst, t } = await resolverPnj(ctx.o.enemigo, ctx.partidaId);
   const max = t[clave];
   if (ctx.o.valor !== undefined) {
     const antes = inst[clave];
     try { inst[clave] = M.aplicarValor(antes, ctx.o.valor, max); } catch (e) { throw new Aviso(e.message); }
-    await E.guardarCampo(c);
+    await E.guardarCampo(c, ctx.partidaId);
     const x = clave === 'pv' ? E.cruces(antes, inst.pv, t) : {};
     const nota = x.cae ? ' · **Caído**' : x.entraCrisis ? ' · **Entra en Crisis**' : x.saleCrisis ? ' · Sale de Crisis' : '';
     return texto(`**${inst.nombre}** · ${clave.toUpperCase()} ${antes} → **${inst[clave]}** / ${max}${nota}`, true);
@@ -758,7 +784,7 @@ const MANEJADORES = {
       if (accion === 'anadir') set.add(estado); else set.delete(estado);
     }
     pj.estado.estados = [...set];
-    await P.escribir(pj);
+    await P.escribir(pj, ctx.partidaId);
     const lista = pj.estado.estados.map((s) => M.nombreEstado(ctx.db, s)).join(', ') || 'ninguno';
     const verbo = accion === 'limpiar' ? 'Estados eliminados' : `${M.nombreEstado(ctx.db, estado)} ${accion === 'anadir' ? 'añadido' : 'quitado'}`;
     return texto(`**${M.nombre(pj)}** · ${verbo}. Estados: ${lista}.`);
@@ -772,7 +798,7 @@ const MANEJADORES = {
     for (const pj of lista) {
       const c = M.calc(pj, ctx.db);
       pj.estado = { ...(pj.estado || {}), pv: c.pv_max, pm: c.pm_max, estados: [] };
-      await P.escribir(pj);
+      await P.escribir(pj, ctx.partidaId);
     }
     return texto(`🛏️ Descanso: ${lista.map((p) => `**${M.nombre(p)}**`).join(', ')} ${lista.length > 1 ? 'recuperan' : 'recupera'} PV y PM y ${lista.length > 1 ? 'se libran' : 'se libra'} de los estados alterados.`);
   },
@@ -796,29 +822,29 @@ const MANEJADORES = {
     const { nombre, secciones, cantidad } = ctx.o;
     switch (ctx.sub) {
       case 'crear': {
-        if (await P.reloj(nombre)) throw new Aviso(`Ya existe el reloj «${nombre}».`);
+        if (await P.reloj(nombre, ctx.partidaId)) throw new Aviso(`Ya existe el reloj «${nombre}».`);
         const r = { nombre: nombre.trim(), secciones, llenas: 0, creado: new Date().toISOString() };
-        await P.guardarReloj(r);
+        await P.guardarReloj(r, ctx.partidaId);
         return texto(`🕒 **${r.nombre}**\n${dibujoReloj(r)}`);
       }
       case 'avanzar':
       case 'retroceder': {
-        const r = await buscarReloj(nombre);
+        const r = await buscarReloj(nombre, ctx.partidaId);
         const n = (cantidad || 1) * (ctx.sub === 'avanzar' ? 1 : -1);
         const antes = r.llenas;
         r.llenas = Math.max(0, Math.min(r.secciones, r.llenas + n));
-        await P.guardarReloj(r);
+        await P.guardarReloj(r, ctx.partidaId);
         const completo = r.llenas >= r.secciones && antes < r.secciones;
         return texto(`🕒 **${r.nombre}** ${signo(r.llenas - antes) || '±0'}\n${dibujoReloj(r)}${completo ? '\n**¡Reloj completo!**' : ''}`);
       }
       case 'ver': {
-        const lista = nombre ? [await buscarReloj(nombre)] : await P.relojes();
+        const lista = nombre ? [await buscarReloj(nombre, ctx.partidaId)] : await P.relojes(ctx.partidaId);
         if (!lista.length) return texto('No hay relojes activos.', true);
         return texto(lista.map((r) => `🕒 **${r.nombre}**\n${dibujoReloj(r)}`).join('\n\n'));
       }
       case 'borrar': {
-        const r = await buscarReloj(nombre);
-        await P.borrarReloj(r.nombre);
+        const r = await buscarReloj(nombre, ctx.partidaId);
+        await P.borrarReloj(r.nombre, ctx.partidaId);
         return texto(`Reloj **${r.nombre}** eliminado.`);
       }
       default: throw new Aviso('Subcomando desconocido.');
@@ -836,7 +862,7 @@ const MANEJADORES = {
         const dados = M.dadosEfectivos(pj, c);
         const r = M.prueba(dados.DES, dados.PER, c.init + (bono || 0), dificultad);
         const extra = [r.exito ? '**Los jugadores eligen quién empieza.**' : '**Empiezan los enemigos.**'];
-        const pf = await pifiaPf(pj, r);
+        const pf = await pifiaPf(pj, r, ctx.partidaId);
         if (pf) extra.push(pf);
         const embed = embedPrueba({
           titulo: `Iniciativa · ${M.nombre(pj)}`, r, etiquetas: [`DES d${dados.DES}`, `PER d${dados.PER}`], extra,
@@ -856,7 +882,7 @@ const MANEJADORES = {
         const dados = M.dadosEfectivos(pj, c);
         const r = M.prueba(dados.DES, dados.PER, c.init + (bono || 0), dificultad);
         const extra = [r.exito ? '✅ **Supera la iniciativa**' : '❌ **No supera la iniciativa**'];
-        const pf = await pifiaPf(pj, r);
+        const pf = await pifiaPf(pj, r, ctx.partidaId);
         if (pf) extra.push(pf);
         const pie = [
           `Inic. ${signo(c.init) || '0'}${bono ? ` · bono ${signo(bono)}` : ''}`,
@@ -883,7 +909,7 @@ const MANEJADORES = {
     const dados = M.dadosEfectivos(pj, c);
     const r = M.prueba(dados.DES, dados.PER, c.init + (bono || 0), dificultad);
     const extra = [r.exito ? '**Los jugadores eligen quién empieza.**' : '**Empiezan los enemigos.**'];
-    const pf = await pifiaPf(pj, r);
+    const pf = await pifiaPf(pj, r, ctx.partidaId);
     if (pf) extra.push(pf);
     const embed = embedPrueba({
       titulo: `Iniciativa · lidera ${M.nombre(pj)}`, r, etiquetas: [`DES d${dados.DES}`, `PER d${dados.PER}`], extra,
@@ -897,11 +923,11 @@ const MANEJADORES = {
   },
 
   async combate(ctx) {
-    let cb = await P.combate();
+    let cb = await P.combate(ctx.partidaId);
     switch (ctx.sub) {
       case 'iniciar':
         cb = { ronda: 1, empieza: ctx.o.empieza, actuados: [], enemigos: [], ultimo: null, inicio: new Date().toISOString() };
-        await P.guardarCombate(cb);
+        await P.guardarCombate(cb, ctx.partidaId);
         return texto(`⚔️ ${await textoCombate(ctx, cb)}`);
       case 'turno': {
         if (!cb) throw new Aviso('No hay ningún conflicto en curso.');
@@ -914,28 +940,28 @@ const MANEJADORES = {
           if (!cb.actuados.includes(pj.id)) cb.actuados.push(pj.id);
           cb.ultimo = 'pj';
         }
-        await P.guardarCombate(cb);
+        await P.guardarCombate(cb, ctx.partidaId);
         return texto(await textoCombate(ctx, cb));
       }
       case 'ronda':
         if (!cb) throw new Aviso('No hay ningún conflicto en curso.');
         cb = { ...cb, ronda: cb.ronda + 1, actuados: [], enemigos: [], ultimo: null };
-        await P.guardarCombate(cb);
+        await P.guardarCombate(cb, ctx.partidaId);
         return texto(`⚔️ ${await textoCombate(ctx, cb)}`);
       case 'ver':
         return texto(await textoCombate(ctx, cb), !cb);
       case 'terminar': {
         if (!cb) throw new Aviso('No hay ningún conflicto en curso.');
-        await P.terminarCombate();
-        const n = await E.vaciar('enemigo');
+        await P.terminarCombate(ctx.partidaId);
+        const n = await E.vaciar('enemigo', ctx.partidaId);
         const todosPjs = await ctx.todos();
         for (const pj of todosPjs) {
           if (pj.estado && pj.estado.estados && pj.estado.estados.length > 0) {
             pj.estado.estados = [];
-            await P.escribir(pj);
+            await P.escribir(pj, ctx.partidaId);
           }
         }
-        const cCampo = await E.campo();
+        const cCampo = await E.campo(ctx.partidaId);
         let campoTocado = false;
         for (const inst of (cCampo.enemigos || [])) {
           if (inst.estados && inst.estados.length > 0) {
@@ -943,7 +969,7 @@ const MANEJADORES = {
             campoTocado = true;
           }
         }
-        if (campoTocado) await E.guardarCampo(cCampo);
+        if (campoTocado) await E.guardarCampo(cCampo, ctx.partidaId);
         return texto(`Conflicto terminado tras ${cb.ronda} ronda${cb.ronda > 1 ? 's' : ''}.${n ? ` ${n} enemigo${n > 1 ? 's' : ''} retirado${n > 1 ? 's' : ''} del campo.` : ''} Se han eliminado los estados alterados de los personajes.`);
       }
       default: throw new Aviso('Subcomando desconocido.');
@@ -961,13 +987,13 @@ const MANEJADORES = {
     } catch (e) { throw new Aviso('No he podido leer el archivo: ¿es el JSON exportado desde el generador?'); }
     let pj;
     try { pj = P.preparar(datos); } catch (e) { throw new Aviso(e.message); }
-    const existia = await P.obtener(pj.id);
-    await P.guardar(pj, { forzar: true });
+    const existia = await P.obtener(pj.id, ctx.partidaId);
+    await P.guardar(pj, { forzar: true }, ctx.partidaId);
     let extra = '';
     if (ctx.o.jugador) {
       const u = ctx.i.data.resolved.users[ctx.o.jugador];
       const m = ctx.i.data.resolved.members && ctx.i.data.resolved.members[ctx.o.jugador];
-      await P.asignar(pj.id, { id: u.id, nombre: (m && m.nick) || nombreUsuario(u) });
+      await P.asignar(pj.id, { id: u.id, nombre: (m && m.nick) || nombreUsuario(u) }, ctx.partidaId);
       extra = ` y asignado a <@${u.id}>`;
     }
     return texto(`📥 **${M.nombre(pj)}** (nivel ${pj.nivel}) ${existia ? 'actualizado' : 'importado'}${extra}.`, true);
@@ -975,19 +1001,19 @@ const MANEJADORES = {
 
   async exportar(ctx) {
     const pj = await resolverPj(ctx, ctx.o.personaje);
-    const url = `${ctx.origen}/api/datos/?accion=descargar&id=${encodeURIComponent(pj.id)}`;
+    const url = `${ctx.origen}/api/datos/?accion=descargar&id=${encodeURIComponent(pj.id)}&partida=${encodeURIComponent(ctx.partidaId)}`;
     return mensaje({ content: `📤 JSON de **${M.nombre(pj)}**: ${url}\nPuedes abrirlo en el generador con «Cargar».` }, true);
   },
 
   async asignar(ctx) {
     const pj = await resolverPj(ctx, ctx.o.personaje);
     if (!ctx.o.jugador) {
-      await P.asignar(pj.id, null);
+      await P.asignar(pj.id, null, ctx.partidaId);
       return texto(`**${M.nombre(pj)}** ya no está asignado a ningún jugador.`);
     }
     const u = ctx.i.data.resolved.users[ctx.o.jugador];
     const m = ctx.i.data.resolved.members && ctx.i.data.resolved.members[ctx.o.jugador];
-    await P.asignar(pj.id, { id: u.id, nombre: (m && m.nick) || nombreUsuario(u) });
+    await P.asignar(pj.id, { id: u.id, nombre: (m && m.nick) || nombreUsuario(u) }, ctx.partidaId);
     return texto(`**${M.nombre(pj)}** asignado a <@${u.id}>.`);
   },
 
@@ -1004,7 +1030,7 @@ const MANEJADORES = {
     const lineas = [];
     for (const pj of lista) {
       pj.px = Math.max(0, (pj.px || 0) + ctx.o.cantidad);
-      await P.escribir(pj);
+      await P.escribir(pj, ctx.partidaId);
       lineas.push(`**${M.nombre(pj)}** · ${pj.px} PX${pj.px >= 10 ? ' · ⬆️ puede subir de nivel' : ''}`);
     }
     return texto(`✨ ${signo(ctx.o.cantidad)} PX\n${lineas.join('\n')}`);
@@ -1016,7 +1042,7 @@ const MANEJADORES = {
     const lineas = [];
     for (const pj of lista) {
       pj.zenit = Math.max(0, (pj.zenit || 0) + ctx.o.cantidad);
-      await P.escribir(pj);
+      await P.escribir(pj, ctx.partidaId);
       lineas.push(`**${M.nombre(pj)}** · ${pj.zenit} z`);
     }
     return texto(`💰 ${signo(ctx.o.cantidad)} z\n${lineas.join('\n')}`);
@@ -1029,12 +1055,12 @@ const MANEJADORES = {
   },
 
   async estudiar(ctx) {
-    const { inst, t } = await resolverPnj(ctx.o.enemigo);
+    const { inst, t } = await resolverPnj(ctx.o.enemigo, ctx.partidaId);
     return mensaje(await hacerEstudio(ctx, { inst, t, pjValor: ctx.o.personaje, bono: ctx.o.bono || 0 }));
   },
 
   async revelar(ctx) {
-    const { inst } = await resolverPnj(ctx.o.enemigo);
+    const { inst } = await resolverPnj(ctx.o.enemigo, ctx.partidaId);
     const t = await E.revelar(inst.plantilla, ctx.o.nivel);
     return mensaje({ embeds: [embedRevelado(t, t.revelado ? `🔎 Información sobre ${t.nombre}` : `${t.nombre}: perfil oculto`)] });
   },
@@ -1053,7 +1079,7 @@ async function pulsarBoton(ctx) {
   if (tipo === 'pm') {
     const [, id, costeTxt] = partes;
     const coste = Number(costeTxt);
-    const pj = await P.obtener(id);
+    const pj = await P.obtener(id, ctx.partidaId);
     if (!pj) throw new Aviso('El personaje ya no existe.');
     if (!puedeEditar(ctx, pj)) throw new Aviso('Solo su jugador o el DJ pueden gastar esos PM.');
     const c = M.calc(pj, ctx.db);
@@ -1061,7 +1087,7 @@ async function pulsarBoton(ctx) {
     if (rec.pm < coste) throw new Aviso(`${M.nombre(pj)} solo tiene ${rec.pm} PM.`);
     pj.estado = pj.estado || {};
     pj.estado.pm = rec.pm - coste;
-    await P.escribir(pj);
+    await P.escribir(pj, ctx.partidaId);
     const comps = (ctx.i.message.components || []).map((f) => ({ ...f, components: f.components.filter((b) => !b.custom_id.startsWith('pm:')) })).filter((f) => f.components.length);
     const embeds = original ? [{ ...original, footer: { text: `${original.footer ? original.footer.text + ' · ' : ''}Gastados ${coste} PM (quedan ${pj.estado.pm})` } }] : [];
     return actualizar({ embeds, components: comps });
@@ -1069,7 +1095,7 @@ async function pulsarBoton(ctx) {
 
   if (tipo === 'ev') {
     if (!ctx.dj) throw new Aviso('Solo el DJ puede ver el estado de los PNJ.');
-    const c = await E.campo();
+    const c = await E.campo(ctx.partidaId);
     const inst = c.enemigos.find((i) => i.id === partes[1]);
     if (!inst) throw new Aviso('Ese PNJ ya no está en el campo.');
     const t = await E.plantilla(inst.plantilla);
@@ -1078,7 +1104,7 @@ async function pulsarBoton(ctx) {
 
   if (tipo === 'ap') {
     const [, id, danoTxt] = partes;
-    const pj = await P.obtener(id);
+    const pj = await P.obtener(id, ctx.partidaId);
     if (!pj) throw new Aviso('El personaje ya no existe.');
     if (!puedeEditar(ctx, pj)) throw new Aviso('Solo su jugador o el DJ pueden aplicar ese daño.');
     const c = M.calc(pj, ctx.db);
@@ -1087,7 +1113,7 @@ async function pulsarBoton(ctx) {
     const nuevo = Math.max(0, rec.pv - dano);
     pj.estado = pj.estado || {};
     pj.estado.pv = nuevo;
-    await P.escribir(pj);
+    await P.escribir(pj, ctx.partidaId);
     let nota = `${M.nombre(pj)} pierde ${dano} PV (${rec.pv} → ${nuevo})`;
     if (nuevo === 0) nota += ' · cae a 0 PV';
     else if (nuevo <= c.crisis && rec.pv > c.crisis) nota += ' · entra en Crisis';
@@ -1098,12 +1124,12 @@ async function pulsarBoton(ctx) {
 
   if (tipo === 'rr') {
     const [, sub, id, ...resto] = partes;
-    const pj = await P.obtener(id);
+    const pj = await P.obtener(id, ctx.partidaId);
     if (!pj) throw new Aviso('El personaje ya no existe.');
     if (!puedeEditar(ctx, pj)) throw new Aviso('Solo su jugador o el DJ pueden repetir esta tirada.');
     if ((pj.pf || 0) < 1) throw new Aviso(`${M.nombre(pj)} no tiene Puntos Fábula.`);
     pj.pf -= 1;
-    await P.escribir(pj);
+    await P.escribir(pj, ctx.partidaId);
     ctx._todos = null;
     let res;
     if (sub === 't') {
@@ -1111,20 +1137,20 @@ async function pulsarBoton(ctx) {
       res = await hacerTirada(ctx, { a1, a2, bono: Number(bono) || 0, dif: dif === '' ? null : Number(dif), pjValor: id });
     } else if (sub === 'a') {
       const [idx, bono, instId, delta] = resto;
-      if (instId) await deshacerPnj(instId, Number(delta) || 0);
+      if (instId) await deshacerPnj(instId, Number(delta) || 0, ctx.partidaId);
       res = await hacerAtaque(ctx, { arma: idx, bono: Number(bono) || 0, pjValor: id, objetivo: instId || undefined });
     } else if (sub === 'c') {
       const [cjId, obj, bono, atr, instId, delta] = resto;
-      if (instId) await deshacerPnj(instId, Number(delta) || 0);
+      if (instId) await deshacerPnj(instId, Number(delta) || 0, ctx.partidaId);
       res = await hacerConjuro(ctx, { conjuro: cjId, objetivos: Number(obj) || 1, bono: Number(bono) || 0, atributos: atr, pjValor: id, objetivo: instId || undefined });
     } else if (sub === 'e') {
       const [instId, bono] = resto;
-      const { inst, t } = await resolverPnj(instId);
+      const { inst, t } = await resolverPnj(instId, ctx.partidaId);
       res = await hacerEstudio(ctx, { inst, t, pjValor: id, bono: Number(bono) || 0 });
     } else throw new Aviso('Botón desconocido.');
     const yaGastado = !(ctx.i.message.components || []).some((f) => (f.components || []).some((b) => (b.custom_id || '').startsWith('pm:')));
     if (yaGastado) res.components = (res.components || []).map((f) => ({ ...f, components: f.components.filter((b) => !b.custom_id.startsWith('pm:')) })).filter((f) => f.components.length);
-    const pjAhora = await P.obtener(id);
+    const pjAhora = await P.obtener(id, ctx.partidaId);
     const nota = `🔁 Repetida con 1 PF (quedan ${pjAhora.pf || 0}). Antes: ${original ? (original.description || '').split('\n')[1] || '' : ''}`.replace(/\*\*/g, '');
     res.embeds[0].footer = { text: [nota, res.embeds[0].footer && res.embeds[0].footer.text].filter(Boolean).join(' · ') };
     return actualizar(res);
@@ -1141,7 +1167,7 @@ async function autocompletar(ctx) {
   let choices = [];
   try {
     const cmdNombre = ctx.i.data.name;
-    const enCampo = async (lado = null) => (await E.campo()).enemigos.filter((i) => !lado || i.lado === lado);
+    const enCampo = async (lado = null) => (await E.campo(ctx.partidaId)).enemigos.filter((i) => !lado || i.lado === lado);
     if (f.name === 'personaje') {
       const todos = await ctx.todos();
       const mios = (p) => (p.discord && p.discord.id === ctx.user.id ? 0 : 1);
@@ -1176,16 +1202,16 @@ async function autocompletar(ctx) {
     } else if (f.name === 'plantilla') {
       choices = filtra((await E.plantillas()).map((t) => ({ name: `${t.nombre} · Nv ${t.nivel}`.slice(0, 100), value: t.id })));
     } else if (/^objetivo\d?$/.test(f.name) && cmdNombre === 'enemigo') {
-      const form = await E.formacion();
+      const form = await E.formacion(ctx.partidaId);
       choices = filtra((await ctx.todos()).filter((p) => (form[p.id] || {}).fila !== 'fuera').map((p) => ({ name: M.nombre(p).slice(0, 100), value: p.id })));
     } else if (f.name === 'objetivo') {
       const lista = await enCampo();
       choices = filtra([...lista].sort((a, b) => (a.lado === 'enemigo' ? 0 : 1) - (b.lado === 'enemigo' ? 0 : 1)).map((i) => ({ name: i.nombre.slice(0, 100), value: i.id })));
     } else if (f.name === 'ataque') {
-      const { t } = await resolverPnj(ctx.o.enemigo);
+      const { t } = await resolverPnj(ctx.o.enemigo, ctx.partidaId);
       choices = filtra(t.ataques.map((a, k) => ({ name: `${a.nombre} · ${a.alcance === 'distancia' ? 'distancia' : 'cuerpo a cuerpo'}`.slice(0, 100), value: String(k) })));
     } else if (f.name === 'conjuro' && cmdNombre === 'enemigo') {
-      const { t } = await resolverPnj(ctx.o.enemigo);
+      const { t } = await resolverPnj(ctx.o.enemigo, ctx.partidaId);
       choices = filtra(t.conjuros.map((c, k) => ({ name: `${c.nombre} · ${c.pm}${c.por_objetivo ? ' × obj.' : ''} PM`.slice(0, 100), value: String(k) })));
     } else if (f.name === 'arma') {
       const pj = await resolverPj(ctx, ctx.o.personaje);
@@ -1194,7 +1220,7 @@ async function autocompletar(ctx) {
       const pj = await resolverPj(ctx, ctx.o.personaje);
       choices = filtra(conjurosDe(pj, ctx.db).map((c) => ({ name: `${c.nombre} · ${c.pm} PM`.slice(0, 100), value: c.id })));
     } else if (f.name === 'nombre') {
-      choices = filtra((await P.relojes()).map((r) => ({ name: `${r.nombre} (${r.llenas}/${r.secciones})`.slice(0, 100), value: r.nombre.slice(0, 100) })));
+      choices = filtra((await P.relojes(ctx.partidaId)).map((r) => ({ name: `${r.nombre} (${r.llenas}/${r.secciones})`.slice(0, 100), value: r.nombre.slice(0, 100) })));
     }
   } catch (e) { choices = []; }
   return { type: 8, data: { choices } };
@@ -1208,6 +1234,7 @@ export async function manejarInteraccion(i, origen) {
   let ctx;
   try {
     ctx = await contexto(i, origen);
+    if (ctx.rol === 'bloqueado') throw new Aviso('No tienes acceso a la partida configurada para este canal.');
     await P.registrarUsuario(ctx.user);
     if (i.type === 4) return await autocompletar(ctx);
     if (i.type === 3) return await pulsarBoton(ctx);

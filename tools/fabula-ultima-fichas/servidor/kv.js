@@ -63,8 +63,14 @@ export async function hgetall(h) {
 }
 
 /** Marca que algo de la partida ha cambiado (la vista de combate lo consulta). */
-export const tocar = () => cmd('INCR', 'fu:version').catch(() => null);
-export const versionPartida = async () => Number(await cmd('GET', 'fu:version').catch(() => 0)) || 0;
+export const tocar = (partidaId = null) => {
+  if (partidaId && partidaId !== 'principal') cmd('INCR', `fu:partida:${partidaId}:version`).catch(() => null);
+  return cmd('INCR', 'fu:version').catch(() => null);
+};
+export const versionPartida = async (partidaId = null) => {
+  const clave = (partidaId && partidaId !== 'principal') ? `fu:partida:${partidaId}:version` : 'fu:version';
+  return Number(await cmd('GET', clave).catch(() => 0)) || 0;
+};
 
 // ------------------------------------------------------------------ memoria (local)
 const MEM = globalThis.__fuMemoria || (globalThis.__fuMemoria = new Map());

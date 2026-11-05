@@ -32,7 +32,13 @@ function guardar() {
 
 // Partida en la nube (solo DJ): sesion = { usuario, dj } de /api/auth/
 const nube = { dj: false, pendiente: false };
-const API = { yo: '/api/auth/?accion=yo', uno: (id) => `/api/datos/?accion=uno&id=${encodeURIComponent(id)}`, guardar: '/api/datos/?accion=guardar' };
+const paramsGen = new URLSearchParams(location.search);
+const partidaGen = paramsGen.get('partida') || localStorage.getItem('fu-partida') || 'principal';
+const API = {
+  yo: '/api/auth/?accion=yo',
+  uno: (id) => `/api/datos/?accion=uno&id=${encodeURIComponent(id)}&partida=${encodeURIComponent(partidaGen)}`,
+  guardar: '/api/datos/?accion=guardar'
+};
 
 const libre = () => !!pj.modo_libre;
 const creando = () => !pj.creacion_completa;
@@ -111,7 +117,7 @@ async function guardarNube(forzar = false) {
   try {
     const r = await fetch(API.guardar, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ personaje: pj, rev: pj.rev ?? null, forzar })
+      body: JSON.stringify({ personaje: pj, rev: pj.rev ?? null, forzar, partida: partidaGen })
     });
     const j = await r.json();
     if (r.status === 409) {

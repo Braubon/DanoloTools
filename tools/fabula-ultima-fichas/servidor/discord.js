@@ -79,6 +79,61 @@ export async function rolUsuario(userId) {
   return rol;
 }
 
+/**
+ * Información completa del miembro en el servidor (roles, nick, etc.).
+ */
+export async function miembroServidor(userId) {
+  const guild = env('DISCORD_GUILD_ID');
+  if (!guild || !userId) return null;
+  const clave = `fu:cache:miembro:${userId}`;
+  const cache = await getJSON(clave).catch(() => null);
+  if (cache) return cache;
+  try {
+    const m = await api(`/guilds/${guild}/members/${userId}`);
+    const esDjGlobal = await miembroEsDj(m, guild);
+    const data = {
+      id: userId,
+      esDjGlobal,
+      roles: m.roles || [],
+      nick: m.nick || null,
+      nombre: m.user ? (m.nick || m.user.global_name || m.user.username) : userId
+    };
+    await setJSON(clave, data, 300).catch(() => {});
+    return data;
+  } catch (e) {
+    if (e.status !== 404) throw e;
+    return null;
+  }
+}
+
+/** Lista de roles y canales de texto del servidor de Discord para el panel del DJ. */
+export async function listaRolesYCanales(guildId) {
+  const guild = guildId || env('DISCORD_GUILD_ID');
+  if (!guild || !env('DISCORD_BOT_TOKEN')) return { roles: [], canales: [] };
+  const clave = `fu:cache:roles-canales:${guild}`;
+  const cache = await getJSON(clave).catch(() => null);
+  if (cache) return cache;
+  try {
+    const [rRes, cRes] = await Promise.all([
+      api(`/guilds/${guild}/roles`).catch(() => []),
+      api(`/guilds/${guild}/channels`).catch(() => [])
+    ]);
+    const roles = (Array.isArray(rRes) ? rRes : [])
+      .filter((r) => r.name !== '@everyone')
+      .map((r) => ({ id: r.id, nombre: r.name, color: r.color }))
+      .sort((a, b) => a.nombre.localeCompare(b.nombre));
+    const canales = (Array.isArray(cRes) ? cRes : [])
+      .filter((c) => c.type === 0 || c.type === 4) // 0 = texto, 4 = categoria
+      .map((c) => ({ id: c.id, nombre: c.name, tipo: c.type, categoria: c.parent_id }))
+      .sort((a, b) => a.nombre.localeCompare(b.nombre));
+    const resultado = { roles, canales };
+    await setJSON(clave, resultado, 300).catch(() => {});
+    return resultado;
+  } catch (e) {
+    return { roles: [], canales: [] };
+  }
+}
+
 /** ¿El usuario tiene el rol DJ en el servidor configurado? */
 export const usuarioEsDj = async (userId) => (await rolUsuario(userId)) === 'dj';
 

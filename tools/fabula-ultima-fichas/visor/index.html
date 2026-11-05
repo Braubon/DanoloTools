@@ -22,8 +22,12 @@
   <header class="topbar">
     <div class="marca"><a href="../index.html"><h1 class="display">Fábula RO</h1></a><span>Combate</span></div>
     <div class="acciones">
+      <div id="caja-partida" class="selector-partida oculto">
+        <label for="sel-partida">Partida</label>
+        <select id="sel-partida" aria-label="Seleccionar partida"></select>
+      </div>
       <span id="usuario"></span>
-      <a class="btn fantasma" href="../ficha/index.html">Fichas</a>
+      <a class="btn fantasma" id="enlace-fichas" href="../ficha/index.html">Fichas</a>
       <a class="btn fantasma oculto" id="enlace-panel" href="../panel/index.html">Panel</a>
       <a class="btn fantasma" href="../comandos/index.html">Comandos</a>
       <button class="btn icono fantasma" data-tema-toggle aria-label="Cambiar tema"></button>

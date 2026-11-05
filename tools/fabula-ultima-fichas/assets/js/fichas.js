@@ -15,7 +15,7 @@ const LS_LOCALES = 'fu-visor-locales';
 
 let raw, db;
 const pjs = [];           // { key, pj, origen: 'nube'|'carpeta'|'local' }
-const API_PUBLICO = '/api/datos/?accion=publico';
+let partidaActual = new URLSearchParams(location.search).get('partida') || localStorage.getItem('fu-partida') || 'principal';
 let acceso = null;        // { motivo } si la API pide iniciar sesión
 let actual = 'grupo';     // 'grupo' | key
 let pestana = 'resumen';
@@ -23,8 +23,42 @@ const filtro = { q: '', hab: 'todas', clase: '', magia: 'todos', equipo: 'todo' 
 
 const vista = () => document.getElementById('vista');
 
+function actualizarEnlacesNav() {
+  const ec = document.getElementById('enlace-combate');
+  if (ec) ec.href = `../visor/index.html?partida=${encodeURIComponent(partidaActual)}`;
+}
+
+async function cargarPartidas() {
+  const caja = document.getElementById('caja-partida');
+  const sel = document.getElementById('sel-partida');
+  if (!caja || !sel) return;
+  try {
+    const res = await (await fetch('/api/datos/?accion=partidas', { cache: 'no-store' })).json();
+    const lista = (res && res.partidas) || [];
+    if (lista.length > 1 || (sesion && sesion.dj)) {
+      sel.innerHTML = lista.map((p) => `<option value="${esc(p.id)}" ${p.id === partidaActual ? 'selected' : ''}>${esc(p.nombre || p.id)}</option>`).join('');
+      caja.classList.remove('oculto');
+      sel.onchange = () => {
+        partidaActual = sel.value;
+        localStorage.setItem('fu-partida', partidaActual);
+        const u = new URL(location);
+        u.searchParams.set('partida', partidaActual);
+        history.replaceState(null, '', u);
+        actualizarEnlacesNav();
+        pjs.length = 0;
+        cargarNube().then(() => render());
+      };
+    } else {
+      caja.classList.add('oculto');
+    }
+  } catch (e) {
+    caja.classList.add('oculto');
+  }
+}
+
 async function iniciar() {
   initTema();
+  actualizarEnlacesNav();
   try {
     raw = await cargarRaw('../data/');
   } catch (e) {
@@ -35,7 +69,8 @@ async function iniciar() {
   db = construirDb(raw, null);
   const nube = await cargarNube();
   if (nube === false) await cargarCarpeta();
-  pintarUsuario();
+  await pintarUsuario();
+  cargarPartidas();
   cargarLocales();
   const hash = decodeURIComponent(location.hash.slice(1));
   if (hash && pjs.some((p) => p.key === hash)) actual = hash;
@@ -45,7 +80,9 @@ async function iniciar() {
 /** true = cargado; 'login' = la API pide sesión; false = no hay API (local). */
 async function cargarNube() {
   try {
-    const r = await fetch(API_PUBLICO, { cache: 'no-store' });
+    acceso = null;
+    const url = `/api/datos/?accion=publico&partida=${encodeURIComponent(partidaActual)}`;
+    const r = await fetch(url, { cache: 'no-store' });
     if (!(r.headers.get('content-type') || '').includes('json')) return false;
     const j = await r.json();
     if (r.status === 401 || r.status === 403) { acceso = { motivo: j.error, status: r.status }; return 'login'; }
