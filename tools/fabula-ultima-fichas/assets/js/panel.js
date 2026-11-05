@@ -82,23 +82,32 @@ const post = (ruta, cuerpo = {}) => {
 
 // ================================================================== arranque
 async function iniciar() {
-  initTema();
-  const q = new URLSearchParams(location.search);
-  if (q.get('login') === 'error') toast('No se pudo iniciar sesión con Discord.', 'err');
-  if (q.has('login')) history.replaceState(null, '', location.pathname);
   try {
-    sesion = await pedir('auth/?accion=yo');
-  } catch (e) {
-    vista().innerHTML = `<div class="vacio"><p><strong>El panel necesita las funciones de Vercel.</strong></p>
-      <p class="small">No responde <code>/api/</code>. Si estás en local, usa <code>vercel dev</code>; si ya está publicado, revisa la guía de configuración.</p></div>`;
-    return;
+    initTema();
+    const q = new URLSearchParams(location.search);
+    if (q.get('login') === 'error') toast('No se pudo iniciar sesión con Discord.', 'err');
+    if (q.has('login')) history.replaceState(null, '', location.pathname);
+    try {
+      sesion = await pedir('auth/?accion=yo');
+    } catch (e) {
+      vista().innerHTML = `<div class="vacio"><p><strong>El panel necesita las funciones de Vercel.</strong></p>
+        <p class="small">No responde <code>/api/</code>. Si estás en local, usa <code>vercel dev</code>; si ya está publicado, revisa la guía de configuración.</p></div>`;
+      return;
+    }
+    pintarUsuario();
+    estado = await pedir('datos/?accion=estado').catch(() => null);
+    if (!sesion.usuario) return pintarEntrar();
+    if (!sesion.dj) return pintarSinPermiso();
+    await recargar();
+    abrirDesdeHash();
+  } catch (err) {
+    console.error('Error al inicializar el panel del DJ:', err);
+    const v = vista();
+    if (v) {
+      v.innerHTML = `<div class="vacio"><p><strong>Error al cargar el panel</strong></p>
+        <p class="small" style="color:var(--err)">${esc(err.message || String(err))}</p></div>`;
+    }
   }
-  pintarUsuario();
-  estado = await pedir('datos/?accion=estado').catch(() => null);
-  if (!sesion.usuario) return pintarEntrar();
-  if (!sesion.dj) return pintarSinPermiso();
-  await recargar();
-  abrirDesdeHash();
 }
 
 function abrirDesdeHash() {
@@ -110,19 +119,27 @@ function abrirDesdeHash() {
 async function recargar() {
   try {
     const [l, m, partRes, rcRes] = await Promise.all([
-      pedir(`datos/?accion=lista&partida=${encodeURIComponent(partidaActual)}`),
+      pedir(`datos/?accion=lista&partida=${encodeURIComponent(partidaActual)}`).catch((e) => {
+        toast(`Error al cargar datos de la partida: ${e.message}`, 'err');
+        return { personajes: [], plantillas: [], imagenes: [] };
+      }),
       pedir('datos/?accion=miembros').catch((e) => ({ miembros: [], aviso: e.message })),
       pedir('datos/?accion=partidas').catch(() => ({ partidas: [] })),
       pedir('datos/?accion=roles-canales').catch(() => ({ roles: [], canales: [] }))
     ]);
-    personajes = (l.personajes || []).map((p) => R.normalizarPersonaje(p));
-    plantillas = l.plantillas || [];
-    imagenes = l.imagenes || {};
-    miembros = m;
+    personajes = ((l && l.personajes) || []).map((p) => R.normalizarPersonaje(p));
+    plantillas = (l && l.plantillas) || [];
+    imagenes = (l && l.imagenes) || {};
+    miembros = m || { miembros: [], aviso: null };
     partidas = (partRes && partRes.partidas) || [];
     rolesCanales = rcRes || { roles: [], canales: [] };
-    if (!db) db = construirDb(await cargarRaw('../data/'), null);
-  } catch (e) { toast(e.message, 'err'); }
+    if (!db) {
+      try { db = construirDb(await cargarRaw('../data/'), null); } catch (e) { /* db opcional */ }
+    }
+  } catch (e) {
+    console.error('Error en recargar():', e);
+    toast(e.message, 'err');
+  }
   cargarSelectorTopbar();
   actualizarEnlacesNav();
   pintar();
@@ -181,16 +198,16 @@ function pintar() {
 const urlImg = (clave) => (imagenes[clave] ? `${A}datos/?accion=imagen&clave=${encodeURIComponent(clave)}&v=${imagenes[clave]}` : '../assets/img/sprite-defecto.png');
 
 function filaPj(pj) {
-  const i = pj.identidad;
+  const i = pj.identidad || {};
   let clases = '';
   try { clases = db ? resumenClases(pj, db) : ''; } catch (e) { clases = ''; }
   const asignado = pj.discord && pj.discord.id;
-  const opciones = [...miembros.miembros];
+  const opciones = Array.isArray(miembros && miembros.miembros) ? [...miembros.miembros] : [];
   if (asignado && !opciones.some((m) => m.id === pj.discord.id)) opciones.unshift({ id: pj.discord.id, nombre: pj.discord.nombre || pj.discord.id });
   return `<div class="item pj-fila">
     <div class="fila" style="flex-wrap:nowrap"><img src="${esc(urlImg(`pj:${pj.id}`))}" alt="" width="40" height="40" class="miniatura"><div><a class="titulo" href="../ficha/index.html?partida=${encodeURIComponent(partidaActual)}#${encodeURIComponent(pj.id)}" style="color:var(--text)">${esc(i.nombre || 'Sin nombre')}</a>
-      <div class="sub">Nivel ${pj.nivel}${clases ? ' · ' + esc(clases) : ''}${i.identidad ? ' · ' + esc(i.identidad) : ''}</div></div></div>
-    <select data-act="asignar" data-id="${esc(pj.id)}" aria-label="Jugador de ${esc(i.nombre)}">
+      <div class="sub">Nivel ${pj.nivel || 1}${clases ? ' · ' + esc(clases) : ''}${i.identidad ? ' · ' + esc(i.identidad) : ''}</div></div></div>
+    <select data-act="asignar" data-id="${esc(pj.id)}" aria-label="Jugador de ${esc(i.nombre || 'personaje')}">
       <option value="">Sin jugador</option>
       ${opciones.map((m) => `<option value="${esc(m.id)}" ${asignado === m.id ? 'selected' : ''}>${esc(m.nombre)}</option>`).join('')}
     </select>
@@ -204,13 +221,15 @@ function filaPj(pj) {
 }
 
 function htmlPartidas() {
+  const rList = Array.isArray(rolesCanales && rolesCanales.roles) ? rolesCanales.roles : [];
+  const cList = Array.isArray(rolesCanales && rolesCanales.canales) ? rolesCanales.canales : [];
   const nombreRol = (id) => {
     if (!id) return null;
-    const r = (rolesCanales.roles || []).find((x) => x.id === id);
+    const r = rList.find((x) => x.id === id);
     return r ? `@${r.nombre}` : id;
   };
   const nombreCanal = (id) => {
-    const c = (rolesCanales.canales || []).find((x) => x.id === id);
+    const c = cList.find((x) => x.id === id);
     return c ? `#${c.nombre}` : id;
   };
 
@@ -236,21 +255,21 @@ function htmlPartidas() {
           <label class="small muted" style="display:block;margin-bottom:4px">Rol Discord de Jugador (acceso exclusivo)</label>
           <select id="part-rol-jugador" style="width:100%">
             <option value="">(Cualquier miembro del servidor)</option>
-            ${(rolesCanales.roles || []).map((r) => `<option value="${esc(r.id)}" ${editandoPartida.rolJugador === r.id ? 'selected' : ''}>@${esc(r.nombre)}</option>`).join('')}
+            ${rList.map((r) => `<option value="${esc(r.id)}" ${editandoPartida.rolJugador === r.id ? 'selected' : ''}>@${esc(r.nombre)}</option>`).join('')}
           </select>
         </div>
         <div>
           <label class="small muted" style="display:block;margin-bottom:4px">Rol Discord de DJ (opcional para DJ específico)</label>
           <select id="part-rol-dj" style="width:100%">
             <option value="">(Rol DJ global del servidor)</option>
-            ${(rolesCanales.roles || []).map((r) => `<option value="${esc(r.id)}" ${editandoPartida.rolDj === r.id ? 'selected' : ''}>@${esc(r.nombre)}</option>`).join('')}
+            ${rList.map((r) => `<option value="${esc(r.id)}" ${editandoPartida.rolDj === r.id ? 'selected' : ''}>@${esc(r.nombre)}</option>`).join('')}
           </select>
         </div>
       </div>
       <div style="margin-bottom:14px">
         <label class="small muted" style="display:block;margin-bottom:4px">Canales de Discord vinculados a esta partida</label>
         <div style="display:grid;grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));gap:6px;max-height:160px;overflow-y:auto;background:var(--surface-2);padding:8px;border-radius:6px;border:1px solid var(--line)">
-          ${(rolesCanales.canales || []).filter((c) => c.tipo === 0).map((c) => `
+          ${cList.filter((c) => c.tipo === 0).map((c) => `
             <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer">
               <input type="checkbox" name="part-canal" value="${esc(c.id)}" ${(editandoPartida.canales || []).includes(c.id) ? 'checked' : ''}>
               #${esc(c.nombre)}
@@ -265,13 +284,13 @@ function htmlPartidas() {
     </div>
   ` : '';
 
-  const partActual = partidas.find((p) => p.id === partidaActual) || { nombre: partidaActual };
+  const partActual = (partidas || []).find((p) => p.id === partidaActual) || { nombre: partidaActual };
 
   return `
     <div class="seccion fila entre" id="partidas" style="margin-top:28px">
       <div>
         <h2 style="font-size:20px">Partidas y Campañas</h2>
-        <p class="muted small">${partidas.length} partida${partidas.length === 1 ? '' : 's'} configurada${partidas.length === 1 ? '' : 's'}. Administra partidas separadas en el mismo servidor de Discord. Partida activa actual: <strong style="color:var(--accent)">${esc(partActual.nombre || partidaActual)}</strong>.</p>
+        <p class="muted small">${(partidas || []).length} partida${(partidas || []).length === 1 ? '' : 's'} configurada${(partidas || []).length === 1 ? '' : 's'}. Administra partidas separadas en el mismo servidor de Discord. Partida activa actual: <strong style="color:var(--accent)">${esc(partActual.nombre || partidaActual)}</strong>.</p>
       </div>
       <div class="fila">
         <button class="btn primario" data-act="nueva-partida">+ Nueva partida</button>
@@ -279,7 +298,7 @@ function htmlPartidas() {
     </div>
     ${formPartida}
     <div class="lista">
-      ${partidas.map((p) => {
+      ${(partidas || []).map((p) => {
         const esActual = p.id === partidaActual;
         const rJ = nombreRol(p.rolJugador) || 'Todos los miembros';
         const rD = nombreRol(p.rolDj) || 'DJ Global';
@@ -313,8 +332,52 @@ function htmlPartidas() {
   `;
 }
 
+function htmlEnemigos() {
+  return `<div class="seccion fila entre" id="enemigos" style="margin-top:28px">
+      <div><h2 style="font-size:20px">Fichas de enemigo y PNJ</h2>
+        <p class="muted small">${plantillas.length} ficha${plantillas.length === 1 ? '' : 's'}. Los jugadores no las ven: en la <a href="../visor/index.html?partida=${encodeURIComponent(partidaActual)}">vista de combate</a> solo ven nombre, imagen, estados, daño recibido y lo que reveléis con el Estudio.</p></div>
+      <div class="fila">
+        <button class="btn" data-act="importar-pnj">Importar JSON</button>
+        <a class="btn" href="../pnj/index.html?bestiario">Desde el bestiario</a>
+        <a class="btn primario" href="../pnj/index.html?nuevo">Nueva ficha</a>
+      </div>
+    </div>
+    ${plantillas.length ? `<div class="lista">${plantillas.map((t) => `<div class="item pnj-fila">
+      <img src="${esc(urlImg(`pnj:${t.id}`))}" alt="" width="40" height="40">
+      <div><span class="titulo">${esc(t.nombre)}</span>
+        <div class="sub">Nivel ${t.nivel} · ${esc(N.nombreRango(t))} · ${esc(N.nombreEspecie(t.especie))} · PV ${t.pv} · PM ${t.pm}${t.villano ? ` · ${esc(N.nombreVillano(t.villano).toLowerCase())}` : ''}${t.siguiente_fase ? ' · con otra fase' : ''}${t.revelado ? ` · <span style="color:var(--accent)">revelado ${t.revelado}+</span>` : ''}</div></div>
+      <div class="botones">
+        <a class="btn peq" href="../pnj/index.html?id=${encodeURIComponent(t.id)}">Editar</a>
+        <a class="btn peq fantasma" href="../pnj/index.html?duplicar=${encodeURIComponent(t.id)}">Duplicar</a>
+        <button class="btn peq fantasma" data-act="imagen" data-clave="pnj:${esc(t.id)}">Imagen</button>
+        <a class="btn peq fantasma" href="${A}datos/?accion=descargar-plantilla&id=${encodeURIComponent(t.id)}">Exportar</a>
+        <button class="btn peq fantasma peligro" data-act="eliminar-pnj" data-id="${esc(t.id)}">Eliminar</button>
+      </div></div>`).join('')}</div>`
+      : '<div class="vacio"><p>No hay fichas de enemigo.</p><p class="small">Crea una nueva, parte de una criatura del bestiario o importa un JSON.</p></div>'}`;
+}
+
+async function importarPnj(files) {
+  let ok = 0;
+  for (const f of files) {
+    try {
+      const contenido = await leerArchivo(f);
+      const lista = Array.isArray(contenido) ? contenido : [contenido];
+      for (const datos of lista) {
+        if (datos && datos.formato === R.FORMATO) throw new Error(`${f.name}: es un personaje jugador; impórtalo arriba, en «Personajes de la partida».`);
+        const t = N.normalizarPnj(N.completarHabilidades({ ...datos, habilidades: (datos.habilidades || []).map((h) => ({ ...h })) }, (db && db.col.habilidades_pnj) || []));
+        const existe = plantillas.some((x) => x.id === t.id);
+        if (existe && !confirm(`«${t.nombre}» ya existe. ¿Sustituir su ficha? (se conserva su imagen y lo revelado)`)) continue;
+        await post('datos/?accion=guardar-plantilla', { plantilla: datos, reemplazar: true });
+        ok++;
+      }
+    } catch (e) { toast(e.message, 'err'); }
+  }
+  if (ok) toast(`${ok} ficha${ok > 1 ? 's' : ''} de PNJ importada${ok > 1 ? 's' : ''}.`);
+  await recargar();
+}
+
 function htmlConfig(esDj) {
-  if (!estado) return '';
+  if (!estado || !Array.isArray(estado.checks)) return '';
   const pendientes = estado.checks.filter((c) => !c.ok).length;
   const copiar = (etq, valor) => `<div class="small muted" style="margin-top:10px">${etq}</div>
     <div class="copiar"><code>${esc(valor)}</code><button class="btn peq" data-act="copiar" data-valor="${esc(valor)}">Copiar</button></div>`;
@@ -323,8 +386,8 @@ function htmlConfig(esDj) {
       <span class="chip ${pendientes ? 'err' : 'ok'}">${pendientes ? `${pendientes} pendiente${pendientes > 1 ? 's' : ''}` : 'Todo correcto'}</span></summary>
     <div style="margin-top:12px">
       ${estado.checks.map((c) => `<div class="check ${c.ok ? 'ok' : ''}"><i></i><div><strong>${esc(c.nombre)}</strong>${c.detalle ? ` <span class="muted small">— ${esc(c.detalle)}</span>` : ''}</div></div>`).join('')}
-      ${copiar('Interactions Endpoint URL (Discord Developer Portal → General Information)', estado.urls.interacciones)}
-      ${copiar('Redirect (Discord Developer Portal → OAuth2 → Redirects)', estado.urls.redireccion)}
+      ${(estado.urls && estado.urls.interacciones) ? copiar('Interactions Endpoint URL (Discord Developer Portal → General Information)', estado.urls.interacciones) : ''}
+      ${(estado.urls && estado.urls.redireccion) ? copiar('Redirect (Discord Developer Portal → OAuth2 → Redirects)', estado.urls.redireccion) : ''}
       ${esDj ? `<div class="fila" style="margin-top:14px"><button class="btn primario" data-act="registrar">Actualizar comandos de Discord</button>
         <span class="muted small">Púlsalo la primera vez y cada vez que se añadan comandos.</span></div>` : ''}
       <p class="small muted" style="margin-top:12px">Guía paso a paso: <code>tools/fabula-ultima-fichas/docs/bot-discord.md</code></p>

@@ -75,9 +75,10 @@ export async function eliminar(id) {
 export function rolEnPartida(partida, miembroInfo) {
   if (!miembroInfo) return 'espectador';
   if (miembroInfo.esDjGlobal) return 'dj';
-  if (partida.rolDj && miembroInfo.roles.includes(partida.rolDj)) return 'dj';
-  if (partida.rolJugador) {
-    return miembroInfo.roles.includes(partida.rolJugador) ? 'jugador' : 'bloqueado';
+  const roles = Array.isArray(miembroInfo.roles) ? miembroInfo.roles : [];
+  if (partida && partida.rolDj && roles.includes(partida.rolDj)) return 'dj';
+  if (partida && partida.rolJugador) {
+    return roles.includes(partida.rolJugador) ? 'jugador' : 'bloqueado';
   }
   // Sin rol específico de jugador: cualquier miembro del servidor tiene acceso de jugador
   return 'jugador';
