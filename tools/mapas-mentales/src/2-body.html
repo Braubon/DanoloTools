@@ -1,0 +1,87 @@
+<body>
+<main id="viewport" aria-label="Lienzo del mapa mental">
+  <svg id="edges" class="layer" aria-hidden="true"><g id="ev"><g id="eg"></g></g></svg>
+  <div id="world"><div id="labels"></div><div id="nodes"></div></div>
+  <svg id="overlay" class="layer" aria-hidden="true"><g id="ov"><g id="ovg"></g><path id="templink" style="display:none"></path></g></svg>
+  <div id="selrect" hidden></div>
+</main>
+
+<header class="toolbar">
+  <div class="tb-group tb-title">
+    <a href="../../index.html" class="ibtn" title="Volver a DanoloTools" aria-label="Volver a DanoloTools" data-i="back" style="text-decoration:none"></a>
+    <span class="sep"></span>
+    <button class="ibtn" id="btn-maps" title="Mis mapas" aria-label="Mis mapas" data-i="menu"></button>
+    <div class="title-wrap">
+      <button class="map-title" id="map-title" title="Cambiar el nombre del mapa">Mapa</button>
+      <span class="savestate" id="savestate">Guardado en este navegador</span>
+    </div>
+  </div>
+  <div class="tb-group tb-tools" role="toolbar" aria-label="Herramientas">
+    <button class="ibtn" id="btn-undo" title="Deshacer (Ctrl+Z)" aria-label="Deshacer" data-i="undo"></button>
+    <button class="ibtn" id="btn-redo" title="Rehacer (Ctrl+Y)" aria-label="Rehacer" data-i="redo"></button>
+    <span class="sep"></span>
+    <button class="ibtn" id="btn-layout" title="Organizar automáticamente" aria-label="Organizar automáticamente" data-i="layout"></button>
+    <button class="ibtn" id="btn-magnet" title="Imán" aria-label="Opciones de imán" data-i="magnet"></button>
+    <button class="ibtn" id="btn-select" title="Selección con rectángulo (o Mayús + arrastrar)" aria-label="Modo selección" aria-pressed="false" data-i="select"></button>
+    <span class="sep"></span>
+    <button class="ibtn" id="btn-tags" title="Etiquetas y filtro" aria-label="Etiquetas y filtro" data-i="tags"></button>
+    <button class="ibtn" id="btn-search" title="Buscar (Ctrl+F)" aria-label="Buscar" data-i="search"></button>
+    <span class="sep"></span>
+    <button class="ibtn" id="btn-file" title="Exportar e importar" aria-label="Exportar e importar" data-i="file"></button>
+    <button class="ibtn" id="btn-theme" title="Tema claro u oscuro" aria-label="Cambiar tema" data-i="moon"></button>
+    <button class="ibtn" id="btn-help" title="Ayuda y atajos" aria-label="Ayuda y atajos" data-i="help"></button>
+  </div>
+</header>
+
+<div class="tb-group zoomctl">
+  <button class="ibtn" id="btn-zout" title="Alejar" aria-label="Alejar" data-i="minus"></button>
+  <button class="zoomlbl" id="zoomlbl" title="Volver a 100 %">100%</button>
+  <button class="ibtn" id="btn-zin" title="Acercar" aria-label="Acercar" data-i="plus"></button>
+  <button class="ibtn" id="btn-fit" title="Encajar todo (F)" aria-label="Encajar todo" data-i="fit"></button>
+  <button class="ibtn" id="btn-mini" title="Minimapa" aria-label="Mostrar u ocultar el minimapa" aria-pressed="true" data-i="mini"></button>
+</div>
+<div class="tb-group" id="minimap"><canvas aria-label="Minimapa"></canvas></div>
+
+<div id="filterchip" hidden><span id="filtertext"></span><button id="filterclear">Quitar filtro</button></div>
+<div class="tb-group" id="hint" hidden>
+  <span><b>Doble clic</b> edita · <b>arrastra desde el cuadro</b> para conectar o crear · <b>arrastra la barra</b> para mover</span>
+  <button class="ibtn" id="hintclose" title="Cerrar" aria-label="Cerrar la ayuda rápida" data-i="x"></button>
+</div>
+
+<div class="tb-group" id="searchbar" hidden>
+  <svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
+  <input id="sq" type="search" placeholder="Buscar texto o etiqueta" autocomplete="off" aria-label="Buscar en el mapa">
+  <span id="scount"></span>
+  <button class="ibtn" id="sprev" title="Anterior" aria-label="Resultado anterior" data-i="up"></button>
+  <button class="ibtn" id="snext" title="Siguiente (Intro)" aria-label="Resultado siguiente" data-i="down"></button>
+  <button class="ibtn" id="sclose" title="Cerrar (Esc)" aria-label="Cerrar la búsqueda" data-i="x"></button>
+</div>
+
+<aside class="side left" id="drawer" hidden aria-label="Mis mapas">
+  <header><h2>Mis mapas</h2><button class="ibtn" id="drawerclose" aria-label="Cerrar" data-i="x"></button></header>
+  <div class="dr-actions">
+    <button class="btn primary" id="newmap"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Nuevo mapa</button>
+    <button class="btn" id="importbtn2">Importar JSON</button>
+  </div>
+  <div class="scroll"><ul class="maplist" id="maplist"></ul></div>
+  <footer><span class="syncdot" id="syncdot"></span><span id="syncinfo">Guardado en este navegador</span></footer>
+</aside>
+
+<aside class="side right" id="tagpanel" hidden aria-label="Etiquetas">
+  <header><h2>Etiquetas</h2><button class="ibtn" id="tagpanelclose" aria-label="Cerrar" data-i="x"></button></header>
+  <div class="tp-top">
+    <p class="note" style="margin:0">Pulsa una etiqueta para destacar los cuadros que la llevan. Puedes elegir varias.</p>
+    <div class="seg" id="fmode">
+      <button data-m="dim" aria-pressed="true">Atenuar el resto</button>
+      <button data-m="hide" aria-pressed="false">Ocultar el resto</button>
+    </div>
+  </div>
+  <div class="scroll"><ul class="taglist" id="taglist"></ul>
+    <form class="newtag" id="newtag"><input class="textin" id="newtagname" placeholder="Nueva etiqueta" maxlength="40" autocomplete="off" aria-label="Nombre de la nueva etiqueta"><button class="btn" type="submit">Crear</button></form>
+  </div>
+</aside>
+
+<div id="pop" hidden role="dialog"></div>
+<div id="modal" hidden></div>
+<div id="toasts" aria-live="polite"></div>
+<input type="file" id="fileinp" accept=".json,application/json" hidden>

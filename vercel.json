@@ -7,6 +7,11 @@
       "source": "/aspect-ratio",
       "destination": "/tools/aspect-ratio/",
       "permanent": true
+    },
+    {
+      "source": "/mapas-mentales",
+      "destination": "/tools/mapas-mentales/",
+      "permanent": true
     }
   ],
   "headers": [
