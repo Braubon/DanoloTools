@@ -90,6 +90,52 @@ const urlVisor = (ctx, pj) => {
 const urlComandos = (ctx) => `${ctx.origen}/tools/fabula-ultima-fichas/comandos/index.html`;
 const puedeEditar = (ctx, pj) => ctx.dj || (pj.discord && pj.discord.id === ctx.user.id);
 
+/** Convierte un PNJ de la escena en una estructura compatible para tiradas. */
+function convertirPnjAPj(inst, t) {
+  return {
+    id: inst.id,
+    instId: inst.id,
+    plantillaId: t.id,
+    esPnj: true,
+    inst,
+    t,
+    identidad: {
+      nombre: inst.nombre,
+      identidad: `${N.nombreRango(t)} · ${N.nombreEspecie(t.especie)}`,
+      pronombres: ''
+    },
+    nivel: t.nivel,
+    atributos: { base: t.atributos },
+    estado: {
+      pv: inst.pv,
+      pm: inst.pm,
+      estados: inst.estados || []
+    },
+    pf: inst.pu || 0,
+    clases: [],
+    calculado: {
+      actual: t.atributos,
+      init: t.iniciativa || 0,
+      def: t.defensa || 0,
+      mdef: t.defensa_magica || 0,
+      crisis: N.crisisPnj(t),
+      pv_max: t.pv,
+      pm_max: t.pm,
+      pi_max: 0,
+      ataques: (t.ataques || []).map((a) => ({
+        nombre: a.nombre,
+        tipo: a.tipo,
+        dano: a.dano,
+        precision: a.precision,
+        bonus: a.bonus
+      }))
+    }
+  };
+}
+
+const calcPj = (pj, db) => (pj.esPnj ? pj.calculado : M.calc(pj, db));
+const dadosPj = (pj, c) => (pj.esPnj ? N.dadosPnj(pj.t, pj.inst.estados) : M.dadosEfectivos(pj, c));
+
 /** Busca el personaje indicado o el asignado al usuario. */
 async function resolverPj(ctx, valor, { editar = false } = {}) {
   const todos = await ctx.todos();
@@ -97,7 +143,17 @@ async function resolverPj(ctx, valor, { editar = false } = {}) {
   if (valor) {
     const n = P.norm(valor);
     pj = todos.find((p) => p.id === valor) || todos.find((p) => P.norm(M.nombre(p)) === n) || todos.find((p) => P.norm(M.nombre(p)).includes(n));
-    if (!pj) throw new Aviso(`No encuentro el personaje «${valor}».`);
+    if (!pj) {
+      if (ctx.dj) {
+        const c = await E.campo(ctx.partidaId);
+        const inst = E.buscarInstancia(c, valor);
+        if (inst) {
+          const t = await E.plantilla(inst.plantilla);
+          if (t) return convertirPnjAPj(inst, t);
+        }
+      }
+      throw new Aviso(`No encuentro el personaje «${valor}».`);
+    }
   } else {
     const mios = todos.filter((p) => p.discord && p.discord.id === ctx.user.id);
     if (mios.length > 1) throw new Aviso(`Llevas varios personajes (${mios.map(M.nombre).join(', ')}): indica cuál con la opción «personaje».`);
@@ -121,9 +177,21 @@ async function resolverPjs(ctx, valor, { editar = false } = {}) {
     if (editar && !ctx.dj) throw new Aviso('Solo el DJ puede modificar varios personajes a la vez.');
     return todos;
   }
+  if (normVal === 'todos_enemigos' || normVal === 'enemigos') {
+    if (!ctx.dj) throw new Aviso('Solo el DJ puede seleccionar a todos los enemigos.');
+    const c = await E.campo(ctx.partidaId);
+    if (!c.enemigos || !c.enemigos.length) throw new Aviso('No hay enemigos en el combate.');
+    const res = [];
+    for (const inst of c.enemigos) {
+      const t = await E.plantilla(inst.plantilla);
+      if (t) res.push(convertirPnjAPj(inst, t));
+    }
+    return res;
+  }
   if (String(valor).includes(',') || String(valor).includes('+')) {
     const trozos = String(valor).split(/[,+]/).map((s) => s.trim()).filter(Boolean);
     const seleccionados = [];
+    let campoCache = null;
     for (const t of trozos) {
       const nt = P.norm(t);
       if (nt === 'todos' || nt === 'all' || nt === 'grupo') {
@@ -132,16 +200,40 @@ async function resolverPjs(ctx, valor, { editar = false } = {}) {
         }
         continue;
       }
+      if (nt === 'todos_enemigos' || nt === 'enemigos') {
+        if (!campoCache) campoCache = await E.campo(ctx.partidaId);
+        for (const inst of campoCache.enemigos || []) {
+          const templ = await E.plantilla(inst.plantilla);
+          if (templ && !seleccionados.some((s) => s.id === inst.id)) {
+            seleccionados.push(convertirPnjAPj(inst, templ));
+          }
+        }
+        continue;
+      }
       const match = todos.find((p) => p.id === t) ||
                     todos.find((p) => P.norm(M.nombre(p)) === nt) ||
                     todos.find((p) => P.norm(M.nombre(p)).includes(nt));
-      if (!match) throw new Aviso(`No encuentro el personaje «${t}».`);
-      if (!seleccionados.some((s) => s.id === match.id)) {
-        if (editar && !puedeEditar(ctx, match)) throw new Aviso(`Solo el DJ puede modificar a ${M.nombre(match)}.`);
-        seleccionados.push(match);
+      if (match) {
+        if (!seleccionados.some((s) => s.id === match.id)) {
+          if (editar && !puedeEditar(ctx, match)) throw new Aviso(`Solo el DJ puede modificar a ${M.nombre(match)}.`);
+          seleccionados.push(match);
+        }
+        continue;
       }
+      if (ctx.dj) {
+        if (!campoCache) campoCache = await E.campo(ctx.partidaId);
+        const inst = E.buscarInstancia(campoCache, t);
+        if (inst) {
+          const templ = await E.plantilla(inst.plantilla);
+          if (templ && !seleccionados.some((s) => s.id === inst.id)) {
+            seleccionados.push(convertirPnjAPj(inst, templ));
+            continue;
+          }
+        }
+      }
+      throw new Aviso(`No encuentro «${t}».`);
     }
-    if (!seleccionados.length) throw new Aviso('No se ha seleccionado ningún personaje.');
+    if (!seleccionados.length) throw new Aviso('No se ha seleccionado ningún personaje o enemigo.');
     return seleccionados;
   }
   const pj = await resolverPj(ctx, valor, { editar });
@@ -175,6 +267,7 @@ function notaEstados(pj, c, dados, atributos) {
 /** Si la tirada es pifia de un PJ, suma 1 PF. Devuelve la línea a mostrar. */
 async function pifiaPf(pj, r, partidaId) {
   if (!pj || !r.pifia) return '';
+  if (pj.esPnj) return '';
   pj.pf = (pj.pf || 0) + 1;
   await P.escribir(pj, partidaId);
   return `+1 Punto Fábula por la pifia (ahora ${pj.pf}).`;
@@ -201,8 +294,8 @@ async function hacerTirada(ctx, { a1, a2, bono, dif, pjValor }) {
 
   if (pjs.length === 1) {
     const pj = pjs[0];
-    const c = M.calc(pj, ctx.db);
-    const dados = M.dadosEfectivos(pj, c);
+    const c = calcPj(pj, ctx.db);
+    const dados = dadosPj(pj, c);
     if (necesitaPj && [a1, a2].some((a) => R.ATR.includes(a) && !dados[a])) {
       throw new Aviso(`${M.nombre(pj)} no tiene atributos definidos.`);
     }
@@ -215,17 +308,18 @@ async function hacerTirada(ctx, { a1, a2, bono, dif, pjValor }) {
       r,
       etiquetas: [et(a1), et(a2)],
       extra,
-      pie: notaEstados(pj, c, dados, [a1, a2])
+      pie: pj.esPnj ? notaEstadosPnj(pj.t, dados, [a1, a2]) : notaEstados(pj, c, dados, [a1, a2]),
+      color: pj.esPnj ? (r.critico ? COLOR.critico : r.pifia ? COLOR.pifia : COLOR.enemigo) : undefined
     });
-    const rep = botonRepetir(r, `rr:t:${pj.id}:${a1}:${a2}:${bono || 0}:${dif ?? ''}`);
+    const rep = !pj.esPnj ? botonRepetir(r, `rr:t:${pj.id}:${a1}:${a2}:${bono || 0}:${dif ?? ''}`) : null;
     return { embeds: [embed], components: rep ? [fila(rep)] : [] };
   }
 
   const embeds = [];
   const botones = [];
   for (const pj of pjs.slice(0, 10)) {
-    const c = M.calc(pj, ctx.db);
-    const dados = M.dadosEfectivos(pj, c);
+    const c = calcPj(pj, ctx.db);
+    const dados = dadosPj(pj, c);
     if (necesitaPj && [a1, a2].some((a) => R.ATR.includes(a) && !dados[a])) {
       throw new Aviso(`${M.nombre(pj)} no tiene atributos definidos.`);
     }
@@ -238,9 +332,10 @@ async function hacerTirada(ctx, { a1, a2, bono, dif, pjValor }) {
       r,
       etiquetas: [et(a1), et(a2)],
       extra,
-      pie: notaEstados(pj, c, dados, [a1, a2])
+      pie: pj.esPnj ? notaEstadosPnj(pj.t, dados, [a1, a2]) : notaEstados(pj, c, dados, [a1, a2]),
+      color: pj.esPnj ? (r.critico ? COLOR.critico : r.pifia ? COLOR.pifia : COLOR.enemigo) : undefined
     }));
-    if (!r.critico && !r.pifia) {
+    if (!pj.esPnj && !r.critico && !r.pifia) {
       botones.push(boton(`Repetir ${M.nombre(pj)} (1 PF)`, `rr:t:${pj.id}:${a1}:${a2}:${bono || 0}:${dif ?? ''}`));
     }
   }
@@ -766,8 +861,18 @@ const MANEJADORES = {
   async ficha(ctx) {
     const pjs = await resolverPjs(ctx, ctx.o.personaje);
     if (!pjs.length) throw new Aviso('No hay personajes.');
-    if (pjs.length === 1) return mensaje({ embeds: [embedFicha(ctx, pjs[0])] });
-    return mensaje({ embeds: pjs.slice(0, 10).map((pj) => embedFicha(ctx, pj)) });
+    if (pjs.length === 1) {
+      const pj = pjs[0];
+      if (pj.esPnj) {
+        if (ctx.dj) {
+          const f = camposPnj(pj.t, pj.t, { completo: true });
+          return mensaje({ embeds: [{ title: `${pj.inst.nombre} (PNJ · Nivel ${pj.t.nivel})`, color: COLOR.enemigo, description: estadoPnjDj(pj.inst, pj.t), fields: f }] });
+        }
+        return mensaje({ embeds: [embedRevelado(pj.t, pj.inst.nombre)] });
+      }
+      return mensaje({ embeds: [embedFicha(ctx, pj)] });
+    }
+    return mensaje({ embeds: pjs.slice(0, 10).map((pj) => (pj.esPnj ? embedRevelado(pj.t, pj.inst.nombre) : embedFicha(ctx, pj))) });
   },
   pv: (ctx) => cambiarRecurso(ctx, 'pv'),
   pm: (ctx) => cambiarRecurso(ctx, 'pm'),
@@ -858,44 +963,46 @@ const MANEJADORES = {
       if (!pjs.length) throw new Aviso('No hay personajes.');
       if (pjs.length === 1) {
         const pj = pjs[0];
-        const c = M.calc(pj, ctx.db);
-        const dados = M.dadosEfectivos(pj, c);
+        const c = calcPj(pj, ctx.db);
+        const dados = dadosPj(pj, c);
         const r = M.prueba(dados.DES, dados.PER, c.init + (bono || 0), dificultad);
-        const extra = [r.exito ? '**Los jugadores eligen quién empieza.**' : '**Empiezan los enemigos.**'];
+        const extra = [r.exito ? (pj.esPnj ? '**Empiezan los enemigos.**' : '**Los jugadores eligen quién empieza.**') : (pj.esPnj ? '**Los jugadores eligen quién empieza.**' : '**Empiezan los enemigos.**')];
         const pf = await pifiaPf(pj, r, ctx.partidaId);
         if (pf) extra.push(pf);
         const embed = embedPrueba({
           titulo: `Iniciativa · ${M.nombre(pj)}`, r, etiquetas: [`DES d${dados.DES}`, `PER d${dados.PER}`], extra,
           pie: [
             `Inic. ${signo(c.init) || '0'}${bono ? ` · bono ${signo(bono)}` : ''}`,
-            notaEstados(pj, c, dados, ['DES', 'PER'])
-          ].filter(Boolean).join(' · ')
+            pj.esPnj ? notaEstadosPnj(pj.t, dados, ['DES', 'PER']) : notaEstados(pj, c, dados, ['DES', 'PER'])
+          ].filter(Boolean).join(' · '),
+          color: pj.esPnj ? (r.critico ? COLOR.critico : r.pifia ? COLOR.pifia : COLOR.enemigo) : undefined
         });
-        const rep = botonRepetir(r, `rr:t:${pj.id}:DES:PER:${(c.init + (bono || 0))}:${dificultad ?? ''}`);
+        const rep = !pj.esPnj ? botonRepetir(r, `rr:t:${pj.id}:DES:PER:${(c.init + (bono || 0))}:${dificultad ?? ''}`) : null;
         return mensaje({ embeds: [embed], components: rep ? [fila(rep)] : [] });
       }
 
       const embeds = [];
       const botones = [];
       for (const pj of pjs.slice(0, 10)) {
-        const c = M.calc(pj, ctx.db);
-        const dados = M.dadosEfectivos(pj, c);
+        const c = calcPj(pj, ctx.db);
+        const dados = dadosPj(pj, c);
         const r = M.prueba(dados.DES, dados.PER, c.init + (bono || 0), dificultad);
-        const extra = [r.exito ? '✅ **Supera la iniciativa**' : '❌ **No supera la iniciativa**'];
+        const extra = [r.exito ? (pj.esPnj ? '✅ **Supera la iniciativa (empiezan enemigos)**' : '✅ **Supera la iniciativa**') : '❌ **No supera la iniciativa**'];
         const pf = await pifiaPf(pj, r, ctx.partidaId);
         if (pf) extra.push(pf);
         const pie = [
           `Inic. ${signo(c.init) || '0'}${bono ? ` · bono ${signo(bono)}` : ''}`,
-          notaEstados(pj, c, dados, ['DES', 'PER'])
+          pj.esPnj ? notaEstadosPnj(pj.t, dados, ['DES', 'PER']) : notaEstados(pj, c, dados, ['DES', 'PER'])
         ].filter(Boolean).join(' · ');
         embeds.push(embedPrueba({
           titulo: `Iniciativa · ${M.nombre(pj)}`,
           r,
           etiquetas: [`DES d${dados.DES}`, `PER d${dados.PER}`],
           extra,
-          pie
+          pie,
+          color: pj.esPnj ? (r.critico ? COLOR.critico : r.pifia ? COLOR.pifia : COLOR.enemigo) : undefined
         }));
-        if (!r.critico && !r.pifia) {
+        if (!pj.esPnj && !r.critico && !r.pifia) {
           botones.push(boton(`Repetir ${M.nombre(pj)} (1 PF)`, `rr:t:${pj.id}:DES:PER:${(c.init + (bono || 0))}:${dificultad ?? ''}`));
         }
       }
@@ -1163,7 +1270,15 @@ async function autocompletar(ctx) {
   const f = ctx.enfocada;
   if (!f) return { type: 8, data: { choices: [] } };
   const q = P.norm(f.value);
-  const filtra = (lista) => lista.filter((x) => !q || P.norm(x.name).includes(q)).slice(0, 25);
+  const qWords = q ? q.split(/\s+/).filter(Boolean) : [];
+  const coincide = (texto, query, queryWords) => {
+    if (!query) return true;
+    const n = P.norm(texto);
+    if (n.includes(query)) return true;
+    const nWords = n.split(/[^a-z0-9]+/i).filter(Boolean);
+    return queryWords.every((qw) => nWords.some((nw) => nw.startsWith(qw)));
+  };
+  const filtra = (lista) => lista.filter((x) => coincide(x.name, q, qWords)).slice(0, 25);
   let choices = [];
   try {
     const cmdNombre = ctx.i.data.name;
@@ -1173,27 +1288,60 @@ async function autocompletar(ctx) {
       const mios = (p) => (p.discord && p.discord.id === ctx.user.id ? 0 : 1);
       const listaPjs = [...todos].sort((a, b) => mios(a) - mios(b));
       const comandosConTodos = ['tirada', 'ficha', 'iniciativa', 'px'];
+      let enemigosCampo = [];
+      if (ctx.dj) {
+        try {
+          const c = await E.campo(ctx.partidaId);
+          enemigosCampo = c && Array.isArray(c.enemigos) ? c.enemigos : [];
+        } catch (e) { enemigosCampo = []; }
+      }
       const trozos = (f.value || '').split(/[,+]/);
       if (trozos.length > 1 && comandosConTodos.includes(cmdNombre)) {
         const prefijo = trozos.slice(0, -1).map((s) => s.trim()).filter(Boolean).join(', ') + ', ';
         const ultimo = P.norm(trozos[trozos.length - 1].trim());
+        const ultimoWords = ultimo ? ultimo.split(/\s+/).filter(Boolean) : [];
         const yaElegidos = trozos.slice(0, -1).map((s) => P.norm(s.trim()));
-        const disponibles = listaPjs.filter((p) => !yaElegidos.some((y) => y === P.norm(M.nombre(p)) || y === p.id));
-        choices = disponibles
-          .filter((p) => !ultimo || P.norm(M.nombre(p)).includes(ultimo))
+        const candidatos = [];
+        for (const p of listaPjs) {
+          const nm = M.nombre(p);
+          if (!yaElegidos.some((y) => y === P.norm(nm) || y === p.id)) {
+            candidatos.push({
+              name: `${prefijo}${nm}${p.discord && p.discord.nombre ? ` · ${p.discord.nombre}` : ''}`.slice(0, 100),
+              value: `${prefijo}${nm}`.slice(0, 100),
+              search: nm
+            });
+          }
+        }
+        for (const i of enemigosCampo) {
+          if (!yaElegidos.some((y) => y === P.norm(i.nombre) || y === i.id)) {
+            candidatos.push({
+              name: `${prefijo}👹 ${i.nombre}${i.lado === 'aliado' ? ' (aliado)' : ' (enemigo)'}`.slice(0, 100),
+              value: `${prefijo}${i.nombre}`.slice(0, 100),
+              search: i.nombre
+            });
+          }
+        }
+        choices = candidatos
+          .filter((c) => coincide(c.search, ultimo, ultimoWords))
           .slice(0, 25)
-          .map((p) => ({
-            name: `${prefijo}${M.nombre(p)}`.slice(0, 100),
-            value: `${prefijo}${M.nombre(p)}`.slice(0, 100)
-          }));
+          .map((c) => ({ name: c.name, value: c.value }));
       } else {
         const base = listaPjs.map((p) => ({
           name: `${M.nombre(p)}${p.discord && p.discord.nombre ? ` · ${p.discord.nombre}` : ''}`.slice(0, 100),
           value: p.id
         }));
-        const lista = comandosConTodos.includes(cmdNombre)
-          ? [{ name: '👥 Todos los personajes', value: 'todos' }, ...base]
-          : base;
+        const baseEnemigos = enemigosCampo.map((i) => ({
+          name: `👹 ${i.nombre}${i.lado === 'aliado' ? ' (aliado)' : ' (enemigo)'}`.slice(0, 100),
+          value: i.nombre.slice(0, 100)
+        }));
+        let lista = [];
+        if (comandosConTodos.includes(cmdNombre)) {
+          lista.push({ name: '👥 Todos los personajes', value: 'todos' });
+          if (ctx.dj && enemigosCampo.length) {
+            lista.push({ name: '👹 Todos los enemigos en combate', value: 'todos_enemigos' });
+          }
+        }
+        lista = [...lista, ...base, ...baseEnemigos];
         choices = filtra(lista);
       }
     } else if (f.name === 'enemigo') {
