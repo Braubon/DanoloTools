@@ -50,7 +50,7 @@ export function nuevoPersonaje() {
     equipo: { equipado: { mano_principal: null, mano_secundaria: null, armadura: null, accesorio: null }, objetos: [] },
     vinculos: [],
     opcionales: { peculiaridad: null, poder_cero: null },
-    estado: { pv: null, pm: null, pi: null, estados: [] },
+    estado: { pv: null, pm: null, pi: null, estados: [], bufos: [] },
     notas: '',
     historial: []
   };
@@ -72,6 +72,7 @@ export function normalizarPersonaje(pj) {
   for (const k of ['clases', 'heroicas', 'vinculos', 'historial']) out[k] = Array.isArray(pj[k]) ? pj[k] : [];
   out.elecciones = pj.elecciones || {};
   out.estado.estados = out.estado.estados || [];
+  out.estado.bufos = Array.isArray(pj.estado && pj.estado.bufos) ? pj.estado.bufos : [];
   return out;
 }
 
@@ -233,6 +234,39 @@ export function calcular(pj, db) {
     vistos.add(o._uid);
     add(o.modificadores, o.nombre, 1);
   }
+
+  // Bufos y modificadores temporales en combate
+  const bufos = (pj.estado && Array.isArray(pj.estado.bufos)) ? pj.estado.bufos : [];
+  for (const b of bufos) {
+    if (!b) continue;
+    const origen = b.nombre ? `Bufo: ${b.nombre}` : 'Bufo de combate';
+    if (b.def) mods.push({ stat: 'def', valor: Number(b.def) || 0, origen });
+    if (b.mdef) mods.push({ stat: 'mdef', valor: Number(b.mdef) || 0, origen });
+    if (b.init) mods.push({ stat: 'init', valor: Number(b.init) || 0, origen });
+    if (b.pv_max) mods.push({ stat: 'pv_max', valor: Number(b.pv_max) || 0, origen });
+    if (b.pm_max) mods.push({ stat: 'pm_max', valor: Number(b.pm_max) || 0, origen });
+    if (b.precision) mods.push({ stat: 'precision', valor: Number(b.precision) || 0, origen });
+    if (b.dano) {
+      mods.push({ stat: 'dano_cuerpo', valor: Number(b.dano) || 0, origen });
+      mods.push({ stat: 'dano_distancia', valor: Number(b.dano) || 0, origen });
+    }
+    if (b.atributos) {
+      for (const a of ATR) {
+        if (b.atributos[a]) mods.push({ stat: 'dado_' + a, valor: Number(b.atributos[a]) || 0, origen });
+      }
+    }
+  }
+
+  const afinidades = {};
+  for (const b of bufos) {
+    if (b && b.afinidades) {
+      for (const [k, v] of Object.entries(b.afinidades)) {
+        if (v) afinidades[k] = v;
+      }
+    }
+  }
+  const tipoDanoBuff = bufos.map((b) => b && b.tipo_dano).filter(Boolean).pop() || null;
+
   const suma = (stat) => mods.filter((m) => m.stat === stat).reduce((a, m) => a + m.valor, 0);
 
   // Dados actuales
@@ -285,7 +319,7 @@ export function calcular(pj, db) {
       return {
         nombre: a.nombre, uid: a._uid, categoria: a.categoria, alcance: a.alcance, manos: a.manos, marcial: a.marcial,
         precision: { atributos: at, bonus: bonusP, dados: at.map((x) => actual[x]) },
-        dano: { bonus: bonusD, tipo: (a.dano && a.dano.tipo) || 'fisico' },
+        dano: { bonus: bonusD, tipo: tipoDanoBuff || (a.dano && a.dano.tipo) || 'fisico' },
         cualidad: a.cualidad || ''
       };
     });
@@ -296,7 +330,7 @@ export function calcular(pj, db) {
     def, mdef, init,
     magia: suma('magia'), dano_conjuros: suma('dano_conjuros'),
     competencias: [...competencias], rituales: [...rituales], proyectos,
-    ataques, mods, equipados: eq,
+    ataques, mods, equipados: eq, afinidades, bufos,
     dominadas: clasesDominadas(pj),
     fuerzaVinculos: pj.vinculos.map((v) => (v.emociones || []).length)
   };

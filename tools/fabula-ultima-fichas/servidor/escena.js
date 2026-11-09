@@ -13,7 +13,7 @@
 // su estado. Al borrar una plantilla se retiran sus instancias.
 // ---------------------------------------------------------------------------
 import { hgetallJSON, hgetJSON, hsetJSON, hdel, getJSON, setJSON, cmd, hgetall, tocar } from './kv.js';
-import { normalizarPnj, crisisPnj, aplicarAfinidad } from '../assets/js/pnj.js';
+import { normalizarPnj, crisisPnj, aplicarAfinidad, statsEfectivasPnj } from '../assets/js/pnj.js';
 
 const H_PNJ = 'fu:pnj';
 const H_IMG = 'fu:imagenes';
@@ -114,7 +114,7 @@ export async function sacar(t, { cantidad = 1, fila = 'vanguardia', lado = 'enem
   const f = FILAS.includes(fila) ? fila : 'vanguardia';
   const l = LADOS.includes(lado) ? lado : 'enemigo';
   const orden = c.enemigos.filter((i) => i.lado === l && i.fila === f).length;
-  const nuevos = nombres.map((nm, k) => ({ id: uid(), plantilla: t.id, nombre: nm, lado: l, fila: f, orden: orden + k, pv: t.pv, pm: t.pm, pu: t.villano ? t.puntos_ultima || 0 : 0, estados: [] }));
+  const nuevos = nombres.map((nm, k) => ({ id: uid(), plantilla: t.id, nombre: nm, lado: l, fila: f, orden: orden + k, pv: t.pv, pm: t.pm, pu: t.villano ? t.puntos_ultima || 0 : 0, estados: [], bufos: [] }));
   c.enemigos.push(...nuevos);
   await guardarCampo(c, partidaId);
   return nuevos;
@@ -149,10 +149,11 @@ export async function vaciar(lado = null, partidaId = 'principal') {
  * Devuelve { antes, despues, res, entraCrisis, saleCrisis, cae }.
  */
 export function danar(inst, t, cantidad, tipo, { ignoraResistencia = false } = {}) {
-  const res = aplicarAfinidad(t, cantidad, tipo, { ignoraResistencia });
+  const st = statsEfectivasPnj(t, inst);
+  const res = aplicarAfinidad(t, cantidad, tipo, { ignoraResistencia, afinidades: st.afinidades });
   const antes = inst.pv;
-  inst.pv = res.cura ? Math.min(t.pv, inst.pv + res.final) : Math.max(0, inst.pv - res.final);
-  return { antes, despues: inst.pv, res, ...cruces(antes, inst.pv, t) };
+  inst.pv = res.cura ? Math.min(st.pv_max, inst.pv + res.final) : Math.max(0, inst.pv - res.final);
+  return { antes, despues: inst.pv, res, ...cruces(antes, inst.pv, { ...t, pv: st.pv_max }) };
 }
 
 /**

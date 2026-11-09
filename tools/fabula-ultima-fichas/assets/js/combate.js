@@ -133,13 +133,14 @@ function calcPj(e) {
   const c = R.calcular(pj, db);
   const s = pj.estado || {};
   const v = (x, max) => (x === null || x === undefined ? max : x);
-  return { pj, c, pv: v(s.pv, c.pv_max), pm: v(s.pm, c.pm_max), pi: v(s.pi, c.pi_max), estados: s.estados || [] };
+  return { pj, c, pv: v(s.pv, c.pv_max), pm: v(s.pm, c.pm_max), pi: v(s.pi, c.pi_max), estados: s.estados || [], bufos: s.bufos || [] };
 }
 const entidad = (clave) => (datos ? [...datos.pjs, ...datos.pnj].find((x) => x.clave === clave) : null);
 const ladoDe = (e) => (e.clave.startsWith('pj:') ? 'aliado' : e.lado);
 const imagenDe = (e) => e.imagen || SPRITE;
 const hayEnemigos = () => datos.pnj.some((p) => p.lado === 'enemigo') || !!datos.combate;
 const puedeMover = (e) => esDj() || (e.clave.startsWith('pj:') && e.propio);
+const puedeModificar = (e) => esDj() || (e.clave.startsWith('pj:') && e.propio);
 
 /** Entidades de una columna, ordenadas. */
 function columna(lado, fila) {
@@ -220,12 +221,14 @@ function token(e) {
     if (x) {
       const pct = (a, m) => Math.max(0, Math.min(100, (a / (m || 1)) * 100));
       mini = `<div class="mini"><div class="barra pv" title="PV ${x.pv}/${x.c.pv_max}"><i style="width:${pct(x.pv, x.c.pv_max)}%"></i></div><div class="barra pm" title="PM ${x.pm}/${x.c.pm_max}"><i style="width:${pct(x.pm, x.c.pm_max)}%"></i></div></div>`;
-      marcas = x.estados.map((s) => `<span class="marca-est" title="${esc(N.nombreEstado(s))}">${ABREV[s] || esc(s)}</span>`).join('');
+      const bufoTag = (x.bufos && x.bufos.length) ? '<span class="marca-bufo" title="Con bufos activos">✨</span>' : '';
+      marcas = x.estados.map((s) => `<span class="marca-est" title="${esc(N.nombreEstado(s))}">${ABREV[s] || esc(s)}</span>`).join('') + bufoTag;
       if (x.pv === 0) clase = 'ko'; else if (x.pv <= x.c.crisis) clase = 'crisis';
     }
   } else if (!pj && ve()) {
     if (e.dano) dano = `<span class="dano" title="Daño recibido">−${e.dano}</span>`;
-    marcas = (e.estados || []).map((s) => `<span class="marca-est" title="${esc(N.nombreEstado(s))}">${ABREV[s] || esc(s)}</span>`).join('');
+    const bufoTag = (e.bufos && e.bufos.length) ? '<span class="marca-bufo" title="Con bufos activos">✨</span>' : '';
+    marcas = (e.estados || []).map((s) => `<span class="marca-est" title="${esc(N.nombreEstado(s))}">${ABREV[s] || esc(s)}</span>`).join('') + bufoTag;
     const max = e.ficha ? e.ficha.pv : e.info && e.info.pv;
     if (e.pv !== undefined && max) {
       if (e.pv === 0) clase = 'ko'; else if (esDj() && e.pv <= Math.floor(max / 2)) clase = 'crisis';
@@ -285,6 +288,132 @@ function selectorEstados(actuales, inmunes = []) {
 const bloqueEstados = (actuales, inmunes = []) => `<div class="bloque"><h4>Estados alterados</h4>${selectorEstados(actuales, inmunes)}
   <p class="nota" style="margin:6px 0 0">Pulsa para marcar o quitar. Reducen sus dados en las tiradas del bot.</p></div>`;
 
+function htmlSeccionBufos(e, bufos = [], editable = false) {
+  let lista = '';
+  if (bufos.length) {
+    lista = `<div class="lista-bufos">${bufos.map((b, idx) => {
+      const detalles = [];
+      if (b.def) detalles.push(`${b.def > 0 ? '+' : ''}${b.def} DEF`);
+      if (b.mdef) detalles.push(`${b.mdef > 0 ? '+' : ''}${b.mdef} D.Mág`);
+      if (b.dano) detalles.push(`${b.dano > 0 ? '+' : ''}${b.dano} Daño`);
+      if (b.tipo_dano) detalles.push(`Tipo ${N.nombreTipoDano(b.tipo_dano).toLowerCase()}`);
+      if (b.precision) detalles.push(`${b.precision > 0 ? '+' : ''}${b.precision} Prec`);
+      if (b.init) detalles.push(`${b.init > 0 ? '+' : ''}${b.init} Inic`);
+      if (b.pv_max) detalles.push(`${b.pv_max > 0 ? '+' : ''}${b.pv_max} PV máx`);
+      if (b.pm_max) detalles.push(`${b.pm_max > 0 ? '+' : ''}${b.pm_max} PM máx`);
+      if (b.atributos) {
+        for (const [k, v] of Object.entries(b.atributos)) {
+          if (v) detalles.push(`${k} ${v > 0 ? '+' : ''}${v} paso${Math.abs(v) > 1 ? 's' : ''}`);
+        }
+      }
+      if (b.afinidades) {
+        for (const [k, v] of Object.entries(b.afinidades)) {
+          if (v) detalles.push(`${N.nombreTipoDano(k)} ${v}`);
+        }
+      }
+      if (b.duracion) detalles.push(b.duracion);
+      const sub = detalles.join(' · ') || 'Efecto activo';
+      const btnQuitar = editable
+        ? `<button class="btn icono fantasma peq" data-act="quitar-bufo" data-clave="${esc(e.clave)}" data-bufo-id="${esc(b.id || String(idx))}" title="Quitar bufo">✕</button>`
+        : '';
+      return `<div class="item bufo-item"><div class="fila entre"><span class="titulo">✨ ${esc(b.nombre || 'Efecto')}</span>${btnQuitar}</div><div class="sub small">${esc(sub)}</div></div>`;
+    }).join('')}</div>`;
+  }
+
+  if (!editable) {
+    return bufos.length ? `<div class="bloque"><h4>Bufos y efectos activos</h4>${lista}</div>` : '';
+  }
+
+  return `<div class="bloque">
+    <div class="fila entre" style="margin-bottom:6px">
+      <h4 style="margin:0">Bufos y modificaciones</h4>
+      ${bufos.length ? `<button class="btn fantasma peq peligro" data-act="limpiar-bufos" data-clave="${esc(e.clave)}">Limpiar todos</button>` : ''}
+    </div>
+    ${lista || '<p class="small muted" style="margin:0 0 8px">Sin bufos activos en este momento.</p>'}
+    <details class="dj bufo-editor" data-bloque="editor-bufo">
+      <summary>+ Añadir bufo / modificar atributos</summary>
+      <div class="controles form-bufo" style="margin-top:8px">
+        <div class="fila">
+          <label class="small muted">Preajuste</label>
+          <select id="bf-preset" aria-label="Preajuste rápido">
+            <option value="">Personalizado…</option>
+            <option value="barrera">Barrera (+2 D.Mág)</option>
+            <option value="espectral">Armadura espectral (+2 DEF)</option>
+            <option value="furia">Furia (+5 daño)</option>
+            <option value="arma_fuego">Arma Ígnea (+5 daño Fuego)</option>
+            <option value="arma_hielo">Arma Helada (+5 daño Hielo)</option>
+            <option value="res_fuego">Protección Ígnea (RS Fuego)</option>
+            <option value="res_hielo">Protección Helada (RS Hielo)</option>
+            <option value="res_rayo">Protección Eléctrica (RS Rayo)</option>
+            <option value="vigor">Vigor (+1 paso VIG)</option>
+            <option value="agilidad">Agilidad (+1 paso DES)</option>
+            <option value="fortaleza">Fortaleza (+10 PV máx)</option>
+          </select>
+        </div>
+        <div class="fila">
+          <label class="small muted">Nombre</label>
+          <input type="text" id="bf-nombre" placeholder="Barrera, Furia, etc." aria-label="Nombre del bufo" style="flex:1">
+        </div>
+        <div class="fila">
+          <label class="small muted">DEF</label>
+          <input type="number" id="bf-def" placeholder="+2" aria-label="Bono a DEF" style="width:60px">
+          <label class="small muted">D.Mág</label>
+          <input type="number" id="bf-mdef" placeholder="+2" aria-label="Bono a D.Mág" style="width:60px">
+          <label class="small muted">Inic</label>
+          <input type="number" id="bf-init" placeholder="+2" aria-label="Bono a Iniciativa" style="width:60px">
+        </div>
+        <div class="fila">
+          <label class="small muted">Daño</label>
+          <input type="number" id="bf-dano" placeholder="+5" aria-label="Bono a daño" style="width:60px">
+          <label class="small muted">Prec</label>
+          <input type="number" id="bf-prec" placeholder="+1" aria-label="Bono a precisión" style="width:60px">
+          <select id="bf-tipo-dano" aria-label="Tipo de daño de ataque" style="flex:1">
+            <option value="">(tipo original)</option>
+            ${N.TIPOS_DANO.map(([k, n]) => `<option value="${k}">${n}</option>`).join('')}
+          </select>
+        </div>
+        <div class="fila">
+          <label class="small muted">PV máx</label>
+          <input type="number" id="bf-pv" placeholder="+10" aria-label="PV máx adicional" style="width:70px">
+          <label class="small muted">PM máx</label>
+          <input type="number" id="bf-pm" placeholder="+10" aria-label="PM máx adicional" style="width:70px">
+        </div>
+        <div class="fila">
+          <label class="small muted">Afinidad</label>
+          <select id="bf-af-tipo" aria-label="Elemento">
+            <option value="">(ninguno)</option>
+            ${N.TIPOS_DANO.map(([k, n]) => `<option value="${k}">${n}</option>`).join('')}
+          </select>
+          <select id="bf-af-grado" aria-label="Grado">
+            <option value="RS">RS (Resistente)</option>
+            <option value="IM">IM (Inmune)</option>
+            <option value="AS">AS (Absorbe)</option>
+            <option value="VU">VU (Vulnerable)</option>
+          </select>
+        </div>
+        <div class="fila">
+          <label class="small muted">Dado atributo</label>
+          <select id="bf-atr" aria-label="Atributo">
+            <option value="">(ninguno)</option>
+            <option value="DES">DES</option>
+            <option value="PER">PER</option>
+            <option value="VIG">VIG</option>
+            <option value="VOL">VOL</option>
+          </select>
+          <select id="bf-atr-pasos" aria-label="Pasos de dado">
+            <option value="1">+1 paso (ej. d8→d10)</option>
+            <option value="2">+2 pasos</option>
+            <option value="-1">−1 paso</option>
+          </select>
+        </div>
+        <div class="fila" style="margin-top:6px">
+          <button class="btn primario peq" data-act="guardar-bufo" data-clave="${esc(e.clave)}">Aplicar bufo</button>
+        </div>
+      </div>
+    </details>
+  </div>`;
+}
+
 // ------------------------------------------------------------------ PJ
 function detallePj(e) {
   if (!ve()) return `${cabecera(e, '')}<div class="bloque"><p class="muted">Entra con tu cuenta de Discord del servidor para ver su ficha.</p></div>`;
@@ -300,19 +429,23 @@ function detallePj(e) {
   const heroicas = pj.heroicas.map((h) => get(db, 'habilidades_heroicas', h.id)).filter(Boolean);
   const crisis = x.pv <= c.crisis;
   const sub = esc([`Nivel ${pj.nivel}`, F.resumenClases(pj, db)].filter(Boolean).join(' · '));
+  const tieneModDef = c.mods.some((m) => m.stat === 'def' && m.origen.startsWith('Bufo'));
+  const tieneModMdef = c.mods.some((m) => m.stat === 'mdef' && m.origen.startsWith('Bufo'));
   return `${cabecera(e, sub)}
     <div class="bloque">
       ${barraRec('PV', 'pv', x.pv, c.pv_max)}${barraRec('PM', 'pm', x.pm, c.pm_max)}${barraRec('PI', 'pi', x.pi, c.pi_max)}
       <div class="fila small" style="margin-top:4px"><span class="chip acento">PF ${pj.pf || 0}</span>${crisis && x.pv > 0 ? '<span class="chip err">En Crisis</span>' : `<span class="faint">Crisis ≤ ${c.crisis}</span>`}${x.pv === 0 ? '<span class="chip err">A 0 PV</span>' : ''}${esDj() ? '' : x.estados.map((s) => `<span class="chip err">${esc(N.nombreEstado(s))}</span>`).join('')}</div>
     </div>
     ${esDj() ? bloqueEstados(x.estados) : ''}
+    ${htmlSeccionBufos(e, x.bufos, puedeModificar(e))}
     <div class="bloque"><div class="numeros">
-      <div class="stat"><div class="k">DEF</div><div class="v">${c.def}</div></div>
-      <div class="stat"><div class="k">D. Mág</div><div class="v">${c.mdef}</div></div>
+      <div class="stat"><div class="k">DEF</div><div class="v ${tieneModDef ? 'acento' : ''}">${c.def}</div></div>
+      <div class="stat"><div class="k">D. Mág</div><div class="v ${tieneModMdef ? 'acento' : ''}">${c.mdef}</div></div>
       <div class="stat"><div class="k">Inic.</div><div class="v">${seg(c.init)}</div></div>
       <div class="stat"><div class="k">Magia</div><div class="v">${seg(c.magia || 0)}</div></div>
     </div></div>
     <div class="bloque"><h4>Atributos</h4><div class="atributos">${R.ATR.map((a) => `<div class="atributo"><div class="k">${a}</div><div class="v ${dados[a] < c.actual[a] ? 'baja' : ''}">d${dados[a] || '—'}</div><div class="b">${dados[a] < c.actual[a] ? `de d${c.actual[a]}` : '&nbsp;'}</div></div>`).join('')}</div></div>
+    ${c.afinidades && Object.keys(c.afinidades).length ? `<div class="bloque"><h4>Resistencias y afinidades temporales</h4>${VP.htmlAfinidades(c.afinidades)}</div>` : ''}
     <div class="bloque"><h4>Ataque básico</h4><div class="lista">${c.ataques.map((a) => `<div class="item"><div class="fila entre"><span class="titulo">${esc(a.nombre)}</span><span class="muted small">${a.alcance === 'cuerpo' ? 'Cuerpo a cuerpo' : 'A distancia'}</span></div>
       <div class="mono small">${esc(R.fmtPrecision(a.precision))} → ${esc(R.fmtDano(a.dano, db))}</div>${a.cualidad ? `<div class="sub">${esc(a.cualidad)}</div>` : ''}</div>`).join('')}</div></div>
     ${habs.length || heroicas.length ? `<div class="bloque"><h4>Habilidades</h4><div class="lista">${habs.map((h) => F.htmlHabilidad(db, h.def, h.sl)).join('')}${heroicas.map((d) => `<details class="item" data-det="hh:${esc(d.id)}"><summary><span class="titulo">${esc(d.nombre)}</span><span class="der"><span class="chip acento">Heroica</span></span></summary><div class="cuerpo texto">${md(d.efecto)}</div></details>`).join('')}</div></div>` : ''}
@@ -334,14 +467,16 @@ function detallePnj(e) {
   const estados = e.estados || [];
   if (!esDj()) return `${cabecera(e, esc(VP.subtituloPnj(e, false)))}${VP.htmlPnjJugador(e)}`;
   const t = e.ficha;
-  const cr = N.crisisPnj(t);
+  const st = N.statsEfectivasPnj(t, e);
+  const cr = st.crisis;
   return `${cabecera(e, esc(VP.subtituloPnj(e, true, t)))}
-    <div class="bloque">${barraRec('PV', 'pv', e.pv, t.pv)}${barraRec('PM', 'pm', e.pm, t.pm)}
+    <div class="bloque">${barraRec('PV', 'pv', e.pv, st.pv_max)}${barraRec('PM', 'pm', e.pm, st.pm_max)}
       <div class="fila small">${e.pv === 0 ? '<span class="chip err">Caído</span>' : e.pv <= cr ? '<span class="chip err">En Crisis</span>' : `<span class="faint">Crisis ≤ ${cr}</span>`}<span class="faint">· Los jugadores ven ${e.dano ? `−${e.dano} de daño` : 'que está intacto'}</span></div>
       ${t.villano ? `<div class="fila small" style="margin-top:8px"><span class="chip acento">PU ${e.pu || 0}</span><button class="btn peq" data-act="pu" data-valor="-1" ${e.pu ? '' : 'disabled'}>Gastar 1 PU</button><button class="btn peq fantasma" data-act="pu" data-valor="+1">+1</button></div>` : ''}
       ${e.siguiente ? `<div class="fila small" style="margin-top:8px"><button class="btn peq ${e.pv === 0 ? 'primario' : ''}" data-act="fase">Pasar a la fase siguiente: ${esc(e.siguiente.nombre)}</button></div>` : ''}
       ${t.descripcion ? `<p class="small muted" style="margin-top:8px"><em>${esc(t.descripcion)}</em></p>` : ''}</div>
     ${bloqueEstados(estados, t.inmunidades_estados || [])}
+    ${htmlSeccionBufos(e, e.bufos || [], true)}
     <div class="bloque"><details class="dj" open data-bloque="ajustes-pnj"><summary>Ajustes del DJ</summary><div class="controles">
       <div class="fila"><label class="small muted">Daño</label><input type="text" id="aj-dano" inputmode="numeric" placeholder="12" aria-label="Daño">
         <select id="aj-tipo" aria-label="Tipo de daño">${N.TIPOS_DANO.map(([k, n]) => `<option value="${k}">${n}</option>`).join('')}</select>
@@ -353,7 +488,7 @@ function detallePnj(e) {
       <p class="nota" style="margin:0">El nivel revelado vale para todos los PNJ de la ficha «${esc(t.nombre)}».</p>
     </div></details></div>
     ${controlesMover(e)}
-    ${VP.htmlPnjCompleto(t, estados)}
+    ${VP.htmlPnjCompleto(t, estados, e)}
     <div class="acciones-pj">
       <button class="btn" data-act="imagen">Imagen</button>${e.imagen ? '<button class="btn fantasma" data-act="quitar-imagen">Quitar imagen</button>' : ''}
       <a class="btn fantasma" href="../pnj/index.html?id=${encodeURIComponent(t.id)}" target="_blank" rel="noopener">Editar ficha</a>
@@ -446,12 +581,80 @@ document.addEventListener('click', async (ev) => {
       if (!e) return;
       await accion(() => post('datos/?accion=quitar-imagen', { clave: e.clave.startsWith('pj:') ? `pj:${e.id}` : `pnj:${e.plantilla}` }), 'Imagen quitada.');
       return;
+    case 'guardar-bufo': {
+      if (!e) return;
+      const nom = $('bf-nombre') ? $('bf-nombre').value.trim() : '';
+      const def = $('bf-def') ? $('bf-def').value.trim() : '';
+      const mdef = $('bf-mdef') ? $('bf-mdef').value.trim() : '';
+      const init = $('bf-init') ? $('bf-init').value.trim() : '';
+      const dano = $('bf-dano') ? $('bf-dano').value.trim() : '';
+      const prec = $('bf-prec') ? $('bf-prec').value.trim() : '';
+      const tipoDano = $('bf-tipo-dano') ? $('bf-tipo-dano').value : '';
+      const pvMax = $('bf-pv') ? $('bf-pv').value.trim() : '';
+      const pmMax = $('bf-pm') ? $('bf-pm').value.trim() : '';
+      const afTipo = $('bf-af-tipo') ? $('bf-af-tipo').value : '';
+      const afGrado = $('bf-af-grado') ? $('bf-af-grado').value : 'RS';
+      const atr = $('bf-atr') ? $('bf-atr').value : '';
+      const atrPasos = $('bf-atr-pasos') ? $('bf-atr-pasos').value : '1';
+
+      const bufo = { nombre: nom || 'Efecto' };
+      if (def) bufo.def = Number(def);
+      if (mdef) bufo.mdef = Number(mdef);
+      if (init) bufo.init = Number(init);
+      if (dano) bufo.dano = Number(dano);
+      if (prec) bufo.precision = Number(prec);
+      if (tipoDano) bufo.tipo_dano = tipoDano;
+      if (pvMax) bufo.pv_max = Number(pvMax);
+      if (pmMax) bufo.pm_max = Number(pmMax);
+      if (afTipo) bufo.afinidades = { [afTipo]: afGrado };
+      if (atr) bufo.atributos = { [atr]: Number(atrPasos) || 1 };
+
+      await accion(() => post('datos/?accion=ajustar', { clave: ds.clave, anadirBufo: bufo }), (r) => r.texto || 'Bufo aplicado.');
+      return;
+    }
+    case 'quitar-bufo': {
+      if (!e) return;
+      await accion(() => post('datos/?accion=ajustar', { clave: ds.clave, quitarBufo: ds.bufoId }), (r) => r.texto || 'Bufo retirado.');
+      return;
+    }
+    case 'limpiar-bufos': {
+      if (!e || !confirm('¿Eliminar todos los bufos de combate de esta ficha?')) return;
+      await accion(() => post('datos/?accion=ajustar', { clave: ds.clave, limpiarBufos: true }), 'Bufos eliminados.');
+      return;
+    }
     default:
   }
 });
 
 document.addEventListener('change', async (ev) => {
   const t = ev.target;
+  if (t && t.id === 'bf-preset') {
+    const val = t.value;
+    const setVal = (id, v) => { if ($(id)) $(id).value = v; };
+    if (val === 'barrera') {
+      setVal('bf-nombre', 'Barrera'); setVal('bf-mdef', '2'); setVal('bf-def', ''); setVal('bf-dano', ''); setVal('bf-tipo-dano', ''); setVal('bf-af-tipo', ''); setVal('bf-atr', ''); setVal('bf-pv', ''); setVal('bf-pm', ''); setVal('bf-init', '');
+    } else if (val === 'espectral') {
+      setVal('bf-nombre', 'Armadura espectral'); setVal('bf-def', '2'); setVal('bf-mdef', ''); setVal('bf-dano', ''); setVal('bf-tipo-dano', ''); setVal('bf-af-tipo', ''); setVal('bf-atr', ''); setVal('bf-pv', ''); setVal('bf-pm', ''); setVal('bf-init', '');
+    } else if (val === 'furia') {
+      setVal('bf-nombre', 'Furia'); setVal('bf-dano', '5'); setVal('bf-def', ''); setVal('bf-mdef', ''); setVal('bf-tipo-dano', ''); setVal('bf-af-tipo', ''); setVal('bf-atr', ''); setVal('bf-pv', ''); setVal('bf-pm', ''); setVal('bf-init', '');
+    } else if (val === 'arma_fuego') {
+      setVal('bf-nombre', 'Arma Ígnea'); setVal('bf-dano', '5'); setVal('bf-tipo-dano', 'fuego'); setVal('bf-def', ''); setVal('bf-mdef', ''); setVal('bf-af-tipo', ''); setVal('bf-atr', ''); setVal('bf-pv', ''); setVal('bf-pm', ''); setVal('bf-init', '');
+    } else if (val === 'arma_hielo') {
+      setVal('bf-nombre', 'Arma Helada'); setVal('bf-dano', '5'); setVal('bf-tipo-dano', 'hielo'); setVal('bf-def', ''); setVal('bf-mdef', ''); setVal('bf-af-tipo', ''); setVal('bf-atr', ''); setVal('bf-pv', ''); setVal('bf-pm', ''); setVal('bf-init', '');
+    } else if (val === 'res_fuego') {
+      setVal('bf-nombre', 'Protección Ígnea'); setVal('bf-af-tipo', 'fuego'); setVal('bf-af-grado', 'RS'); setVal('bf-def', ''); setVal('bf-mdef', ''); setVal('bf-dano', ''); setVal('bf-atr', ''); setVal('bf-pv', ''); setVal('bf-pm', ''); setVal('bf-init', '');
+    } else if (val === 'res_hielo') {
+      setVal('bf-nombre', 'Protección Helada'); setVal('bf-af-tipo', 'hielo'); setVal('bf-af-grado', 'RS'); setVal('bf-def', ''); setVal('bf-mdef', ''); setVal('bf-dano', ''); setVal('bf-atr', ''); setVal('bf-pv', ''); setVal('bf-pm', ''); setVal('bf-init', '');
+    } else if (val === 'res_rayo') {
+      setVal('bf-nombre', 'Protección Eléctrica'); setVal('bf-af-tipo', 'rayo'); setVal('bf-af-grado', 'RS'); setVal('bf-def', ''); setVal('bf-mdef', ''); setVal('bf-dano', ''); setVal('bf-atr', ''); setVal('bf-pv', ''); setVal('bf-pm', ''); setVal('bf-init', '');
+    } else if (val === 'vigor') {
+      setVal('bf-nombre', 'Vigor'); setVal('bf-atr', 'VIG'); setVal('bf-atr-pasos', '1'); setVal('bf-def', ''); setVal('bf-mdef', ''); setVal('bf-dano', ''); setVal('bf-af-tipo', ''); setVal('bf-pv', ''); setVal('bf-pm', ''); setVal('bf-init', '');
+    } else if (val === 'agilidad') {
+      setVal('bf-nombre', 'Agilidad'); setVal('bf-atr', 'DES'); setVal('bf-atr-pasos', '1'); setVal('bf-def', ''); setVal('bf-mdef', ''); setVal('bf-dano', ''); setVal('bf-af-tipo', ''); setVal('bf-pv', ''); setVal('bf-pm', ''); setVal('bf-init', '');
+    } else if (val === 'fortaleza') {
+      setVal('bf-nombre', 'Fortaleza'); setVal('bf-pv', '10'); setVal('bf-def', ''); setVal('bf-mdef', ''); setVal('bf-dano', ''); setVal('bf-af-tipo', ''); setVal('bf-atr', ''); setVal('bf-pm', ''); setVal('bf-init', '');
+    }
+  }
   if (t.id === 'aj-revelado') {
     const e = seleccion && entidad(seleccion);
     if (!e) return;

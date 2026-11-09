@@ -258,6 +258,30 @@ function embedPrueba({ titulo, r, etiquetas, extra = [], pie = '', color }) {
   return { title: titulo, description: lineas.join('\n'), color: color || (r.critico ? COLOR.critico : r.pifia ? COLOR.pifia : COLOR.normal), footer: pie ? { text: pie } : undefined };
 }
 
+function resumenBufo(b) {
+  const parts = [];
+  if (b.def) parts.push(`${b.def > 0 ? '+' : ''}${b.def} DEF`);
+  if (b.mdef) parts.push(`${b.mdef > 0 ? '+' : ''}${b.mdef} D.Mág`);
+  if (b.dano) parts.push(`${b.dano > 0 ? '+' : ''}${b.dano} daño`);
+  if (b.tipo_dano) parts.push(`tipo ${N.nombreTipoDano(b.tipo_dano).toLowerCase()}`);
+  if (b.precision) parts.push(`${b.precision > 0 ? '+' : ''}${b.precision} prec.`);
+  if (b.init) parts.push(`${b.init > 0 ? '+' : ''}${b.init} inic.`);
+  if (b.pv_max) parts.push(`${b.pv_max > 0 ? '+' : ''}${b.pv_max} PV máx`);
+  if (b.pm_max) parts.push(`${b.pm_max > 0 ? '+' : ''}${b.pm_max} PM máx`);
+  if (b.atributos) {
+    for (const [k, v] of Object.entries(b.atributos)) {
+      if (v) parts.push(`${k} ${v > 0 ? '+' : ''}${v} paso${Math.abs(v) > 1 ? 's' : ''}`);
+    }
+  }
+  if (b.afinidades) {
+    for (const [k, v] of Object.entries(b.afinidades)) {
+      if (v) parts.push(`${N.nombreTipoDano(k)} ${v}`);
+    }
+  }
+  if (b.duracion) parts.push(`(${b.duracion})`);
+  return parts.join(' · ') || 'Sin modificadores numéricos';
+}
+
 function notaEstados(pj, c, dados, atributos) {
   const red = [...new Set(atributos)].filter((a) => R.ATR.includes(a) && dados[a] < c.actual[a]);
   if (!red.length) return '';
@@ -389,7 +413,8 @@ async function golpearPnj(valor, r, contra, dano, tipo, partidaId = 'principal')
   if (!inst) throw new Aviso(`No hay ningún PNJ «${valor}» en el campo.`);
   const t = await E.plantilla(inst.plantilla);
   if (!t) throw new Aviso('La ficha de ese PNJ ya no existe.');
-  const defensa = contra === 'mdef' ? t.defensa_magica : t.defensa;
+  const st = N.statsEfectivasPnj(t, inst);
+  const defensa = contra === 'mdef' ? st.mdef : st.def;
   const impacta = r.critico || (!r.pifia && r.total >= defensa);
   const lineas = [impacta ? `🎯 **Impacta a ${inst.nombre}**` : `❌ **Falla contra ${inst.nombre}**`];
   let delta = 0;
@@ -720,13 +745,14 @@ const SUB_ENEMIGO = {
   },
   async atacar(ctx) {
     const { inst, t } = await resolverPnj(ctx.o.enemigo, ctx.partidaId);
-    if (!t.ataques.length) throw new Aviso(`${t.nombre} no tiene ataques básicos en su ficha.`);
-    let a = t.ataques[0];
+    const st = N.statsEfectivasPnj(t, inst);
+    if (!st.ataques.length) throw new Aviso(`${t.nombre} no tiene ataques básicos en su ficha.`);
+    let a = st.ataques[0];
     if (ctx.o.ataque !== undefined && ctx.o.ataque !== '') {
-      a = /^\d+$/.test(String(ctx.o.ataque)) ? t.ataques[Number(ctx.o.ataque)] : t.ataques.find((x) => P.norm(x.nombre).includes(P.norm(ctx.o.ataque)));
+      a = /^\d+$/.test(String(ctx.o.ataque)) ? st.ataques[Number(ctx.o.ataque)] : st.ataques.find((x) => P.norm(x.nombre).includes(P.norm(ctx.o.ataque)));
       if (!a) throw new Aviso(`${t.nombre} no tiene el ataque «${ctx.o.ataque}».`);
     }
-    const dados = N.dadosPnj(t, inst.estados);
+    const dados = st.dados;
     const [x, y] = a.precision;
     const r = M.prueba(dados[x], dados[y], a.bonus + (ctx.o.bono || 0));
     const dano = r.tm + a.dano;
@@ -1063,24 +1089,220 @@ const MANEJADORES = {
         const n = await E.vaciar('enemigo', ctx.partidaId);
         const todosPjs = await ctx.todos();
         for (const pj of todosPjs) {
-          if (pj.estado && pj.estado.estados && pj.estado.estados.length > 0) {
+          const estadosPrevios = pj.estado && pj.estado.estados && pj.estado.estados.length > 0;
+          const bufosPrevios = pj.estado && pj.estado.bufos && pj.estado.bufos.length > 0;
+          if (estadosPrevios || bufosPrevios) {
             pj.estado.estados = [];
+            pj.estado.bufos = [];
             await P.escribir(pj, ctx.partidaId);
           }
         }
         const cCampo = await E.campo(ctx.partidaId);
         let campoTocado = false;
         for (const inst of (cCampo.enemigos || [])) {
-          if (inst.estados && inst.estados.length > 0) {
+          if ((inst.estados && inst.estados.length > 0) || (inst.bufos && inst.bufos.length > 0)) {
             inst.estados = [];
+            inst.bufos = [];
             campoTocado = true;
           }
         }
         if (campoTocado) await E.guardarCampo(cCampo, ctx.partidaId);
-        return texto(`Conflicto terminado tras ${cb.ronda} ronda${cb.ronda > 1 ? 's' : ''}.${n ? ` ${n} enemigo${n > 1 ? 's' : ''} retirado${n > 1 ? 's' : ''} del campo.` : ''} Se han eliminado los estados alterados de los personajes.`);
+        return texto(`Conflicto terminado tras ${cb.ronda} ronda${cb.ronda > 1 ? 's' : ''}.${n ? ` ${n} enemigo${n > 1 ? 's' : ''} retirado${n > 1 ? 's' : ''} del campo.` : ''} Se han eliminado los estados alterados y bufos de combate de los personajes.`);
       }
       default: throw new Aviso('Subcomando desconocido.');
     }
+  },
+
+  async bufo(ctx) {
+    const sub = ctx.sub;
+    const submanejadores = {
+      async aplicar(ctx) {
+        const o = ctx.o;
+        if (!o.nombre) throw new Aviso('Indica el nombre del bufo o conjuro.');
+        const pj = await resolverPj(ctx, o.personaje);
+        if (!pj) throw new Aviso('No se encontró el objetivo.');
+        if (pj.esPnj && !ctx.dj) throw new Aviso('Solo el DJ puede aplicar bufos a enemigos.');
+
+        const bufo = {
+          id: `b_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+          nombre: o.nombre.trim().slice(0, 60)
+        };
+        if (o.def !== undefined && o.def !== null) bufo.def = Number(o.def);
+        if (o.mdef !== undefined && o.mdef !== null) bufo.mdef = Number(o.mdef);
+        if (o.dano !== undefined && o.dano !== null) bufo.dano = Number(o.dano);
+        if (o.tipo_dano) bufo.tipo_dano = o.tipo_dano;
+        if (o.precision !== undefined && o.precision !== null) bufo.precision = Number(o.precision);
+        if (o.init !== undefined && o.init !== null) bufo.init = Number(o.init);
+        if (o.pv_max !== undefined && o.pv_max !== null) bufo.pv_max = Number(o.pv_max);
+        if (o.pm_max !== undefined && o.pm_max !== null) bufo.pm_max = Number(o.pm_max);
+        if (o.duracion) bufo.duracion = o.duracion.trim().slice(0, 50);
+
+        const afs = {};
+        if (o.resistencia) afs[o.resistencia] = 'RS';
+        if (o.inmunidad) afs[o.inmunidad] = 'IM';
+        if (o.vulnerabilidad) afs[o.vulnerabilidad] = 'VU';
+        if (Object.keys(afs).length) bufo.afinidades = afs;
+
+        if (o.atributo) {
+          bufo.atributos = { [o.atributo]: o.pasos !== undefined && o.pasos !== null ? Number(o.pasos) : 1 };
+        }
+
+        const resumen = resumenBufo(bufo);
+
+        if (pj.esPnj) {
+          const c = await E.campo(ctx.partidaId);
+          const inst = c.enemigos.find((x) => x.id === pj.id);
+          if (!inst) throw new Aviso('El enemigo ya no está en el campo.');
+          inst.bufos = Array.isArray(inst.bufos) ? inst.bufos : [];
+          inst.bufos.push(bufo);
+          await E.guardarCampo(c, ctx.partidaId);
+          const st = N.statsEfectivasPnj(pj.t, inst);
+          const embed = {
+            title: `✨ Bufo «${bufo.nombre}» aplicado a ${inst.nombre}`,
+            description: `**Efecto**: ${resumen}\n\n**Estadísticas de combate**: DEF **${st.def}** · D.Mág **${st.mdef}** · Inic. **${st.init}** · PV **${inst.pv}/${st.pv_max}**`,
+            color: COLOR.enemigo
+          };
+          return mensaje({ embeds: [embed] });
+        }
+
+        pj.estado = pj.estado || {};
+        pj.estado.bufos = Array.isArray(pj.estado.bufos) ? pj.estado.bufos : [];
+        pj.estado.bufos.push(bufo);
+        await P.escribir(pj, ctx.partidaId);
+        const calc = M.calc(pj, ctx.db);
+        const rec = M.recursos(pj, calc);
+        const embed = {
+          title: `✨ Bufo «${bufo.nombre}» aplicado a ${M.nombre(pj)}`,
+          description: `**Efecto**: ${resumen}\n\n**Estadísticas de combate**: DEF **${calc.def}** · D.Mág **${calc.mdef}** · Inic. **${signo(calc.init) || '0'}** · PV **${rec.pv}/${calc.pv_max}** · PM **${rec.pm}/${calc.pm_max}**`,
+          color: COLOR.info
+        };
+        return mensaje({ embeds: [embed] });
+      },
+
+      async quitar(ctx) {
+        const o = ctx.o;
+        if (!o.nombre) throw new Aviso('Indica el nombre del bufo a retirar.');
+        const pj = await resolverPj(ctx, o.personaje);
+        if (!pj) throw new Aviso('No se encontró el objetivo.');
+        if (pj.esPnj && !ctx.dj) throw new Aviso('Solo el DJ puede retirar bufos de enemigos.');
+
+        const busq = P.norm(o.nombre);
+
+        if (pj.esPnj) {
+          const c = await E.campo(ctx.partidaId);
+          const inst = c.enemigos.find((x) => x.id === pj.id);
+          if (!inst) throw new Aviso('El enemigo ya no está en el campo.');
+          const prev = inst.bufos || [];
+          const idx = prev.findIndex((b) => b.id === o.nombre || P.norm(b.nombre) === busq || P.norm(b.nombre).includes(busq));
+          if (idx < 0) throw new Aviso(`«${inst.nombre}» no tiene ningún bufo que coincida con «${o.nombre}».`);
+          const [quitado] = inst.bufos.splice(idx, 1);
+          await E.guardarCampo(c, ctx.partidaId);
+          return texto(`✨ Bufo «${quitado.nombre}» retirado de **${inst.nombre}**.`);
+        }
+
+        const bufos = pj.estado && pj.estado.bufos ? pj.estado.bufos : [];
+        const idx = bufos.findIndex((b) => b.id === o.nombre || P.norm(b.nombre) === busq || P.norm(b.nombre).includes(busq));
+        if (idx < 0) throw new Aviso(`«${M.nombre(pj)}» no tiene ningún bufo que coincida con «${o.nombre}».`);
+        const [quitado] = pj.estado.bufos.splice(idx, 1);
+        await P.escribir(pj, ctx.partidaId);
+        return texto(`✨ Bufo «${quitado.nombre}» retirado de **${M.nombre(pj)}**.`);
+      },
+
+      async ver(ctx) {
+        const valor = ctx.o.personaje;
+        if (valor) {
+          const pj = await resolverPj(ctx, valor);
+          if (pj.esPnj) {
+            const st = N.statsEfectivasPnj(pj.t, pj.inst);
+            const lista = (pj.inst.bufos || []).map((b) => `• **${b.nombre}**: ${resumenBufo(b)}`).join('\n') || '*(Sin bufos activos)*';
+            const embed = {
+              title: `✨ Bufos activos · ${pj.inst.nombre}`,
+              description: `${lista}\n\n**Estadísticas efectivas**: DEF **${st.def}** · D.Mág **${st.mdef}** · Inic. **${st.init}** · PV **${pj.inst.pv}/${st.pv_max}**`,
+              color: COLOR.enemigo
+            };
+            return mensaje({ embeds: [embed] });
+          }
+          const c = M.calc(pj, ctx.db);
+          const rec = M.recursos(pj, c);
+          const lista = (pj.estado && pj.estado.bufos ? pj.estado.bufos : []).map((b) => `• **${b.nombre}**: ${resumenBufo(b)}`).join('\n') || '*(Sin bufos activos)*';
+          const embed = {
+            title: `✨ Bufos activos · ${M.nombre(pj)}`,
+            description: `${lista}\n\n**Estadísticas efectivas**: DEF **${c.def}** · D.Mág **${c.mdef}** · Inic. **${signo(c.init) || '0'}** · PV **${rec.pv}/${c.pv_max}** · PM **${rec.pm}/${c.pm_max}**`,
+            color: COLOR.info
+          };
+          return mensaje({ embeds: [embed] });
+        }
+
+        // Vista de todo el combate
+        const todosPjs = await ctx.todos();
+        const lineasPj = [];
+        for (const p of todosPjs) {
+          const bs = (p.estado && p.estado.bufos) || [];
+          if (bs.length) {
+            lineasPj.push(`**${M.nombre(p)}**:\n` + bs.map((b) => `  • ${b.nombre}: ${resumenBufo(b)}`).join('\n'));
+          }
+        }
+        let lineasEnem = [];
+        if (ctx.dj) {
+          const c = await E.campo(ctx.partidaId);
+          for (const i of c.enemigos || []) {
+            const bs = i.bufos || [];
+            if (bs.length) {
+              lineasEnem.push(`**${i.nombre}**:\n` + bs.map((b) => `  • ${b.nombre}: ${resumenBufo(b)}`).join('\n'));
+            }
+          }
+        }
+        const contenido = [...lineasPj, ...lineasEnem].join('\n\n') || 'No hay bufos activos en ningún personaje ni enemigo.';
+        return mensaje({ embeds: [{ title: '✨ Bufos activos en combate', description: contenido, color: COLOR.info }] });
+      },
+
+      async limpiar(ctx) {
+        const val = ctx.o.personaje;
+        const normVal = P.norm(val);
+        if (normVal === 'todos' || normVal === 'all') {
+          if (!ctx.dj) throw new Aviso('Solo el DJ puede limpiar los bufos de todo el combate.');
+          const todosPjs = await ctx.todos();
+          for (const p of todosPjs) {
+            if (p.estado && p.estado.bufos && p.estado.bufos.length) {
+              p.estado.bufos = [];
+              await P.escribir(p, ctx.partidaId);
+            }
+          }
+          const c = await E.campo(ctx.partidaId);
+          let modif = false;
+          for (const i of c.enemigos || []) {
+            if (i.bufos && i.bufos.length) {
+              i.bufos = [];
+              modif = true;
+            }
+          }
+          if (modif) await E.guardarCampo(c, ctx.partidaId);
+          return texto('✨ Se han eliminado todos los bufos de combate de todos los personajes y enemigos.');
+        }
+
+        const pj = await resolverPj(ctx, val);
+        if (!pj) throw new Aviso('No se encontró el objetivo.');
+        if (pj.esPnj) {
+          if (!ctx.dj) throw new Aviso('Solo el DJ puede limpiar bufos de enemigos.');
+          const c = await E.campo(ctx.partidaId);
+          const inst = c.enemigos.find((x) => x.id === pj.id);
+          if (inst) {
+            inst.bufos = [];
+            await E.guardarCampo(c, ctx.partidaId);
+          }
+          return texto(`✨ Se han eliminado todos los bufos de **${pj.inst.nombre}**.`);
+        }
+
+        pj.estado = pj.estado || {};
+        pj.estado.bufos = [];
+        await P.escribir(pj, ctx.partidaId);
+        return texto(`✨ Se han eliminado todos los bufos de **${M.nombre(pj)}**.`);
+      }
+    };
+
+    const handler = submanejadores[sub];
+    if (!handler) throw new Aviso('Subcomando de bufo no reconocido.');
+    return handler(ctx);
   },
 
   async importar(ctx) {
@@ -1210,18 +1432,28 @@ async function pulsarBoton(ctx) {
   }
 
   if (tipo === 'ap') {
-    const [, id, danoTxt] = partes;
+    const [, id, danoTxt, tipoDano] = partes;
     const pj = await P.obtener(id, ctx.partidaId);
     if (!pj) throw new Aviso('El personaje ya no existe.');
     if (!puedeEditar(ctx, pj)) throw new Aviso('Solo su jugador o el DJ pueden aplicar ese daño.');
     const c = M.calc(pj, ctx.db);
     const rec = M.recursos(pj, c);
-    const dano = Number(danoTxt) || 0;
-    const nuevo = Math.max(0, rec.pv - dano);
+    let dano = Number(danoTxt) || 0;
+    let afinidadNota = '';
+    if (tipoDano && c.afinidades && c.afinidades[tipoDano]) {
+      const af = c.afinidades[tipoDano];
+      if (af === 'VU') { dano = dano * 2; afinidadNota = ' · ¡Vulnerable!'; }
+      else if (af === 'RS') { dano = Math.floor(dano / 2); afinidadNota = ' · Resiste'; }
+      else if (af === 'IM') { dano = 0; afinidadNota = ' · Inmune'; }
+      else if (af === 'AS') { dano = -dano; afinidadNota = ' · ¡Absorbe!'; }
+    }
+    const nuevo = dano < 0 ? Math.min(c.pv_max, rec.pv - dano) : Math.max(0, rec.pv - dano);
     pj.estado = pj.estado || {};
     pj.estado.pv = nuevo;
     await P.escribir(pj, ctx.partidaId);
-    let nota = `${M.nombre(pj)} pierde ${dano} PV (${rec.pv} → ${nuevo})`;
+    let nota = dano < 0
+      ? `${M.nombre(pj)} absorbe el daño y recupera ${-dano} PV (${rec.pv} → ${nuevo})`
+      : `${M.nombre(pj)} pierde ${dano} PV (${rec.pv} → ${nuevo})${afinidadNota}`;
     if (nuevo === 0) nota += ' · cae a 0 PV';
     else if (nuevo <= c.crisis && rec.pv > c.crisis) nota += ' · entra en Crisis';
     const comps = (ctx.i.message.components || []).map((f) => ({ ...f, components: f.components.filter((b) => b.custom_id !== ctx.i.data.custom_id) })).filter((f) => f.components.length);
@@ -1287,7 +1519,7 @@ async function autocompletar(ctx) {
       const todos = await ctx.todos();
       const mios = (p) => (p.discord && p.discord.id === ctx.user.id ? 0 : 1);
       const listaPjs = [...todos].sort((a, b) => mios(a) - mios(b));
-      const comandosConTodos = ['tirada', 'ficha', 'iniciativa', 'px'];
+      const comandosConTodos = ['tirada', 'ficha', 'iniciativa', 'px', 'bufo'];
       let enemigosCampo = [];
       if (ctx.dj) {
         try {
@@ -1367,6 +1599,12 @@ async function autocompletar(ctx) {
     } else if (f.name === 'conjuro') {
       const pj = await resolverPj(ctx, ctx.o.personaje);
       choices = filtra(conjurosDe(pj, ctx.db).map((c) => ({ name: `${c.nombre} · ${c.pm} PM`.slice(0, 100), value: c.id })));
+    } else if (f.name === 'nombre' && cmdNombre === 'bufo') {
+      const pj = await resolverPj(ctx, ctx.o.personaje).catch(() => null);
+      if (pj) {
+        const bufos = pj.esPnj ? (pj.inst.bufos || []) : ((pj.estado && pj.estado.bufos) || []);
+        choices = filtra(bufos.map((b) => ({ name: `${b.nombre} · ${resumenBufo(b)}`.slice(0, 100), value: b.nombre.slice(0, 100) })));
+      }
     } else if (f.name === 'nombre') {
       choices = filtra((await P.relojes(ctx.partidaId)).map((r) => ({ name: `${r.nombre} (${r.llenas}/${r.secciones})`.slice(0, 100), value: r.nombre.slice(0, 100) })));
     }

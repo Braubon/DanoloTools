@@ -221,6 +221,61 @@ export const COMANDOS = [
         ayuda: 'Termina el conflicto, retira del campo a los enemigos y elimina los estados alterados de los personajes. Los PNJ aliados se quedan con el grupo.', ejemplos: ['/combate terminar'], options: [] }
     ]
   },
+  {
+    name: 'bufo', description: 'Bufos, conjuros defensivos y modificaciones de combate',
+    categoria: 'combate',
+    options: [
+      {
+        type: T.SUB, name: 'aplicar', description: 'Aplica un bufo o modifica atributos en combate', dj: false,
+        ayuda: 'Añade un bufo o conjuro defensivo que modifica temporalmente defensas, vida máx, PM máx, resistencias/afinidades, daño de ataque o atributos en combate. El DJ puede aplicarlo a cualquier personaje o enemigo; los jugadores a sus propios personajes.',
+        ejemplos: [
+          '/bufo aplicar nombre:Barrera mdef:2',
+          '/bufo aplicar nombre:Arma Ígnea dano:5 tipo_dano:Fuego',
+          '/bufo aplicar nombre:Protección resistencia:Fuego',
+          '/bufo aplicar personaje:Aria nombre:Vigor atributo:VIG pasos:1'
+        ],
+        options: [
+          { type: T.TEXTO, name: 'nombre', description: 'Nombre del bufo o conjuro (ej. Barrera, Furia)', required: true, max_length: 60 },
+          optPersonaje('Objetivo (por defecto, tu personaje; el DJ puede elegir enemigos)'),
+          { type: T.ENTERO, name: 'def', description: 'Bono a la Defensa (+N o -N)', min_value: -20, max_value: 20 },
+          { type: T.ENTERO, name: 'mdef', description: 'Bono a la Defensa Mágica (+N o -N)', min_value: -20, max_value: 20 },
+          { type: T.ENTERO, name: 'dano', description: 'Bono al daño de ataque (+N o -N)', min_value: -50, max_value: 100 },
+          { type: T.TEXTO, name: 'tipo_dano', description: 'Cambia el tipo de daño de los ataques', choices: TIPOS_DANO },
+          { type: T.TEXTO, name: 'resistencia', description: 'Otorga Resistencia (RS) a este tipo de daño', choices: TIPOS_DANO },
+          { type: T.TEXTO, name: 'inmunidad', description: 'Otorga Inmunidad (IM) a este tipo de daño', choices: TIPOS_DANO },
+          { type: T.TEXTO, name: 'vulnerabilidad', description: 'Otorga Vulnerabilidad (VU) a este tipo de daño', choices: TIPOS_DANO },
+          { type: T.ENTERO, name: 'precision', description: 'Bono a la precisión de ataques (+N o -N)', min_value: -10, max_value: 20 },
+          { type: T.ENTERO, name: 'init', description: 'Bono a la iniciativa (+N o -N)', min_value: -10, max_value: 20 },
+          { type: T.ENTERO, name: 'pv_max', description: 'Bono a PV máximos (+N)', min_value: -200, max_value: 500 },
+          { type: T.ENTERO, name: 'pm_max', description: 'Bono a PM máximos (+N)', min_value: -200, max_value: 500 },
+          { type: T.TEXTO, name: 'atributo', description: 'Atributo a mejorar (DES, PER, VIG, VOL)', choices: ATRIBUTOS },
+          { type: T.ENTERO, name: 'pasos', description: 'Pasos de dado a subir (por defecto 1)', min_value: -2, max_value: 3 },
+          { type: T.TEXTO, name: 'duracion', description: 'Duración descriptiva (ej. "Escena", "1 ronda")', max_length: 50 }
+        ]
+      },
+      {
+        type: T.SUB, name: 'quitar', description: 'Retira un bufo activo', dj: false,
+        ayuda: 'Elimina un bufo activo de un personaje o enemigo.',
+        ejemplos: ['/bufo quitar nombre:Barrera', '/bufo quitar personaje:Aria nombre:Arma Ígnea'],
+        options: [
+          { type: T.TEXTO, name: 'nombre', description: 'Nombre del bufo a retirar', required: true, autocomplete: true },
+          optPersonaje('Objetivo (por defecto, tu personaje)')
+        ]
+      },
+      {
+        type: T.SUB, name: 'ver', description: 'Lista los bufos activos y atributos efectivos', dj: false,
+        ayuda: 'Muestra los bufos activos y el desglose de modificadores de un personaje, enemigo o todo el combate.',
+        ejemplos: ['/bufo ver', '/bufo ver personaje:Aria'],
+        options: [optPersonaje('Objetivo (vacío para ver todo el combate)')]
+      },
+      {
+        type: T.SUB, name: 'limpiar', description: 'Limpia todos los bufos activos', dj: false,
+        ayuda: 'Elimina todos los bufos del personaje (o de todo el combate si lo usa el DJ con "todos").',
+        ejemplos: ['/bufo limpiar', '/bufo limpiar personaje:todos'],
+        options: [optPersonaje('Personaje a limpiar (o "todos" para limpiar todo)')]
+      }
+    ]
+  },
 
   // ------------------------------------------------------------------ enemigos
   {

@@ -205,8 +205,82 @@ export function exportarPnj(t) {
 
 export const crisisPnj = (t) => Math.floor((t.pv || 0) / 2);
 
-/** Dados actuales tras los estados alterados (mínimo d6). */
-export function dadosPnj(t, estados = []) {
+/**
+ * Calcula las estadísticas efectivas de una instancia de PNJ en combate,
+ * aplicando sus bufos y estados alterados.
+ */
+export function statsEfectivasPnj(t, inst = {}) {
+  const bufos = Array.isArray(inst.bufos) ? inst.bufos : [];
+  let modDef = 0, modMdef = 0, modInit = 0, modDano = 0, modPrec = 0, modPvMax = 0, modPmMax = 0;
+  let tipoDano = null;
+  const modAtr = { DES: 0, PER: 0, VIG: 0, VOL: 0 };
+  const afinidades = { ...(t.afinidades || {}) };
+
+  for (const b of bufos) {
+    if (!b) continue;
+    modDef += Number(b.def) || 0;
+    modMdef += Number(b.mdef) || 0;
+    modInit += Number(b.init) || 0;
+    modDano += Number(b.dano) || 0;
+    modPrec += Number(b.precision) || 0;
+    modPvMax += Number(b.pv_max) || 0;
+    modPmMax += Number(b.pm_max) || 0;
+    if (b.tipo_dano) tipoDano = b.tipo_dano;
+    if (b.atributos) {
+      for (const [k, v] of Object.entries(b.atributos)) {
+        if (modAtr[k] !== undefined) modAtr[k] += Number(v) || 0;
+      }
+    }
+    if (b.afinidades) {
+      for (const [k, v] of Object.entries(b.afinidades)) {
+        if (v) afinidades[k] = v;
+      }
+    }
+  }
+
+  const baseAtr = {};
+  for (const a of ATR) {
+    const val = (t.atributos && t.atributos[a]) || 8;
+    baseAtr[a] = Math.max(6, Math.min(12, val + 2 * (modAtr[a] || 0)));
+  }
+
+  const dados = { ...baseAtr };
+  for (const s of (inst.estados || [])) {
+    for (const a of REDUCE[s] || []) {
+      if (dados[a]) dados[a] = Math.max(6, dados[a] - 2);
+    }
+  }
+
+  const def = Math.max(0, (t.defensa || 0) + modDef);
+  const mdef = Math.max(0, (t.defensa_magica || 0) + modMdef);
+  const init = (t.iniciativa || 0) + modInit;
+  const pv_max = Math.max(1, (t.pv || 0) + modPvMax);
+  const pm_max = Math.max(0, (t.pm || 0) + modPmMax);
+  const crisis = Math.floor(pv_max / 2);
+
+  const ataques = (t.ataques || []).map((a) => ({
+    ...a,
+    precision: a.precision,
+    bonus: (a.bonus || 0) + modPrec,
+    dano: (a.dano || 0) + modDano,
+    tipo: tipoDano || a.tipo
+  }));
+
+  return {
+    def, mdef, init, pv_max, pm_max, crisis,
+    atributos: baseAtr, dados,
+    afinidades,
+    ataques,
+    bufos,
+    mods: { def: modDef, mdef: modMdef, init: modInit, dano: modDano, precision: modPrec, pv_max: modPvMax, pm_max: modPmMax, tipoDano }
+  };
+}
+
+/** Dados actuales tras los estados alterados y bufos (mínimo d6). */
+export function dadosPnj(t, estados = [], bufos = []) {
+  if (Array.isArray(bufos) && bufos.length) {
+    return statsEfectivasPnj(t, { estados, bufos }).dados;
+  }
   const d = { ...t.atributos };
   for (const s of estados || []) for (const a of REDUCE[s] || []) if (d[a]) d[a] = Math.max(6, d[a] - 2);
   return d;
@@ -216,9 +290,10 @@ export function dadosPnj(t, estados = []) {
  * Daño tras afinidades. Devuelve { final, afinidad, cura }.
  * final es lo que pierde (o, si cura, lo que recupera).
  */
-export function aplicarAfinidad(t, cantidad, tipo, { ignoraResistencia = false } = {}) {
+export function aplicarAfinidad(t, cantidad, tipo, { ignoraResistencia = false, afinidades = null } = {}) {
   const base = Math.max(0, Math.round(Number(cantidad) || 0));
-  let af = (t && t.afinidades && t.afinidades[tipoValido(tipo)]) || null;
+  const afs = afinidades || (t && t.afinidades) || {};
+  let af = afs[tipoValido(tipo)] || null;
   if (af === 'RS' && ignoraResistencia) af = null;
   switch (af) {
     case 'VU': return { final: base * 2, afinidad: af, cura: false };

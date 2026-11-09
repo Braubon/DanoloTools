@@ -352,7 +352,16 @@ export const datos = envoltorio(async (req) => {
       if (!post) return error('Usa POST.', 405);
       const b = await cuerpo(req);
       const destinoPartida = b.partida || pId;
-      await exigirDj(req, destinoPartida);
+      const s = await sesion(req);
+      const [tipo, id] = String(b.clave || '').split(':');
+      const esDjReq = await esDj(s, req, destinoPartida);
+      if (!esDjReq) {
+        if (tipo !== 'pj') return error('Solo el DJ puede modificar PNJ.', 403);
+        const pj = await P.obtener(id, destinoPartida);
+        if (!pj || !s || !pj.discord || pj.discord.id !== s.id) {
+          return error('Solo puedes modificar tus propios personajes.', 403);
+        }
+      }
       try { return json(await ajustar(b, destinoPartida)); } catch (e) { return error(e.message); }
     }
     case 'revelar': {
@@ -433,12 +442,12 @@ async function vistaCampo({ s, rol, partidaId = 'principal' }) {
       const t = tpl[i.plantilla];
       const base = { clave: `pnj:${i.id}`, id: i.id, plantilla: t.id, nombre: i.nombre, lado: i.lado, fila: i.fila, orden: Number(i.orden) || 0, imagen: urlImagen(`pnj:${t.id}`, vers) };
       if (!ve) { delete base.plantilla; return base; }
-      if (rol === 'dj') return { ...base, pv: i.pv, pm: i.pm, pu: i.pu || 0, estados: i.estados || [], dano: Math.max(0, t.pv - i.pv), ficha: t, siguiente: t.siguiente_fase && tpl[t.siguiente_fase] ? { id: t.siguiente_fase, nombre: tpl[t.siguiente_fase].nombre } : null };
+      if (rol === 'dj') return { ...base, pv: i.pv, pm: i.pm, pu: i.pu || 0, estados: i.estados || [], bufos: i.bufos || [], dano: Math.max(0, t.pv - i.pv), ficha: t, siguiente: t.siguiente_fase && tpl[t.siguiente_fase] ? { id: t.siguiente_fase, nombre: tpl[t.siguiente_fase].nombre } : null };
       const aliado = i.lado === 'aliado';
       const info = aliado ? vistaRevelada(t, 16) : vistaRevelada(t);
       const conoce = aliado || info.revelado >= 10;
       delete base.plantilla; // el id de la ficha no se envía a los jugadores
-      return { ...base, estados: i.estados || [], dano: Math.max(0, t.pv - i.pv), info: { ...(conoce ? { nombre: t.nombre, descripcion: t.descripcion } : {}), ...info }, ...(conoce ? { pv: i.pv, pm: i.pm } : {}) };
+      return { ...base, estados: i.estados || [], bufos: i.bufos || [], dano: Math.max(0, t.pv - i.pv), info: { ...(conoce ? { nombre: t.nombre, descripcion: t.descripcion } : {}), ...info }, ...(conoce ? { pv: i.pv, pm: i.pm } : {}) };
     })
   };
   if (rol === 'dj') out.plantillas = lista.map((t) => ({ id: t.id, nombre: t.nombre, nivel: t.nivel, especie: t.especie, revelado: t.revelado || 0 }));
@@ -508,6 +517,22 @@ async function ajustar(b, partidaId = 'principal') {
       lineas.push(`${i.nombre} pasa a su siguiente fase.`);
     }
     if (b.nombre) i.nombre = String(b.nombre).trim().slice(0, 60) || i.nombre;
+    i.bufos = Array.isArray(i.bufos) ? i.bufos : [];
+    if (b.anadirBufo) {
+      const bufo = { id: `b_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`, ...b.anadirBufo };
+      i.bufos.push(bufo);
+      lineas.push(`Bufo «${bufo.nombre || 'Efecto'}» aplicado.`);
+    }
+    if (b.quitarBufo) {
+      const q = String(b.quitarBufo).trim();
+      i.bufos = i.bufos.filter((x) => x.id !== q && x.nombre !== q);
+      lineas.push('Bufo retirado.');
+    }
+    if (b.limpiarBufos) {
+      i.bufos = [];
+      lineas.push('Bufos eliminados.');
+    }
+    if (Array.isArray(b.bufos)) i.bufos = b.bufos;
     await E.guardarCampo(c, partidaId);
     return { ok: true, texto: lineas.join(' ') };
   }
@@ -517,13 +542,44 @@ async function ajustar(b, partidaId = 'principal') {
     const c = R.calcular(pj, await baseDatos());
     pj.estado = pj.estado || {};
     const act = (k, max) => (pj.estado[k] === null || pj.estado[k] === undefined ? max : pj.estado[k]);
+    if (b.dano) {
+      const actPv = act('pv', c.pv_max);
+      let d = Number(b.dano.cantidad) || 0;
+      let afNota = '';
+      if (b.dano.tipo && c.afinidades && c.afinidades[b.dano.tipo] && !b.dano.ignora) {
+        const af = c.afinidades[b.dano.tipo];
+        if (af === 'VU') { d = d * 2; afNota = ' · ¡Vulnerable!'; }
+        else if (af === 'RS') { d = Math.floor(d / 2); afNota = ' · Resiste'; }
+        else if (af === 'IM') { d = 0; afNota = ' · Inmune'; }
+        else if (af === 'AS') { d = -d; afNota = ' · ¡Absorbe!'; }
+      }
+      const nuevo = d < 0 ? Math.min(c.pv_max, actPv - d) : Math.max(0, actPv - d);
+      pj.estado.pv = nuevo;
+      lineas.push(d < 0 ? `${pj.identidad.nombre} absorbe y recupera ${-d} PV` : `${pj.identidad.nombre} pierde ${d} PV${afNota}`);
+    }
     if (b.pv !== undefined && b.pv !== '') pj.estado.pv = aplicarValor(act('pv', c.pv_max), b.pv, c.pv_max);
     if (b.pm !== undefined && b.pm !== '') pj.estado.pm = aplicarValor(act('pm', c.pm_max), b.pm, c.pm_max);
     if (b.pf !== undefined && b.pf !== '') pj.pf = aplicarValor(pj.pf || 0, b.pf, null);
     if (Array.isArray(b.estados)) pj.estado.estados = b.estados.filter((x) => typeof x === 'string').slice(0, 6);
     if (b.fila && (E.FILAS.includes(b.fila) || b.fila === 'fuera')) await E.colocarPj(id, { fila: b.fila }, partidaId);
+    pj.estado.bufos = Array.isArray(pj.estado.bufos) ? pj.estado.bufos : [];
+    if (b.anadirBufo) {
+      const bufo = { id: `b_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`, ...b.anadirBufo };
+      pj.estado.bufos.push(bufo);
+      lineas.push(`Bufo «${bufo.nombre || 'Efecto'}» aplicado.`);
+    }
+    if (b.quitarBufo) {
+      const q = String(b.quitarBufo).trim();
+      pj.estado.bufos = pj.estado.bufos.filter((x) => x.id !== q && x.nombre !== q);
+      lineas.push('Bufo retirado.');
+    }
+    if (b.limpiarBufos) {
+      pj.estado.bufos = [];
+      lineas.push('Bufos eliminados.');
+    }
+    if (Array.isArray(b.bufos)) pj.estado.bufos = b.bufos;
     await P.escribir(pj, undefined, partidaId);
-    return { ok: true };
+    return { ok: true, texto: lineas.join(' ') };
   }
   throw new Error('Clave no válida.');
 }

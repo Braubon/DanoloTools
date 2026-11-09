@@ -243,7 +243,10 @@ function vistaPersonaje(p) {
       <div class="stat"><div class="k">Iniciativa</div><div class="v">${c.init >= 0 ? '+' : ''}${c.init}</div></div>
       ${R.ATR.map((a) => `<div class="atributo"><div class="k">${a}</div><div class="v">${R.fmtDado(c.actual[a])}</div><div class="b">${c.actual[a] !== c.base[a] ? 'base d' + c.base[a] : R.ATR_NOMBRE[a]}</div></div>`).join('')}
     </div>
-    ${(e.estados || []).length ? `<div class="fila" style="margin:-8px 0 16px">${e.estados.map((s) => `<span class="chip err">${esc(F.nombreEstado(db, s))}</span>`).join('')}</div>` : ''}
+    ${((e.estados || []).length || (e.bufos || []).length) ? `<div class="fila" style="margin:-8px 0 16px;gap:6px;flex-wrap:wrap">
+      ${(e.estados || []).map((s) => `<span class="chip err">${esc(F.nombreEstado(db, s))}</span>`).join('')}
+      ${(e.bufos || []).map((b) => `<span class="chip acento" title="${esc(b.duracion || 'Bufo de combate')}">✨ ${esc(b.nombre)}</span>`).join('')}
+    </div>` : ''}
     <nav class="pestanas" role="tablist">${tabs.map(([id, n]) => `<button role="tab" aria-selected="${pestana === id}" data-act="pestana" data-id="${id}">${n}</button>`).join('')}</nav>
     ${barraFiltros(pj)}
     <section id="contenido-pestana">${({ resumen: tabResumen, habilidades: tabHabilidades, magia: tabMagia, equipo: tabEquipo, vinculos: tabVinculos, notas: tabNotas })[pestana](pj, c)}</section>`;
