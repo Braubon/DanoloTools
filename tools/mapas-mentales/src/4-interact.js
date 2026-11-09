@@ -232,8 +232,10 @@ function duplicateSel(){
 function toggleCollapse(id,force){
   const n=byId.get(id);if(!n)return;
   n.collapsed=force!==undefined?force:!n.collapsed;
-  if(n.collapsed)for(const d of descendants(id))S.sel.delete(d);
-  render();commit();
+  render();
+  if(n.collapsed)for(const d of descendants(id))if(S.hidden.has(d))S.sel.delete(d);
+  updateClasses();
+  commit();
 }
 function targetsFor(id){return S.sel.has(id)&&S.sel.size>1?[...S.sel].map(i=>byId.get(i)).filter(Boolean):[byId.get(id)].filter(Boolean)}
 function selectOnly(id){S.sel=new Set([id]);S.edge=null;updateClasses();renderEdges()}

@@ -244,11 +244,11 @@ function createSample(){
   const raw={name:'Viaje a Lisboa',
     tags:[{id:'t1',name:'pendiente',color:'#E5484D'},{id:'t2',name:'reservado',color:'#46A758'},{id:'t3',name:'idea',color:'#0090FF'}],
     nodes:[
-      {id:'a',text:'Viaje a Lisboa',fontSize:24,bold:true,color:'#F2B544'},
-      {id:'b',text:'Presupuesto',color:'#EF6F5E',tags:['t1']},{id:'b1',text:'Vuelos ida y vuelta\n~180 €',color:'#EF6F5E',tags:['t2']},{id:'b2',text:'Comidas: 40 € al día',color:'#EF6F5E'},
-      {id:'c',text:'Alojamiento',color:'#5B8DEF'},{id:'c1',text:'Alfama',color:'#5B8DEF',tags:['t3']},{id:'c2',text:'Baixa-Chiado',color:'#5B8DEF',tags:['t2']},
-      {id:'d',text:'Qué ver',color:'#3DBFA6'},{id:'d1',text:'Torre de Belém',color:'#3DBFA6'},{id:'d2',text:'Tranvía 28',color:'#3DBFA6',tags:['t3']},{id:'d3',text:'LX Factory',color:'#3DBFA6',tags:['t3','t1']},
-      {id:'e',text:'Transporte',color:'#C77DD6'},{id:'e1',text:'Tarjeta Viva Viagem',color:'#C77DD6',tags:['t1']}],
+      {id:'a',text:'Viaje a Lisboa',fontSize:24,bold:true,color:'#FEF08A'},
+      {id:'b',text:'Presupuesto',color:'#FECDD3',tags:['t1']},{id:'b1',text:'Vuelos ida y vuelta\n~180 €',color:'#FECDD3',tags:['t2']},{id:'b2',text:'Comidas: 40 € al día',color:'#FECDD3'},
+      {id:'c',text:'Alojamiento',color:'#BAE6FD'},{id:'c1',text:'Alfama',color:'#BAE6FD',tags:['t3']},{id:'c2',text:'Baixa-Chiado',color:'#BAE6FD',tags:['t2']},
+      {id:'d',text:'Qué ver',color:'#99F6E4'},{id:'d1',text:'Torre de Belém',color:'#99F6E4'},{id:'d2',text:'Tranvía 28',color:'#99F6E4',tags:['t3']},{id:'d3',text:'LX Factory',color:'#99F6E4',tags:['t3','t1']},
+      {id:'e',text:'Transporte',color:'#E9D5FF'},{id:'e1',text:'Tarjeta Viva Viagem',color:'#E9D5FF',tags:['t1']}],
     edges:[{from:'a',to:'b'},{from:'b',to:'b1'},{from:'b',to:'b2'},{from:'a',to:'c'},{from:'c',to:'c1',label:'opción A'},{from:'c',to:'c2',label:'opción B'},
       {from:'a',to:'d'},{from:'d',to:'d1'},{from:'d',to:'d2'},{from:'d',to:'d3'},{from:'a',to:'e'},{from:'e',to:'e1'},
       {from:'d2',to:'c1',label:'pasa por',dashed:true,arrow:'end',style:'curve',width:1.5,color:'#5F6878'}]};

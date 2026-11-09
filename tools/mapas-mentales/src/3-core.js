@@ -30,9 +30,9 @@ const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
    ===================================================================== */
 const GRID=24;
 const KMIN=.12,KMAX=3;
-const NODE_COLORS=['#F2B544','#F28C38','#EF6F5E','#E8708F','#C77DD6','#8C7AE6','#5B8DEF','#4FB3D9','#3DBFA6','#6CC070','#B5C35A','#8A94A6','#FFFFFF','#2B2F36'];
+const NODE_COLORS=['#FEF08A','#FED7AA','#FECDD3','#FBCFE8','#E9D5FF','#DDD6FE','#C7D2FE','#BAE6FD','#A5F3FC','#99F6E4','#BBF7D0','#D9F99D','#F5EBE0','#FFFFFF'];
 const TAG_COLORS=['#E5484D','#F76B15','#FFC53D','#46A758','#12A594','#0090FF','#6E56CF','#D6409F','#8D8D8D','#A18072'];
-const DEFAULT_COLOR='#F2B544';
+const DEFAULT_COLOR='#FEF08A';
 const DEFAULT_EDGE={style:'curve',arrow:'none',color:null,dashed:false,width:2};
 const WIDTHS=['auto',160,240,320];
 const LAYOUTS={
@@ -134,12 +134,46 @@ function descendants(id){
 }
 function outAdj(){const adj=new Map();for(const e of map.edges){if(!adj.has(e.from))adj.set(e.from,[]);adj.get(e.from).push(e.to)}return adj}
 function computeHidden(){
-  const adj=outAdj();const hid=new Set();S.outCount=new Map([...adj].map(([k,v])=>[k,v.length]));
-  for(const n of map.nodes){
-    if(!n.collapsed)continue;
-    const st=[n.id],seen=new Set([n.id]);
-    while(st.length){const c=st.pop();for(const t of adj.get(c)||[])if(!seen.has(t)){seen.add(t);hid.add(t);st.push(t)}}
+  const adj=outAdj();
+  S.outCount=new Map([...adj].map(([k,v])=>[k,v.length]));
+  const inDegree=new Map(map.nodes.map(n=>[n.id,0]));
+  for(const e of map.edges){
+    if(inDegree.has(e.to))inDegree.set(e.to,inDegree.get(e.to)+1);
   }
+  const hasCollapsedAncestor=new Set();
+  const cQueue=[];
+  for(const n of map.nodes)if(n.collapsed)cQueue.push(n.id);
+  while(cQueue.length){
+    const c=cQueue.shift();
+    for(const t of adj.get(c)||[])if(!hasCollapsedAncestor.has(t)){hasCollapsedAncestor.add(t);cQueue.push(t)}
+  }
+  const visible=new Set();
+  const q=[];
+  for(const n of map.nodes){
+    if((inDegree.get(n.id)||0)===0){
+      visible.add(n.id);
+      if(!n.collapsed)q.push(n.id);
+    }
+  }
+  for(const n of map.nodes){
+    if(!hasCollapsedAncestor.has(n.id)&&!visible.has(n.id)){
+      visible.add(n.id);
+      if(!n.collapsed)q.push(n.id);
+    }
+  }
+  while(q.length){
+    const currId=q.shift();
+    for(const childId of adj.get(currId)||[]){
+      const child=byId.get(childId);
+      if(!child)continue;
+      if(!visible.has(childId)){
+        visible.add(childId);
+        if(!child.collapsed)q.push(childId);
+      }
+    }
+  }
+  const hid=new Set();
+  for(const n of map.nodes)if(!visible.has(n.id))hid.add(n.id);
   return hid;
 }
 const tagById=id=>map.tags.find(t=>t.id===id);
@@ -303,9 +337,12 @@ function updateNodeContent(n,el){
   const kids=S.outCount.get(n.id)||0;
   el.classList.toggle('has-kids',kids>0);
   el.classList.toggle('collapsed',!!n.collapsed&&kids>0);
-  if(n.collapsed&&kids>0)el.querySelector('.nbadge').textContent='+'+descendants(n.id).size;
+  if(n.collapsed&&kids>0){
+    const hidKids=[...descendants(n.id)].filter(d=>S.hidden&&S.hidden.has(d)).length;
+    el.querySelector('.nbadge').textContent=hidKids>0?'+'+hidKids:'+';
+  }
 }
-function nodeSig(n){return[n.text,n.color,n.fontSize,n.bold,n.width,n.tags.join(','),S.tagVer,n.collapsed,S.outCount.get(n.id)||0,n.collapsed?map.edges.length:0].join('|')}
+function nodeSig(n){return[n.text,n.color,n.fontSize,n.bold,n.width,n.tags.join(','),S.tagVer,n.collapsed,S.outCount.get(n.id)||0,n.collapsed?(S.hidden?S.hidden.size:0):0].join('|')}
 function render(){
   if(!map)return;
   S.hidden=computeHidden();
@@ -397,7 +434,7 @@ function renderEdges(){
   let s='',lab='';
   for(const e of map.edges){
     const a=byId.get(e.from),b=byId.get(e.to);
-    if(!shown(a)||!shown(b))continue;
+    if(!shown(a)||!shown(b)||a.collapsed)continue;
     const as=arrowSize(e),hasE=e.arrow==='end'||e.arrow==='both',hasS=e.arrow==='start'||e.arrow==='both';
     const g=edgeGeom(e,a,b,hasS?as*.7:0,hasE?as*.7:0);
     const col=edgeColor(e,a),sel=S.edge===e.id;
