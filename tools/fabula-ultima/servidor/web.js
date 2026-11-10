@@ -352,10 +352,10 @@ export const datos = envoltorio(async (req) => {
       if (!post) return error('Usa POST.', 405);
       const b = await cuerpo(req);
       const destinoPartida = b.partida || pId;
-      const s = await sesion(req);
+      const q = await quien(req, destinoPartida);
+      const s = q.s;
       const [tipo, id] = String(b.clave || '').split(':');
-      const esDjReq = await esDj(s, req, destinoPartida);
-      if (!esDjReq) {
+      if (q.rol !== 'dj') {
         if (tipo !== 'pj') return error('Solo el DJ puede modificar PNJ.', 403);
         const pj = await P.obtener(id, destinoPartida);
         if (!pj || !s || !pj.discord || pj.discord.id !== s.id) {
