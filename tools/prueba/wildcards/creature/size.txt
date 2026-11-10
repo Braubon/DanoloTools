@@ -1,9 +1,0 @@
-# __creature/size__
-tiny
-small
-human-sized
-large
-huge
-colossal
-titanic
-mountain-sized
