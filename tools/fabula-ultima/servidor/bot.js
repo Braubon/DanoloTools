@@ -369,6 +369,8 @@ async function hacerTirada(ctx, { a1, a2, bono, dif, pjValor }) {
 // --- ataque
 async function hacerAtaque(ctx, { arma, bono, pjValor, objetivo }) {
   const pj = await resolverPj(ctx, pjValor);
+  // El DJ puede elegir un PNJ del campo como «personaje»: se resuelve como /enemigo atacar.
+  if (pj.esPnj) return (await SUB_ENEMIGO.atacar({ ...ctx, o: { enemigo: pj.inst.id, ataque: arma, bono, objetivo } })).data;
   const c = M.calc(pj, ctx.db);
   const dados = M.dadosEfectivos(pj, c);
   let idx = 0;
@@ -461,6 +463,7 @@ const TIPO_POR_NOMBRE = { fisico: 'fisico', aire: 'aire', rayo: 'rayo', oscuro: 
 
 async function hacerConjuro(ctx, { conjuro, objetivos, bono, atributos, pjValor, objetivo }) {
   const pj = await resolverPj(ctx, pjValor);
+  if (pj.esPnj) return (await SUB_ENEMIGO.conjuro({ ...ctx, o: { enemigo: pj.inst.id, conjuro, bono, objetivo } })).data;
   const lista = conjurosDe(pj, ctx.db);
   const cj = lista.find((x) => x.id === conjuro) || lista.find((x) => P.norm(x.nombre) === P.norm(conjuro)) || lista.find((x) => P.norm(x.nombre).includes(P.norm(conjuro)));
   if (!cj) throw new Aviso(`${M.nombre(pj)} no conoce el conjuro «${conjuro}».`);
@@ -1584,6 +1587,10 @@ async function autocompletar(ctx) {
     } else if (/^objetivo\d?$/.test(f.name) && cmdNombre === 'enemigo') {
       const form = await E.formacion(ctx.partidaId);
       choices = filtra((await ctx.todos()).filter((p) => (form[p.id] || {}).fila !== 'fuera').map((p) => ({ name: M.nombre(p).slice(0, 100), value: p.id })));
+    } else if (f.name === 'objetivo' && ctx.o.personaje && (await resolverPj(ctx, ctx.o.personaje).catch(() => null))?.esPnj) {
+      // Un PNJ que ataca o lanza un conjuro apunta a los PJ.
+      const form = await E.formacion(ctx.partidaId);
+      choices = filtra((await ctx.todos()).filter((p) => (form[p.id] || {}).fila !== 'fuera').map((p) => ({ name: M.nombre(p).slice(0, 100), value: p.id })));
     } else if (f.name === 'objetivo') {
       const lista = await enCampo();
       choices = filtra([...lista].sort((a, b) => (a.lado === 'enemigo' ? 0 : 1) - (b.lado === 'enemigo' ? 0 : 1)).map((i) => ({ name: i.nombre.slice(0, 100), value: i.id })));
@@ -1595,10 +1602,14 @@ async function autocompletar(ctx) {
       choices = filtra(t.conjuros.map((c, k) => ({ name: `${c.nombre} · ${c.pm}${c.por_objetivo ? ' × obj.' : ''} PM`.slice(0, 100), value: String(k) })));
     } else if (f.name === 'arma') {
       const pj = await resolverPj(ctx, ctx.o.personaje);
-      choices = filtra(M.calc(pj, ctx.db).ataques.map((a, i) => ({ name: a.nombre.slice(0, 100), value: String(i) })));
+      choices = pj.esPnj
+        ? filtra((pj.t.ataques || []).map((a, k) => ({ name: `${a.nombre} · ${a.alcance === 'distancia' ? 'distancia' : 'cuerpo a cuerpo'}`.slice(0, 100), value: String(k) })))
+        : filtra(M.calc(pj, ctx.db).ataques.map((a, i) => ({ name: a.nombre.slice(0, 100), value: String(i) })));
     } else if (f.name === 'conjuro') {
       const pj = await resolverPj(ctx, ctx.o.personaje);
-      choices = filtra(conjurosDe(pj, ctx.db).map((c) => ({ name: `${c.nombre} · ${c.pm} PM`.slice(0, 100), value: c.id })));
+      choices = pj.esPnj
+        ? filtra((pj.t.conjuros || []).map((c, k) => ({ name: `${c.nombre} · ${c.pm}${c.por_objetivo ? ' × obj.' : ''} PM`.slice(0, 100), value: String(k) })))
+        : filtra(conjurosDe(pj, ctx.db).map((c) => ({ name: `${c.nombre} · ${c.pm} PM`.slice(0, 100), value: c.id })));
     } else if (f.name === 'nombre' && cmdNombre === 'bufo') {
       const pj = await resolverPj(ctx, ctx.o.personaje).catch(() => null);
       if (pj) {
