@@ -390,7 +390,7 @@ function htmlConfig(esDj) {
       ${(estado.urls && estado.urls.redireccion) ? copiar('Redirect (Discord Developer Portal → OAuth2 → Redirects)', estado.urls.redireccion) : ''}
       ${esDj ? `<div class="fila" style="margin-top:14px"><button class="btn primario" data-act="registrar">Actualizar comandos de Discord</button>
         <span class="muted small">Púlsalo la primera vez y cada vez que se añadan comandos.</span></div>` : ''}
-      <p class="small muted" style="margin-top:12px">Guía paso a paso: <code>tools/fabula-ultima-fichas/docs/bot-discord.md</code></p>
+      <p class="small muted" style="margin-top:12px">Guía paso a paso: <code>tools/fabula-ultima/docs/bot-discord.md</code></p>
     </div></details>`;
 }
 

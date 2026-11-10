@@ -55,7 +55,7 @@ Después, en **Deployments**, abre el último despliegue y pulsa **Redeploy** pa
 
 ## 6. Activar el bot
 
-1. Abre `https://danolotools.vercel.app/tools/fabula-ultima-fichas/panel/index.html`.
+1. Abre `https://danolotools.vercel.app/tools/fabula-ultima/panel/index.html`.
 2. Despliega **Configuración del bot**: todo debe salir en verde. Si algo falla, el propio panel dice qué.
 3. Pulsa **Entrar con Discord** y autoriza.
 4. En **Configuración del bot**, pulsa **Actualizar comandos de Discord**.
@@ -70,11 +70,11 @@ Después, en **Deployments**, abre el último despliegue y pulsa **Redeploy** pa
 - **Asignar**: en el panel, elige el jugador en el desplegable de cada personaje; o en Discord `/asignar personaje:… jugador:@…`. Un jugador puede llevar varios personajes; si tiene más de uno, sus comandos le piden elegir con la opción `personaje`.
 - **Editar**: en el panel, **Editar** abre el personaje en el generador; al terminar pulsa **Guardar en la partida**. Si mientras tanto cambió desde Discord (PV, PM…), te pregunta antes de sobrescribir.
 - **Subir de nivel**: `/px` reparte experiencia; la subida de nivel se hace en el generador (Editar → Progreso → Guardar en la partida).
-- **Vista de combate** (`…/tools/fabula-ultima-fichas/visor/`): el grupo en formación y, cuando sacas enemigos, las cuatro columnas. Quien entra con una cuenta de Discord del servidor ve las fichas de los PJ y lo que se sabe de los enemigos; sin entrar, solo posiciones e imágenes. Tú (rol DJ) ves y ajustas todo.
+- **Vista de combate** (`…/tools/fabula-ultima/visor/`): el grupo en formación y, cuando sacas enemigos, las cuatro columnas. Quien entra con una cuenta de Discord del servidor ve las fichas de los PJ y lo que se sabe de los enemigos; sin entrar, solo posiciones e imágenes. Tú (rol DJ) ves y ajustas todo.
 - **Fichas completas** (`…/ficha/`): el botón «Detalles» de la vista de combate. `/ficha` enlaza directamente a cada personaje. Exige entrar con Discord.
 - **Imágenes**: botón **Imagen** en el panel o en la vista de combate (solo DJ). Se ajustan solas a 124 × 124 (sin deformarlas). La de un enemigo vale para todas sus copias.
 - **Enemigos**: crea sus fichas en el editor de PNJ (panel → **Fichas de enemigo y PNJ** → **Nueva ficha** o **Desde el bestiario**), o impórtalas en JSON. Los villanos tienen Puntos Última (`/enemigo pu` o botones en la vista de combate) y los jefes pueden tener varias fases (`/enemigo fase`). Sácalos al campo desde la vista de combate o con `/enemigo sacar`. El daño con afinidades, los estados, sus ataques y conjuros van con `/enemigo …` o desde su panel en la vista. `/estudiar` (jugadores) y `/revelar` (DJ) deciden qué ven los jugadores de su perfil. `/combate terminar` retira a los enemigos (los PNJ aliados se quedan).
-- **Comandos**: la lista completa está en `…/tools/fabula-ultima-fichas/comandos/index.html` (o con `/ayuda`).
+- **Comandos**: la lista completa está en `…/tools/fabula-ultima/comandos/index.html` (o con `/ayuda`).
 
 ## Si algo falla
 

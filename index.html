@@ -162,7 +162,8 @@
 
     async function loadTools() {
       try {
-        const res = await fetch('/api/tools');
+        const res = await fetch('/api/tools/');
+        if (!res.ok) throw new Error(res.status);
         allTools = await res.json();
         renderTools(allTools);
       } catch {

@@ -21,7 +21,7 @@ import * as Partidas from './partidas.js';
 import { vistaRevelada, exportarPnj, completarHabilidades } from '../assets/js/pnj.js';
 import { aplicarValor, R, baseDatos } from './motor.js';
 
-const RUTA_PANEL = '/tools/fabula-ultima-fichas/panel/index.html';
+const RUTA_PANEL = '/tools/fabula-ultima/panel/index.html';
 const SESION = 'fu_sesion';
 const DURACION = 60 * 60 * 24 * 14; // 14 días
 
@@ -230,7 +230,7 @@ export const datos = envoltorio(async (req) => {
       const clave = url.searchParams.get('clave') || '';
       const img = /^(pj|pnj):[\w-]{1,80}$/.test(clave) ? await E.imagen(clave) : null;
       const m = img && img.match(/^data:(image\/[a-z]+);base64,(.+)$/);
-      if (!m) return new Response(null, { status: 302, headers: { Location: '/tools/fabula-ultima-fichas/assets/img/sprite-defecto.png' } });
+      if (!m) return new Response(null, { status: 302, headers: { Location: '/tools/fabula-ultima/assets/img/sprite-defecto.png' } });
       return new Response(Buffer.from(m[2], 'base64'), { headers: { 'Content-Type': m[1], 'Cache-Control': 'public, max-age=31536000, immutable' } });
     }
     case 'mover': {

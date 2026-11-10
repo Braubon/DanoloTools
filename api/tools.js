@@ -1,41 +1,35 @@
-const fs = require('fs');
-const path = require('path');
+// Función de Vercel: /api/tools/ — lista las carpetas de tools/ que tengan index.html
+// (nombre y descripción opcionales en tools/<carpeta>/meta.json: { "name": "...", "desc": "..." }).
+import { readdirSync, existsSync, readFileSync } from 'node:fs';
+import { join } from 'node:path';
 
-function formatName(folder) {
-  return folder
-    .split('-')
-    .map(w => w.charAt(0).toUpperCase() + w.slice(1))
-    .join(' ');
+const formatName = (folder) =>
+  folder.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+
+function listTools() {
+  const toolsDir = join(process.cwd(), 'tools');
+  return readdirSync(toolsDir, { withFileTypes: true })
+    .filter(e => e.isDirectory() && existsSync(join(toolsDir, e.name, 'index.html')))
+    .map(e => {
+      let name = formatName(e.name);
+      let desc = '';
+      try {
+        const meta = JSON.parse(readFileSync(join(toolsDir, e.name, 'meta.json'), 'utf-8'));
+        if (meta.name) name = meta.name;
+        if (meta.desc) desc = meta.desc;
+      } catch {}
+      return { folder: e.name, name, desc };
+    })
+    .sort((a, b) => a.name.localeCompare(b.name, 'es'));
 }
 
-module.exports = (req, res) => {
-  res.setHeader('Cache-Control', 'no-store');
-  res.setHeader('Access-Control-Allow-Origin', '*');
-
-  const toolsDir = path.join(process.cwd(), 'tools');
-
-  try {
-    const entries = fs.readdirSync(toolsDir, { withFileTypes: true });
-    const tools = entries
-      .filter(e => {
-        if (!e.isDirectory()) return false;
-        return fs.existsSync(path.join(toolsDir, e.name, 'index.html'));
-      })
-      .map(e => {
-        let name = formatName(e.name);
-        let desc = '';
-        try {
-          const meta = JSON.parse(
-            fs.readFileSync(path.join(toolsDir, e.name, 'meta.json'), 'utf-8')
-          );
-          if (meta.name) name = meta.name;
-          if (meta.desc) desc = meta.desc;
-        } catch {}
-        return { folder: e.name, name, desc };
-      });
-
-    res.json(tools);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+export default {
+  fetch() {
+    const headers = { 'Cache-Control': 'no-store' };
+    try {
+      return Response.json(listTools(), { headers });
+    } catch (err) {
+      return Response.json({ error: err.message }, { status: 500, headers });
+    }
+  },
 };

@@ -84,10 +84,10 @@ async function contexto(i, origen) {
 const urlVisor = (ctx, pj) => {
   const pParam = `partida=${encodeURIComponent(ctx.partidaId || 'principal')}`;
   return pj
-    ? `${ctx.origen}/tools/fabula-ultima-fichas/ficha/index.html?${pParam}#${encodeURIComponent(pj.id)}`
-    : `${ctx.origen}/tools/fabula-ultima-fichas/visor/index.html?${pParam}`;
+    ? `${ctx.origen}/tools/fabula-ultima/ficha/index.html?${pParam}#${encodeURIComponent(pj.id)}`
+    : `${ctx.origen}/tools/fabula-ultima/visor/index.html?${pParam}`;
 };
-const urlComandos = (ctx) => `${ctx.origen}/tools/fabula-ultima-fichas/comandos/index.html`;
+const urlComandos = (ctx) => `${ctx.origen}/tools/fabula-ultima/comandos/index.html`;
 const puedeEditar = (ctx, pj) => ctx.dj || (pj.discord && pj.discord.id === ctx.user.id);
 
 /** Convierte un PNJ de la escena en una estructura compatible para tiradas. */

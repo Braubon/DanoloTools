@@ -12,6 +12,11 @@
       "source": "/mapas-mentales",
       "destination": "/tools/mapas-mentales/",
       "permanent": true
+    },
+    {
+      "source": "/tools/fabula-ultima-fichas/:path*",
+      "destination": "/tools/fabula-ultima/:path*",
+      "permanent": true
     }
   ],
   "headers": [
@@ -33,7 +38,7 @@
       ]
     },
     {
-      "source": "/tools/fabula-ultima-fichas/(data|personajes)/(.*)",
+      "source": "/tools/fabula-ultima/(data|personajes)/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -54,7 +59,7 @@
   "functions": {
     "api/*.js": {
       "includeFiles": [
-        "tools/fabula-ultima-fichas/{data,assets/js,servidor}/**",
+        "tools/fabula-ultima/{data,assets/js,servidor}/**",
         "tools/*/index.html",
         "tools/*/meta.json"
       ],
