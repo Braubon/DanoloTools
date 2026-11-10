@@ -1,0 +1,10 @@
+# __vehicle__ : any vehicle
+__vehicle/ground__
+__vehicle/air__
+__vehicle/sea__
+__vehicle/space__
+__vehicle/fantasy__
+__material/finish__ __vehicle/ground__
+__inspiration/genre__ __vehicle/air__
+__inspiration/genre__ __vehicle/ground__
+__vehicle/space__ with a __color/metallic__ hull

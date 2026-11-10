@@ -1,0 +1,15 @@
+# __material__ : any material (finish + material combos are more likely)
+__material/metal__
+__material/metal__
+__material/wood__
+__material/stone__
+__material/fabric__
+__material/leather__
+__material/gem__
+__material/organic__
+__material/synthetic__
+__material/exotic__
+__material/finish__ __material/metal__
+__material/finish__ __material/wood__
+__material/finish__ __material/stone__
+__material/finish__ __material/exotic__

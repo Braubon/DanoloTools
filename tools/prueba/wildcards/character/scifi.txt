@@ -1,0 +1,10 @@
+# __character/scifi__ : full sci-fi character descriptions
+__character/age__ __character/race/scifi__ __character/class/scifi__
+__character/race/scifi__ __character/class/scifi__ wearing __character/outfit/scifi__
+__character/trait__ __character/class/scifi__, __character/race/scifi__, __character/hair__, __character/outfit/cyberware__
+__character/age__ __character/gender__, __character/class/scifi__ with __character/outfit/cyberware__ and __character/face/eye_color__
+__character/gender__ __character/class/scifi__, __character/face__, __character/outfit/scifi__
+__character/race/scifi__ __character/class/scifi__ holding a __prop/weapon/scifi__
+__character/trait__ __character/race/scifi__ __character/class/scifi__, __character/body__, __character/outfit/scifi__ with __color/neon__ accents
+__character/class/scifi__ in __character/outfit/scifi__, __character/face/marks__, __character/hair__
+__inspiration/genre__ __character/class/scifi__, __character/race/scifi__, __character/outfit/cyberware__

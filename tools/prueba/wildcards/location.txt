@@ -1,0 +1,10 @@
+# __location__ : any place / setting
+__location/fantasy__
+__location/fantasy__
+__location/scifi__
+__location/scifi__
+__location/urban__
+__location/ruin__
+__inspiration/culture__ __location/architecture__
+__art/movement__ __location/architecture__
+__location/architecture__ made of __material/stone__

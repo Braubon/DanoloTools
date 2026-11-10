@@ -1,0 +1,5 @@
+# __art/camera__ : shot + angle + lens combos
+__art/camera/shot__, __art/camera/angle__
+__art/camera/shot__, __art/camera/lens__
+__art/camera/angle__, __art/camera/lens__
+__art/camera/shot__, __art/camera/angle__, __art/camera/lens__

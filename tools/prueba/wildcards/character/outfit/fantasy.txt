@@ -1,0 +1,28 @@
+# __character/outfit/fantasy__
+a hooded traveling cloak
+flowing robes embroidered with runes
+__material/fabric__ robes in __color/dark__
+an ornate __material/fabric__ gown
+a __color/jewel__ velvet doublet
+a noble's brocade coat
+leather jerkin and breeches
+tattered peasant clothes
+a fur-lined cloak
+priestly vestments
+a ceremonial kimono
+layered silk robes
+a monk's habit
+desert wraps and veils
+a pirate coat with brass buttons
+a ranger's leaf-patterned cloak
+an alchemist's apron with vials
+a wizard robe with star patterns
+furs and bone ornaments
+a shaman's feathered mantle
+a bard's patchwork motley
+a scholar's robe and spectacles
+a witch's wide-brimmed hat and shawl
+a battle-worn surcoat
+a court jester costume
+a __color/warm__ hooded mantle
+a __inspiration/culture__ style tunic

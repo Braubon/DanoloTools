@@ -1,0 +1,13 @@
+# __vehicle/sea__
+galleon
+viking longship
+trireme
+junk ship
+caravel
+steamship
+submarine
+ironclad
+gondola
+catamaran
+pirate ship
+ghost ship

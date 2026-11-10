@@ -1,0 +1,13 @@
+# __creature/robot__
+combat drone
+security robot
+maintenance bot
+quadruped mech
+spider tank
+colossal war mech
+robotic hound
+android sentinel
+swarm of drones
+hover drone
+nanite cloud
+salvage crawler

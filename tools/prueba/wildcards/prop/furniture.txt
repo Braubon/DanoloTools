@@ -1,0 +1,15 @@
+# __prop/furniture__
+throne
+carved wooden chair
+four-poster bed
+writing desk
+bookshelf
+alchemist's table
+chandelier
+candelabra
+tapestry
+standing mirror
+globe
+armchair
+wardrobe
+chest of drawers

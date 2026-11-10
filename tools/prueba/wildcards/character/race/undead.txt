@@ -1,0 +1,21 @@
+# __character/race/undead__
+vampire
+vampire lord
+lich
+revenant
+ghoul
+wraith
+specter
+banshee
+ghost
+poltergeist
+skeleton warrior
+zombie
+mummy
+death knight
+draugr
+dullahan
+wight
+bone witch
+plague-risen corpse
+cursed knight

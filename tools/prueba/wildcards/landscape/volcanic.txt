@@ -1,0 +1,9 @@
+# __landscape/volcanic__
+active volcano
+lava field
+rivers of lava
+obsidian plains
+ash wasteland
+sulfur vents
+caldera lake
+black basalt columns

@@ -1,0 +1,21 @@
+# __character/face/eyes__ : eye shape and look
+almond-shaped eyes
+hooded eyes
+deep-set eyes
+wide-set eyes
+narrow eyes
+large round eyes
+upturned eyes
+downturned eyes
+monolid eyes
+heavy-lidded eyes
+piercing eyes
+sharp eyes
+kind crinkled eyes
+tired eyes with dark circles
+glowing eyes
+slit pupils
+catlike eyes
+milky blind eyes
+eyes without pupils
+eyes with starlike irises

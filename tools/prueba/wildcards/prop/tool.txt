@@ -1,0 +1,15 @@
+# __prop/tool__
+blacksmith hammer
+anvil
+tongs
+lockpicks
+oil lamp
+torch
+rope and grappling hook
+pickaxe
+shovel
+fishing rod
+quill and ink
+magnifying glass
+brass telescope
+sewing kit

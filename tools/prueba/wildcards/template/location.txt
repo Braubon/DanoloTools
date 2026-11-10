@@ -1,0 +1,8 @@
+# __template/location__ : interiors, architecture and places
+interior of a __location/fantasy__, __scene/atmosphere__, __art/lighting__, __art/style__, __art/quality__
+__location/scifi__, __scene/weather__, __color/palette__, __art/style/digital__, __art/lighting__
+__inspiration/culture__ __location/architecture__ at __scene/time__, __art/camera/angle__, __art/style__
+__art/movement__ __location/architecture__, __art/style/photo__, __art/camera/lens__
+abandoned __location/ruin__ reclaimed by nature, __elemental/nature__, __scene/time__, __art/style__
+cozy __location/urban__, __scene/weather__ outside, warm interior light, __art/style/illustration__
+isometric diorama of a __location__, __art/style/digital__, __color/palette__, __art/quality__

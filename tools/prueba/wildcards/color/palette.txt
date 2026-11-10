@@ -1,0 +1,32 @@
+# __color/palette__ : whole color schemes (uses the other color files)
+__color/warm__ and __color/cool__ color scheme
+monochromatic __color/cool__ palette
+monochromatic __color/warm__ palette
+analogous __color/cool__ tones
+analogous __color/warm__ tones
+complementary __color/jewel__ and __color/metallic__ palette
+triadic color scheme of __color/basic__, __color/basic__ and __color/basic__
+split-complementary color scheme
+muted __color/earth__ tones
+__color/pastel__ and __color/neutral__ palette
+soft __color/pastel__ palette
+pastel dreamscape palette
+neon __color/neon__ against __color/dark__
+duotone __color/neon__ and __color/dark__
+high contrast __color/dark__ and __color/metallic__
+limited palette of __color/earth__, __color/neutral__ and __color/metallic__
+desaturated palette with __color/warm__ accents
+black and white with a single __color/warm__ accent
+black and white with a single __color/neon__ accent
+autumn palette of __color/warm__ and __color/earth__
+winter palette of __color/cool__ and __color/neutral__
+spring palette of __color/pastel__ and green
+jewel-toned palette of __color/jewel__ and __color/jewel__
+regal palette of __color/metallic__ and __color/jewel__
+teal and orange cinematic palette
+iridescent holographic palette
+vibrant saturated colors
+muted vintage colors
+faded film colors
+sepia toned
+grayscale

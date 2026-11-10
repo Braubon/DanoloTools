@@ -1,0 +1,22 @@
+# __prop/weapon/scifi__
+plasma rifle
+laser pistol
+railgun
+gauss rifle
+pulse carbine
+energy sword
+monomolecular blade
+vibro-knife
+smart gun
+sniper rifle with a holographic scope
+grenade launcher
+arc thrower
+flamethrower
+gravity hammer
+ion cannon
+needle gun
+cryo rifle
+sonic disruptor
+drone launcher
+nano-whip
+heavy rotary cannon

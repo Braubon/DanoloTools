@@ -1,0 +1,30 @@
+# __creature/mythic__ : beasts of myth and legend
+dragon
+eastern dragon
+wyvern
+drake
+wyrm
+hydra
+phoenix
+griffin
+hippogriff
+pegasus
+unicorn
+chimera
+manticore
+basilisk
+cockatrice
+kraken
+leviathan
+behemoth
+sea serpent
+sphinx
+three-headed hound
+kirin
+qilin
+simurgh
+amphisbaena
+nue
+baku
+nine-tailed fox
+jackalope

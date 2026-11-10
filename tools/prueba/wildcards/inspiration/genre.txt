@@ -1,0 +1,43 @@
+# __inspiration/genre__ : fiction genres and "-punk" aesthetics
+cyberpunk
+solarpunk
+steampunk
+dieselpunk
+atompunk
+biopunk
+clockpunk
+silkpunk
+stonepunk
+raypunk
+mythpunk
+cassette futurism
+retrofuturism
+space opera
+hard science fiction
+military science fiction
+dying earth
+high fantasy
+low fantasy
+dark fantasy
+grimdark
+sword and sorcery
+gaslamp fantasy
+mythic fantasy
+fairy tale
+desert fantasy
+wuxia
+xianxia
+gothic horror
+cosmic horror
+folk horror
+weird west
+noir
+tech noir
+post-apocalyptic
+dystopian
+utopian
+afrofuturism
+new weird
+cottagecore
+dreamcore
+liminal space

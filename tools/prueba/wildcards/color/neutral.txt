@@ -1,0 +1,40 @@
+# __color/neutral__ : whites, grays, blacks, beiges
+ivory
+cream
+eggshell
+bone white
+pearl white
+alabaster
+snow white
+chalk white
+linen
+parchment
+oatmeal
+sand
+beige
+khaki
+camel
+tan
+taupe
+greige
+mushroom
+stone gray
+dove gray
+fog gray
+smoke gray
+ash gray
+silver gray
+slate gray
+pewter
+graphite
+charcoal
+gunmetal
+jet black
+onyx black
+ebony
+obsidian black
+umber
+sepia
+walnut brown
+chocolate brown
+espresso brown

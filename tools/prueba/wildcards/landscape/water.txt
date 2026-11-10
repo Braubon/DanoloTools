@@ -1,0 +1,25 @@
+# __landscape/water__ : coasts, seas, lakes, rivers, wetlands
+tropical beach
+rocky coast
+black sand beach
+fjord
+sea cliffs
+sea stacks
+lagoon
+archipelago
+coral reef
+deep ocean
+stormy sea
+tidal flats
+calm lake
+mountain lake
+winding river
+river delta
+waterfall
+hot springs
+swamp
+bayou
+marsh
+misty bog
+flooded forest
+mediterranean cove

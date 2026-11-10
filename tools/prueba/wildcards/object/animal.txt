@@ -1,0 +1,31 @@
+# __object/animal__ : real animals
+cat
+dog
+fox
+wolf
+owl
+raven
+crow
+hawk
+eagle
+deer
+stag
+horse
+rabbit
+bear
+lion
+tiger
+snake
+frog
+butterfly
+moth
+bee
+beetle
+koi fish
+jellyfish
+octopus
+whale
+turtle
+peacock
+hummingbird
+hedgehog

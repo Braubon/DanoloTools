@@ -1,0 +1,19 @@
+# __character/face/eye_color__
+amber eyes
+honey eyes
+golden eyes
+copper eyes
+hazel eyes
+dark brown eyes
+black eyes
+emerald green eyes
+turquoise eyes
+ice blue eyes
+gray eyes
+steel gray eyes
+silver eyes
+violet eyes
+pale lavender eyes
+red eyes
+heterochromatic blue and green eyes
+glowing __color/neon__ eyes

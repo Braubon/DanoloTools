@@ -1,0 +1,14 @@
+# __creature/construct__ : golems, automatons, animated things
+stone golem
+iron golem
+clay golem
+crystal golem
+clockwork automaton
+brass dragon automaton
+steam-powered titan
+living statue
+animated armor
+scarecrow construct
+wooden puppet guardian
+rune-carved colossus
+bone construct

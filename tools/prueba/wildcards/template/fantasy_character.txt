@@ -1,0 +1,13 @@
+# __template/fantasy_character__ : base ideas for fantasy characters
+portrait of a __character/fantasy__, __landscape__ in the background, __art/style__, __art/lighting__, __art/quality__
+__art/camera/shot__ of a __character/fantasy__, __inspiration__, __color/palette__, __art/style__, __art/quality__
+full body concept art of a __character/fantasy__, __character/pose__, character design, plain __color/neutral__ background, __art/quality__
+__character/fantasy__, __character/pose__, inside a __location/fantasy__, __scene__, __art/lighting__, __art/style__
+{epic|heroic|dark} fantasy illustration of a __character/fantasy__ facing a __creature__, __elemental__, __art/mood__ mood, __art/style/painting__
+__art/mood__ portrait of a __character/race__ __character/class/magic__, __elemental__, __character/face__, __art/lighting__, __art/style__
+tarot card illustration of a __character/fantasy__, ornate border with __prop/detail__, __art/movement__ style
+{close-up|bust} portrait of a __character/trait__ __character/race/undead__, __character/outfit__, gothic atmosphere, __art/style/painting__, __art/lighting__
+__character/race__ __character/class/warrior__ in __character/outfit/armor__, holding a __prop/weapon__, __character/pose__, __landscape__, __scene/weather__, __art/style__, __art/quality__
+{king|queen|emperor|empress} of the __character/race__, seated on a throne, __character/outfit/accessory__, __inspiration/culture__ inspired court, __art/lighting__, __art/style/painting__
+__character/race/spirit__ in a __landscape/fantasy__, __elemental__, __color/palette__, ethereal, __art/style__, __art/quality__
+character sheet of a __character/fantasy__, front view and side view, __art/style/illustration__, white background

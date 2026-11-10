@@ -1,0 +1,31 @@
+# __material/organic__ : natural and animal materials
+bone
+ivory
+horn
+antler
+chitin
+scales
+feathers
+seashell
+mother-of-pearl
+nacre
+tortoiseshell
+coral
+bark
+living wood
+moss
+lichen
+vines
+roots
+mushroom caps
+mycelium
+fungus
+beeswax
+honeycomb
+amber resin
+spider silk
+dried flowers
+autumn leaves
+seeds
+eggshell
+fishbone

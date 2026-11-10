@@ -1,0 +1,11 @@
+# __scene/season__
+spring
+early spring
+summer
+late summer
+autumn
+late autumn
+winter
+deep winter
+monsoon season
+harvest season

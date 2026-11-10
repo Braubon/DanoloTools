@@ -1,0 +1,12 @@
+# __prop/book__
+ancient tome
+grimoire
+leather-bound journal
+illuminated manuscript
+scroll
+codex
+treasure map
+star chart
+bestiary
+recipe book
+ship's logbook

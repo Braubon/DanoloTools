@@ -1,0 +1,24 @@
+# __character/face/skin__ : skin tones and textures, human and fantastic
+pale porcelain skin
+fair freckled skin
+rosy-cheeked skin
+olive skin
+tan skin
+sun-kissed skin
+golden brown skin
+deep brown skin
+dark ebony skin
+weathered tanned skin
+pockmarked skin
+ashen gray skin
+blue-tinged skin
+green skin
+deep red skin
+lavender skin
+scaled skin
+stone-like skin
+bark-textured skin
+iridescent skin
+translucent skin with visible veins
+metallic synthetic skin
+bioluminescent freckles

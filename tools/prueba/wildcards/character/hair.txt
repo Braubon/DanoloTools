@@ -1,0 +1,7 @@
+# __character/hair__ : hair color + style
+__character/hair/color__ __character/hair/style__
+__character/hair/color__ __character/hair/style__
+__character/hair/color__ __character/hair/style__
+shaved head
+bald head with tattoos
+half-shaved head with __character/hair/color__ hair

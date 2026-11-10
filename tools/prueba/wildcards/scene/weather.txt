@@ -1,0 +1,18 @@
+# __scene/weather__
+clear sky
+scattered clouds
+overcast sky
+light rain
+heavy rain
+drizzle
+thunderstorm
+hailstorm
+fog
+mist
+snowfall
+blizzard
+sandstorm
+strong wind
+heat haze
+after the rain with puddles
+rainbow after the storm

@@ -1,0 +1,19 @@
+# __prop/weapon/focus__ : magic implements
+wizard staff
+gnarled wooden staff
+crystal-tipped staff
+wand
+bone wand
+orb
+crystal ball
+spellbook
+grimoire
+tome bound in chains
+rune stones
+holy symbol
+scepter
+censer
+ritual dagger
+lantern containing a spirit
+mask of power
+totem

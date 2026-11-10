@@ -1,0 +1,6 @@
+# __character/outfit__ : FANTASY outfits (sci-fi in __character/outfit/scifi__)
+__character/outfit/fantasy__
+__character/outfit/fantasy__
+__character/outfit/armor__
+__character/outfit/fantasy__ with __character/outfit/accessory__
+__character/outfit/armor__ and __character/outfit/accessory__

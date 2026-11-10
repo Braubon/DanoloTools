@@ -1,0 +1,10 @@
+# __template/scifi_character__ : base ideas for sci-fi characters
+portrait of a __character/scifi__, __location/scifi__ background, __art/style__, __art/lighting__, __art/quality__
+__art/camera/shot__ of a __character/scifi__, __inspiration/genre__ aesthetic, __color/palette__, __art/style/digital__, __art/quality__
+full body concept art of a __character/scifi__, __character/pose__, character design, plain __color/neutral__ background, __art/quality__
+__character/scifi__ in a __location/scifi__, __scene/weather__, neon reflections, __art/lighting__, __art/style/photo__
+{gritty|sleek|retro} sci-fi illustration of a __character/class/scifi__ holding a __prop/weapon/scifi__, __landscape/alien__, __art/mood__ mood, __art/style__
+close-up portrait of a __character/race/scifi__, __character/outfit/cyberware__, __character/face/eye_color__, __art/lighting__, __art/camera/lens__, __art/style/photo__
+__inspiration/era__ retrofuturist poster of a __character/class/scifi__, __color/palette__, __art/style/illustration__
+__character/race/scifi__ __character/class/scifi__ in a derelict starship, __elemental/void__, __art/lighting__, __art/style/digital__, __art/quality__
+character sheet of a __character/scifi__, front view and back view, __art/style/digital__, white background

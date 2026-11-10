@@ -1,0 +1,13 @@
+# __color__ : any single color, picked from every color family
+__color/basic__
+__color/warm__
+__color/warm__
+__color/cool__
+__color/cool__
+__color/neutral__
+__color/pastel__
+__color/neon__
+__color/metallic__
+__color/jewel__
+__color/earth__
+__color/dark__

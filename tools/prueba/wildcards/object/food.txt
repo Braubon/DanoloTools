@@ -1,0 +1,31 @@
+# __object/food__ : food and drink
+loaf of bread
+croissant
+layer cake
+cupcake
+macarons
+donut
+fruit pie
+cheese wheel
+sushi platter
+ramen bowl
+dumplings
+pizza
+burger
+paella
+roast chicken
+fruit tart
+chocolate bonbons
+honey jar
+apple
+pomegranate
+bunch of grapes
+lemon
+orange
+strawberries
+cherries
+watermelon
+wild mushrooms
+glass of red wine
+cup of coffee
+cocktail

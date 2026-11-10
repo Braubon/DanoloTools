@@ -1,0 +1,49 @@
+# __color/warm__ : reds, oranges, yellows and warm browns
+crimson
+scarlet
+vermilion
+cinnabar
+carmine
+blood red
+cherry red
+ruby red
+poppy red
+brick red
+rose red
+garnet
+wine red
+oxblood
+burgundy
+cayenne
+paprika
+burnt orange
+tangerine
+pumpkin orange
+persimmon
+flame orange
+ember orange
+coral
+salmon
+apricot
+peach
+amber
+saffron
+marigold
+honey gold
+goldenrod
+sunflower yellow
+mustard yellow
+butterscotch
+caramel
+cognac
+ochre
+terracotta
+rust
+copper
+burnt sienna
+sienna
+mahogany
+hot pink
+fuchsia
+magenta
+raspberry

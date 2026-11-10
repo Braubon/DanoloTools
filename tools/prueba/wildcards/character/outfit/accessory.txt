@@ -1,0 +1,30 @@
+# __character/outfit/accessory__
+an amulet
+a pendant
+a torc
+a circlet
+a crown
+a signet ring
+ornate earrings
+arm bands
+leather bracers
+a belt with pouches
+a bandolier
+a long scarf
+a cape
+a mantle
+gauntlets
+an eyepatch
+a monocle
+brass goggles
+a mask
+a half mask
+a veil
+a deep hood
+a feathered hat
+a tricorne hat
+a wide-brimmed hat
+a horned helmet
+a bone necklace
+prayer beads
+a weapon holster

@@ -1,0 +1,23 @@
+# __object/plant__
+rose
+lily
+lotus
+sunflower
+orchid
+tulip
+peony
+lavender
+cherry blossom branch
+poppy
+dandelion
+wildflowers
+cactus
+succulent
+fern
+bonsai tree
+monstera
+ivy
+mushroom cluster
+moss
+bamboo
+orange blossom

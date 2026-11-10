@@ -1,0 +1,8 @@
+# __template/creature__
+__creature__, __landscape__, __scene__, __art/style__, __art/lighting__, __art/quality__
+creature concept art of a __creature__, multiple angles, __art/style/digital__, __color/neutral__ background
+{majestic|terrifying|curious} __creature/mythic__ perched on __landscape/feature__, __elemental__, __art/mood__ mood, __art/style/painting__
+bestiary page illustration of a __creature__, handwritten notes, __art/style/drawing__, aged parchment
+__art/camera/shot__ of a __creature__ emerging from __landscape/underground__, __art/lighting__, __art/style__
+__inspiration/culture__ inspired __creature/mythic__ as a __art/style/craft__, __color/palette__
+a __character/fantasy__ riding a __creature/beast__, __landscape__, __scene__, __art/style__, __art/quality__

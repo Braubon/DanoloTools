@@ -1,0 +1,29 @@
+# __material/wood__
+oak
+bog oak
+ash wood
+ebony
+mahogany
+walnut
+cherry wood
+birch
+pine
+cedar
+yew
+maple
+rosewood
+teak
+bamboo
+driftwood
+petrified wood
+burl wood
+charred wood
+ironwood
+willow
+cypress
+olive wood
+sandalwood
+bloodwood
+weathered barn wood
+lacquered wood
+white ash

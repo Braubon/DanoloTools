@@ -1,0 +1,14 @@
+# __landscape/plains__
+grasslands
+savanna
+steppe
+prairie
+wildflower meadow
+lavender fields
+wheat fields
+rice paddies
+vineyard
+orange groves
+heathland
+patchwork farmland
+sunflower fields

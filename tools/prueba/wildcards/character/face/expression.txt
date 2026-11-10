@@ -1,0 +1,26 @@
+# __character/face/expression__
+stoic expression
+gentle smile
+shy smile
+smirk
+sly grin
+mischievous grin
+fierce scowl
+furious snarl
+serene gaze
+cold stare
+brooding look
+haunted look
+laughing
+determined look
+confident look
+defiant look
+sorrowful look
+melancholic gaze
+contemplative look
+weary look
+solemn expression
+wide-eyed wonder
+curious look
+calm and focused
+mid battle cry

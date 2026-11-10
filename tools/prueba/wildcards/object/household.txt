@@ -1,0 +1,31 @@
+# __object/household__
+teacup
+teapot
+kettle
+candle
+clock
+mirror
+vase
+bowl
+plate
+cutlery set
+jar
+bottle
+lamp
+chair
+rug
+pillow
+blanket
+umbrella
+key
+padlock
+book
+eyeglasses
+typewriter
+radio
+telephone
+sewing machine
+broom
+bucket
+basket
+chess set

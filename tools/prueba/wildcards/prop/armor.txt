@@ -1,0 +1,15 @@
+# __prop/armor__ : armor pieces and shields
+shield
+kite shield
+round shield
+tower shield
+buckler
+helmet
+great helm
+horned helm
+crowned helm
+gauntlets
+pauldrons
+breastplate
+greaves
+war mask

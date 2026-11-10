@@ -1,0 +1,8 @@
+# __character/race__ : any FANTASY race (sci-fi races live in __character/race/scifi__)
+__character/race/fantasy__
+__character/race/fantasy__
+__character/race/fantasy__
+__character/race/beastfolk__
+__character/race/mythic__
+__character/race/undead__
+__character/race/spirit__

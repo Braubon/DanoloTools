@@ -1,0 +1,37 @@
+# __material/fabric__
+silk
+velvet
+linen
+wool
+homespun wool
+cotton
+brocade
+damask
+jacquard
+satin
+chiffon
+tulle
+lace
+organza
+taffeta
+samite
+muslin
+gauze
+tweed
+tartan
+felt
+burlap
+canvas
+denim
+cashmere
+embroidered silk
+quilted cloth
+knitted wool
+crocheted yarn
+fur
+faux fur
+sequined fabric
+metallic lamé
+nylon ripstop
+neoprene
+kevlar weave

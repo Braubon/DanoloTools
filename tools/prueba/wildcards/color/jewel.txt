@@ -1,0 +1,25 @@
+# __color/jewel__ : rich gemstone colors
+ruby
+emerald
+sapphire
+amethyst
+topaz
+garnet
+citrine
+aquamarine
+peridot
+tourmaline
+tanzanite
+alexandrite
+jade
+opal
+onyx
+lapis lazuli
+malachite
+turquoise
+carnelian
+spinel red
+morganite pink
+tsavorite green
+imperial topaz
+moonstone

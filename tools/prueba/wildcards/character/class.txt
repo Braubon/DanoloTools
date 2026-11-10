@@ -1,0 +1,9 @@
+# __character/class__ : any FANTASY class or profession (sci-fi in __character/class/scifi__)
+__character/class/warrior__
+__character/class/warrior__
+__character/class/magic__
+__character/class/magic__
+__character/class/rogue__
+__character/class/ranger__
+__character/class/support__
+__character/class/civilian__

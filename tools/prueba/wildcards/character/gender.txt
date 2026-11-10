@@ -1,0 +1,7 @@
+# __character/gender__
+man
+woman
+androgynous person
+male
+female
+nonbinary person

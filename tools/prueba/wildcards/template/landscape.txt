@@ -1,0 +1,9 @@
+# __template/landscape__ : base ideas for landscapes
+__landscape__, __scene__, __art/camera/shot__, __art/style__, __art/lighting__, __art/quality__
+__art/style/photo__ of __landscape__, __scene/time__, __scene/weather__, __art/camera/lens__
+epic matte painting of __landscape/fantasy__, __landscape/feature__, __color/palette__, __art/mood__ mood
+__landscape__ inspired by __inspiration/culture__ art, __scene/season__, __art/style/painting__
+{tiny|lonely|small} traveler standing before __landscape__, __scene__, vast scale, __art/style__, __art/lighting__
+__landscape/alien__, __vehicle/space__ in the sky, __scene/atmosphere__, __art/style/digital__, __art/quality__
+__landscape__ during __scene/season__, __scene/atmosphere__, __art/movement__ style, __art/style/painting__
+__art/camera/angle__ of __landscape/water__ with __landscape/feature__, __scene/time__, __art/style/photo__

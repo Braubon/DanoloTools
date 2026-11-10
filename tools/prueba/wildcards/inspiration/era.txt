@@ -1,0 +1,31 @@
+# __inspiration/era__ : time periods
+prehistoric
+stone age
+bronze age
+iron age
+classical antiquity
+late antiquity
+early medieval
+high medieval
+late medieval
+renaissance
+baroque era
+age of sail
+age of enlightenment
+regency era
+victorian era
+edwardian era
+belle époque
+roaring twenties
+1930s
+1940s wartime
+1950s atomic age
+swinging sixties
+1970s
+1980s
+1990s
+y2k era
+near future
+far future
+post-apocalyptic future
+distant interstellar future

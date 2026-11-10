@@ -1,0 +1,25 @@
+# __character/race/mythic__ : hybrids and creatures of legend
+centaur
+satyr
+faun
+minotaur
+harpy
+siren
+mermaid
+merman
+triton
+naga
+lamia
+gorgon
+werewolf
+werebear
+cyclops
+hill giant
+frost giant
+fire giant
+storm giant
+troll
+gargoyle
+living golem
+sphinx-kin
+valkyrie

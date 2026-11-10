@@ -1,0 +1,15 @@
+# __creature__ : any creature, often combined with anatomy, elements and materials
+__creature/size__ __creature/mythic__ with __creature/anatomy__
+__creature/mythic__ of __elemental/type__, __elemental__
+__color/jewel__ __creature/mythic__
+__inspiration/culture__ inspired __creature/mythic__
+__creature/size__ __creature/beast__ with __creature/anatomy__ and __creature/anatomy__
+__creature/beast__ with __creature/anatomy__
+__creature/horror__
+__creature/horror__ with __creature/anatomy__
+__creature/construct__ made of __material__
+__creature/construct__, __elemental__
+__creature/size__ __creature/alien__ with __creature/anatomy__
+__creature/alien__, __color/neon__ markings
+__creature/robot__
+__creature/size__ __creature/robot__ with __color/metallic__ plating

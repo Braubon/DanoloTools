@@ -1,0 +1,11 @@
+# __vehicle/space__
+starfighter
+cargo freighter
+battlecruiser
+shuttle
+colony ark
+mining barge
+scout ship
+dreadnought
+escape pod
+solar sail ship

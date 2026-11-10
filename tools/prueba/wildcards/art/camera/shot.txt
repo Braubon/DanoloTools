@@ -1,0 +1,15 @@
+# __art/camera/shot__
+extreme close-up
+close-up portrait
+headshot
+bust shot
+medium shot
+cowboy shot
+full body shot
+wide shot
+extreme wide shot
+establishing shot
+over-the-shoulder shot
+two-shot
+detail shot
+panoramic view

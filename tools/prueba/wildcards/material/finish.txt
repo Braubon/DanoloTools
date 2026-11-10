@@ -1,0 +1,35 @@
+# __material/finish__ : surface treatments and wear
+polished
+brushed
+hammered
+engraved
+etched
+embossed
+filigreed
+gilded
+lacquered
+enameled
+patinated
+oxidized
+rusted
+weathered
+cracked
+chipped
+scorched
+frosted
+glossy
+matte
+satin-finished
+sandblasted
+inlaid
+carved
+riveted
+studded
+gem-encrusted
+rune-carved
+worn smooth
+battle-scarred
+moss-grown
+salt-crusted
+anodized
+iridescent

@@ -1,0 +1,21 @@
+# __location/architecture__ : building types (combine with styles/cultures)
+cathedral
+palace
+castle
+citadel
+temple
+pagoda
+ziggurat
+pyramid
+monastery
+lighthouse
+observatory
+bridge
+watchtower
+windmill
+bathhouse
+amphitheater
+library
+skyscraper
+train station
+mosque courtyard

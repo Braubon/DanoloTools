@@ -1,0 +1,17 @@
+# __elemental__ : an elemental effect (fire, water, ice...). Use __elemental/type__ for just the word.
+__elemental/fire__
+__elemental/water__
+__elemental/earth__
+__elemental/air__
+__elemental/lightning__
+__elemental/ice__
+__elemental/light__
+__elemental/shadow__
+__elemental/nature__
+__elemental/arcane__
+__elemental/void__
+__elemental/poison__
+a clash of __elemental/fire__ and __elemental/ice__
+__elemental/water__ swirling with __elemental/light__
+__elemental/shadow__ pierced by __elemental/light__
+__elemental/lightning__ and __elemental/air__
