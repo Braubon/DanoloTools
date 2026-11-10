@@ -58,11 +58,7 @@
   ],
   "functions": {
     "api/*.js": {
-      "includeFiles": [
-        "tools/fabula-ultima/{data,assets/js,servidor}/**",
-        "tools/*/index.html",
-        "tools/*/meta.json"
-      ],
+      "includeFiles": "tools/{fabula-ultima/{data,assets/js,servidor}/**,*/index.html,*/meta.json}",
       "maxDuration": 10
     }
   },
