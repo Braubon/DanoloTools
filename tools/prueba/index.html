@@ -1,0 +1,1368 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wildcarder — DanoloTools</title>
+<link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="wildcards-data.js"></script>
+<style>
+:root {
+  --bg: #10141f;
+  --panel: #161b27;
+  --panel-2: #1b2232;
+  --ink: #e2e6ef;
+  --muted: #8e97ac;
+  --line: #262e40;
+  --brass: #e6b960;
+  --brass-bg: rgba(230, 185, 96, .15);
+  --brass-strong: #e6b960;
+  --verd: #5fcab7;
+  --rose: #f27c8c;
+  --rose-bg: rgba(242, 124, 140, .14);
+  --btn: #e6b960;
+  --btn-ink: #1a1f2b;
+  --focus: #7fb0ff;
+  --ui: "Schibsted Grotesk", ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+  --mono: "Spline Sans Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #10141f; --panel: #161b27; --panel-2: #1b2232; --ink: #e2e6ef; --muted: #8e97ac;
+    --line: #262e40; --brass: #e6b960; --brass-bg: rgba(230, 185, 96, .15); --brass-strong: #e6b960;
+    --verd: #5fcab7; --rose: #f27c8c; --rose-bg: rgba(242, 124, 140, .14);
+    --btn: #e6b960; --btn-ink: #1a1f2b; --focus: #7fb0ff; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #10141f; --panel: #161b27; --panel-2: #1b2232; --ink: #e2e6ef; --muted: #8e97ac;
+  --line: #262e40; --brass: #e6b960; --brass-bg: rgba(230, 185, 96, .15); --brass-strong: #e6b960;
+  --verd: #5fcab7; --rose: #f27c8c; --rose-bg: rgba(242, 124, 140, .14);
+  --btn: #e6b960; --btn-ink: #1a1f2b; --focus: #7fb0ff; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--bg); color: var(--ink); font: 15px/1.5 var(--ui);
+  min-height: 100vh; display: flex; flex-direction: column;
+}
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+code, .mono { font-family: var(--mono); font-size: .92em; }
+
+/* ---------- top bar ---------- */
+.top {
+  display: flex; align-items: center; gap: 18px; padding: 10px 18px;
+  border-bottom: 1px solid var(--line); background: var(--panel); flex-wrap: wrap;
+}
+.brand { font: 500 19px/1 var(--mono); letter-spacing: -.02em; white-space: nowrap; }
+.brand .us { color: var(--brass-strong); }
+.status { color: var(--muted); font-size: 14px; flex: 1; min-width: 180px; }
+.status b { color: var(--ink); font-weight: 600; }
+.top-actions { display: flex; gap: 8px; align-items: center; }
+.btn {
+  border: 1px solid var(--line); background: var(--panel); border-radius: 7px;
+  padding: 6px 12px; font-size: 14px; font-weight: 500;
+}
+.btn:hover:not(:disabled) { border-color: var(--muted); }
+.btn:disabled { opacity: .45; cursor: default; }
+.btn.primary { background: var(--btn); color: var(--btn-ink); border-color: var(--btn); font-weight: 600; }
+.btn.primary:hover { filter: brightness(1.08); }
+.btn.small { padding: 3px 9px; font-size: 13px; }
+.chk { display: inline-flex; gap: 6px; align-items: center; font-size: 14px; color: var(--muted); cursor: pointer; user-select: none; }
+.chk input { accent-color: var(--brass-strong); margin: 0; }
+
+/* ---------- layout ---------- */
+.mtabs { display: none; }
+.grid {
+  flex: 1; display: grid; grid-template-columns: 270px minmax(0, 1fr) 360px; min-height: 0;
+}
+.pane { min-width: 0; min-height: 0; }
+.files { border-right: 1px solid var(--line); background: var(--panel-2); display: flex; flex-direction: column; }
+.side { border-left: 1px solid var(--line); background: var(--panel-2); display: flex; flex-direction: column; }
+.work { padding: 22px 28px 40px; overflow: auto; }
+@media (min-width: 981px) {
+  body { height: 100vh; }
+  .grid { min-height: 0; }
+  .files, .side { overflow: hidden; }
+}
+
+/* ---------- file tree ---------- */
+.pane-head { padding: 12px; border-bottom: 1px solid var(--line); }
+.search {
+  width: 100%; padding: 7px 10px; border: 1px solid var(--line); border-radius: 7px;
+  background: var(--panel); font-size: 14px;
+}
+.tree { overflow: auto; padding: 6px 0 24px; flex: 1; }
+.row {
+  display: flex; align-items: center; gap: 6px; width: 100%; text-align: left;
+  border: 0; background: none; padding: 3px 12px 3px 0; font: 13.5px/1.4 var(--mono); color: var(--ink);
+}
+.row:hover { background: var(--brass-bg); }
+.row.sel { background: var(--brass-bg); box-shadow: inset 3px 0 0 var(--brass-strong); }
+.row .chev { width: 12px; flex: none; color: var(--muted); font-size: 10px; text-align: center; }
+.row .nm { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.row.dir .nm { color: var(--muted); }
+.row .ct { color: var(--muted); font-size: 12px; }
+.tree-empty { padding: 16px; color: var(--muted); font-size: 14px; }
+
+/* ---------- editor ---------- */
+.label-row { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+.label-row h2 { font-size: 16px; margin: 0; font-weight: 600; }
+.hint { color: var(--muted); font-size: 13px; }
+.editor-wrap { position: relative; }
+.editor {
+  display: grid; border: 1px solid var(--line); border-radius: 10px; background: var(--panel);
+  transition: border-color .15s;
+}
+.editor:focus-within { border-color: var(--brass-strong); }
+.editor > * { grid-area: 1 / 1; }
+.editor pre, .editor textarea {
+  margin: 0; padding: 16px 18px; border: 0; font: 15px/1.65 var(--mono);
+  white-space: pre-wrap; overflow-wrap: break-word; word-break: normal; tab-size: 4;
+  letter-spacing: 0; min-height: 9.5rem;
+}
+.editor pre { pointer-events: none; color: var(--ink); overflow: hidden; }
+.editor textarea {
+  height: 100%; align-self: stretch; background: transparent; color: transparent; caret-color: var(--ink); resize: none;
+  outline: none; overflow: hidden;
+}
+.editor textarea::placeholder { color: var(--muted); }
+.editor textarea::selection { background: rgba(46, 107, 214, .28); color: transparent; }
+.t-wc { color: var(--brass); background: var(--brass-bg); border-radius: 3px; }
+.t-glob { color: var(--brass); background: var(--brass-bg); border-radius: 3px; text-decoration: underline dotted; }
+.t-miss { color: var(--rose); background: var(--rose-bg); border-radius: 3px; text-decoration: underline wavy; text-decoration-thickness: 1px; }
+.t-var { color: var(--verd); }
+.t-com { color: var(--muted); }
+
+.ac {
+  position: absolute; z-index: 20; min-width: 260px; max-width: 420px; max-height: 300px; overflow: auto;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(10, 15, 30, .22); padding: 4px;
+}
+.ac button {
+  display: flex; justify-content: space-between; gap: 14px; width: 100%; border: 0; background: none;
+  text-align: left; padding: 5px 9px; border-radius: 5px; font: 13.5px/1.4 var(--mono);
+}
+.ac button.on, .ac button:hover { background: var(--brass-bg); }
+.ac .ct { color: var(--muted); font-size: 12px; }
+.ac mark { background: none; color: var(--brass); font-weight: 500; }
+
+.warn { margin-top: 8px; font-size: 13.5px; color: var(--rose); }
+.warn:empty { display: none; }
+.warn code { background: var(--rose-bg); padding: 0 4px; border-radius: 3px; }
+
+.controls {
+  display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; margin: 16px 0 26px;
+}
+.controls .btn.primary { padding: 9px 20px; font-size: 15px; }
+.field { display: inline-flex; align-items: center; gap: 7px; font-size: 14px; color: var(--muted); }
+.field select, .field input[type="number"] {
+  border: 1px solid var(--line); background: var(--panel); border-radius: 7px; padding: 5px 8px; color: var(--ink);
+}
+.field input[type="number"] { width: 126px; font-family: var(--mono); font-size: 13.5px; }
+.kbd { font: 12px var(--mono); color: var(--muted); }
+
+/* ---------- results ---------- */
+.results-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+.results-head h2 { margin: 0 auto 0 0; font-size: 16px; font-weight: 600; }
+.results { display: flex; flex-direction: column; gap: 10px; }
+.res {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px 10px;
+}
+.res-text { font: 15px/1.7 var(--ui); overflow-wrap: anywhere; }
+.res-meta { display: flex; gap: 10px; align-items: center; margin-top: 8px; color: var(--muted); font-size: 12.5px; }
+.res-meta .seed { font-family: var(--mono); margin-right: auto; }
+.res-meta .flag { color: var(--rose); }
+.results .wc { background: var(--brass-bg); border-radius: 3px; box-decoration-break: clone; -webkit-box-decoration-break: clone; cursor: pointer; }
+.results .wc.miss { background: var(--rose-bg); color: var(--rose); font-family: var(--mono); font-size: .92em; }
+.results .wc.hot { outline: 1.5px solid var(--brass-strong); outline-offset: 1px; }
+.results.plain .wc { background: none; cursor: text; }
+.results.plain .wc.hot { outline: none; }
+.trace {
+  position: sticky; bottom: 0; margin-top: 12px; padding: 8px 12px; border-radius: 8px;
+  background: var(--panel); border: 1px solid var(--line); font: 13px/1.5 var(--mono); color: var(--muted);
+  min-height: 36px;
+}
+.trace b { color: var(--brass); font-weight: 500; }
+.trace .sep { opacity: .55; padding: 0 6px; }
+.empty-res { color: var(--muted); font-size: 14px; padding: 18px 0; }
+
+/* ---------- welcome ---------- */
+.welcome { max-width: 620px; padding: 30px 0; }
+.welcome h1 { font: 600 30px/1.2 var(--ui); margin: 0 0 12px; letter-spacing: -.015em; }
+.welcome h1 code { font-size: .86em; color: var(--brass); }
+.welcome p { color: var(--muted); margin: 0 0 14px; max-width: 64ch; }
+.welcome .acts { display: flex; gap: 10px; flex-wrap: wrap; margin: 22px 0 26px; }
+.welcome .btn.primary { padding: 10px 20px; font-size: 15px; }
+.tree-sketch {
+  font: 13.5px/1.65 var(--mono); background: var(--panel); border: 1px solid var(--line);
+  border-radius: 10px; padding: 14px 18px; color: var(--muted); white-space: pre; overflow: auto;
+}
+.tree-sketch b { color: var(--brass); font-weight: 500; }
+.note { font-size: 13.5px; color: var(--muted); margin-top: 16px; }
+.welcome .note { margin-top: 12px; }
+
+/* ---------- side panel ---------- */
+.tabs { display: flex; border-bottom: 1px solid var(--line); padding: 0 8px; gap: 2px; }
+.tabs button {
+  border: 0; background: none; padding: 12px 10px 10px; font-size: 14px; font-weight: 500; color: var(--muted);
+  border-bottom: 2px solid transparent; margin-bottom: -1px;
+}
+.tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--brass-strong); }
+.tabpanel { overflow: auto; padding: 16px; flex: 1; }
+.tabpanel[hidden] { display: none; }
+.side h3 { font-size: 15px; margin: 0 0 4px; font-weight: 600; }
+.side .sub { color: var(--muted); font-size: 13px; margin: 0 0 12px; }
+.idea { border: 1px solid var(--line); border-radius: 9px; background: var(--panel); margin-bottom: 10px; }
+.idea summary {
+  list-style: none; cursor: pointer; padding: 10px 12px; display: flex; align-items: center; gap: 8px;
+  font-weight: 600; font-size: 14.5px;
+}
+.idea summary::-webkit-details-marker { display: none; }
+.idea summary .ct { margin-left: auto; color: var(--muted); font-weight: 400; font-size: 12.5px; }
+.idea summary::before { content: "▸"; color: var(--muted); font-size: 11px; transition: transform .15s; }
+.idea[open] summary::before { transform: rotate(90deg); }
+.idea-body { padding: 0 12px 12px; }
+.idea-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+.tpl {
+  display: block; width: 100%; text-align: left; border: 1px solid transparent; background: var(--panel-2);
+  border-radius: 7px; padding: 8px 10px; margin-top: 6px; font: 12.5px/1.55 var(--mono); color: var(--ink);
+}
+.tpl:hover { border-color: var(--brass-strong); }
+.surprise { width: 100%; margin-bottom: 14px; padding: 10px; }
+
+.fhead { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 6px; }
+.fname { font: 500 15px/1.3 var(--mono); color: var(--brass); overflow-wrap: anywhere; }
+.fpath { font: 12.5px var(--mono); color: var(--muted); margin-bottom: 12px; overflow-wrap: anywhere; }
+.section-t { font-size: 13px; font-weight: 600; color: var(--muted); margin: 16px 0 6px; display: flex; align-items: center; gap: 8px; }
+.section-t .btn { margin-left: auto; }
+.samples { margin: 0; padding: 0; list-style: none; }
+.samples li { padding: 6px 0; border-bottom: 1px dashed var(--line); font-size: 14px; }
+.lines { font: 12.5px/1.6 var(--mono); border: 1px solid var(--line); border-radius: 8px; background: var(--panel); max-height: 46vh; overflow: auto; }
+.lines div { padding: 2px 10px 2px 0; display: flex; gap: 10px; }
+.lines .n { color: var(--muted); opacity: .6; min-width: 34px; text-align: right; user-select: none; flex: none; }
+.lines .t-wc, .lines .t-glob { cursor: pointer; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { border: 1px solid var(--line); background: var(--panel); border-radius: 6px; padding: 2px 8px; font: 12.5px var(--mono); color: var(--ink); }
+.chip:hover { border-color: var(--brass-strong); }
+.help dl { margin: 0; }
+.help dt { font: 13px/1.5 var(--mono); color: var(--brass); margin-top: 12px; }
+.help dt .t-var { color: var(--verd); }
+.help dd { margin: 2px 0 0; font-size: 14px; color: var(--ink); }
+.help p { font-size: 14px; }
+.muted { color: var(--muted); }
+
+/* ---------- toast / drop ---------- */
+.toast {
+  position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%) translateY(20px); opacity: 0;
+  background: var(--ink); color: var(--panel); padding: 9px 16px; border-radius: 8px; font-size: 14px;
+  transition: opacity .2s, transform .2s; pointer-events: none; z-index: 50;
+}
+.toast.on { opacity: 1; transform: translateX(-50%) translateY(0); }
+.drop {
+  position: fixed; inset: 14px; border: 2px dashed var(--brass-strong); border-radius: 16px;
+  background: color-mix(in srgb, var(--bg) 88%, transparent); display: none; place-items: center;
+  font: 600 22px var(--ui); z-index: 60; pointer-events: none;
+}
+.drop.on { display: grid; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 1240px) { .grid { grid-template-columns: 240px minmax(0, 1fr) 320px; } }
+@media (max-width: 980px) {
+  .mtabs { display: flex; border-bottom: 1px solid var(--line); background: var(--panel); }
+  .mtabs button { flex: 1; border: 0; background: none; padding: 10px; font-weight: 500; color: var(--muted); border-bottom: 2px solid transparent; }
+  .mtabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--brass-strong); }
+  .grid { display: block; }
+  .pane { display: none; border: 0; }
+  .pane.show { display: flex; flex-direction: column; }
+  .work.show { display: block; }
+  .work { padding: 16px; }
+  .tree { max-height: none; }
+  .top { padding: 10px 16px; gap: 10px; }
+  .status { order: 3; flex-basis: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<header class="top">
+  <div style="display:flex; align-items:center; gap:12px;">
+    <a href="../../index.html" class="btn" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px; font-weight:600;" title="Volver al inicio de DanoloTools">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+      <span>Volver</span>
+    </a>
+    <div class="brand" aria-label="Wildcarder"><span class="us">__</span>wildcarder<span class="us">__</span></div>
+  </div>
+  <div class="status" id="status">Ninguna carpeta abierta</div>
+  <div class="top-actions">
+    <button class="btn" id="btnReveal" type="button" hidden title="Abre la carpeta wildcards en el explorador de archivos">Abrir carpeta wildcards</button>
+    <button class="btn" id="btnOpen" type="button" hidden>Elegir carpeta</button>
+    <button class="btn" id="btnReload" type="button" disabled>Recargar</button>
+    <label class="chk" title="Vuelve a leer los .txt automáticamente cuando los guardas (Chrome / Edge)"><input type="checkbox" id="optAuto" checked> Auto-recargar</label>
+  </div>
+  <input type="file" id="dirInput" webkitdirectory directory multiple hidden>
+</header>
+
+<nav class="mtabs" role="tablist" aria-label="Secciones">
+  <button type="button" data-pane="paneFiles" aria-selected="false">Archivos</button>
+  <button type="button" data-pane="paneWork" aria-selected="true">Prompt</button>
+  <button type="button" data-pane="paneSide" aria-selected="false">Ideas</button>
+</nav>
+
+<main class="grid">
+  <aside class="pane files" id="paneFiles" aria-label="Archivos de wildcards">
+    <div class="pane-head"><input class="search" id="filter" type="search" placeholder="Filtrar archivos" aria-label="Filtrar archivos"></div>
+    <div class="tree" id="tree"><div class="tree-empty">Abre tu carpeta para ver aquí los .txt.</div></div>
+  </aside>
+
+  <section class="pane work show" id="paneWork" aria-label="Prompt">
+    <div class="welcome" id="welcome" hidden>
+      <h1>Abre Wildcarder con el lanzador</h1>
+      <p>Para que la web lea sola la carpeta <code>wildcards</code> del proyecto, ábrela con el lanzador que hay junto a este archivo. Se abre el navegador con todo cargado y, cada vez que guardes un .txt, la web se actualiza.</p>
+      <div class="tree-sketch">wildcarder/
+├─ <b>Wildcarder (Windows).bat</b>     <span class="muted">← doble clic en Windows</span>
+├─ <b>Wildcarder (Mac).command</b>     <span class="muted">← doble clic en Mac</span>
+├─ wildcarder-linux.sh
+├─ index.html
+└─ wildcards/                   <span class="muted">← tus .txt</span></div>
+      <p class="note">El lanzador abre una ventana negra: déjala abierta mientras uses la web y ciérrala para terminar.</p>
+      <div class="acts">
+        <button class="btn" id="btnOpen2" type="button">Elegir la carpeta a mano</button>
+        <button class="btn" id="btnReconnect" type="button" hidden>Reconectar</button>
+      </div>
+      <p class="note" id="browserNote">Sin lanzador también funciona, pero tendrás que elegir la carpeta cada vez que abras la web.</p>
+    </div>
+
+    <div id="workspace" hidden>
+      <div class="label-row">
+        <h2><label for="prompt">Prompt</label></h2>
+        <span class="hint">Escribe <code>__</code> para buscar wildcards</span>
+      </div>
+      <div class="editor-wrap" id="editorWrap">
+        <div class="editor">
+          <pre id="hl" aria-hidden="true"></pre>
+          <textarea id="prompt" spellcheck="false" autocomplete="off" placeholder="portrait of a __character/fantasy__, __landscape__ in the background, {oil painting|watercolor}, __art/lighting__"></textarea>
+        </div>
+        <div class="ac" id="ac" role="listbox" hidden></div>
+      </div>
+      <div class="warn" id="warn" aria-live="polite"></div>
+
+      <div class="controls">
+        <button class="btn primary" id="btnGen" type="button">Generar</button>
+        <label class="field">Cantidad
+          <select id="optCount"><option>1</option><option>2</option><option selected>4</option><option>8</option><option>16</option><option>32</option></select>
+        </label>
+        <label class="field">Semilla <input type="number" id="optSeed" min="0" max="4294967295" step="1"></label>
+        <button class="btn small" id="btnDice" type="button" title="Semilla nueva">Nueva</button>
+        <label class="chk"><input type="checkbox" id="optLock"> Fijar semilla</label>
+        <label class="chk" title="Quita comas duplicadas y espacios sobrantes"><input type="checkbox" id="optClean" checked> Limpiar comas</label>
+        <span class="kbd">Ctrl + Enter</span>
+      </div>
+
+      <div class="results-head">
+        <h2 id="resTitle">Resultados</h2>
+        <label class="chk" title="Colorea cada parte según el wildcard que la generó"><input type="checkbox" id="optTrace" checked> Ver origen</label>
+        <button class="btn small" id="btnCopyAll" type="button" disabled>Copiar todo</button>
+        <button class="btn small" id="btnDownload" type="button" disabled>Descargar .txt</button>
+      </div>
+      <div class="results" id="results"><div class="empty-res">Pulsa Generar para ver resultados.</div></div>
+      <div class="trace" id="trace">Pasa el ratón por un resultado para ver de qué wildcard sale cada parte.</div>
+    </div>
+  </section>
+
+  <aside class="pane side" id="paneSide" aria-label="Panel lateral">
+    <div class="tabs" role="tablist">
+      <button type="button" role="tab" data-tab="ideas" aria-selected="true">Ideas base</button>
+      <button type="button" role="tab" data-tab="file" aria-selected="false">Archivo</button>
+      <button type="button" role="tab" data-tab="help" aria-selected="false">Sintaxis</button>
+    </div>
+    <div class="tabpanel" id="tab-ideas" role="tabpanel"><p class="muted">Las ideas base salen de la carpeta <code>wildcards/template/</code>.</p></div>
+    <div class="tabpanel" id="tab-file" role="tabpanel" hidden><p class="muted">Elige un archivo en la lista de la izquierda.</p></div>
+    <div class="tabpanel help" id="tab-help" role="tabpanel" hidden>
+      <h3>Sintaxis</h3>
+      <p class="sub">La misma que Dynamic Prompts e Impact Pack en ComfyUI.</p>
+      <dl>
+        <dt>__color__</dt><dd>Una línea al azar de <code>wildcards/color.txt</code>.</dd>
+        <dt>__color/warm__</dt><dd>Subcarpetas: <code>wildcards/color/warm.txt</code>.</dd>
+        <dt>__color/*__</dt><dd>Junta todas las líneas de todos los .txt dentro de <code>color/</code> (subcarpetas incluidas) y elige una.</dd>
+        <dt>__*/fantasy__</dt><dd>El asterisco vale en cualquier parte del nombre.</dd>
+        <dt><span class="t-var">{</span>red<span class="t-var">|</span>blue<span class="t-var">|</span>green<span class="t-var">}</span></dt><dd>Elige una de las opciones.</dd>
+        <dt><span class="t-var">{2$$</span>a<span class="t-var">|</span>b<span class="t-var">|</span>c<span class="t-var">}</span></dt><dd>Elige 2 distintas, separadas por coma.</dd>
+        <dt><span class="t-var">{1-3$$</span>a<span class="t-var">|</span>b<span class="t-var">|</span>c<span class="t-var">}</span></dt><dd>Entre 1 y 3 opciones distintas.</dd>
+        <dt><span class="t-var">{2$$ and $$</span>a<span class="t-var">|</span>b<span class="t-var">|</span>c<span class="t-var">}</span></dt><dd>Separador propio: «a and c».</dd>
+        <dt><span class="t-var">{3::</span>a<span class="t-var">|</span>b<span class="t-var">}</span></dt><dd>Peso: «a» sale 3 veces más que «b».</dd>
+        <dt><span class="t-var">{</span>__color/warm__<span class="t-var">|</span>__color/cool__<span class="t-var">}</span></dt><dd>Las opciones pueden contener wildcards, y al revés.</dd>
+      </dl>
+      <h3 style="margin-top:22px">Dentro de los .txt</h3>
+      <p>Una opción por línea. Las líneas vacías y las que empiezan por <code>#</code> se ignoran. Repetir una línea hace que salga más a menudo. Una línea puede llevar otros wildcards y variantes: así se anidan las listas.</p>
+      <p>El nombre del wildcard es la ruta del archivo dentro de <code>wildcards/</code>, sin <code>.txt</code>. Un archivo y una carpeta pueden llamarse igual: <code>color.txt</code> mezcla lo que hay en <code>color/</code>.</p>
+      <h3 style="margin-top:22px">Atajos</h3>
+      <p><code>Ctrl + Enter</code> genera. Mientras escribes <code>__</code>, las flechas y <code>Tab</code> o <code>Enter</code> eligen un wildcard. Doble clic en un archivo de la lista lo inserta en el prompt. Clic en una parte de un resultado abre el archivo del que sale.</p>
+    </div>
+  </aside>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="drop" id="drop">Suelta aquí la carpeta</div>
+
+<script>
+// ENGINE START
+const MAX_DEPTH = 40;
+const MAX_STEPS = 20000;
+const WC_RE = /^__([A-Za-z0-9*][A-Za-z0-9 _\-\/*.]*?)__/;
+
+function normKey(s) {
+  return String(s).trim().toLowerCase().replace(/\\/g, '/').replace(/\.txt$/, '').replace(/^\/+|\/+$/g, '');
+}
+function parseLines(text) {
+  return String(text).replace(/^﻿/, '').split(/\r?\n/).map(l => l.trim()).filter(l => l && !l.startsWith('#'));
+}
+function escRe(s) { return s.replace(/[.+?^${}()|[\]\\]/g, '\\$&'); }
+function mulberry32(a) {
+  return function () {
+    a |= 0; a = a + 0x6D2B79F5 | 0;
+    let t = Math.imul(a ^ a >>> 15, 1 | a);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+function matchBrace(str, i) {
+  let d = 0;
+  for (let j = i; j < str.length; j++) {
+    const c = str[j];
+    if (c === '\\') { j++; continue; }
+    if (c === '{') d++;
+    else if (c === '}') { d--; if (d === 0) return j; }
+  }
+  return -1;
+}
+function splitTop(str) {
+  const parts = []; let d = 0, cur = '';
+  for (let j = 0; j < str.length; j++) {
+    const c = str[j];
+    if (c === '\\' && j + 1 < str.length) { cur += c + str[j + 1]; j++; continue; }
+    if (c === '{') d++;
+    else if (c === '}') d--;
+    if (c === '|' && d === 0) { parts.push(cur); cur = ''; continue; }
+    cur += c;
+  }
+  parts.push(cur);
+  return parts;
+}
+// Finds every __name__ in a text (static scan, used for highlighting and references).
+function scanWildcards(text) {
+  const out = [];
+  for (let i = 0; i < text.length; i++) {
+    if (text[i] === '_' && text[i + 1] === '_') {
+      const m = WC_RE.exec(text.slice(i));
+      if (m) { out.push({ name: m[1], start: i, end: i + m[0].length }); i += m[0].length - 1; }
+    }
+  }
+  return out;
+}
+
+class WildcardEngine {
+  constructor(map) {
+    this.map = map;                       // key -> array of lines
+    this.keys = Object.keys(map).sort();
+    this.globCache = new Map();
+  }
+  has(name) { return !!this.lookup(name); }
+  lookup(name) {
+    const k = normKey(name);
+    if (k.includes('*')) {
+      if (this.globCache.has(k)) return this.globCache.get(k);
+      const re = new RegExp('^' + k.split('*').map(escRe).join('.*') + '$');
+      const matched = this.keys.filter(key => re.test(key));
+      let lines = [];
+      for (const key of matched) lines = lines.concat(this.map[key]);
+      const r = matched.length && lines.length ? { lines, matched } : null;
+      this.globCache.set(k, r);
+      return r;
+    }
+    const lines = this.map[k];
+    return lines && lines.length ? { lines, matched: [k] } : null;
+  }
+  run(text, seed, opts = {}) {
+    const rng = mulberry32(seed >>> 0);
+    const out = [];                       // [char, sourceId]
+    const sources = [{ name: null, parent: -1 }];
+    const missing = new Set();
+    let overflow = false, steps = 0;
+    const self = this;
+    const emit = (str, src) => { for (const ch of str) out.push([ch, src]); };
+
+    function expand(str, src, depth) {
+      let buf = '';
+      const flush = () => { if (buf) { emit(buf, src); buf = ''; } };
+      for (let i = 0; i < str.length;) {
+        const c = str[i];
+        if (c === '\\' && '{}|_'.includes(str[i + 1] || '#')) { buf += str[i + 1]; i += 2; continue; }
+        if (c === '{') {
+          const end = matchBrace(str, i);
+          if (end > i) { flush(); variant(str.slice(i + 1, end), src, depth); i = end + 1; continue; }
+        }
+        if (c === '_' && str[i + 1] === '_') {
+          const m = WC_RE.exec(str.slice(i));
+          if (m) { flush(); wildcard(m[1], src, depth); i += m[0].length; continue; }
+        }
+        buf += c; i++;
+      }
+      flush();
+    }
+    function wildcard(name, src, depth) {
+      const key = normKey(name);
+      const res = self.lookup(key);
+      const id = sources.length;
+      sources.push({ name: key, parent: src, missing: !res });
+      if (!res) { missing.add(key); emit('__' + name + '__', id); return; }
+      if (depth >= MAX_DEPTH || ++steps > MAX_STEPS) { overflow = true; emit('__' + name + '__', id); return; }
+      expand(res.lines[Math.floor(rng() * res.lines.length)], id, depth + 1);
+    }
+    function variant(inner, src, depth) {
+      let body = inner, min = 1, max = 1, sep = ', ';
+      const m = /^\s*(\d*)\s*(?:-\s*(\d*))?\s*\$\$/.exec(body);
+      let counted = false;
+      if (m && (m[1] !== '' || m[2] !== undefined)) {
+        counted = true;
+        body = body.slice(m[0].length);
+        const lo = m[1] === '' ? 1 : parseInt(m[1], 10);
+        if (m[2] === undefined) { min = max = lo; }
+        else { min = lo; max = m[2] === '' ? Infinity : parseInt(m[2], 10); }
+        const si = body.indexOf('$$');
+        if (si >= 0 && !/[|{]/.test(body.slice(0, si))) { sep = body.slice(0, si); body = body.slice(si + 2); }
+      }
+      let opts = splitTop(body).map(o => {
+        const w = /^\s*(\d+(?:\.\d+)?)::/.exec(o);
+        return w ? { text: o.slice(w[0].length), w: parseFloat(w[1]) } : { text: o, w: 1 };
+      }).filter(o => o.w > 0);
+      if (!opts.length) return;
+      if (!counted) { min = max = 1; }
+      max = Math.min(max, opts.length); min = Math.min(min, max);
+      const k = min + Math.floor(rng() * (max - min + 1));
+      const pool = opts.slice(), picked = [];
+      for (let n = 0; n < k && pool.length; n++) {
+        const total = pool.reduce((s, o) => s + o.w, 0);
+        let r = rng() * total, idx = 0;
+        for (; idx < pool.length - 1; idx++) { r -= pool[idx].w; if (r < 0) break; }
+        picked.push(pool.splice(idx, 1)[0]);
+      }
+      picked.forEach((o, n) => { if (n) emit(sep, src); expand(o.text, src, depth); });
+    }
+
+    expand(String(text), 0, 0);
+    const chars = opts.clean === false ? out : cleanChars(out, sources);
+    return {
+      text: chars.map(c => c[0]).join(''),
+      chars, sources, missing: [...missing], overflow
+    };
+  }
+}
+
+function commonAncestor(a, b, sources) {
+  if (a === b) return a;
+  const seen = new Set();
+  for (let x = a; x >= 0; x = sources[x].parent) seen.add(x);
+  for (let y = b; y >= 0; y = sources[y].parent) if (seen.has(y)) return y;
+  return 0;
+}
+// Collapses whitespace, removes empty/duplicate commas and normalises ", " — keeping track of sources.
+function cleanChars(chars, sources) {
+  const res = [];
+  let pend = null;
+  for (const [ch, src] of chars) {
+    if (/\s/.test(ch)) { if (pend === null) pend = src; continue; }
+    const last = res.length ? res[res.length - 1][0] : '';
+    if (ch === ',') {
+      if (!res.length || last === ',' || last === '(' ) { pend = null; continue; }
+      res.push([ch, src]); pend = src; continue;
+    }
+    if (pend !== null && res.length && last !== '(' && last !== '[' && !')].:;!?'.includes(ch)) {
+      res.push([' ', commonAncestor(pend, src, sources)]);
+    }
+    pend = null;
+    res.push([ch, src]);
+  }
+  while (res.length && /[\s,]/.test(res[res.length - 1][0])) res.pop();
+  // "a elf" -> "an elf" (skips words like "unicorn", "uniform", "used")
+  for (let i = 0; i < res.length - 2; i++) {
+    const c = res[i][0];
+    if ((c === 'a' || c === 'A') && res[i + 1][0] === ' ' && (i === 0 || /[\s,(]/.test(res[i - 1][0]))) {
+      let w = '';
+      for (let j = i + 2; j < res.length && /[A-Za-z'-]/.test(res[j][0]) && w.length < 5; j++) w += res[j][0].toLowerCase();
+      if ((/^[aeio]/.test(w) && !/^(one|once)/.test(w)) || (/^u/.test(w) && !/^(uni|use|usu|ura|ure|uti|ut)/.test(w)) || /^(hour|heir|hones|honor|honou)/.test(w)) {
+        res.splice(i + 1, 0, ['n', res[i][1]]);
+      }
+    }
+  }
+  return res;
+}
+// ENGINE END
+
+/* ================= UI ================= */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const fmt = n => n.toLocaleString('es-ES');
+const store = {
+  get(k, d) { try { const v = localStorage.getItem('wildcarder:' + k); return v === null ? d : JSON.parse(v); } catch { return d; } },
+  set(k, v) { try { localStorage.setItem('wildcarder:' + k, JSON.stringify(v)); } catch {} }
+};
+const randSeed = () => { const a = new Uint32Array(1); crypto.getRandomValues(a); return a[0]; };
+
+const state = {
+  map: {}, raw: {}, engine: new WildcardEngine({}),
+  source: null, dirHandle: null, folderName: '', sigs: new Map(), httpBase: null,
+  usedBy: new Map(), selected: null, expanded: new Set(store.get('expanded', [])),
+  results: [], busy: false
+};
+
+/* ---------- IndexedDB for remembering the folder ---------- */
+function idb() {
+  return new Promise((res, rej) => {
+    const r = indexedDB.open('wildcarder', 1);
+    r.onupgradeneeded = () => r.result.createObjectStore('kv');
+    r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error);
+  });
+}
+async function idbSet(k, v) { try { const db = await idb(); await new Promise((res, rej) => { const t = db.transaction('kv', 'readwrite'); t.objectStore('kv').put(v, k); t.oncomplete = res; t.onerror = () => rej(t.error); }); } catch {} }
+async function idbGet(k) { try { const db = await idb(); return await new Promise((res, rej) => { const r = db.transaction('kv').objectStore('kv').get(k); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); }); } catch { return undefined; } }
+
+/* ---------- loading ---------- */
+async function rootOf(handle) {
+  try { return await handle.getDirectoryHandle('wildcards'); } catch { return handle; }
+}
+async function walkHandle(dir, prefix = '') {
+  const out = [];
+  for await (const [name, h] of dir.entries()) {
+    if (name.startsWith('.')) continue;
+    if (h.kind === 'directory') out.push(...await walkHandle(h, prefix + name + '/'));
+    else if (/\.txt$/i.test(name)) out.push({ path: prefix + name, handle: h });
+  }
+  return out;
+}
+async function loadFromHandle(handle, { quiet = false } = {}) {
+  const root = await rootOf(handle);
+  const entries = await walkHandle(root);
+  const files = [];
+  const sigs = new Map();
+  for (const e of entries) {
+    const f = await e.handle.getFile();
+    sigs.set(e.path, f.size + ':' + f.lastModified);
+    files.push({ path: e.path, text: await f.text() });
+  }
+  const changed = countChanged(sigs);
+  state.sigs = sigs; state.dirHandle = handle; state.source = 'handle';
+  state.folderName = root.name;
+  ingest(files);
+  if (quiet && changed) toast(changed === 1 ? 'Recargado: 1 archivo cambiado' : `Recargado: ${changed} archivos cambiados`);
+}
+function countChanged(sigs) {
+  if (!state.sigs.size) return 0;
+  let n = 0;
+  for (const [p, s] of sigs) if (state.sigs.get(p) !== s) n++;
+  for (const p of state.sigs.keys()) if (!sigs.has(p)) n++;
+  return n;
+}
+async function signature(handle) {
+  const root = await rootOf(handle);
+  const entries = await walkHandle(root);
+  const parts = [];
+  for (const e of entries) { const f = await e.handle.getFile(); parts.push(e.path + '|' + f.size + ':' + f.lastModified); }
+  return parts.sort().join('\n');
+}
+function currentSignature() { return [...state.sigs].map(([p, s]) => p + '|' + s).sort().join('\n'); }
+
+async function loadFromFileList(list) {
+  const txt = [...list].filter(f => /\.txt$/i.test(f.name));
+  if (!txt.length) { toast('No hay archivos .txt en esa carpeta'); return; }
+  const files = [];
+  let rootName = '';
+  for (const f of txt) {
+    const parts = (f.webkitRelativePath || f._rel || f.name).split('/').filter(Boolean);
+    const wi = parts.findIndex(p => p.toLowerCase() === 'wildcards');
+    const rel = wi >= 0 ? parts.slice(wi + 1) : parts.slice(1);
+    rootName = wi >= 0 ? parts[wi] : parts[0];
+    if (!rel.length) continue;
+    files.push({ path: rel.join('/'), text: await f.text() });
+  }
+  state.source = 'input'; state.dirHandle = null; state.sigs = new Map(); state.folderName = rootName;
+  ingest(files);
+}
+
+async function crawlHttp(base) {
+  const found = [];
+  async function walk(url, prefix, depth) {
+    if (depth > 8) return;
+    const r = await fetch(url, { cache: 'no-store' });
+    if (!r.ok) throw new Error(r.status);
+    const doc = new DOMParser().parseFromString(await r.text(), 'text/html');
+    for (const a of doc.querySelectorAll('a[href]')) {
+      const href = a.getAttribute('href');
+      if (!href || /^(\?|#|\/|\.\.|[a-z]+:)/i.test(href)) continue;
+      const name = decodeURIComponent(href);
+      if (href.endsWith('/')) await walk(url + href, prefix + name, depth + 1);
+      else if (/\.txt$/i.test(name)) found.push({ path: prefix + name, url: url + href });
+    }
+  }
+  await walk(base, '', 0);
+  return found;
+}
+async function loadFromHttp({ quiet = false } = {}) {
+  try {
+    const r = await fetch('wildcards.json', { cache: 'no-store' });
+    if (r.ok) {
+      const files = await r.json();
+      if (Array.isArray(files) && files.length) {
+        const sig = files.map(f => f.path + '|' + f.text.length + '|' + hash(f.text)).sort().join('\n');
+        const changed = state.httpSig && state.httpSig !== sig;
+        if (quiet && !changed) return;
+        state.httpSig = sig; state.source = 'http'; state.folderName = 'wildcards';
+        ingest(files);
+        if (quiet) toast('Recargado: hay cambios en los .txt');
+        return;
+      }
+    }
+  } catch {}
+  const base = new URL('wildcards/', location.href).href;
+  const list = await crawlHttp(base);
+  if (!list.length) throw new Error('empty');
+  const files = await Promise.all(list.map(async e => ({ path: e.path, text: await (await fetch(e.url, { cache: 'no-store' })).text() })));
+  const sig = files.map(f => f.path + '|' + f.text.length + '|' + hash(f.text)).sort().join('\n');
+  const changed = state.httpSig && state.httpSig !== sig;
+  if (quiet && !changed) return;
+  state.httpSig = sig; state.source = 'http'; state.folderName = 'wildcards';
+  ingest(files);
+  if (quiet) toast('Recargado: hay cambios en los .txt');
+}
+async function fetchText(url) {
+  const r = await fetch(url, { cache: 'no-store' });
+  if (!r.ok) throw new Error('HTTP ' + r.status);
+  return r.text();
+}
+async function loadFromServer({ quiet = false } = {}) {
+  if (quiet) {
+    const sig = await fetchText('__wildcarder/sig');
+    if (sig === state.serverSig) return;
+  }
+  const r = await fetch('__wildcarder/files', { cache: 'no-store' });
+  if (!r.ok) throw new Error('HTTP ' + r.status);
+  const data = await r.json();
+  const changed = state.serverSig !== undefined && state.serverSig !== data.sig;
+  state.serverSig = data.sig; state.source = 'server'; state.folderName = 'wildcards'; state.folderPath = data.folder;
+  ingest(data.files);
+  if (quiet && changed) toast('Actualizado: has cambiado algún .txt');
+}
+async function serverPost(path, body) {
+  const r = await fetch(path, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+  if (!r.ok) throw new Error(await r.text() || ('HTTP ' + r.status));
+}
+async function revealInOs(rel) {
+  try { await serverPost('__wildcarder/open', { path: rel || '' }); toast(rel ? 'Abriendo ' + rel : 'Abriendo la carpeta wildcards'); }
+  catch (e) { toast('No se pudo abrir: ' + e.message); }
+}
+function hash(s) { let h = 0; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0; return h; }
+
+function ingest(files) {
+  const map = {}, raw = {};
+  files.sort((a, b) => a.path.localeCompare(b.path));
+  for (const f of files) {
+    const key = normKey(f.path);
+    map[key] = parseLines(f.text);
+    raw[key] = { path: f.path, text: f.text };
+  }
+  state.map = map; state.raw = raw;
+  state.engine = new WildcardEngine(map);
+  buildUsedBy();
+  $('#welcome').hidden = true; $('#workspace').hidden = false;
+  $('#btnReload').disabled = false;
+  renderStatus(); renderTree(); renderIdeas(); updateEditor();
+  if (state.selected && raw[state.selected]) showFile(state.selected, { keepTab: true });
+  else if (state.selected) { state.selected = null; $('#tab-file').innerHTML = '<p class="muted">Ese archivo ya no existe.</p>'; }
+}
+function buildUsedBy() {
+  const ub = new Map();
+  for (const [key, lines] of Object.entries(state.map)) {
+    for (const line of lines) {
+      for (const w of scanWildcards(line)) {
+        const r = state.engine.lookup(w.name);
+        if (!r) continue;
+        for (const t of r.matched) {
+          if (!ub.has(t)) ub.set(t, new Set());
+          ub.get(t).add(key);
+        }
+      }
+    }
+  }
+  state.usedBy = ub;
+}
+
+/* ---------- opening ---------- */
+async function openFolder() {
+  if (window.showDirectoryPicker) {
+    try {
+      const h = await window.showDirectoryPicker({ id: 'wildcarder', mode: 'read' });
+      await loadFromHandle(h);
+      idbSet('dir', h);
+      toast('Carpeta cargada');
+    } catch (e) { if (e && e.name !== 'AbortError') toast('No se pudo abrir la carpeta: ' + e.message); }
+  } else {
+    $('#dirInput').click();
+  }
+}
+async function reload() {
+  try {
+    if (state.source === 'server') { await loadFromServer(); toast('Recargado'); }
+    else if (state.source === 'handle' && state.dirHandle) { await loadFromHandle(state.dirHandle); toast('Recargado'); }
+    else if (state.source === 'http') { state.httpSig = null; await loadFromHttp(); toast('Recargado'); }
+    else $('#dirInput').click();
+  } catch (e) { toast('Error al recargar: ' + e.message); }
+}
+async function poll() {
+  if (!$('#optAuto').checked || document.hidden || state.busy) return;
+  state.busy = true;
+  try {
+    if (state.source === 'server') {
+      await loadFromServer({ quiet: true });
+    } else if (state.source === 'handle' && state.dirHandle) {
+      const sig = await signature(state.dirHandle);
+      if (sig !== currentSignature()) await loadFromHandle(state.dirHandle, { quiet: true });
+    } else if (state.source === 'http') {
+      await loadFromHttp({ quiet: true });
+    }
+  } catch {} finally { state.busy = false; }
+}
+
+/* ---------- status / tree ---------- */
+function renderStatus() {
+  const nFiles = Object.keys(state.map).length;
+  const nLines = Object.values(state.map).reduce((s, l) => s + l.length, 0);
+  const server = state.source === 'server';
+  $('#status').innerHTML = `<b>${esc(state.folderName || 'wildcards')}</b>${server ? ' del proyecto' : ''}: ${fmt(nFiles)} archivos, ${fmt(nLines)} entradas`;
+  if (server && state.folderPath) $('#status').title = state.folderPath;
+  $('#btnReveal').hidden = !server;
+  $('#btnOpen').hidden = server;
+  $('#optAuto').disabled = state.source === 'input';
+  $('#optAuto').parentElement.title = state.source === 'input'
+    ? 'Tu navegador no permite vigilar la carpeta: usa Recargar después de guardar'
+    : 'Vuelve a leer los .txt automáticamente cuando los guardas';
+}
+function buildTree() {
+  const root = { children: new Map(), count: 0 };
+  for (const key of Object.keys(state.map)) {
+    const parts = key.split('/');
+    let node = root;
+    for (let i = 0; i < parts.length - 1; i++) {
+      const dk = 'd:' + parts[i];
+      if (!node.children.has(dk)) node.children.set(dk, { type: 'dir', name: parts[i], path: parts.slice(0, i + 1).join('/'), children: new Map(), count: 0 });
+      node = node.children.get(dk);
+      node.count++;
+    }
+    node.children.set('f:' + parts[parts.length - 1], { type: 'file', name: parts[parts.length - 1], key });
+  }
+  return root;
+}
+function renderTree() {
+  const q = $('#filter').value.trim().toLowerCase();
+  const tree = buildTree();
+  const el = $('#tree');
+  if (!Object.keys(state.map).length) { el.innerHTML = '<div class="tree-empty">No hay archivos.</div>'; return; }
+  let html = '';
+  const matches = node => node.type === 'file' ? node.key.includes(q) : [...node.children.values()].some(matches);
+  const sortChildren = m => [...m.values()].sort((a, b) => a.name.localeCompare(b.name) || (a.type === 'file' ? -1 : 1));
+  const walk = (node, depth) => {
+    for (const ch of sortChildren(node.children)) {
+      if (q && !matches(ch)) continue;
+      const pad = 12 + depth * 14;
+      if (ch.type === 'dir') {
+        const open = q ? true : state.expanded.has(ch.path);
+        html += `<button class="row dir" type="button" data-dir="${esc(ch.path)}" style="padding-left:${pad}px" aria-expanded="${open}"><span class="chev">${open ? '▾' : '▸'}</span><span class="nm">${esc(ch.name)}/</span><span class="ct">${ch.count}</span></button>`;
+        if (open) walk(ch, depth + 1);
+      } else {
+        const n = state.map[ch.key].length;
+        html += `<button class="row file${state.selected === ch.key ? ' sel' : ''}" type="button" data-key="${esc(ch.key)}" style="padding-left:${pad}px" title="__${esc(ch.key)}__ · doble clic para insertar"><span class="chev"></span><span class="nm">${esc(ch.name)}.txt</span><span class="ct">${n}</span></button>`;
+      }
+    }
+  };
+  walk(tree, 0);
+  el.innerHTML = html || '<div class="tree-empty">Nada coincide con el filtro.</div>';
+}
+$('#tree').addEventListener('click', e => {
+  const b = e.target.closest('.row');
+  if (!b) return;
+  if (b.dataset.dir) {
+    const p = b.dataset.dir;
+    state.expanded.has(p) ? state.expanded.delete(p) : state.expanded.add(p);
+    store.set('expanded', [...state.expanded]);
+    renderTree();
+  } else if (b.dataset.key) {
+    showFile(b.dataset.key);
+  }
+});
+$('#tree').addEventListener('dblclick', e => {
+  const b = e.target.closest('.row.file');
+  if (b) { insertAtCaret('__' + b.dataset.key + '__'); showPane('paneWork'); }
+});
+$('#filter').addEventListener('input', renderTree);
+
+/* ---------- highlighting ---------- */
+function highlight(text, { comments = false } = {}) {
+  if (comments && text.trim().startsWith('#')) return `<span class="t-com">${esc(text)}</span>`;
+  let html = '', i = 0;
+  const wcs = scanWildcards(text);
+  let wi = 0;
+  while (i < text.length) {
+    if (wi < wcs.length && wcs[wi].start === i) {
+      const w = wcs[wi++];
+      const raw = text.slice(w.start, w.end);
+      const ok = state.engine.has(w.name);
+      const cls = !ok ? 't-miss' : w.name.includes('*') ? 't-glob' : 't-wc';
+      html += `<span class="${cls}" data-wc="${esc(normKey(w.name))}">${esc(raw)}</span>`;
+      i = w.end; continue;
+    }
+    const c = text[i];
+    if (c === '$' && text[i + 1] === '$') { html += '<span class="t-var">$$</span>'; i += 2; continue; }
+    if (c === '{' || c === '}' || c === '|') { html += `<span class="t-var">${c}</span>`; i++; continue; }
+    if (c === ':' && text[i + 1] === ':') { html += '<span class="t-var">::</span>'; i += 2; continue; }
+    html += esc(c); i++;
+  }
+  return html;
+}
+
+/* ---------- editor ---------- */
+const ta = $('#prompt'), hl = $('#hl');
+ta.value = store.get('prompt', '');
+function updateEditor() {
+  hl.innerHTML = highlight(ta.value) + '\n ';
+  const miss = [...new Set(scanWildcards(ta.value).filter(w => !state.engine.has(w.name)).map(w => normKey(w.name)))];
+  $('#warn').innerHTML = miss.length && Object.keys(state.map).length
+    ? 'No existe: ' + miss.map(m => `<code>__${esc(m)}__</code>`).join(', ') + (miss.some(m => !m.includes('*')) ? `. Crea <code>wildcards/${esc(miss.find(m => !m.includes('*')))}.txt</code> o corrige el nombre.` : '.')
+    : '';
+}
+ta.addEventListener('input', () => { updateEditor(); store.set('prompt', ta.value); autocomplete(); });
+ta.addEventListener('click', autocomplete);
+ta.addEventListener('blur', () => setTimeout(() => { if (!$('#ac').contains(document.activeElement)) closeAc(); }, 120));
+
+function replaceRange(start, end, text) {
+  ta.focus();
+  ta.setSelectionRange(start, end);
+  let ok = false;
+  try { ok = document.execCommand('insertText', false, text); } catch {}
+  if (!ok) { ta.setRangeText(text, start, end, 'end'); ta.dispatchEvent(new Event('input')); }
+}
+function insertAtCaret(text) {
+  const s = ta.selectionStart ?? ta.value.length, e = ta.selectionEnd ?? s;
+  const before = ta.value.slice(0, s);
+  const pad = before && !/[\s,({|]$/.test(before) ? ', ' : '';
+  replaceRange(s, e, pad + text);
+}
+function setPrompt(text) { replaceRange(0, ta.value.length, text); ta.setSelectionRange(text.length, text.length); }
+
+/* ---------- autocomplete ---------- */
+let acItems = [], acIndex = 0, acCtx = null;
+function acCandidates() {
+  const keys = Object.keys(state.map);
+  const dirs = new Set();
+  for (const k of keys) { const p = k.split('/'); for (let i = 1; i < p.length; i++) dirs.add(p.slice(0, i).join('/') + '/*'); }
+  return [...keys.map(k => ({ name: k, count: state.map[k].length })), ...[...dirs].map(d => ({ name: d, count: null }))];
+}
+function autocomplete() {
+  const pos = ta.selectionStart;
+  if (pos !== ta.selectionEnd) return closeAc();
+  const before = ta.value.slice(0, pos);
+  const m = /__([A-Za-z0-9 _\-\/*.]*)$/.exec(before);
+  if (!m) return closeAc();
+  const start = pos - m[0].length;
+  const line = before.slice(before.lastIndexOf('\n') + 1, start);
+  if ((line.match(/__/g) || []).length % 2 === 1) return closeAc(); // this "__" closes a wildcard
+  const q = m[1].toLowerCase();
+  const scored = [];
+  for (const c of acCandidates()) {
+    const n = c.name;
+    let s = -1;
+    if (!q) s = n.includes('/') ? 1 : 3;
+    else if (n.startsWith(q)) s = 4;
+    else if (n.split('/').some(p => p.startsWith(q))) s = 3;
+    else if (n.includes(q)) s = 2;
+    if (s >= 0) scored.push({ ...c, s });
+  }
+  scored.sort((a, b) => b.s - a.s || a.name.split('/').length - b.name.split('/').length || a.name.localeCompare(b.name));
+  acItems = scored.slice(0, 40);
+  if (!acItems.length) return closeAc();
+  acIndex = 0; acCtx = { start, end: pos, q };
+  renderAc();
+}
+function renderAc() {
+  const ac = $('#ac');
+  const mark = n => {
+    if (!acCtx.q) return esc(n);
+    const i = n.indexOf(acCtx.q);
+    return i < 0 ? esc(n) : esc(n.slice(0, i)) + '<mark>' + esc(n.slice(i, i + acCtx.q.length)) + '</mark>' + esc(n.slice(i + acCtx.q.length));
+  };
+  ac.innerHTML = acItems.map((it, i) =>
+    `<button type="button" role="option" class="${i === acIndex ? 'on' : ''}" data-i="${i}" aria-selected="${i === acIndex}"><span>${mark(it.name)}</span><span class="ct">${it.count === null ? 'carpeta' : it.count}</span></button>`).join('');
+  const c = caretCoords(acCtx.start);
+  const wrapW = $('#editorWrap').clientWidth;
+  ac.hidden = false;
+  ac.style.top = (c.top + c.h + 4) + 'px';
+  ac.style.left = Math.max(0, Math.min(c.left, wrapW - ac.offsetWidth)) + 'px';
+  const on = ac.querySelector('.on'); if (on) on.scrollIntoView({ block: 'nearest' });
+}
+function closeAc() { $('#ac').hidden = true; acItems = []; acCtx = null; }
+function acceptAc(i = acIndex) {
+  const it = acItems[i]; if (!it || !acCtx) return;
+  let end = acCtx.end;
+  const after = ta.value.slice(end);
+  const rest = /^[A-Za-z0-9 _\-\/*.]*?__/.exec(after);
+  if (rest && rest[0].length <= 64) end += rest[0].length;
+  const s = acCtx.start;
+  closeAc();
+  replaceRange(s, end, '__' + it.name + '__');
+}
+$('#ac').addEventListener('mousedown', e => e.preventDefault());
+$('#ac').addEventListener('click', e => { const b = e.target.closest('button'); if (b) acceptAc(+b.dataset.i); });
+ta.addEventListener('keydown', e => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); generate(); return; }
+  if ($('#ac').hidden) return;
+  if (e.key === 'ArrowDown') { e.preventDefault(); acIndex = (acIndex + 1) % acItems.length; renderAc(); }
+  else if (e.key === 'ArrowUp') { e.preventDefault(); acIndex = (acIndex - 1 + acItems.length) % acItems.length; renderAc(); }
+  else if (e.key === 'Enter' || e.key === 'Tab') { e.preventDefault(); acceptAc(); }
+  else if (e.key === 'Escape') { e.preventDefault(); closeAc(); }
+});
+function caretCoords(pos) {
+  const cs = getComputedStyle(ta);
+  const div = document.createElement('div');
+  for (const p of ['boxSizing', 'width', 'paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft', 'borderTopWidth', 'borderRightWidth', 'borderBottomWidth', 'borderLeftWidth', 'fontFamily', 'fontSize', 'fontWeight', 'lineHeight', 'letterSpacing', 'tabSize', 'wordBreak', 'overflowWrap'])
+    div.style[p] = cs[p];
+  Object.assign(div.style, { position: 'absolute', visibility: 'hidden', whiteSpace: 'pre-wrap', top: '0', left: '-9999px', borderStyle: 'solid', borderColor: 'transparent' });
+  div.textContent = ta.value.slice(0, pos);
+  const span = document.createElement('span'); span.textContent = '​'; div.appendChild(span);
+  document.body.appendChild(div);
+  const r = { top: span.offsetTop + ta.offsetTop, left: span.offsetLeft + ta.offsetLeft, h: parseFloat(cs.lineHeight) || 24 };
+  div.remove();
+  return r;
+}
+
+/* ---------- generate ---------- */
+const optSeed = $('#optSeed'), optCount = $('#optCount'), optLock = $('#optLock'), optClean = $('#optClean'), optTrace = $('#optTrace');
+optSeed.value = store.get('seed', randSeed());
+optCount.value = String(store.get('count', 4));
+optLock.checked = store.get('lock', false);
+optClean.checked = store.get('clean', true);
+optTrace.checked = store.get('trace', true);
+$('#results').classList.toggle('plain', !optTrace.checked);
+[optCount, optLock, optClean, optTrace].forEach(el => el.addEventListener('change', () => {
+  store.set('count', +optCount.value); store.set('lock', optLock.checked); store.set('clean', optClean.checked); store.set('trace', optTrace.checked);
+  $('#results').classList.toggle('plain', !optTrace.checked);
+}));
+optSeed.addEventListener('change', () => { optSeed.value = String(Math.max(0, Math.min(4294967295, parseInt(optSeed.value, 10) || 0))); store.set('seed', +optSeed.value); });
+$('#btnDice').addEventListener('click', () => { optSeed.value = randSeed(); store.set('seed', +optSeed.value); });
+
+function chainOf(id, sources) { const c = []; for (let x = id; x > 0; x = sources[x].parent) c.unshift(x); return c; }
+function renderResult(r, idx) {
+  let html = '', stack = [];
+  const ch = r.chars;
+  for (let i = 0; i < ch.length;) {
+    const src = ch[i][1];
+    let j = i, s = '';
+    while (j < ch.length && ch[j][1] === src) { s += ch[j][0]; j++; }
+    const chain = chainOf(src, r.sources);
+    let p = 0;
+    while (p < stack.length && p < chain.length && stack[p] === chain[p]) p++;
+    for (let k = stack.length - 1; k >= p; k--) html += '</span>';
+    for (let k = p; k < chain.length; k++) {
+      const so = r.sources[chain[k]];
+      html += `<span class="wc${so.missing ? ' miss' : ''}" data-r="${idx}" data-id="${chain[k]}">`;
+    }
+    stack = chain;
+    html += esc(s);
+    i = j;
+  }
+  for (let k = 0; k < stack.length; k++) html += '</span>';
+  return html;
+}
+function generate() {
+  closeAc();
+  const text = ta.value;
+  if (!text.trim()) { toast('Escribe un prompt o elige una idea base'); return; }
+  let seed = parseInt(optSeed.value, 10);
+  if (!optLock.checked || isNaN(seed)) { seed = randSeed(); optSeed.value = seed; }
+  store.set('seed', seed);
+  const n = +optCount.value;
+  state.results = [];
+  for (let i = 0; i < n; i++) state.results.push({ seed: (seed + i) >>> 0, ...state.engine.run(text, (seed + i) >>> 0, { clean: optClean.checked }) });
+  $('#resTitle').textContent = n === 1 ? '1 resultado' : `${n} resultados`;
+  $('#results').innerHTML = state.results.map((r, i) => `
+    <article class="res">
+      <div class="res-text">${renderResult(r, i) || '<span class="muted">(vacío)</span>'}</div>
+      <div class="res-meta"><span class="seed">semilla ${r.seed}</span>${r.overflow ? '<span class="flag">límite de anidado: revisa si un .txt se llama a sí mismo</span>' : ''}<button class="btn small" type="button" data-copy="${i}">Copiar</button></div>
+    </article>`).join('');
+  $('#btnCopyAll').disabled = $('#btnDownload').disabled = false;
+}
+$('#btnGen').addEventListener('click', generate);
+document.addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && e.key === 'Enter' && document.activeElement !== ta) { e.preventDefault(); generate(); } });
+
+async function copyText(t) {
+  try { await navigator.clipboard.writeText(t); }
+  catch { const x = document.createElement('textarea'); x.value = t; document.body.appendChild(x); x.select(); document.execCommand('copy'); x.remove(); }
+}
+$('#results').addEventListener('click', async e => {
+  const b = e.target.closest('[data-copy]');
+  if (b) { await copyText(state.results[+b.dataset.copy].text); toast('Copiado'); return; }
+  const w = e.target.closest('.wc');
+  if (w && optTrace.checked) {
+    const r = state.results[+w.dataset.r], so = r.sources[+w.dataset.id];
+    if (so.missing) toast(`No existe wildcards/${so.name}.txt`);
+    else { const f = fileForName(so.name); if (f) showFile(f); }
+  }
+});
+let hot = null;
+$('#results').addEventListener('mouseover', e => {
+  if (!optTrace.checked) return;
+  const w = e.target.closest('.wc');
+  if (w === hot) return;
+  if (hot) hot.classList.remove('hot');
+  hot = w;
+  if (!w) return;
+  w.classList.add('hot');
+  const r = state.results[+w.dataset.r];
+  const chain = chainOf(+w.dataset.id, r.sources).map(id => r.sources[id]);
+  $('#trace').innerHTML = chain.map((s, i) => i === chain.length - 1 ? `<b>__${esc(s.name)}__</b>` : `__${esc(s.name)}__`).join('<span class="sep">›</span>');
+});
+$('#btnCopyAll').addEventListener('click', async () => { await copyText(state.results.map(r => r.text).join('\n')); toast('Copiados ' + state.results.length + ' resultados'); });
+$('#btnDownload').addEventListener('click', () => {
+  const blob = new Blob([state.results.map(r => r.text).join('\n') + '\n'], { type: 'text/plain;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'prompts_' + new Date().toISOString().slice(0, 16).replace(/[:T]/g, '-') + '.txt';
+  a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+});
+
+/* ---------- side panel ---------- */
+function showTab(name) {
+  document.querySelectorAll('.tabs button').forEach(b => b.setAttribute('aria-selected', String(b.dataset.tab === name)));
+  ['ideas', 'file', 'help'].forEach(t => { $('#tab-' + t).hidden = t !== name; });
+}
+document.querySelectorAll('.tabs button').forEach(b => b.addEventListener('click', () => showTab(b.dataset.tab)));
+
+const IDEA_NAMES = {
+  fantasy_character: 'Personaje de fantasía', scifi_character: 'Personaje sci-fi', creature: 'Criaturas',
+  prop: 'Props y objetos', landscape: 'Paisajes', location: 'Lugares e interiores', vehicle: 'Vehículos',
+  still_life: 'Bodegón y objetos', mashup: 'Mezclas raras', random: 'Cualquiera'
+};
+const humanize = n => IDEA_NAMES[n] || (n.charAt(0).toUpperCase() + n.slice(1)).replace(/[_-]+/g, ' ');
+function renderIdeas() {
+  const el = $('#tab-ideas');
+  const tpls = Object.keys(state.map).filter(k => k.startsWith('template/') && k.split('/').length === 2);
+  if (!tpls.length) {
+    el.innerHTML = '<h3>Ideas base</h3><p class="sub">Crea la carpeta <code>wildcards/template/</code> y pon dentro .txt con prompts completos (uno por línea). Aparecerán aquí.</p>';
+    return;
+  }
+  const order = ['fantasy_character', 'scifi_character', 'creature', 'prop', 'landscape', 'location', 'vehicle', 'still_life', 'mashup'];
+  tpls.sort((a, b) => {
+    const ia = order.indexOf(a.slice(9)), ib = order.indexOf(b.slice(9));
+    return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib) || a.localeCompare(b);
+  });
+  const openSet = new Set(store.get('ideasOpen', ['template/fantasy_character']));
+  el.innerHTML = `<h3>Ideas base</h3><p class="sub">Prompts de partida guardados en <code>wildcards/template/</code>. Elige uno para cargarlo en el editor y modificarlo.</p>
+    <button class="btn primary surprise" type="button" id="btnSurprise">Sorpréndeme</button>` +
+    tpls.filter(k => k !== 'template/random').map(k => {
+      const lines = state.map[k];
+      return `<details class="idea" data-key="${esc(k)}"${openSet.has(k) ? ' open' : ''}>
+        <summary>${esc(humanize(k.slice(9)))}<span class="ct">${lines.length}</span></summary>
+        <div class="idea-body">
+          <div class="idea-actions">
+            <button class="btn small" type="button" data-act="rand" data-key="${esc(k)}">Una al azar</button>
+            <button class="btn small" type="button" data-act="ins" data-key="${esc(k)}" title="Inserta __${esc(k)}__: cada resultado usa una idea distinta">Insertar __${esc(k)}__</button>
+          </div>
+          ${lines.map((l, i) => `<button class="tpl" type="button" data-act="use" data-key="${esc(k)}" data-i="${i}">${highlight(l)}</button>`).join('')}
+        </div>
+      </details>`;
+    }).join('');
+  el.querySelectorAll('details').forEach(d => d.addEventListener('toggle', () => {
+    const s = new Set(store.get('ideasOpen', ['template/fantasy_character']));
+    d.open ? s.add(d.dataset.key) : s.delete(d.dataset.key);
+    store.set('ideasOpen', [...s]);
+  }));
+}
+$('#tab-ideas').addEventListener('click', e => {
+  if (e.target.closest('#btnSurprise')) {
+    const tpls = Object.keys(state.map).filter(k => k.startsWith('template/') && k !== 'template/random' && k.split('/').length === 2);
+    const k = tpls[Math.floor(Math.random() * tpls.length)];
+    const lines = state.map[k];
+    useIdea(lines[Math.floor(Math.random() * lines.length)]);
+    return;
+  }
+  const b = e.target.closest('[data-act]');
+  if (!b) return;
+  const lines = state.map[b.dataset.key];
+  if (b.dataset.act === 'use') useIdea(lines[+b.dataset.i]);
+  else if (b.dataset.act === 'rand') useIdea(lines[Math.floor(Math.random() * lines.length)]);
+  else if (b.dataset.act === 'ins') { insertAtCaret('__' + b.dataset.key + '__'); showPane('paneWork'); }
+});
+function useIdea(line) { setPrompt(line); showPane('paneWork'); generate(); }
+
+function fileForName(name) {
+  const k = normKey(name);
+  if (state.raw[k]) return k;
+  const lk = state.engine.lookup(k);
+  if (!lk) return null;
+  const base = k.split('*')[0].replace(/\/$/, '');
+  if (lk.matched.length > 1 && state.raw[base]) return base;
+  return lk.matched[0];
+}
+function showFile(key, { keepTab = false } = {}) {
+  const raw = state.raw[key];
+  if (!raw) return;
+  state.selected = key;
+  document.querySelectorAll('.row.file').forEach(r => r.classList.toggle('sel', r.dataset.key === key));
+  const lines = raw.text.replace(/^﻿/, '').split(/\r?\n/);
+  while (lines.length && !lines[lines.length - 1].trim()) lines.pop();
+  const used = [...(state.usedBy.get(key) || [])].sort();
+  const refs = [...new Set(state.map[key].flatMap(l => scanWildcards(l).map(w => normKey(w.name))))].sort();
+  $('#tab-file').innerHTML = `
+    <div class="fhead"><span class="fname">__${esc(key)}__</span></div>
+    <div class="fpath">wildcards/${esc(raw.path)} · ${fmt(state.map[key].length)} opciones</div>
+    <div class="idea-actions">
+      <button class="btn small primary" type="button" data-fa="ins">Insertar en el prompt</button>
+      ${state.source === 'server' ? '<button class="btn small" type="button" data-fa="edit">Editar el .txt</button>' : ''}
+      <button class="btn small" type="button" data-fa="copy">Copiar __${esc(key.split('/').pop())}__</button>
+    </div>
+    <div class="section-t">Muestras <button class="btn small" type="button" data-fa="roll">Otra tirada</button></div>
+    <ul class="samples" id="samples"></ul>
+    ${refs.length ? `<div class="section-t">Usa</div><div class="chips">${refs.map(r => `<button class="chip" type="button" data-go="${esc(r)}">__${esc(r)}__</button>`).join('')}</div>` : ''}
+    ${used.length ? `<div class="section-t">Lo usan</div><div class="chips">${used.map(r => `<button class="chip" type="button" data-go="${esc(r)}">__${esc(r)}__</button>`).join('')}</div>` : ''}
+    <div class="section-t">Contenido</div>
+    <div class="lines">${lines.map((l, i) => `<div><span class="n">${i + 1}</span><span>${highlight(l, { comments: true }) || '&nbsp;'}</span></div>`).join('')}</div>
+    <p class="sub" style="margin-top:10px">${state.source === 'server'
+      ? 'Al guardar el archivo en tu editor, la web se actualiza sola.'
+      : `Para editarlo abre <code>wildcards/${esc(raw.path)}</code> en tu editor de texto y guarda.`}</p>`;
+  rollSamples();
+  if (!keepTab) { showTab('file'); showPane('paneSide'); }
+}
+function rollSamples() {
+  const ul = $('#samples'); if (!ul || !state.selected) return;
+  const items = [];
+  for (let i = 0; i < 6; i++) items.push(state.engine.run('__' + state.selected + '__', randSeed(), { clean: true }).text);
+  ul.innerHTML = items.map(t => `<li>${esc(t)}</li>`).join('');
+}
+$('#tab-file').addEventListener('click', async e => {
+  const go = e.target.closest('[data-go], .t-wc[data-wc], .t-glob[data-wc]');
+  if (go) {
+    const f = fileForName(go.dataset.go || go.dataset.wc);
+    if (f) showFile(f, { keepTab: true });
+    return;
+  }
+  const b = e.target.closest('[data-fa]'); if (!b) return;
+  if (b.dataset.fa === 'ins') { insertAtCaret('__' + state.selected + '__'); showPane('paneWork'); }
+  else if (b.dataset.fa === 'copy') { await copyText('__' + state.selected + '__'); toast('Copiado'); }
+  else if (b.dataset.fa === 'roll') rollSamples();
+  else if (b.dataset.fa === 'edit') revealInOs(state.raw[state.selected].path);
+});
+
+/* ---------- mobile panes ---------- */
+function showPane(id) {
+  if (window.innerWidth > 980) return;
+  document.querySelectorAll('.pane').forEach(p => p.classList.toggle('show', p.id === id));
+  document.querySelectorAll('.mtabs button').forEach(b => b.setAttribute('aria-selected', String(b.dataset.pane === id)));
+}
+document.querySelectorAll('.mtabs button').forEach(b => b.addEventListener('click', () => showPane(b.dataset.pane)));
+
+/* ---------- toast ---------- */
+let toastT;
+function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), 2200); }
+
+/* ---------- open / drop wiring ---------- */
+$('#btnOpen').addEventListener('click', openFolder);
+$('#btnOpen2').addEventListener('click', openFolder);
+$('#btnReload').addEventListener('click', reload);
+$('#btnReveal').addEventListener('click', () => revealInOs(''));
+$('#dirInput').addEventListener('change', async e => { if (e.target.files.length) { await loadFromFileList(e.target.files); toast('Carpeta cargada'); } e.target.value = ''; });
+
+let dragDepth = 0;
+window.addEventListener('dragenter', e => { if ([...e.dataTransfer.types].includes('Files')) { dragDepth++; $('#drop').classList.add('on'); } });
+window.addEventListener('dragleave', () => { dragDepth = Math.max(0, dragDepth - 1); if (!dragDepth) $('#drop').classList.remove('on'); });
+window.addEventListener('dragover', e => e.preventDefault());
+window.addEventListener('drop', async e => {
+  e.preventDefault(); dragDepth = 0; $('#drop').classList.remove('on');
+  const item = e.dataTransfer.items && e.dataTransfer.items[0];
+  if (!item) return;
+  try {
+    if (item.getAsFileSystemHandle) {
+      const h = await item.getAsFileSystemHandle();
+      if (h && h.kind === 'directory') { await loadFromHandle(h); idbSet('dir', h); toast('Carpeta cargada'); return; }
+    }
+    const entry = item.webkitGetAsEntry && item.webkitGetAsEntry();
+    if (entry && entry.isDirectory) {
+      const files = [];
+      const readAll = dir => new Promise(res => { const r = dir.createReader(), all = []; const next = () => r.readEntries(b => { if (!b.length) res(all); else { all.push(...b); next(); } }); next(); });
+      const walk = async (dirEntry, prefix) => {
+        for (const en of await readAll(dirEntry)) {
+          if (en.isDirectory) await walk(en, prefix + en.name + '/');
+          else if (/\.txt$/i.test(en.name)) { const f = await new Promise(r => en.file(r)); f._rel = prefix + en.name; files.push(f); }
+        }
+      };
+      await walk(entry, entry.name + '/');
+      await loadFromFileList(files);
+      toast('Carpeta cargada');
+    } else toast('Arrastra una carpeta, no un archivo');
+  } catch (err) { toast('No se pudo leer: ' + err.message); }
+});
+
+/* ---------- start ---------- */
+(async function start() {
+  updateEditor();
+  const served = /^https?:$/.test(location.protocol);
+  if (served) {
+    try { await loadFromServer(); } catch {
+      try { await loadFromHttp(); } catch {}
+    }
+  } else {
+    // Opened by double-click: if the launcher is already running, jump to it.
+    for (const port of [8765, 8766, 8767]) {
+      try {
+        const ctl = new AbortController(); setTimeout(() => ctl.abort(), 700);
+        const r = await fetch(`http://localhost:${port}/__wildcarder/ping`, { signal: ctl.signal, cache: 'no-store' });
+        if (r.ok && (await r.text()) === 'wildcarder') { location.replace(`http://localhost:${port}/`); return; }
+      } catch {}
+    }
+  }
+  if (!state.source) {
+    if (window.WILDCARDS_FALLBACK_DATA && Array.isArray(window.WILDCARDS_FALLBACK_DATA) && window.WILDCARDS_FALLBACK_DATA.length) {
+      state.source = 'embedded';
+      state.folderName = 'wildcards';
+      ingest(window.WILDCARDS_FALLBACK_DATA);
+    } else {
+      $('#welcome').hidden = false;
+      $('#btnOpen').hidden = false;
+      if (!window.showDirectoryPicker) $('#browserNote').textContent = 'Sin lanzador también funciona, pero tendrás que elegir la carpeta cada vez y pulsar Recargar tras editar un .txt.';
+      const h = await idbGet('dir');
+      if (h && h.queryPermission) {
+        try {
+          const perm = await h.queryPermission({ mode: 'read' });
+          if (perm === 'granted') await loadFromHandle(h);
+          else {
+            const b = $('#btnReconnect');
+            b.hidden = false; b.textContent = `Reconectar «${h.name}»`;
+            b.onclick = async () => {
+              try { if (await h.requestPermission({ mode: 'read' }) === 'granted') { await loadFromHandle(h); toast('Carpeta cargada'); } }
+              catch (e) { toast('No se pudo reconectar: ' + e.message); }
+            };
+          }
+        } catch {}
+      }
+    }
+  }
+  setInterval(poll, 1500);
+})();
+</script>
+</body>
+</html>
