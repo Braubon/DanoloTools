@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PIXFORGE // Pixel Art Sprite Studio</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Top Application Bar -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-icon" aria-hidden="true">
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+        </div>
+        <span class="brand-title">PIXFORGE // STUDIO</span>
+        <span class="brand-badge">100% CLIENT-SIDE</span>
+      </div>
+
+      <div class="header-center">
+        <span class="header-group-label">Perfil Rápido:</span>
+        <select id="presetQuickSelect" class="select-input" style="width: 220px;">
+          <option value="snes16" selected>16-Bit Estándar (32×32 · 16 col · Contorno Armónico)</option>
+          <option value="nes">8-Bit Clásico NES (32×32 · 4 col · Contorno Negro)</option>
+          <option value="gameboy">GameBoy DMG-01 (32×32 · 4 col · Bayer 2×2)</option>
+          <option value="pico8">PICO-8 Micro (16×16 · Paleta PICO-8)</option>
+          <option value="hdsprite">Indie Hi-Bit (64×64 · 32 col · Contorno Armónico)</option>
+        </select>
+      </div>
+
+      <div class="header-actions">
+        <button id="headerUploadBtn" class="tool-btn" type="button" title="Subir imagen (PNG, JPG, WebP)">
+          Subir Imagen
+        </button>
+        <button id="resetBtn" class="tool-btn" type="button" title="Restaurar parámetros por defecto">
+          Reiniciar Ajustes
+        </button>
+      </div>
+    </header>
+
+    <!-- Left Sidebar: Processing Pipeline Controls -->
+    <aside class="sidebar-left">
+      <!-- 1. Image Input & Sample Artworks -->
+      <section class="panel-section">
+        <div class="section-header">
+          <div class="section-title">
+            <span class="step-num">1</span>
+            Carga y Entrada de Imagen
+          </div>
+        </div>
+
+        <div id="dropzone" class="dropzone" role="button" tabindex="0" aria-label="Subir o arrastrar imagen">
+          <input id="fileInput" type="file" accept="image/png,image/jpeg,image/webp" />
+          <svg class="dropzone-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="17 8 12 3 7 8" />
+            <line x1="12" y1="3" x2="12" y2="15" />
+          </svg>
+          <div class="dropzone-title">Arrastra una imagen o haz clic aquí</div>
+          <div class="dropzone-sub">PNG, JPG, WebP o pegar (Ctrl+V / ⌘+V)</div>
+        </div>
+
+        <div class="sample-bar">
+          <div class="sample-pills">
+            <button type="button" class="sample-btn active" data-sample="knight" title="Arte de prueba: Guerrero Cyber">Guerrero</button>
+            <button type="button" class="sample-btn" data-sample="potion" title="Arte de prueba: Poción Arcana">Poción</button>
+            <button type="button" class="sample-btn" data-sample="dragon" title="Arte de prueba: Dragón Esmeralda">Dragón</button>
+            <button type="button" class="sample-btn" data-sample="mecha" title="Arte de prueba: Robot Mecha">Mecha</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Grid Resolution & Anti-Mixel Downsampling -->
+      <section class="panel-section">
+        <div class="section-header">
+          <div class="section-title">
+            <span class="step-num">2</span>
+            Ajuste de Cuadrícula (Grid)
+          </div>
+        </div>
+
+        <div class="segmented-grid cols-5" role="group" aria-label="Resolución lógica del sprite">
+          <button type="button" class="seg-btn grid-size-btn" data-size="16">16×16</button>
+          <button type="button" class="seg-btn grid-size-btn active" data-size="32">32×32</button>
+          <button type="button" class="seg-btn grid-size-btn" data-size="48">48×48</button>
+          <button type="button" class="seg-btn grid-size-btn" data-size="64">64×64</button>
+          <button type="button" class="seg-btn grid-size-btn" data-size="128">128×128</button>
+        </div>
+
+        <div class="control-row">
+          <span class="control-label">Muestreo (Anti-Mixels):</span>
+          <select id="samplingModeSelect" class="select-input" style="width: 165px;">
+            <option value="dominant" selected>Cluster Modal (Anti-AA)</option>
+            <option value="median">Mediana Estadística</option>
+            <option value="center">Punto Central Estricto</option>
+            <option value="sharp-avg">Promedio Ponderado</option>
+          </select>
+        </div>
+
+        <div class="control-row">
+          <span class="control-label">Encaje de Proporción:</span>
+          <select id="fitModeSelect" class="select-input" style="width: 165px;">
+            <option value="contain" selected>Contener (Integro)</option>
+            <option value="cover">Cubrir (Recorte)</option>
+            <option value="stretch">Estirar (1:1)</option>
+          </select>
+        </div>
+
+        <div class="control-stack">
+          <div class="control-label">
+            <span>Nitidez de Bloques Pre-Muestreo</span>
+            <span id="contrastVal" class="control-value">12%</span>
+          </div>
+          <input id="contrastRange" type="range" min="0" max="50" value="12" />
+        </div>
+      </section>
+
+      <!-- 3. Exterior Background Transparency -->
+      <section class="panel-section">
+        <div class="section-header">
+          <div class="section-title">
+            <span class="step-num">3</span>
+            Transparencia Exterior (Fondo)
+          </div>
+          <label class="toggle-switch" title="Activar / Desactivar eliminación de fondo">
+            <input id="bgToggle" type="checkbox" checked />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div id="bgSubpanel" class="subpanel-collapsible">
+          <div class="control-row" style="margin-top: 4px;">
+            <span class="control-label">Detección:</span>
+            <select id="bgModeSelect" class="select-input" style="width: 175px;">
+              <option value="flood" selected>Flood Fill Periférico</option>
+              <option value="global">Chroma Global (Interior+Ext)</option>
+            </select>
+          </div>
+
+          <div class="control-row">
+            <span class="control-label">Color Fondo:</span>
+            <div class="color-picker-wrap">
+              <div class="color-swatch-btn" title="Seleccionar color de fondo manualmente">
+                <input id="bgColorInput" type="color" value="#F1F5F9" />
+              </div>
+              <span id="bgColorHex" class="hex-badge">#F1F5F9</span>
+              <button id="bgAutoResetBtn" type="button" class="tool-btn" style="padding: 3px 7px; font-size: 10.5px;" title="Autodetectar esquinas">
+                Auto
+              </button>
+            </div>
+          </div>
+
+          <div class="control-stack">
+            <div class="control-label">
+              <span>Tolerancia de Color (Umbral ΔE)</span>
+              <span id="bgToleranceVal" class="control-value">22</span>
+            </div>
+            <input id="bgToleranceRange" type="range" min="1" max="85" value="22" />
+          </div>
+
+          <div class="control-stack">
+            <div class="control-label">
+              <span>Recorte Anti-Halo (Defringe AA)</span>
+              <span id="bgDefringeVal" class="control-value">45%</span>
+            </div>
+            <input id="bgDefringeRange" type="range" min="0" max="100" value="45" />
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. Color Quantization & Palette Reduction -->
+      <section class="panel-section">
+        <div class="section-header">
+          <div class="section-title">
+            <span class="step-num">4</span>
+            Cuantización y Paleta
+          </div>
+        </div>
+
+        <div class="segmented-grid cols-6" role="group" aria-label="Tamaño de paleta">
+          <button type="button" class="seg-btn pal-size-btn" data-colors="2">2</button>
+          <button type="button" class="seg-btn pal-size-btn" data-colors="4">4</button>
+          <button type="button" class="seg-btn pal-size-btn" data-colors="8">8</button>
+          <button type="button" class="seg-btn pal-size-btn active" data-colors="16">16</button>
+          <button type="button" class="seg-btn pal-size-btn" data-colors="32">32</button>
+          <button type="button" class="seg-btn pal-size-btn" data-colors="free">Libre</button>
+        </div>
+
+        <div class="control-row">
+          <span class="control-label">Algoritmo / Paleta:</span>
+          <select id="palPresetSelect" class="select-input" style="width: 170px;">
+            <option value="auto" selected>Median-Cut + K-Means</option>
+            <option value="gameboy">GameBoy DMG (4 col)</option>
+            <option value="pico8">PICO-8 Estándar (16 col)</option>
+            <option value="sweetie16">Sweetie 16 (Lospec)</option>
+            <option value="endesga16">Endesga 16</option>
+            <option value="endesga32">Endesga 32</option>
+          </select>
+        </div>
+
+        <div class="control-row">
+          <span class="control-label">Trama (Dithering):</span>
+          <select id="ditherModeSelect" class="select-input" style="width: 170px;">
+            <option value="none" selected>Bloque Plano (Sin Dither)</option>
+            <option value="bayer2">Ordenado Bayer 2×2</option>
+            <option value="bayer4">Ordenado Bayer 4×4</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- 5. Pixel Outline Engine -->
+      <section class="panel-section" style="border-bottom: none;">
+        <div class="section-header">
+          <div class="section-title">
+            <span class="step-num">5</span>
+            Trazado Exterior (Outline 1px)
+          </div>
+          <label class="toggle-switch" title="Activar / Desactivar contorno exterior de 1 píxel">
+            <input id="outlineToggle" type="checkbox" checked />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div id="outlineSubpanel" class="subpanel-collapsible">
+          <div class="segmented-grid cols-2" style="grid-template-columns: 1fr 1fr; margin-bottom: 8px;">
+            <button type="button" class="seg-btn outline-mode-btn" data-mode="fixed">Color Fijo</button>
+            <button type="button" class="seg-btn outline-mode-btn active" data-mode="adaptive">Armónico Oscuro</button>
+          </div>
+
+          <div id="outlineFixedRow" class="control-row" style="display: none;">
+            <span class="control-label">Color del Contorno:</span>
+            <div class="color-picker-wrap">
+              <div class="color-swatch-btn">
+                <input id="outlineColorInput" type="color" value="#000000" />
+              </div>
+              <span id="outlineColorHex" class="hex-badge">#000000</span>
+            </div>
+          </div>
+
+          <div id="outlineAdaptiveRow" class="control-stack">
+            <div class="control-label">
+              <span>Oscurecimiento Armónico Adyacente</span>
+              <span id="outlineDarknessVal" class="control-value">68%</span>
+            </div>
+            <input id="outlineDarknessRange" type="range" min="35" max="90" value="68" />
+          </div>
+
+          <label class="checkbox-row" style="margin-top: 10px;">
+            <input id="cleanLCornersCheck" type="checkbox" checked />
+            <span>Evitar esquinas dobles en "L" (Clean Miter)</span>
+          </label>
+
+          <label class="checkbox-row">
+            <input id="removeOrphansCheck" type="checkbox" checked />
+            <span>Eliminar píxeles huérfanos / Jaggies</span>
+          </label>
+        </div>
+      </section>
+    </aside>
+
+    <!-- Center Interactive Canvas Viewport -->
+    <main class="viewport-area">
+      <div class="viewport-toolbar">
+        <!-- Manual Touchup & Navigation Tools -->
+        <div class="toolbar-group">
+          <button type="button" class="tool-btn canvas-tool-btn active" data-tool="pan" title="Mover lienzo (Arrastrar)">
+            Mover
+          </button>
+          <button type="button" class="tool-btn canvas-tool-btn" data-tool="pencil" title="Pincel de retoque de 1px">
+            Lápiz 1px
+          </button>
+          <button type="button" class="tool-btn canvas-tool-btn" data-tool="eraser" title="Borrar píxel a transparente">
+            Borrador
+          </button>
+          <button type="button" class="tool-btn canvas-tool-btn" data-tool="picker" title="Cuentagotas de color sobre el sprite">
+            Gotero
+          </button>
+          <div class="color-swatch-btn" title="Color activo para el lápiz de 1px">
+            <input id="drawColorInput" type="color" value="#000000" />
+          </div>
+          <button id="clearEditsBtn" type="button" class="tool-btn" style="display: none;" title="Deshacer retoques manuales">
+            Deshacer Retoques
+          </button>
+        </div>
+
+        <!-- Zoom Controls -->
+        <div class="toolbar-group">
+          <button id="zoomOutBtn" type="button" class="tool-btn" title="Alejar zoom">−</button>
+          <span id="zoomReadout" class="zoom-readout">12x (1200%)</span>
+          <button id="zoomInBtn" type="button" class="tool-btn" title="Acercar zoom">+</button>
+          <button id="zoomFitBtn" type="button" class="tool-btn" title="Ajustar sprite a la ventana">Encajar</button>
+        </div>
+
+        <!-- Grid Overlay, Comparison & Backdrop -->
+        <div class="toolbar-group">
+          <button id="gridOverlayBtn" type="button" class="tool-btn active" title="Mostrar / Ocultar rejilla de píxeles">
+            Rejilla Pixel
+          </button>
+          <button id="compareSplitBtn" type="button" class="tool-btn" title="Cortina comparativa antes / después">
+            Comparar Original
+          </button>
+          <select id="backdropSelect" class="select-input" style="width: 122px; padding: 4px 6px;" title="Fondo del visor">
+            <option value="checker-dark" selected>Damero Oscuro</option>
+            <option value="checker-light">Damero Claro</option>
+            <option value="solid-dark">Fondo Negro</option>
+            <option value="solid-light">Fondo Blanco</option>
+            <option value="chroma-green">Verde Chroma</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Interactive Pixel Canvas Stage -->
+      <div id="canvasStage" class="canvas-stage backdrop-checker-dark">
+        <canvas id="viewportCanvas"></canvas>
+      </div>
+
+      <!-- Bottom Status HUD -->
+      <footer class="viewport-hud">
+        <div class="hud-group">
+          <div class="hud-item">
+            <span id="hudCoords">X: --, Y: --</span>
+          </div>
+          <div class="hud-item">
+            <span id="hudSwatch" class="hud-swatch"></span>
+            <span id="hudHex">--</span>
+          </div>
+        </div>
+
+        <div class="hud-group">
+          <span id="hudResolution">32 × 32 px</span>
+          <span id="hudOpaqueCount">-- px opacos</span>
+          <span id="hudPerf">-- ms</span>
+        </div>
+      </footer>
+    </main>
+
+    <!-- Right Sidebar: Previews, Interactive Palette Swatches & PNG Export -->
+    <aside class="sidebar-right">
+      <!-- Real-Time Thumbnail & 1:1 Preview -->
+      <section class="panel-section">
+        <div class="section-header">
+          <div class="section-title">Vista Previa de Referencia</div>
+        </div>
+        <div class="preview-dual-box">
+          <div class="mini-preview-card">
+            <span class="mini-preview-label">Entrada Original</span>
+            <div class="mini-canvas-wrap">
+              <canvas id="origPreviewCanvas"></canvas>
+            </div>
+          </div>
+          <div class="mini-preview-card">
+            <span class="mini-preview-label">Sprite Nítido</span>
+            <div class="mini-canvas-wrap">
+              <canvas id="actualSizeCanvas"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Interactive Palette Swatches -->
+      <section class="panel-section">
+        <div class="section-header">
+          <div class="section-title">Paleta Resultante (Swatches)</div>
+          <span id="paletteCountBadge" class="brand-badge">16 colores</span>
+        </div>
+
+        <div id="paletteSwatchesGrid" class="palette-swatches-grid" aria-label="Muestras de color interactivas"></div>
+
+        <div class="palette-help-note">
+          <span>Haz clic en un color para editarlo</span>
+          <button id="resetSwatchesBtn" type="button" class="tool-btn" style="display: none; padding: 2px 6px; font-size: 10px;">
+            Restaurar
+          </button>
+        </div>
+
+        <button id="copyPaletteHexBtn" type="button" class="btn-secondary" style="margin-top: 8px;">
+          Copiar Códigos HEX
+        </button>
+      </section>
+
+      <!-- PNG Export Studio -->
+      <section class="panel-section" style="border-bottom: none;">
+        <div class="section-header">
+          <div class="section-title">
+            <span class="step-num">6</span>
+            Exportación PNG
+          </div>
+        </div>
+
+        <!-- Mode A: Native 1x Resolution -->
+        <div class="export-card">
+          <div class="export-card-header">
+            <span class="export-card-title">Resolución Nativa (1x)</span>
+            <span id="nativeDimBadge" class="export-dim-badge">32 × 32 px</span>
+          </div>
+          <p class="export-card-desc">
+            Archivo PNG exacto celda a celda para motores de videojuegos (Godot, Unity, GameMaker, Aseprite).
+          </p>
+          <button id="exportNativeBtn" type="button" class="btn-secondary">
+            Exportar PNG Nativo (1x)
+          </button>
+        </div>
+
+        <!-- Mode B: Integer Scaled Nearest-Neighbor -->
+        <div class="export-card">
+          <div class="export-card-header">
+            <span class="export-card-title">Resolución Escalada</span>
+            <span id="scaledDimBadge" class="export-dim-badge">256 × 256 px</span>
+          </div>
+          <p class="export-card-desc">
+            Escalado por múltiplos enteros mediante interpolación Nearest-Neighbor pura (0% difuminado).
+          </p>
+
+          <div class="segmented-grid cols-4" style="margin-bottom: 10px;" role="group" aria-label="Factor de escala entero">
+            <button type="button" class="seg-btn export-scale-btn" data-scale="2">2x</button>
+            <button type="button" class="seg-btn export-scale-btn" data-scale="4">4x</button>
+            <button type="button" class="seg-btn export-scale-btn active" data-scale="8">8x</button>
+            <button type="button" class="seg-btn export-scale-btn" data-scale="16">16x</button>
+          </div>
+
+          <button id="exportScaledBtn" type="button" class="btn-primary">
+            Exportar PNG Escalado
+          </button>
+        </div>
+      </section>
+    </aside>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <!-- Modular Client-Side Scripts -->
+  <script src="js/palettes.js"></script>
+  <script src="js/pipeline.js"></script>
+  <script src="js/demos.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
