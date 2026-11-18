@@ -254,7 +254,7 @@ function panelIdentidad() {
   return `<div class="seccion"><h2>Identidad</h2><p class="muted small">La especie es puramente narrativa: no da modificadores.</p></div>
     <div class="rejilla c2">
       ${campo('Nombre', 'identidad.nombre')}
-      ${campo('Pronombres', 'identidad.pronombres')}
+      ${campo('Apodo', 'identidad.apodo')}
       ${campo('Jugador/a', 'identidad.jugador')}
       ${campo('Especie', 'identidad.especie', { ph: 'Humana, elfa, autómata…' })}
     </div>
@@ -883,11 +883,18 @@ function cerrarDialogo() { const d = document.getElementById('dialogo'); if (d.o
 function panelVinculos() {
   const max = param(db, 'vinculos_max', 6);
   const pares = [['admiracion', 'inferioridad'], ['lealtad', 'desconfianza'], ['afecto', 'odio']];
+  let conocidos = [];
+  try {
+    const loc = JSON.parse(leerLS('fu-visor-locales') || '[]');
+    const mi = (pj.identidad.nombre || '').trim().toLowerCase();
+    conocidos = [...new Set(loc.map((x) => (x.identidad && x.identidad.nombre || '').trim()).filter((n) => n && n.toLowerCase() !== mi))];
+  } catch (e) { /* nada */ }
   let h = `<div class="seccion fila entre"><div><h2>Vínculos</h2><p class="muted small">Hasta ${max}. Cada vínculo admite una emoción de cada pareja; su fuerza es el número de emociones. Usa el nombre exacto de otro personaje para que la página de fichas dibuje las relaciones del grupo.</p></div>
     <span class="chip">${pj.vinculos.length} / ${max}</span></div>`;
+  if (conocidos.length) h += `<datalist id="dl-vinculos-pjs">${conocidos.map((n) => `<option value="${esc(n)}">`).join('')}</datalist>`;
   if (!pj.vinculos.length) h += '<div class="vacio">Sin vínculos todavía.</div>';
   h += '<div class="pila">' + pj.vinculos.map((v, i) => `<div class="tarjeta">
-    <div class="fila" style="flex-wrap:nowrap"><input type="text" placeholder="Hacia quién (personaje, grupo, institución…)" data-bind="vinculos.${i}.hacia" value="${esc(v.hacia || '')}">
+    <div class="fila" style="flex-wrap:nowrap"><input type="text" placeholder="Hacia quién (personaje, grupo, institución…)" ${conocidos.length ? 'list="dl-vinculos-pjs"' : ''} data-bind="vinculos.${i}.hacia" value="${esc(v.hacia || '')}">
       <span class="chip ${v.emociones && v.emociones.length ? 'acento' : ''}" style="flex:none">Fuerza ${(v.emociones || []).length}</span>
       <button class="btn icono fantasma" data-act="quitar-vinculo" data-i="${i}" aria-label="Quitar vínculo">${ICON.x}</button></div>
     <div class="fila" style="margin-top:10px">${pares.map((par) => `<div class="segmento">${par.map((e) =>
@@ -1136,7 +1143,7 @@ function panelFicha() {
   const rit = c.rituales.map((x) => (tabla(dbTodo, 'disciplinas_rituales').find((y) => y.id === x) || { nombre: x }).nombre);
   return `<div class="seccion"><div class="display" style="font-size:30px">${esc(i.nombre || 'Sin nombre')}</div>
       <div class="muted">${esc([i.identidad, i.tema, i.origen].filter(Boolean).join(' · '))}</div>
-      <div class="small faint">${esc([i.pronombres, i.especie, i.jugador ? 'Jugador/a: ' + i.jugador : ''].filter(Boolean).join(' · '))}</div></div>
+      <div class="small faint">${esc([i.apodo || i.pronombres, i.especie, i.jugador ? 'Jugador/a: ' + i.jugador : ''].filter(Boolean).join(' · '))}</div></div>
     <div class="tarjeta"><h3>Estado actual</h3>
       <div class="rejilla c3">
         <label class="campo"><span>PV (máx. ${c.pv_max})</span><input type="number" data-bind="estado.pv" data-num="1" value="${pj.estado.pv ?? ''}"></label>

@@ -5,9 +5,9 @@
 // con una cuenta de Discord del servidor. Si la API no está disponible (por
 // ejemplo en local), usa los listados en /personajes/index.json.
 // ---------------------------------------------------------------------------
-import { cargarRaw, construirDb, get, hab, tabla } from './db.js';
+import { cargarRaw, construirDb, get, hab, tabla, param } from './db.js';
 import * as R from './rules.js';
-import { esc, md, initTema, leerArchivo, toast, ICON, normTxt } from './ui.js';
+import { esc, md, initTema, leerArchivo, descargarJson, slugArchivo, toast, ICON, normTxt } from './ui.js';
 import * as F from './ficha.js';
 
 const CARPETA = '../personajes/';
@@ -19,6 +19,7 @@ let partidaActual = new URLSearchParams(location.search).get('partida') || local
 let acceso = null;        // { motivo } si la API pide iniciar sesión
 let actual = 'grupo';     // 'grupo' | key
 let pestana = 'resumen';
+let dlgVinculo = null;    // { deKey, indice, hacia, emociones }
 const filtro = { q: '', hab: 'todas', clase: '', magia: 'todos', equipo: 'todo' };
 
 const vista = () => document.getElementById('vista');
@@ -131,12 +132,46 @@ function guardarLocales() {
 
 function anadir(datos, origen, archivo = '') {
   if (datos.formato && datos.formato !== R.FORMATO) throw new Error(`${archivo || 'Archivo'}: no es una ficha de personaje.`);
+  const mio = !!datos._mio;
   const pj = R.normalizarPersonaje(datos);
   const key = pj.id || archivo || R.uid();
   const i = pjs.findIndex((p) => p.key === key);
-  const entrada = { key, pj, origen, archivo };
+  const entrada = { key, pj, origen, archivo, mio };
   if (i >= 0) pjs[i] = entrada; else pjs.push(entrada);
   return key;
+}
+
+const puedeEditarVinculos = (p) => !!p && (p.origen !== 'nube' || !!(sesion && (sesion.dj || p.mio)));
+
+async function guardarVinculos(p, nuevaLista) {
+  const max = param(db, 'vinculos_max', 6);
+  if (nuevaLista.length > max && !p.pj.modo_libre) {
+    toast(`Máximo ${max} vínculos por personaje.`, 'err');
+    return false;
+  }
+  if (p.origen === 'nube') {
+    try {
+      const r = await fetch(`/api/datos/?accion=guardar-vinculos&partida=${encodeURIComponent(partidaActual)}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: p.pj.id, partida: partidaActual, vinculos: nuevaLista })
+      });
+      const j = await r.json();
+      if (!r.ok) throw new Error(j.error || `Error ${r.status}`);
+      p.mio = !!(j.personaje && j.personaje._mio);
+      p.pj = R.normalizarPersonaje(j.personaje);
+    } catch (err) {
+      toast(err.message || 'No se pudo guardar la relación.', 'err');
+      return false;
+    }
+  } else {
+    p.pj.vinculos = nuevaLista;
+    if (p.origen === 'carpeta') p.origen = 'local';
+    guardarLocales();
+  }
+  render();
+  toast('Relaciones actualizadas.');
+  return true;
 }
 
 // ============================================================== render
@@ -188,24 +223,30 @@ function vistaGrupo() {
   const POS = new Set(['admiracion', 'lealtad', 'afecto']);
   const celda = (de, a) => {
     if (de === a) return '<td class="yo"></td>';
+    const ed = puedeEditarVinculos(de);
     const v = (de.pj.vinculos || []).find((x) => norm(x.hacia) === norm(a.pj.identidad.nombre));
-    if (!v) return '<td class="faint">—</td>';
-    return `<td>${(v.emociones || []).map((e) => `<span class="em ${POS.has(e) ? 'emo-pos' : 'emo-neg'}">${esc(F.nombreEmocion(db, e))}</span>`).join('')}<span class="fz">Fuerza ${(v.emociones || []).length}</span></td>`;
+    const attrs = ed ? `class="editable" data-act="abrir-vinculo" data-de="${esc(de.key)}" data-hacia="${esc(a.pj.identidad.nombre)}" title="Editar relación"` : '';
+    if (!v) return `<td ${attrs}><span class="faint">—</span></td>`;
+    return `<td ${attrs}>${(v.emociones || []).map((e) => `<span class="em ${POS.has(e) ? 'emo-pos' : 'emo-neg'}">${esc(F.nombreEmocion(db, e))}</span>`).join('')}<span class="fz">Fuerza ${(v.emociones || []).length}</span></td>`;
   };
   const matriz = pjs.length > 1 ? `<div class="matriz"><table><thead><tr><th>De ↓ · Hacia →</th>${pjs.map((p) => `<th>${esc(p.pj.identidad.nombre)}</th>`).join('')}</tr></thead>
     <tbody>${pjs.map((de) => `<tr><th>${esc(de.pj.identidad.nombre)}</th>${pjs.map((a) => celda(de, a)).join('')}</tr>`).join('')}</tbody></table></div>` : '';
-  const externos = pjs.flatMap((p) => (p.pj.vinculos || []).filter((v) => !nombres.some((n) => norm(n) === norm(v.hacia))).map((v) => ({ de: p.pj.identidad.nombre, v })));
-  const ext = externos.length ? `<div class="seccion" style="margin-top:18px"><h2>Otros vínculos</h2><div class="lista">${externos.map(({ de, v }) =>
-    `<div class="item fila entre"><span><span class="muted">${esc(de)} →</span> <span class="titulo">${esc(v.hacia || '—')}</span></span>
-     <span class="muted small">${(v.emociones || []).map((e) => esc(F.nombreEmocion(db, e))).join(', ')} · Fuerza ${(v.emociones || []).length}</span></div>`).join('')}</div></div>` : '';
+  const externos = pjs.flatMap((p) => (p.pj.vinculos || []).map((v, idx) => ({ p, v, idx })).filter(({ v }) => !nombres.some((n) => norm(n) === norm(v.hacia))));
+  const ext = externos.length ? `<div class="seccion" style="margin-top:18px"><h2>Otros vínculos</h2><div class="lista">${externos.map(({ p, v, idx }) =>
+    `<div class="item fila entre"><span><span class="muted">${esc(p.pj.identidad.nombre)} →</span> <span class="titulo">${esc(v.hacia || '—')}</span></span>
+     <span class="fila"><span class="muted small">${(v.emociones || []).map((e) => esc(F.nombreEmocion(db, e))).join(', ') || 'sin emociones'} · Fuerza ${(v.emociones || []).length}</span>
+     ${puedeEditarVinculos(p) ? `<button class="btn peq" data-act="editar-vinculo" data-de="${esc(p.key)}" data-i="${idx}">Editar</button>` : ''}</span></div>`).join('')}</div></div>` : '';
 
+  const hayEditables = pjs.some(puedeEditarVinculos);
   const nivelMedio = Math.round(pjs.reduce((a, p) => a + p.pj.nivel, 0) / pjs.length);
   const orden = [...datos].sort((a, b) => b.c.init - a.c.init).map(({ p, c }) => `${esc(p.pj.identidad.nombre)} (${c.init >= 0 ? '+' : ''}${c.init})`).join(' · ');
   return `<div class="seccion fila entre"><h2 style="font-size:20px">Grupo</h2>
       <span class="muted small">${pjs.length} personaje${pjs.length > 1 ? 's' : ''} · nivel del grupo ${Math.max(...pjs.map((p) => p.pj.nivel))} · medio ${nivelMedio}</span></div>
     <div class="miembros">${tarjetas}</div>
     <p class="small muted" style="margin:-8px 0 18px">Modificadores de iniciativa: ${orden}</p>
-    ${matriz ? `<div class="seccion"><h2>Relaciones</h2>${matriz}</div>` : ''}${ext}`;
+    <div class="seccion fila entre"><div><h2>Relaciones</h2>${pjs.length > 1 && hayEditables ? '<p class="muted small">Pulsa cualquier celda de la tabla para crear o editar una relación entre personajes.</p>' : ''}</div>
+      ${hayEditables ? '<button class="btn peq primario" data-act="abrir-vinculo">Añadir relación</button>' : ''}</div>
+    ${matriz || (!externos.length ? '<div class="vacio">Sin relaciones entre personajes todavía.</div>' : '')}${ext}`;
 }
 
 // ------------------------------------------------------------ personaje
@@ -228,7 +269,7 @@ function vistaPersonaje(p) {
   return `<div class="cabecera">
       <div><div class="display nombre">${esc(i.nombre || 'Sin nombre')}</div>
         <div class="meta">${esc([i.identidad, i.tema, i.origen].filter(Boolean).join(' · '))}</div>
-        <div class="meta2">${esc([`Nivel ${pj.nivel}`, F.resumenClases(pj, db), i.especie, i.pronombres, i.jugador ? 'Jugador/a: ' + i.jugador : ''].filter(Boolean).join(' · '))}</div></div>
+        <div class="meta2">${esc([`Nivel ${pj.nivel}`, F.resumenClases(pj, db), i.especie, i.apodo || i.pronombres, i.jugador ? 'Jugador/a: ' + i.jugador : ''].filter(Boolean).join(' · '))}</div></div>
       <div class="chips"><span class="chip acento">PF ${pj.pf}</span><span class="chip">PX ${pj.px}</span><span class="chip">${pj.zenit} z</span>
         ${p.origen === 'nube' ? '<span class="chip" title="Guardado en la partida">Partida</span>' : p.origen === 'carpeta' ? '<span class="chip" title="Cargado desde la carpeta personajes/">Carpeta</span>' : '<span class="chip" title="Cargado desde tu equipo">Local</span>'}</div>
     </div>
@@ -249,7 +290,7 @@ function vistaPersonaje(p) {
     </div>` : ''}
     <nav class="pestanas" role="tablist">${tabs.map(([id, n]) => `<button role="tab" aria-selected="${pestana === id}" data-act="pestana" data-id="${id}">${n}</button>`).join('')}</nav>
     ${barraFiltros(pj)}
-    <section id="contenido-pestana">${({ resumen: tabResumen, habilidades: tabHabilidades, magia: tabMagia, equipo: tabEquipo, vinculos: tabVinculos, notas: tabNotas })[pestana](pj, c)}</section>`;
+    <section id="contenido-pestana">${({ resumen: tabResumen, habilidades: tabHabilidades, magia: tabMagia, equipo: tabEquipo, vinculos: (x, c0) => tabVinculos(x, p), notas: tabNotas })[pestana](pj, c)}</section>`;
 }
 
 function barraFiltros(pj) {
@@ -347,10 +388,41 @@ function tabEquipo(pj, c) {
   return `${ranuras}<div class="seccion"><h2>Ataques</h2>${F.htmlAtaques(c, db)}</div><div class="seccion"><h2>Inventario <span class="muted">${objs.length}</span></h2>${lista}</div>`;
 }
 
-function tabVinculos(pj) {
-  if (!pj.vinculos.length) return '<div class="vacio">Sin vínculos.</div>';
-  return `<div class="lista">${pj.vinculos.map((v) => F.htmlVinculo(db, v)).join('')}</div>
-    <p class="small muted" style="margin-top:10px">La fuerza de un vínculo es su número de emociones.</p>`;
+function tabVinculos(pj, p) {
+  const editable = puedeEditarVinculos(p);
+  const max = param(db, 'vinculos_max', 6);
+  const norm = (s) => (s || '').trim().toLowerCase();
+  const miNombre = norm(pj.identidad.nombre);
+  const entrantes = miNombre
+    ? pjs.filter((o) => o.key !== p.key).flatMap((o) => (o.pj.vinculos || []).filter((v) => norm(v.hacia) === miNombre).map((v) => ({ de: o, v })))
+    : [];
+
+  let h = `<div class="seccion fila entre"><div><h2>Vínculos</h2><p class="muted small">La fuerza de un vínculo es su número de emociones (${pj.vinculos.length} / ${max}).</p></div>
+    <div class="fila">${editable ? `<button class="btn peq primario" data-act="abrir-vinculo" data-de="${esc(p.key)}" ${pj.vinculos.length >= max && !pj.modo_libre ? 'disabled' : ''}>Añadir vínculo</button>` : ''}
+      <button class="btn peq" data-act="descargar-pj" data-key="${esc(p.key)}">Descargar JSON</button></div></div>`;
+
+  if (!pj.vinculos.length) h += '<div class="vacio">Sin vínculos.</div>';
+  else {
+    h += `<div class="lista">${pj.vinculos.map((v, idx) => {
+      const fuerza = (v.emociones || []).length;
+      return `<div class="item fila entre"><span><span class="titulo">${esc(v.hacia || '—')}</span>
+        <span class="muted small"> · ${(v.emociones || []).map((e) => esc(F.nombreEmocion(db, e))).join(', ') || 'sin emociones'}</span></span>
+        <span class="fila"><span class="chip ${fuerza ? 'acento' : ''}">Fuerza ${fuerza}</span>
+        ${editable ? `<button class="btn peq" data-act="editar-vinculo" data-de="${esc(p.key)}" data-i="${idx}">Editar</button>
+          <button class="btn peq fantasma peligro" data-act="quitar-vinculo" data-de="${esc(p.key)}" data-i="${idx}">Quitar</button>` : ''}</span></div>`;
+    }).join('')}</div>`;
+  }
+
+  if (entrantes.length) {
+    h += `<div class="seccion" style="margin-top:20px"><h2>Vínculos hacia ${esc(pj.identidad.nombre)}</h2>
+      <div class="lista">${entrantes.map(({ de, v }) => {
+        const fuerza = (v.emociones || []).length;
+        return `<div class="item fila entre"><span><button class="btn peq fantasma" data-act="ver" data-key="${esc(de.key)}" style="padding:2px 6px">${esc(de.pj.identidad.nombre || 'Sin nombre')}</button>
+          <span class="muted small"> · ${(v.emociones || []).map((e) => esc(F.nombreEmocion(db, e))).join(', ') || 'sin emociones'}</span></span>
+          <span class="chip ${fuerza ? 'acento' : ''}">Fuerza ${fuerza}</span></div>`;
+      }).join('')}</div></div>`;
+  }
+  return h;
 }
 
 function tabNotas(pj) {
@@ -413,8 +485,65 @@ function aplicarFiltros() {
   }
 }
 
+// ============================================================== diálogo relaciones
+function abrirVinculoDialogo({ deKey = '', indice = -1, hacia = '' } = {}) {
+  const editables = pjs.filter(puedeEditarVinculos);
+  const de = pjs.find((x) => x.key === deKey) || editables[0];
+  if (!de || !puedeEditarVinculos(de)) { toast('No tienes permiso para editar vínculos aquí.', 'err'); return; }
+  const norm = (s) => (s || '').trim().toLowerCase();
+  let idx = indice;
+  if (idx < 0 && hacia) {
+    idx = (de.pj.vinculos || []).findIndex((v) => norm(v.hacia) === norm(hacia));
+  }
+  const existente = idx >= 0 ? de.pj.vinculos[idx] : null;
+  dlgVinculo = {
+    deKey: de.key,
+    indice: idx,
+    fijoDe: !!deKey && idx >= 0,
+    hacia: existente ? (existente.hacia || '') : hacia,
+    emociones: [...(existente ? existente.emociones || [] : [])]
+  };
+  renderDialogoVinculo();
+}
+
+function renderDialogoVinculo() {
+  const d = document.getElementById('dialogo');
+  if (!d || !dlgVinculo) return;
+  const pares = [['admiracion', 'inferioridad'], ['lealtad', 'desconfianza'], ['afecto', 'odio']];
+  const editables = pjs.filter(puedeEditarVinculos);
+  const otrosNombres = pjs.filter((x) => x.key !== dlgVinculo.deKey && x.pj.identidad.nombre).map((x) => x.pj.identidad.nombre);
+  const cuerpo = `<div class="pila">
+    <label class="campo"><span>De</span>
+      <select data-vinc="deKey" ${dlgVinculo.fijoDe ? 'disabled' : ''}>
+        ${editables.map((x) => `<option value="${esc(x.key)}" ${x.key === dlgVinculo.deKey ? 'selected' : ''}>${esc(x.pj.identidad.nombre || 'Sin nombre')}</option>`).join('')}
+      </select>
+    </label>
+    <label class="campo"><span>Hacia quién (personaje, grupo, institución…)</span>
+      <input type="text" data-vinc="hacia" list="dl-pjs-rel" value="${esc(dlgVinculo.hacia)}" placeholder="Nombre exacto del personaje o PNJ">
+      <datalist id="dl-pjs-rel">${otrosNombres.map((n) => `<option value="${esc(n)}">`).join('')}</datalist>
+    </label>
+    <div>
+      <div class="fila entre" style="margin-bottom:6px"><span class="small muted">Emociones</span><span class="chip ${dlgVinculo.emociones.length ? 'acento' : ''}">Fuerza ${dlgVinculo.emociones.length}</span></div>
+      <div class="fila">${pares.map((par) => `<div class="segmento">${par.map((em) =>
+        `<button type="button" data-act="dlg-emocion" data-e="${em}" aria-pressed="${dlgVinculo.emociones.includes(em)}">${esc(F.nombreEmocion(db, em))}</button>`).join('')}</div>`).join('')}</div>
+    </div>
+  </div>`;
+  const pie = `${dlgVinculo.indice >= 0 ? '<button class="btn fantasma peligro" data-act="dlg-eliminar-vinculo" style="margin-right:auto">Eliminar</button>' : ''}
+    <button class="btn" data-act="cerrar-dialogo">Cancelar</button>
+    <button class="btn primario" data-act="dlg-guardar-vinculo">Guardar</button>`;
+  d.innerHTML = `<div class="cab"><h2>${dlgVinculo.indice >= 0 ? 'Editar relación' : 'Nueva relación'}</h2><button class="btn icono fantasma" data-act="cerrar-dialogo" aria-label="Cerrar">${ICON.x}</button></div>
+    <div class="cuerpo-d">${cuerpo}</div><div class="pie">${pie}</div>`;
+  if (!d.open) d.showModal();
+}
+
+function cerrarDialogo() {
+  const d = document.getElementById('dialogo');
+  if (d && d.open) d.close();
+  dlgVinculo = null;
+}
+
 // ============================================================== eventos
-document.addEventListener('click', (e) => {
+document.addEventListener('click', async (e) => {
   const t = e.target.closest('[data-act]');
   if (!t) return;
   const ds = t.dataset;
@@ -429,6 +558,52 @@ document.addEventListener('click', (e) => {
     case 'pestana': pestana = ds.id; filtro.q = ''; render(); break;
     case 'salir': fetch('/api/auth/?accion=salir', { method: 'POST' }).finally(() => location.reload()); break;
     case 'filtro': filtro[ds.clave] = ds.id; render(); break;
+    case 'abrir-vinculo': abrirVinculoDialogo({ deKey: ds.de || '', hacia: ds.hacia || '' }); break;
+    case 'editar-vinculo': abrirVinculoDialogo({ deKey: ds.de, indice: Number(ds.i) }); break;
+    case 'quitar-vinculo': {
+      const p = pjs.find((x) => x.key === ds.de);
+      if (!p) break;
+      const lista = [...(p.pj.vinculos || [])];
+      lista.splice(Number(ds.i), 1);
+      await guardarVinculos(p, lista);
+      break;
+    }
+    case 'dlg-emocion': {
+      if (!dlgVinculo) break;
+      const em = new Set(dlgVinculo.emociones);
+      if (em.has(ds.e)) em.delete(ds.e); else { em.add(ds.e); em.delete(R.opuesta(ds.e)); }
+      dlgVinculo.emociones = [...em];
+      renderDialogoVinculo();
+      break;
+    }
+    case 'dlg-guardar-vinculo': {
+      if (!dlgVinculo) break;
+      const p = pjs.find((x) => x.key === dlgVinculo.deKey);
+      if (!p) break;
+      const hacia = (dlgVinculo.hacia || '').trim();
+      if (!hacia) { toast('Indica hacia quién es el vínculo.', 'err'); break; }
+      const lista = [...(p.pj.vinculos || [])];
+      const nuevo = { hacia, emociones: [...dlgVinculo.emociones] };
+      if (dlgVinculo.indice >= 0) lista[dlgVinculo.indice] = nuevo;
+      else lista.push(nuevo);
+      if (await guardarVinculos(p, lista)) cerrarDialogo();
+      break;
+    }
+    case 'dlg-eliminar-vinculo': {
+      if (!dlgVinculo || dlgVinculo.indice < 0) break;
+      const p = pjs.find((x) => x.key === dlgVinculo.deKey);
+      if (!p) break;
+      const lista = [...(p.pj.vinculos || [])];
+      lista.splice(dlgVinculo.indice, 1);
+      if (await guardarVinculos(p, lista)) cerrarDialogo();
+      break;
+    }
+    case 'cerrar-dialogo': cerrarDialogo(); break;
+    case 'descargar-pj': {
+      const p = pjs.find((x) => x.key === ds.key);
+      if (p) descargarJson(p.pj, `${slugArchivo(p.pj.identidad.nombre, 'personaje')}.json`);
+      break;
+    }
     default:
   }
 });
@@ -436,11 +611,22 @@ document.addEventListener('keydown', (e) => {
   if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('.pj[role="button"]')) { e.preventDefault(); e.target.click(); }
 });
 document.addEventListener('change', (e) => {
-  if (e.target.dataset.act === 'filtro-clase') { filtro.clase = e.target.value; aplicarFiltros(); }
+  if (e.target.dataset.act === 'filtro-clase') { filtro.clase = e.target.value; aplicarFiltros(); return; }
+  if (e.target.dataset.vinc === 'deKey' && dlgVinculo) {
+    dlgVinculo.deKey = e.target.value;
+    const p = pjs.find((x) => x.key === dlgVinculo.deKey);
+    const norm = (s) => (s || '').trim().toLowerCase();
+    const idx = p && dlgVinculo.hacia ? (p.pj.vinculos || []).findIndex((v) => norm(v.hacia) === norm(dlgVinculo.hacia)) : -1;
+    dlgVinculo.indice = idx;
+    if (idx >= 0) dlgVinculo.emociones = [...(p.pj.vinculos[idx].emociones || [])];
+    renderDialogoVinculo();
+  }
 });
 document.addEventListener('input', (e) => {
-  if (e.target.dataset.filtroQ) { filtro.q = e.target.value; aplicarFiltros(); }
+  if (e.target.dataset.filtroQ) { filtro.q = e.target.value; aplicarFiltros(); return; }
+  if (e.target.dataset.vinc === 'hacia' && dlgVinculo) { dlgVinculo.hacia = e.target.value; }
 });
+document.getElementById('dialogo').addEventListener('close', () => { dlgVinculo = null; });
 document.getElementById('cargar').addEventListener('change', async (e) => {
   let ultimo = null;
   for (const f of e.target.files) {

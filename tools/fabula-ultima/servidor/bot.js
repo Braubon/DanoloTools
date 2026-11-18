@@ -102,7 +102,7 @@ function convertirPnjAPj(inst, t) {
     identidad: {
       nombre: inst.nombre,
       identidad: `${N.nombreRango(t)} · ${N.nombreEspecie(t.especie)}`,
-      pronombres: ''
+      apodo: ''
     },
     nivel: t.nivel,
     atributos: { base: t.atributos },

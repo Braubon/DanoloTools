@@ -41,7 +41,7 @@ export function nuevoPersonaje() {
     contenido: { atlas: ['basico'], reglas: {} },
     modo_libre: false,
     creacion_completa: false,
-    identidad: { nombre: '', pronombres: '', jugador: '', identidad: '', tema: '', origen: '', especie: '', apariencia: '' },
+    identidad: { nombre: '', apodo: '', jugador: '', identidad: '', tema: '', origen: '', especie: '', apariencia: '' },
     nivel: 5, px: 0, pf: 3, zenit: 0, ahorros: null,
     atributos: { perfil: '', base: { DES: null, PER: null, VIG: null, VOL: null }, mejoras: [] },
     clases: [],
@@ -63,6 +63,8 @@ export function normalizarPersonaje(pj) {
   for (const k of ['identidad', 'atributos', 'equipo', 'opcionales', 'estado', 'contenido']) {
     out[k] = { ...base[k], ...(pj[k] || {}) };
   }
+  if (!out.identidad.apodo && out.identidad.pronombres) out.identidad.apodo = out.identidad.pronombres;
+  delete out.identidad.pronombres;
   out.atributos.base = { ...base.atributos.base, ...((pj.atributos || {}).base || {}) };
   out.atributos.mejoras = (pj.atributos || {}).mejoras || [];
   out.equipo.equipado = { ...base.equipo.equipado, ...((pj.equipo || {}).equipado || {}) };

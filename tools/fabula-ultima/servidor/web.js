@@ -243,8 +243,26 @@ export const datos = envoltorio(async (req) => {
 
     // ---------------- miembros del servidor (fichas completas)
     case 'publico': {
-      await exigirMiembro(req, pId);
-      return json({ personajes: (await P.listar(pId)).map(P.publico) });
+      const q = await exigirMiembro(req, pId);
+      return json({ personajes: (await P.listar(pId)).map((pj) => ({ ...P.publico(pj), _mio: !!(pj.discord && pj.discord.id === q.usuario.id) })) });
+    }
+    case 'guardar-vinculos': {
+      if (!post) return error('Usa POST.', 405);
+      const b = await cuerpo(req);
+      const destinoPartida = b.partida || pId;
+      const q = await exigirMiembro(req, destinoPartida);
+      const pj = b.id && await P.obtener(b.id, destinoPartida);
+      if (!pj) return error('Personaje no encontrado.', 404);
+      if (q.rol !== 'dj' && !(pj.discord && pj.discord.id === q.usuario.id)) {
+        return error('Solo el DJ o la persona propietaria de la ficha pueden editar sus vínculos.', 403);
+      }
+      if (!Array.isArray(b.vinculos)) return error('Formato de vínculos no válido.');
+      pj.vinculos = b.vinculos.map((v) => ({
+        hacia: String((v && v.hacia) || '').trim(),
+        emociones: Array.isArray(v && v.emociones) ? v.emociones.map(String) : []
+      }));
+      const guardado = await P.guardar(pj, { partidaId: destinoPartida, forzar: true });
+      return json({ personaje: { ...P.publico(guardado), _mio: !!(guardado.discord && guardado.discord.id === q.usuario.id) } });
     }
     case 'descargar': {
       const pj = id && await P.obtener(id, pId);

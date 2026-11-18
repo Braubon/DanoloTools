@@ -451,6 +451,7 @@ function detallePj(e) {
     ${habs.length || heroicas.length ? `<div class="bloque"><h4>Habilidades</h4><div class="lista">${habs.map((h) => F.htmlHabilidad(db, h.def, h.sl)).join('')}${heroicas.map((d) => `<details class="item" data-det="hh:${esc(d.id)}"><summary><span class="titulo">${esc(d.nombre)}</span><span class="der"><span class="chip acento">Heroica</span></span></summary><div class="cuerpo texto">${md(d.efecto)}</div></details>`).join('')}</div></div>` : ''}
     ${conj.length ? `<div class="bloque"><h4>Conjuros</h4><div class="lista">${conj.map((cj) => F.htmlConjuro(db, cj)).join('')}</div></div>` : ''}
     ${opciones.map((g) => `<div class="bloque"><h4>${esc(g.etiqueta)}</h4><div class="lista">${g.opciones.map((o) => F.htmlOpcion(db, o)).join('')}</div></div>`).join('')}
+    ${(pj.vinculos || []).length ? `<div class="bloque"><h4>Vínculos</h4><div class="lista">${pj.vinculos.map((v) => F.htmlVinculo(db, v)).join('')}</div></div>` : ''}
     <div class="acciones-pj">
       <a class="btn primario" href="../ficha/index.html#${encodeURIComponent(e.id)}" target="_blank" rel="noopener">Detalles</a>
       ${esDj() ? `<button class="btn" data-act="imagen">Imagen</button>${e.imagen ? '<button class="btn fantasma" data-act="quitar-imagen">Quitar imagen</button>' : ''}` : ''}

@@ -58,6 +58,8 @@
 .matriz th:last-child, .matriz td:last-child { border-right: 0; }
 .matriz thead th { background: var(--surface-2); font-weight: 600; color: var(--muted); font-size: 12px; }
 .matriz td.yo { background: var(--surface-2); }
+.matriz td.editable { cursor: pointer; transition: background .12s; }
+.matriz td.editable:hover { background: var(--surface-2); }
 .matriz .em { display: block; color: var(--text); }
 .matriz .fz { color: var(--accent); font-size: 11px; }
 .matriz .em.emo-pos { color: var(--ok); } .matriz .em.emo-neg { color: var(--err); }
