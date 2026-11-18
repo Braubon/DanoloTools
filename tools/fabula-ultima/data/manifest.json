@@ -6,6 +6,7 @@
     { "id": "alta-fantasia", "ruta": "alta-fantasia/atlas.json" },
     { "id": "baja-fantasia", "ruta": "baja-fantasia/atlas.json" },
     { "id": "fantasia-natural", "ruta": "fantasia-natural/atlas.json" },
-    { "id": "tecno-fantasia", "ruta": "tecno-fantasia/atlas.json" }
+    { "id": "tecno-fantasia", "ruta": "tecno-fantasia/atlas.json" },
+    { "id": "inventadas", "ruta": "inventadas/atlas.json" }
   ]
 }

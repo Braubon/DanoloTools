@@ -226,7 +226,11 @@ export function calcular(pj, db) {
   };
   for (const h of habilidadesPJ(pj, db)) if (h.def) add(h.def.modificadores, h.def.nombre, h.sl);
   for (const hh of pj.heroicas) { const d = get(db, 'habilidades_heroicas', hh.id); if (d) add(d.modificadores, d.nombre, 1); }
-  if (pj.opcionales.peculiaridad) { const d = get(db, 'peculiaridades', pj.opcionales.peculiaridad.id); if (d) add(d.modificadores, d.nombre, 1); }
+  if (pj.opcionales.peculiaridad) {
+    const p = pj.opcionales.peculiaridad;
+    const d = p.personalizado ? p.personalizado : get(db, 'peculiaridades', p.id);
+    if (d) add(d.modificadores, d.nombre, 1);
+  }
   const vistos = new Set();
   for (const r of RANURAS) {
     const o = eq[r];
@@ -543,9 +547,13 @@ export function validar(pj, db, dbTodo = db) {
   // Reglas opcionales
   const pec = pj.opcionales.peculiaridad;
   if (pec) {
-    const d = get(dbTodo, 'peculiaridades', pec.id);
-    if (!get(db, 'peculiaridades', pec.id)) aviso('opcionales', 'La peculiaridad no está activa en el filtro de contenido.');
-    if (d && d.requisitos) { const r = cumpleRequisitos(d.requisitos, pj, dbTodo); if (!r.ok) err('opcionales', `${d.nombre}: ${r.motivos.join('; ')}.`); }
+    if (pec.personalizado) {
+      if (!(pec.personalizado.nombre || '').trim()) err('opcionales', 'La peculiaridad inventada necesita un nombre.');
+    } else {
+      const d = get(dbTodo, 'peculiaridades', pec.id);
+      if (!get(db, 'peculiaridades', pec.id)) aviso('opcionales', 'La peculiaridad no está activa en el filtro de contenido.');
+      if (d && d.requisitos) { const r = cumpleRequisitos(d.requisitos, pj, dbTodo); if (!r.ok) err('opcionales', `${d.nombre}: ${r.motivos.join('; ')}.`); }
+    }
   }
 
   if (pj.modo_libre) out.forEach((x) => { if (x.nivel === 'error') x.nivel = 'aviso'; });

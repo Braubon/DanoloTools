@@ -18,7 +18,8 @@ const ui = {
   filtroSubidaTag: 'todas',
   ap: null, // arma personalizada en edición
   rm: null, // objeto raro a medida en edición
-  ol: null  // objeto libre
+  ol: null, // objeto libre
+  pec: null // peculiaridad inventada en edición
 };
 
 function leerLS(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
@@ -140,8 +141,7 @@ function render() { renderPestanas(); renderPanel(); renderResumen(); }
 const AMBITO_TAB = { identidad: 'identidad', clases: 'clases', elecciones: 'clases', heroicas: 'clases', atributos: 'atributos', equipo: 'equipo', vinculos: 'vinculos', opcionales: 'extras' };
 
 function listaPestanas() {
-  const t = [['contenido', 'Contenido'], ['identidad', 'Identidad'], ['clases', 'Clases'], ['atributos', 'Atributos'], ['equipo', 'Equipo'], ['vinculos', 'Vínculos']];
-  if (db.col.peculiaridades.length || db.col.poderes_cero_efectos.length) t.push(['extras', 'Reglas opcionales']);
+  const t = [['contenido', 'Contenido'], ['identidad', 'Identidad'], ['clases', 'Clases'], ['atributos', 'Atributos'], ['equipo', 'Equipo'], ['vinculos', 'Vínculos'], ['extras', 'Reglas opcionales']];
   t.push(['progreso', creando() ? 'Finalizar' : 'Progreso'], ['ficha', 'Ficha']);
   return t;
 }
@@ -860,6 +860,14 @@ function renderDialogoOL() {
   `<button class="btn" data-act="cerrar-dialogo">Cancelar</button><button class="btn primario" data-act="ol-crear">Añadir</button>`);
 }
 
+function renderDialogoPecInventada() {
+  abrirDialogo(ui.pec.editando ? 'Editar peculiaridad inventada' : 'Nueva peculiaridad inventada', `<div class="pila">
+    <label class="campo"><span>Nombre</span><input type="text" data-pec="nombre" value="${esc(ui.pec.nombre)}"></label>
+    <label class="campo"><span>Descripción breve (opcional)</span><input type="text" data-pec="descripcion" value="${esc(ui.pec.descripcion)}"></label>
+    <label class="campo"><span>Efecto</span><textarea data-pec="efecto" rows="4">${esc(ui.pec.efecto)}</textarea></label></div>`,
+  `<button class="btn" data-act="cerrar-dialogo">Cancelar</button><button class="btn primario" data-act="pec-inventada-guardar">Guardar</button>`);
+}
+
 // ----------------------------------------------------------- diálogo genérico
 function abrirDialogo(titulo, cuerpo, pie) {
   const d = document.getElementById('dialogo');
@@ -869,7 +877,7 @@ function abrirDialogo(titulo, cuerpo, pie) {
   if (!d.open) d.showModal();
   d.querySelector('.cuerpo-d').scrollTop = scroll;
 }
-function cerrarDialogo() { const d = document.getElementById('dialogo'); if (d.open) d.close(); ui.ap = ui.rm = ui.ol = null; }
+function cerrarDialogo() { const d = document.getElementById('dialogo'); if (d.open) d.close(); ui.ap = ui.rm = ui.ol = ui.pec = null; }
 
 // =========================================================== VÍNCULOS
 function panelVinculos() {
@@ -892,23 +900,32 @@ function panelVinculos() {
 // =========================================================== REGLAS OPCIONALES
 function panelExtras() {
   let h = '';
-  if (db.col.peculiaridades.length) {
-    const pec = pj.opcionales.peculiaridad;
-    h += `<div class="seccion"><h2>Peculiaridad</h2><p class="muted small">Una por personaje y sin repetirse en el grupo.</p></div>`;
-    if (pec) {
+  const pec = pj.opcionales.peculiaridad;
+  h += `<div class="seccion fila entre"><div><h2>Peculiaridad</h2><p class="muted small">Una por personaje y sin repetirse en el grupo.</p></div>
+    ${!pec ? '<button class="btn peq" data-act="abrir-pec-inventada">Crear inventada</button>' : ''}</div>`;
+  if (pec) {
+    if (pec.personalizado) {
+      const p = pec.personalizado;
+      h += `<div class="tarjeta"><div class="fila entre"><h2 style="font-size:17px">${esc(p.nombre || 'Peculiaridad inventada')} <span class="chip">Inventada</span></h2>
+        <div class="fila"><button class="btn peq" data-act="editar-pec-inventada">Editar</button><button class="btn peq fantasma peligro" data-act="quitar-peculiaridad">Quitar</button></div></div>
+        ${p.descripcion ? `<p class="muted">${esc(p.descripcion)}</p>` : ''}
+        ${p.efecto ? `<div class="texto">${md(p.efecto)}</div>` : ''}</div>`;
+    } else {
       const d = get(dbTodo, 'peculiaridades', pec.id);
-      h += `<div class="tarjeta"><div class="fila entre"><h2 style="font-size:17px">${esc(d ? d.nombre : pec.id)}</h2>
+      h += `<div class="tarjeta"><div class="fila entre"><h2 style="font-size:17px">${esc(d ? d.nombre : pec.id)} ${d ? tagAtlas(d) : ''}</h2>
         <button class="btn peq fantasma peligro" data-act="quitar-peculiaridad">Quitar</button></div>
         ${d ? `${d.descripcion ? `<p class="muted">${esc(d.descripcion)}</p>` : ''}${d.requisitos ? `<p class="small muted"><strong>Requisito:</strong> ${esc(d.requisitos.texto)}</p>` : ''}<div class="texto">${md(d.efecto)}</div>
         ${d.elecciones ? eleccionesHtml({ tipo: 'peculiaridad', id: d.id }, d, 1) : ''}` : ''}</div>`;
-    } else {
-      h += '<div class="lista">' + db.col.peculiaridades.map((p) => {
-        const r = R.cumpleRequisitos(p.requisitos, pj, dbTodo);
-        return `<details class="item"><summary><span><span class="titulo">${esc(p.nombre)}</span><br><span class="sub">${esc(p.descripcion || (p.requisitos || {}).texto || '')}</span></span>
-          <span class="der">${!r.ok ? `<span class="chip err">${esc(r.motivos.join(', '))}</span>` : ''}<button class="btn peq primario" data-act="elegir-peculiaridad" data-id="${p.id}" ${r.ok || libre() ? '' : 'disabled'}>Elegir</button></span></summary>
-          <div class="cuerpo texto">${md(p.efecto)}</div></details>`;
-      }).join('') + '</div>';
     }
+  } else if (db.col.peculiaridades.length) {
+    h += '<div class="lista">' + db.col.peculiaridades.map((p) => {
+      const r = R.cumpleRequisitos(p.requisitos, pj, dbTodo);
+      return `<details class="item"><summary><span><span class="titulo">${esc(p.nombre)}</span> ${tagAtlas(p)}<br><span class="sub">${esc(p.descripcion || (p.requisitos || {}).texto || '')}</span></span>
+        <span class="der">${!r.ok ? `<span class="chip err">${esc(r.motivos.join(', '))}</span>` : ''}<button class="btn peq primario" data-act="elegir-peculiaridad" data-id="${p.id}" ${r.ok || libre() ? '' : 'disabled'}>Elegir</button></span></summary>
+        <div class="cuerpo texto">${md(p.efecto)}</div></details>`;
+    }).join('') + '</div>';
+  } else {
+    h += '<div class="vacio">No hay peculiaridades de libros activas. Actívalas en Contenido o pulsa «Crear inventada».</div>';
   }
   if (db.col.poderes_cero_efectos.length) {
     const pc = pj.opcionales.poder_cero;
@@ -1310,6 +1327,22 @@ function accion(act, ds, el, ev) {
     // opcionales
     case 'elegir-peculiaridad': pj.opcionales.peculiaridad = { id: ds.id, elecciones: {} }; cambio(); return;
     case 'quitar-peculiaridad': pj.opcionales.peculiaridad = null; cambio(); return;
+    case 'abrir-pec-inventada': ui.pec = { nombre: '', descripcion: '', efecto: '', editando: false }; renderDialogoPecInventada(); return;
+    case 'editar-pec-inventada': {
+      const p = (pj.opcionales.peculiaridad || {}).personalizado || {};
+      ui.pec = { nombre: p.nombre || '', descripcion: p.descripcion || '', efecto: p.efecto || '', editando: true };
+      renderDialogoPecInventada(); return;
+    }
+    case 'pec-inventada-guardar': {
+      if (!ui.pec.nombre.trim()) return toast('Ponle un nombre.', 'err');
+      if (!ui.pec.efecto.trim() && !ui.pec.descripcion.trim()) return toast('Describe el efecto de la peculiaridad.', 'err');
+      pj.opcionales.peculiaridad = {
+        id: 'personalizada',
+        personalizado: { nombre: ui.pec.nombre.trim(), descripcion: ui.pec.descripcion.trim(), efecto: ui.pec.efecto.trim() },
+        elecciones: {}
+      };
+      cerrarDialogo(); cambio(); return;
+    }
     case 'crear-poder-cero': pj.opcionales.poder_cero = { nombre: '', disparador: '', efecto: '', elecciones: {} }; cambio(); return;
     case 'quitar-poder-cero': pj.opcionales.poder_cero = null; cambio(); return;
     case 'pc-disparador': pj.opcionales.poder_cero.disparador = ds.id; cambio(); return;
@@ -1393,7 +1426,8 @@ document.addEventListener('input', (e) => {
   if (t.dataset.elecLista !== undefined) { const s = storeDe(decFuente(t.dataset.f)); s[t.dataset.clave][Number(t.dataset.elecLista)] = t.value; cambio({ panel: false }); return; }
   if (t.dataset.ap === 'nombre' || t.dataset.ap === 'forma2.nombre') { setPath(ui.ap, t.dataset.ap, t.value); return; }
   if (t.dataset.rm === 'nombre' || t.dataset.rm === 'detalle') { ui.rm[t.dataset.rm] = t.value; return; }
-  if (t.dataset.ol) { ui.ol[t.dataset.ol] = t.value; }
+  if (t.dataset.ol) { ui.ol[t.dataset.ol] = t.value; return; }
+  if (t.dataset.pec) { ui.pec[t.dataset.pec] = t.value; }
 });
 
 function bind(t) {
@@ -1432,6 +1466,6 @@ document.getElementById('cargar').addEventListener('change', async (e) => {
   e.target.value = '';
 });
 
-document.getElementById('dialogo').addEventListener('close', () => { ui.ap = ui.rm = ui.ol = null; });
+document.getElementById('dialogo').addEventListener('close', () => { ui.ap = ui.rm = ui.ol = ui.pec = null; });
 
 iniciar();

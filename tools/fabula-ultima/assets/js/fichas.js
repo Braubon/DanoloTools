@@ -359,9 +359,11 @@ function tabNotas(pj) {
   if (i.apariencia) h += `<div class="seccion item-notas" data-busqueda="${esc(i.apariencia.toLowerCase())}"><h2>Apariencia</h2><div class="texto">${md(i.apariencia)}</div></div>`;
   const pec = pj.opcionales.peculiaridad;
   if (pec) {
-    const d = get(db, 'peculiaridades', pec.id);
-    if (d) h += `<div class="seccion"><h2>Peculiaridad</h2><div class="lista"><details class="item" open data-busqueda="${esc((d.nombre + ' ' + d.efecto).toLowerCase())}"><summary><span class="titulo">${esc(d.nombre)}</span><span class="der">${F.atlasTag(db, d)}</span></summary>
-      <div class="cuerpo"><div class="texto">${md(d.efecto)}</div>${textoElecciones(d, pec.elecciones || {})}</div></details></div></div>`;
+    const d = pec.personalizado
+      ? { nombre: pec.personalizado.nombre || 'Peculiaridad inventada', descripcion: pec.personalizado.descripcion || '', efecto: pec.personalizado.efecto || '', _personal: true }
+      : get(db, 'peculiaridades', pec.id);
+    if (d) h += `<div class="seccion"><h2>Peculiaridad</h2><div class="lista"><details class="item" open data-busqueda="${esc((d.nombre + ' ' + (d.descripcion || '') + ' ' + (d.efecto || '')).toLowerCase())}"><summary><span class="titulo">${esc(d.nombre)}</span><span class="der">${d._personal ? '<span class="chip">Inventada</span>' : F.atlasTag(db, d)}</span></summary>
+      <div class="cuerpo">${d._personal && d.descripcion ? `<p class="muted">${esc(d.descripcion)}</p>` : ''}<div class="texto">${md(d.efecto || '')}</div>${d._personal ? '' : textoElecciones(d, pec.elecciones || {})}</div></details></div></div>`;
   }
   const pc = pj.opcionales.poder_cero;
   if (pc) {

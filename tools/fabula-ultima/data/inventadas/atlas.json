@@ -1,0 +1,24 @@
+{
+  "id": "inventadas",
+  "nombre": "Peculiaridades inventadas",
+  "nombre_original": "Homebrew",
+  "abreviatura": "Inventadas",
+  "tipo": "suplemento",
+  "obligatorio": false,
+  "descripcion": "Peculiaridades inventadas y contenido propio para tu mesa.",
+  "reglas_opcionales": [
+    {
+      "id": "peculiaridades",
+      "nombre": "Peculiaridades inventadas",
+      "nombre_original": "Custom Quirks",
+      "descripcion": "Peculiaridades inventadas incluidas en el catálogo."
+    }
+  ],
+  "archivos": [
+    {
+      "coleccion": "peculiaridades",
+      "ruta": "peculiaridades.json",
+      "regla_opcional": "peculiaridades"
+    }
+  ]
+}
