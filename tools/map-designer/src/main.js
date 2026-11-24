@@ -10,6 +10,7 @@ import { renderMap, PAL } from './render.js';
 import { estimate, PERSONS_PER_HOUSEHOLD, M2_PER_HOUSEHOLD, HOMELESS_RATE } from './population.js';
 import { randomizeAll } from './randomize.js';
 import { citadelRing, snapToShore, portParts, waterShape, districtGrid } from './layers.js';
+import { importSvgText, exampleSvgString } from './svgImport.js';
 
 const $ = (s) => document.querySelector(s);
 const svg = $('#svg'), viewG = $('#view'), mapG = $('#map'), overlay = $('#overlay'), densImg = $('#densImg');
@@ -249,7 +250,7 @@ const fmtVal = (v, u) => {
 };
 const scaleSection = () => `<section><h2>Escala del mapa</h2>
   <label class="field"><span>Proporción del lienzo</span>
-    <select id="aspectSel">${ASPECTS.map(a => `<option value="${a.id}" ${(state.params.aspect || '4:3') === a.id ? 'selected' : ''}>${a.label}</option>`).join('')}</select>
+    <select id="aspectSel">${ASPECTS.map(a => `<option value="${a.id}" ${(state.params.aspect || '4:3') === a.id ? 'selected' : ''}>${a.name}</option>`).join('')}</select>
   </label>
   ${slider('mapScale', 'Tamaño real del mapa', 0.4, 4, 0.1, 'scale', 'params')}
   <p>Cambia cuántos metros representa lo que has dibujado, sin mover el terreno. Mayor tamaño → ríos y caminos más anchos en metros, casas más pequeñas en proporción y un asentamiento más denso.</p></section>`;
@@ -320,6 +321,10 @@ function renderPanel() {
     const opt = toolOptions();
     if (opt) h += `<section>${state.tool === 'select' ? '<h2>Selección</h2>' : (isDrawTool() ? '' : '<h2>Opciones</h2>')}${opt}</section>`;
     h += scaleSection();
+    h += `<section><h2>Desde Illustrator / SVG</h2>
+      <button class="ghost btn-block" id="importSvg">Importar terreno SVG…</button>
+      <button class="ghost btn-block" id="downloadExampleSvg" style="margin-top:6px">Descargar SVG de ejemplo</button>
+      <p>Importa capas o colores de un SVG para generar el asentamiento automáticamente.</p></section>`;
     h += `<section class="grow"><div class="keys"><kbd>Ctrl Z</kbd> deshacer · <kbd>Esc</kbd> cancelar · <kbd>⌫</kbd> quitar punto<br><kbd>Espacio</kbd> o botón derecho + arrastrar: mover · rueda: zoom</div>
       <button class="ghost btn-block" id="clearAll" style="margin-top:12px">Vaciar mapa</button></section>`;
     const ok = settlementDefined();
@@ -425,6 +430,8 @@ function bindPanel() {
     state.edits = { merges: [], deleted: [], roads: [] };
     renderPanel(); refresh();
   });
+  on('importSvg', () => svgInput.click());
+  on('downloadExampleSvg', downloadExampleSvg);
   on('resetEdits', () => { pushHistory(); state.edits = { merges: [], deleted: [], roads: [] }; refresh(); });
 }
 
@@ -1551,6 +1558,38 @@ fileInput.type = 'file'; fileInput.accept = '.json,application/json'; fileInput.
 document.body.appendChild(fileInput);
 fileInput.onchange = () => { if (fileInput.files[0]) openProject(fileInput.files[0]); fileInput.value = ''; };
 
+function downloadExampleSvg() {
+  download(new Blob([exampleSvgString()], { type: 'image/svg+xml' }), 'ejemplo-cartografo-illustrator.svg');
+  flashHint('SVG de ejemplo descargado (listo para abrir en Illustrator)');
+}
+function openSvgFile(file) {
+  const fr = new FileReader();
+  fr.onload = () => {
+    pushHistory();
+    cancelTool();
+    try {
+      const res = importSvgText(fr.result);
+      fit();
+      if (settlementDefined()) {
+        goStep(2);
+        flashHint(`SVG importado (${res.total} elementos) · asentamiento generado`);
+      } else {
+        goStep(1);
+        flashHint(`SVG importado (${res.total} elementos). Añade muralla o densidad para generar.`);
+      }
+    } catch (err) {
+      undo();
+      renderPanel(); refresh();
+      flashHint(err.message || 'No se pudo importar el SVG');
+    }
+  };
+  fr.readAsText(file);
+}
+const svgInput = document.createElement('input');
+svgInput.type = 'file'; svgInput.accept = '.svg,image/svg+xml'; svgInput.hidden = true;
+document.body.appendChild(svgInput);
+svgInput.onchange = () => { if (svgInput.files[0]) openSvgFile(svgInput.files[0]); svgInput.value = ''; };
+
 // ---- menús desplegables ----
 function setupMenu(btnId, panelId, items) {
   const btn = $('#' + btnId), panel = $('#' + panelId);
@@ -1562,6 +1601,9 @@ function setupMenu(btnId, panelId, items) {
 setupMenu('fileBtn', 'fileMenu', [
   { label: 'Guardar proyecto', sub: 'Archivo .json para seguir editando', run: saveProject },
   { label: 'Abrir proyecto…', sub: 'Carga un .json guardado antes', run: () => fileInput.click() },
+  '-',
+  { label: 'Importar terreno SVG…', sub: 'Capas o colores de Illustrator y genera el mapa', run: () => svgInput.click() },
+  { label: 'Descargar SVG de ejemplo', sub: 'Plantilla con capas, colores y guía para Illustrator', run: downloadExampleSvg },
 ]);
 setupMenu('exportBtn', 'exportMenu', [
   { label: 'SVG por capas', sub: 'Capas para Illustrator, Inkscape o Affinity', run: () => download(new Blob([exportSvgString()], { type: 'image/svg+xml' }), 'mapa.svg') },
