@@ -56,6 +56,8 @@ export const state = {
     buildingGap: 0,    // separación entre casas (m)
     roofVar: 0.5,      // variación de color de los tejados
     houseSquare: 0,    // regularidad / casas cuadradas (0..1)
+    gridAngle: 0,      // ángulo manual de la trama urbana (°)
+    gridAngleAuto: true, // orientación automática según camino o semilla
     mapScale: 1,       // metros reales por unidad de dibujo
     aspect: '4:3',
     specials: { temple: true, market: true, hall: true, barracks: true, mills: true },

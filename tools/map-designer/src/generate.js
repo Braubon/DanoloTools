@@ -114,7 +114,7 @@ function seeds(Z, p, rng, theta, origin) {
       rec(u, v + h * ty, w * tx, h * (1 - ty), depth + 1); rec(u + w * tx, v + h * ty, w * (1 - tx), h * (1 - ty), depth + 1);
       return;
     }
-    const j = 0.13;
+    const j = 0.13 * (1 - 0.88 * Math.max(0, Math.min(1, p.houseSquare || 0)));
     pts.push(toW(u + w * (0.5 + (rng() - 0.5) * 2 * j), v + h * (0.5 + (rng() - 0.5) * 2 * j)));
   };
   for (let u = -ext; u < ext; u += S0) for (let v = -ext; v < ext; v += S0) rec(u, v, S0, S0, 0);
@@ -397,15 +397,19 @@ function generateMeters(p, S) {
     distUrban: (x, y) => Z0.distUrban(x / S, y / S) * S,
   };
 
-  // orientación: camino principal más cercano al centro urbano
+  // orientación: manual o camino principal más cercano al centro urbano
   const uc = Z.center;
   let theta = rng() * Math.PI, bestD = Infinity;
-  for (const r of state.layers.roads) {
-    if (!r.pts || r.pts.length < 2) continue;
-    for (let i = 0; i < r.pts.length - 1; i++) {
-      const a = [r.pts[i][0] * S, r.pts[i][1] * S], b = [r.pts[i + 1][0] * S, r.pts[i + 1][1] * S];
-      const d = distPointPolyline(uc, [a, b]);
-      if (d < bestD) { bestD = d; theta = Math.atan2(b[1] - a[1], b[0] - a[0]); }
+  if (p.gridAngleAuto === false) {
+    theta = ((p.gridAngle || 0) * Math.PI) / 180;
+  } else {
+    for (const r of state.layers.roads) {
+      if (!r.pts || r.pts.length < 2) continue;
+      for (let i = 0; i < r.pts.length - 1; i++) {
+        const a = [r.pts[i][0] * S, r.pts[i][1] * S], b = [r.pts[i + 1][0] * S, r.pts[i + 1][1] * S];
+        const d = distPointPolyline(uc, [a, b]);
+        if (d < bestD) { bestD = d; theta = Math.atan2(b[1] - a[1], b[0] - a[0]); }
+      }
     }
   }
   let pts = seeds(Z, p, rng, theta, uc);

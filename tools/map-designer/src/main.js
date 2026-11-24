@@ -244,6 +244,7 @@ const slider = (key, label, min, max, step, unit = '', obj = 'opts') => {
 const fmtVal = (v, u) => {
   const S = state.params.mapScale || 1;
   if (u === '%') return Math.round(v * 100) + ' %';
+  if (u === '°') return state.params.gridAngleAuto !== false ? 'Auto' : Math.round(v) + '°';
   if (u === 'scale') return `${Math.round(WORLD.w * v).toLocaleString('es-ES')} × ${Math.round(WORLD.h * v).toLocaleString('es-ES')} m`;
   if (u === 'dm') { const m = v * S; return (m < 10 ? m.toFixed(1).replace('.', ',') : Math.round(m).toLocaleString('es-ES')) + ' m'; }
   return (Math.round(v * 100) / 100).toLocaleString('es-ES') + (u ? ' ' + u : '');
@@ -339,6 +340,8 @@ function renderPanel() {
       ${slider('buildingGap', 'Separación entre casas', 0, 4, 0.1, 'm', 'params')}
       ${slider('roofVar', 'Variación de tejados', 0, 1, 0.05, '%', 'params')}
       ${slider('houseSquare', 'Casas cuadradas', 0, 1, 0.05, '%', 'params')}
+      ${slider('gridAngle', 'Ángulo de calles', -90, 90, 1, '°', 'params')}
+      ${pcheck('gridAngleAuto', 'Orientación automática (según camino)', state.params.gridAngleAuto !== false)}
       <button class="ghost btn-block" id="reseed">Nueva semilla aleatoria</button>
       <div class="seed">Semilla ${state.params.seed}</div></section>
       <section><h2>Detalles</h2>
@@ -376,6 +379,10 @@ function bindPanel() {
     const k = c.dataset.pcheck;
     if (k.startsWith('sp.')) state.params.specials = { ...(state.params.specials || {}), [k.slice(3)]: c.checked };
     else state.params[k] = c.checked;
+    if (k === 'gridAngleAuto') {
+      const lbl = $('#o-gridAngle');
+      if (lbl) lbl.textContent = fmtVal(state.params.gridAngle ?? 0, '°');
+    }
     if (k !== 'scaleBar') state.edits = { merges: [], deleted: [], roads: [] };
     refresh();
   });
@@ -384,7 +391,13 @@ function bindPanel() {
   document.querySelectorAll('input[type=range][data-key]').forEach(inp => {
     const key = inp.dataset.key, obj = inp.dataset.obj, unit = inp.dataset.unit;
     inp.oninput = () => {
-      $('#o-' + key).textContent = fmtVal(+inp.value, unit);
+      if (key === 'gridAngle') {
+        const chk = document.querySelector('[data-pcheck="gridAngleAuto"]');
+        if (chk) chk.checked = false;
+        $('#o-' + key).textContent = Math.round(+inp.value) + '°';
+      } else {
+        $('#o-' + key).textContent = fmtVal(+inp.value, unit);
+      }
       if (obj === 'opts') {
         state.opts[key] = +inp.value;
         if (key === 'wallWidth' || key === 'towerR') {
@@ -408,6 +421,7 @@ function bindPanel() {
       }
       if (obj === 'params') {
         pushHistory();
+        if (key === 'gridAngle') state.params.gridAngleAuto = false;
         state.params[key] = +inp.value;
         state.edits = { merges: [], deleted: [], roads: [] };
         if (key === 'mapScale') renderPanel();
