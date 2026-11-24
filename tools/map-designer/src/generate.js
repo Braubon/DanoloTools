@@ -160,28 +160,148 @@ function ringsTouch(a, b, tol = 0.6) {
 // ----------- parcelas: subdivisión recursiva con frente a la calle -----------
 // Si la pieza es más gruesa que dos fondos de parcela se parte "espalda con espalda"
 // (paralelo al eje largo); si no, se corta en perpendicular al eje largo.
+function scanIntervals(uv, v) {
+  const xs = [];
+  for (let i = 0, j = uv.length - 1; i < uv.length; j = i++) {
+    const x1 = uv[j][0], y1 = uv[j][1], x2 = uv[i][0], y2 = uv[i][1];
+    if ((y1 <= v && y2 > v) || (y2 <= v && y1 > v)) {
+      xs.push(x1 + ((v - y1) * (x2 - x1)) / (y2 - y1));
+    }
+  }
+  xs.sort((a, b) => a - b);
+  const out = [];
+  for (let k = 0; k + 1 < xs.length; k += 2) out.push([xs[k], xs[k + 1]]);
+  return out;
+}
+
+function candidateAxes(ring) {
+  const edges = [];
+  for (let i = 0; i < ring.length; i++) {
+    const a = ring[i], b = ring[(i + 1) % ring.length];
+    const l = dist(a, b);
+    if (l > 0.5) edges.push({ l, dir: [(b[0] - a[0]) / l, (b[1] - a[1]) / l] });
+  }
+  edges.sort((a, b) => b.l - a.l);
+  const dirs = [];
+  for (const e of edges) {
+    // evitar direcciones duplicadas o perpendiculares (ya cubiertas por (u, v))
+    if (dirs.some((d) => {
+      const dot = Math.abs(d[0] * e.dir[0] + d[1] * e.dir[1]);
+      return dot > 0.992 || dot < 0.12;
+    })) continue;
+    dirs.push(e.dir);
+    if (dirs.length >= 3) break;
+  }
+  return dirs.length ? dirs : [mainAxis(ring)];
+}
+
+function bestInscribedRect(ring, sq) {
+  const dirs = candidateAxes(ring);
+  const maxAsp = 3.6 - 1.85 * sq; // 3.6 → 1.75 al 100 %
+  let best = null, bestScore = 0;
+
+  for (const dir of dirs) {
+    const n = [-dir[1], dir[0]];
+    const uv = ring.map(([x, y]) => [x * dir[0] + y * dir[1], x * n[0] + y * n[1]]);
+    let v0 = Infinity, v1 = -Infinity;
+    for (const [, v] of uv) { if (v < v0) v0 = v; if (v > v1) v1 = v; }
+    const spanV = v1 - v0;
+    if (spanV < 3.2) continue;
+
+    const M = 12;
+    const vs = [];
+    for (let k = 0; k < M; k++) vs.push(v0 + spanV * (0.02 + (0.96 * k) / (M - 1)));
+    const ints = vs.map((v) => scanIntervals(uv, v));
+
+    for (let a = 0; a < M - 1; a++) {
+      let cur = ints[a];
+      if (!cur.length) continue;
+      for (let b = a + 1; b < M; b++) {
+        const nxt = [];
+        for (const [a0, a1] of cur) {
+          for (const [b0, b1] of ints[b]) {
+            const u0 = Math.max(a0, b0), u1 = Math.min(a1, b1);
+            if (u1 - u0 > 2.5) nxt.push([u0, u1]);
+          }
+        }
+        cur = nxt;
+        if (!cur.length) break;
+        const h0 = vs[b] - vs[a];
+        if (h0 < 3) continue;
+        for (const [u0, u1] of cur) {
+          const w0 = u1 - u0;
+          let cu0 = u0, cu1 = u1, cv0 = vs[a], cv1 = vs[b];
+          if (w0 > h0 * maxAsp) {
+            const m = (u0 + u1) / 2, hw = (h0 * maxAsp) / 2;
+            cu0 = m - hw; cu1 = m + hw;
+          } else if (h0 > w0 * maxAsp) {
+            const m = (vs[a] + vs[b]) / 2, hh = (w0 * maxAsp) / 2;
+            cv0 = m - hh; cv1 = m + hh;
+          }
+          const w = cu1 - cu0, h = cv1 - cv0;
+          const area = w * h;
+          if (area < 12) continue;
+          const asp = Math.max(w / h, h / w);
+          const score = area / (1 + sq * 0.45 * Math.max(0, asp - 1.35));
+          if (score <= bestScore) continue;
+          // verificar que el rectángulo entero queda dentro del polígono (cóncavos)
+          const mu = (cu0 + cu1) / 2, mv = (cv0 + cv1) / 2;
+          const toW = (u, v) => [dir[0] * u + n[0] * v, dir[1] * u + n[1] * v];
+          const corners = [toW(cu0, cv0), toW(cu1, cv0), toW(cu1, cv1), toW(cu0, cv1)];
+          const probes = [
+            ...corners,
+            toW(mu, cv0), toW(mu, cv1), toW(cu0, mv), toW(cu1, mv), toW(mu, mv),
+          ];
+          if (!probes.every((pt) => pointInRing(pt, ring))) continue;
+          bestScore = score;
+          best = { ring: corners, area };
+        }
+      }
+    }
+  }
+  return best;
+}
+
+function rectangularizeRing(ring, sq) {
+  if (!(sq > 0)) return ring;
+  const origArea = Math.abs(ringArea(ring));
+  const best = bestInscribedRect(ring, sq);
+  if (!best) return sq > 0.75 ? null : ring;
+  const ratio = best.area / Math.max(1, origArea);
+  const e = extents(ring, mainAxis(ring));
+  const la = e.a1 - e.a0, lb = e.b1 - e.b0;
+  const origAsp = Math.max(la, lb) / Math.max(1, Math.min(la, lb));
+  const need = sq >= 0.99 || ratio < 0.38 + 0.61 * sq || origAsp > 3.5 - 1.75 * sq;
+  if (!need) return ring;
+  if (best.area < 16 && sq > 0.65) return null;
+  return best.ring;
+}
+
 function lotsForBlock(block, d, p, rng) {
+  const sq = Math.max(0, Math.min(1, p.houseSquare || 0));
   const target = p.lotSize * (1.5 - 0.5 * d);
-  const depthMax = Math.sqrt(target) * (1.15 + 0.55 * d);
+  const depthMax = Math.sqrt(target) * (1.15 + 0.55 * d - 0.2 * sq);
   const outer = outerRings(block);
   const out = [];
   const rec = (ring, depth) => {
     const A = Math.abs(ringArea(ring));
-    if (depth > 14 || A < target * (0.65 + rng() * 0.7)) { out.push(ring); return; }
     const dir = mainAxis(ring);
     const e = extents(ring, dir);
     const la = e.a1 - e.a0, lb = e.b1 - e.b0;
+    const asp = Math.max(la, lb) / Math.max(1, Math.min(la, lb));
+    const forceSplit = sq > 0.3 && asp > 2.4 - 0.8 * sq && A > target * 0.55;
+    if (depth > 14 || (!forceSplit && A < target * (0.65 + 0.15 * sq + rng() * (0.7 - 0.45 * sq)))) { out.push(ring); return; }
     const longIsA = la >= lb;
     const shortLen = longIsA ? lb : la;
     let pt, ldir;
     const mid = (lo, hi, t) => lo + (hi - lo) * t;
-    if (shortLen > 2 * depthMax * (0.9 + rng() * 0.2)) {
+    if (!forceSplit && shortLen > 2 * depthMax * (0.9 + rng() * 0.2)) {
       // corte paralelo al eje largo
-      const t = 0.42 + rng() * 0.16;
+      const t = 0.42 + 0.06 * sq + rng() * (0.16 - 0.12 * sq);
       if (longIsA) { pt = [dir[0] * mid(e.a0, e.a1, 0.5) + e.n[0] * mid(e.b0, e.b1, t), dir[1] * mid(e.a0, e.a1, 0.5) + e.n[1] * mid(e.b0, e.b1, t)]; ldir = dir; }
       else { pt = [dir[0] * mid(e.a0, e.a1, t) + e.n[0] * mid(e.b0, e.b1, 0.5), dir[1] * mid(e.a0, e.a1, t) + e.n[1] * mid(e.b0, e.b1, 0.5)]; ldir = e.n; }
     } else {
-      const t = 0.3 + rng() * 0.4;
+      const t = 0.3 + 0.16 * sq + rng() * (0.4 - 0.32 * sq);
       if (longIsA) { pt = [dir[0] * mid(e.a0, e.a1, t) + e.n[0] * mid(e.b0, e.b1, 0.5), dir[1] * mid(e.a0, e.a1, t) + e.n[1] * mid(e.b0, e.b1, 0.5)]; ldir = e.n; }
       else { pt = [dir[0] * mid(e.a0, e.a1, 0.5) + e.n[0] * mid(e.b0, e.b1, t), dir[1] * mid(e.a0, e.a1, 0.5) + e.n[1] * mid(e.b0, e.b1, t)]; ldir = dir; }
     }
@@ -414,6 +534,7 @@ function generateMeters(p, S) {
     }
   }
 
+  const sq = Math.max(0, Math.min(1, p.houseSquare || 0));
   const lots = [];
   const trees = [];
   let nextId = 1;
@@ -430,7 +551,7 @@ function generateMeters(p, S) {
     for (let i = 0; i < lr.length; i++) {
       if (used.has(i)) continue;
       let r = lr[i];
-      if (rng() < DX.merge) {
+      if (rng() < DX.merge * (1 - sq)) {
         for (let j = i + 1; j < lr.length; j++) {
           if (used.has(j)) continue;
           if (ringsTouch(lr[i], lr[j])) { r = mergeRings([r, lr[j]]); used.add(j); break; }
@@ -445,9 +566,13 @@ function generateMeters(p, S) {
         if (rng() < p.trees * DX.trees) { const cc = centroid(r); trees.push([cc[0], cc[1], 2.2 + rng() * 1.6]); }
         continue;
       }
-      let ring = r;
+      let ring = rectangularizeRing(r, sq);
+      if (!ring) {
+        if (rng() < p.trees * DX.trees * 0.4) { const cc = centroid(r); trees.push([cc[0], cc[1], 2 + rng() * 1.3]); }
+        continue;
+      }
       if (b.d < 0.55) {
-        const sh = offset([r], -(0.8 + (0.55 - b.d) * 4));
+        const sh = offset([ring], -(0.8 + (0.55 - b.d) * 4));
         const o = outerRings(sh)[0];
         if (!o || Math.abs(ringArea(o)) < 18) continue;
         ring = o;

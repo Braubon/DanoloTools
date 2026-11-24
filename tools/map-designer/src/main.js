@@ -338,6 +338,7 @@ function renderPanel() {
       ${slider('streetWidth', 'Anchura de calles', 2, 9, 0.5, 'm', 'params')}
       ${slider('buildingGap', 'Separación entre casas', 0, 4, 0.1, 'm', 'params')}
       ${slider('roofVar', 'Variación de tejados', 0, 1, 0.05, '%', 'params')}
+      ${slider('houseSquare', 'Casas cuadradas', 0, 1, 0.05, '%', 'params')}
       <button class="ghost btn-block" id="reseed">Nueva semilla aleatoria</button>
       <div class="seed">Semilla ${state.params.seed}</div></section>
       <section><h2>Detalles</h2>
