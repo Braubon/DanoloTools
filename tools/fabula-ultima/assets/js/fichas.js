@@ -36,6 +36,14 @@ async function cargarPartidas() {
   try {
     const res = await (await fetch('/api/datos/?accion=partidas', { cache: 'no-store' })).json();
     const lista = (res && res.partidas) || [];
+    if (lista.length && !lista.some((p) => p.id === partidaActual)) {
+      partidaActual = lista[0].id;
+      localStorage.setItem('fu-partida', partidaActual);
+      actualizarEnlacesNav();
+      pjs.length = 0;
+      await cargarNube();
+      render();
+    }
     if (lista.length > 1 || (sesion && sesion.dj)) {
       sel.innerHTML = lista.map((p) => `<option value="${esc(p.id)}" ${p.id === partidaActual ? 'selected' : ''}>${esc(p.nombre || p.id)}</option>`).join('');
       caja.classList.remove('oculto');
